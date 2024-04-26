@@ -1,7 +1,3 @@
-<!--		    Author : Kulathunga W.G.R.A
-				IT No   : IT18211306
-				Year     : 2nd Year 1st Semester -->
-				
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
