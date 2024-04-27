@@ -20,7 +20,7 @@ public class RegisterServlet extends HttpServlet{
 		
 		System.out.println("Register GET request");
 		
-		getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/pages/register.jsp").forward(request, response);
 		
 	}
 	
@@ -28,6 +28,7 @@ public class RegisterServlet extends HttpServlet{
 		
 		System.out.println("Register POST request");
 		
+		response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
 	}
 	
 }
