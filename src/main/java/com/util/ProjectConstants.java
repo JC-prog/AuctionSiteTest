@@ -15,7 +15,7 @@ public class ProjectConstants {
 	public static final String ATTRIB_ID = "id";
 	
 	/** Constant for item id prefix */
-	public static final String ITEM_ID_PREFIX = "E300";
+	public static final String ITEM_ID_PREFIX = "U000";
 
 	/** Constant for comma */
 	public static final String COMMA = ",";
@@ -90,6 +90,8 @@ public class ProjectConstants {
 	public static final String QUERY_ID_GET_USER = "user_by_id";
 	
 	public static final String QUERY_ID_ALL_USERS = "all_users";
+	
+	public static final String QUERY_ID_GET_ALL_USER_IDS = "all_user_ids";
 	
 	public static final String QUERY_ID_UPDATE_USER = "update_user";
 	

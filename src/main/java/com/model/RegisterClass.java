@@ -11,6 +11,7 @@ public class RegisterClass implements Serializable{
 	private String uMail;
 	private String uPass;
 	private String uR_Pass;
+
 	
 	public String getuId() {
 		return uId;
@@ -42,6 +43,8 @@ public class RegisterClass implements Serializable{
 	public void setuR_Pass(String uR_Pass) {
 		this.uR_Pass = uR_Pass;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "RegisterClass [uId=" + uId + ", uName=" + uName + ", uMail=" + uMail + ", uPass=" + uPass + ", uR_Pass="

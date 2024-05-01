@@ -53,7 +53,7 @@ public class RegisterInterfaceImpl implements RegisterInterface {
 	@Override
 	public void addUser(RegisterClass registerClass) {
 		
-		String userID = CommonUtil.generateIDs(getUserIDs());
+		//String userID = CommonUtil.generateIDs(getUserIDs());
 		
 		try {
 			connection = DBConnectionUtil.getDBConnection();
@@ -61,7 +61,7 @@ public class RegisterInterfaceImpl implements RegisterInterface {
 			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(ProjectConstants.QUERY_ID_INSERT_USERS));
 			connection.setAutoCommit(false);
 			
-			registerClass.setuId(userID);
+			//registerClass.setuId(userID);
 			preparedStatement.setString(ProjectConstants.COLUMN_INDEX_ONE, registerClass.getuId());
 			preparedStatement.setString(ProjectConstants.COLUMN_INDEX_TWO, registerClass.getuName());
 			preparedStatement.setString(ProjectConstants.COLUMN_INDEX_THREE, registerClass.getuMail());
@@ -87,6 +87,71 @@ public class RegisterInterfaceImpl implements RegisterInterface {
 			}
 		}
 
+	}
+	@Override
+	public ArrayList<String> getAllUserIDs() {
+	    ArrayList<String> userIDs = new ArrayList<>();
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    
+	    try {
+	        connection = DBConnectionUtil.getDBConnection();
+	        preparedStatement = connection.prepareStatement(QueryUtil.queryByID(ProjectConstants.QUERY_ID_GET_ALL_USER_IDS));
+	        resultSet = preparedStatement.executeQuery();
+	        
+	        while (resultSet.next()) {
+	            String userID = resultSet.getString("uId"); // Adjust column name accordingly
+	            userIDs.add(userID);
+	        }
+	    } catch (SQLException | SAXException | IOException | ParserConfigurationException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (resultSet != null) {
+	                resultSet.close();
+	            }
+	            if (preparedStatement != null) {
+	                preparedStatement.close();
+	            }
+	            if (connection != null) {
+	                connection.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    return userIDs;
+	}
+	
+	@Override
+	public ArrayList<String> getExistingIDs() {
+		ArrayList<String> existingUserIDs = new ArrayList<>();
+		try {
+			connection = DBConnectionUtil.getDBConnection();
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(ProjectConstants.QUERY_ID_GET_USER_IDS));
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				existingUserIDs.add(resultSet.getString(ProjectConstants.COLUMN_INDEX_ONE));
+				}
+		} catch (SQLException | SAXException | IOException | ParserConfigurationException | ClassNotFoundException e) {
+			// Handle exceptions or log errors
+			e.printStackTrace();
+		} finally {
+			// Close resources
+		try {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (connection != null) {
+				connection.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			}
+		}
+		return existingUserIDs;
 	}
 
 	@Override
@@ -225,6 +290,7 @@ public class RegisterInterfaceImpl implements RegisterInterface {
 			preparedStatement = connection
 					.prepareStatement(QueryUtil.queryByID(ProjectConstants.QUERY_ID_GET_USER_IDS));
 			ResultSet resultSet = preparedStatement.executeQuery();
+			//loop thru the results adding the first column (uId) into arraylist
 			while (resultSet.next()) {
 				arrayList.add(resultSet.getString(ProjectConstants.COLUMN_INDEX_ONE));
 			}

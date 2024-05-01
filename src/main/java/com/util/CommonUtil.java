@@ -37,10 +37,9 @@ public class CommonUtil {
 	public static String generateIDs(ArrayList<String> arrayList) {
 
 		String id;
-		int next = arrayList.size();
-		next++;
+		int next = arrayList.size()+1;
 		id = ProjectConstants.ITEM_ID_PREFIX + next;
-		if (arrayList.contains(id)) {
+		while (arrayList.contains(id)) {
 			next++;
 			id = ProjectConstants.ITEM_ID_PREFIX + next;
 		}

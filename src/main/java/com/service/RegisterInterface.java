@@ -13,6 +13,10 @@ void addUser(RegisterClass userID);
 	
 	public void removeUser(String userID);
 
+	ArrayList<String> getExistingIDs();
+
+	ArrayList<String> getAllUserIDs();
+
 }
 
 

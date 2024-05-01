@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.RequestDispatcher;
 import com.model.RegisterClass;
 import com.service.RegisterInterface;
 import com.service.RegisterInterfaceImpl;
+import com.util.CommonUtil;
 
 
 
@@ -34,20 +36,37 @@ public class RegisterServlet extends HttpServlet{
 		RequestDispatcher dispatcher = null;	
 		
 		try {
-			
-			RegisterClass registerClass = new RegisterClass();
-			
-			registerClass.setuName(request.getParameter("name"));
-			registerClass.setuMail(request.getParameter("email"));
-			registerClass.setuPass(request.getParameter("pass"));
-			registerClass.setuR_Pass(request.getParameter("re_pass"));
-			
-			RegisterInterface iRegisterService = new RegisterInterfaceImpl();
-			iRegisterService.addUser(registerClass);
+	        
+	        RegisterClass registerClass = new RegisterClass();
+	        
+	        // Set other user details from the request parameters
+	        registerClass.setuName(request.getParameter("name"));
+	        registerClass.setuMail(request.getParameter("email"));
+	        registerClass.setuPass(request.getParameter("pass"));
+	        registerClass.setuR_Pass(request.getParameter("re_pass"));
+	        
+	        
+	        RegisterInterface iRegisterService = new RegisterInterfaceImpl();
+	        // Retrieve existing user IDs
+	        ArrayList<String> existingUserIDs = iRegisterService.getAllUserIDs();
+	        
+	        //for (String userID : existingUserIDs) {
+	        //    System.out.println(userID);
+	        //}
+	        
+	        // Generate a new unique user ID
+	        String newUserID = CommonUtil.generateIDs(existingUserIDs);
+	        System.out.println(newUserID); 
+	        // Set the new user ID
+	        registerClass.setuId(newUserID);
+	        // Add the user using the RegisterInterfaceImpl
+	        
+	        iRegisterService.addUser(registerClass);
 			
 			request.setAttribute("user", registerClass);
-			dispatcher = request.getRequestDispatcher("login");
-			dispatcher.forward(request, response);
+			// Forward to login page after successful registration
+	        dispatcher = request.getRequestDispatcher("index.jsp");
+	        dispatcher.forward(request, response);
 			} catch (Exception e)
 			{
 				e.printStackTrace();

@@ -25,6 +25,12 @@
 			)
         ]]>
 	</query>
+	
+	<query id="all_user_ids">
+	<![CDATA[
+    SELECT uId FROM mydb.user;
+    ]]>
+	</query>
 
 	<!-- DROP TABLE EMPLOYEES Query -->
 <!--   	<query id="drop_table">
