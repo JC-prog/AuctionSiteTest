@@ -1,5 +1,8 @@
+<%@ taglib uri="/WEB-INF/tags" prefix="t" %>
+
 <html>
 <body>
+<jsp:include page="navbar.jsp" />
 <h2>EZ Auction</h2>
 
 	<button onclick="redirectTo('login')">Login</button>
