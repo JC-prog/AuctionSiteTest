@@ -1,0 +1,17 @@
+.menu-bar {
+    display: flex;
+    background-color: #d3d3d3;
+    padding: 10px;
+}
+
+.menu-bar a {
+    color: black;
+    padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.menu-bar a:hover {
+    background-color: #ddd;
+    color: black;
+}
