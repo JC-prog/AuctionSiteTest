@@ -43,7 +43,10 @@ public class RegisterServlet extends HttpServlet{
 	        registerClass.setuName(request.getParameter("name"));
 	        registerClass.setuMail(request.getParameter("email"));
 	        registerClass.setuPass(request.getParameter("pass"));
-	        registerClass.setuR_Pass(request.getParameter("re_pass"));
+	        registerClass.setuNum(request.getParameter("contact"));
+	        registerClass.setuAddress(request.getParameter("address"));
+	        registerClass.setisActive(true);
+	        registerClass.setisAdmin(false);
 	        
 	        
 	        RegisterInterface iRegisterService = new RegisterInterfaceImpl();
