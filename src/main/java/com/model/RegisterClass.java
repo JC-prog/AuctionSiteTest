@@ -10,7 +10,10 @@ public class RegisterClass implements Serializable{
 	private String uName;
 	private String uMail;
 	private String uPass;
-	private String uR_Pass;
+	private String uNum;
+	private String uAddress;
+	private Boolean isAdmin;
+	private Boolean isActive;
 
 	
 	public String getuId() {
@@ -37,18 +40,37 @@ public class RegisterClass implements Serializable{
 	public void setuPass(String uPass) {
 		this.uPass = uPass;
 	}
-	public String getuR_Pass() {
-		return uR_Pass;
+	public String getuNum() {
+		return uNum;
 	}
-	public void setuR_Pass(String uR_Pass) {
-		this.uR_Pass = uR_Pass;
+	public void setuNum(String uNum) {
+		this.uNum = uNum;
+	}
+	public String getuAddress() {
+		return uAddress;
+	}
+	public void setuAddress(String uAddress) {
+		this.uAddress = uAddress;
+	}
+	public Boolean getisAdmin() {
+		return isAdmin;
+	}
+	public void setisAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	public Boolean getisActive() {
+		return isActive;
+	}
+	public void setisActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 	
+
+
 	
 	@Override
 	public String toString() {
-		return "RegisterClass [uId=" + uId + ", uName=" + uName + ", uMail=" + uMail + ", uPass=" + uPass + ", uR_Pass="
-				+ uR_Pass + "]";
+		return "RegisterClass [uId=" + uId + ", uName=" + uName + ", uMail=" + uMail + ", uPass=" + uPass + "]";
 	}
 	
 
