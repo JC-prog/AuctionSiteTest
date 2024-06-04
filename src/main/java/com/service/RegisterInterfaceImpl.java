@@ -66,7 +66,10 @@ public class RegisterInterfaceImpl implements RegisterInterface {
 			preparedStatement.setString(ProjectConstants.COLUMN_INDEX_TWO, registerClass.getuName());
 			preparedStatement.setString(ProjectConstants.COLUMN_INDEX_THREE, registerClass.getuMail());
 			preparedStatement.setString(ProjectConstants.COLUMN_INDEX_FOUR, registerClass.getuPass());
-			preparedStatement.setString(ProjectConstants.COLUMN_INDEX_FIVE, registerClass.getuR_Pass());
+			preparedStatement.setString(ProjectConstants.COLUMN_INDEX_FIVE, registerClass.getuNum());
+			preparedStatement.setString(ProjectConstants.COLUMN_INDEX_SIX, registerClass.getuAddress());
+			preparedStatement.setBoolean(ProjectConstants.COLUMN_INDEX_SEVEN, registerClass.getisAdmin());
+			preparedStatement.setBoolean(ProjectConstants.COLUMN_INDEX_EIGHT, registerClass.getisActive());
 			
 			preparedStatement.execute();
 			connection.commit();
@@ -221,7 +224,10 @@ public class RegisterInterfaceImpl implements RegisterInterface {
 				registerBean.setuName(resultSet.getString(ProjectConstants.COLUMN_INDEX_TWO));
 				registerBean.setuMail(resultSet.getString(ProjectConstants.COLUMN_INDEX_THREE));
 				registerBean.setuPass(resultSet.getString(ProjectConstants.COLUMN_INDEX_FOUR));
-				registerBean.setuR_Pass(resultSet.getString(ProjectConstants.COLUMN_INDEX_FIVE));
+				registerBean.setuNum(resultSet.getString(ProjectConstants.COLUMN_INDEX_FIVE));
+				registerBean.setuAddress(resultSet.getString(ProjectConstants.COLUMN_INDEX_SIX));
+				registerBean.setisAdmin(resultSet.getBoolean(ProjectConstants.COLUMN_INDEX_SEVEN));
+				registerBean.setisActive(resultSet.getBoolean(ProjectConstants.COLUMN_INDEX_EIGHT));
 				
 				userList.add(registerBean);
 			}
@@ -257,7 +263,10 @@ public class RegisterInterfaceImpl implements RegisterInterface {
 				preparedStatement.setString(ProjectConstants.COLUMN_INDEX_TWO, registerBean.getuName());
 				preparedStatement.setString(ProjectConstants.COLUMN_INDEX_THREE, registerBean.getuMail());
 				preparedStatement.setString(ProjectConstants.COLUMN_INDEX_FOUR, registerBean.getuPass());
-				preparedStatement.setString(ProjectConstants.COLUMN_INDEX_FIVE, registerBean.getuR_Pass());
+				preparedStatement.setString(ProjectConstants.COLUMN_INDEX_FIVE, registerBean.getuNum());
+				preparedStatement.setString(ProjectConstants.COLUMN_INDEX_SIX, registerBean.getuAddress());
+				preparedStatement.setBoolean(ProjectConstants.COLUMN_INDEX_SEVEN, registerBean.getisAdmin());
+				preparedStatement.setBoolean(ProjectConstants.COLUMN_INDEX_EIGHT, registerBean.getisActive());
 				
 				preparedStatement.executeUpdate();
 

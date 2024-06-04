@@ -1,50 +1,118 @@
- CREATE TABLE category(
-           
-			    catNo varchar(50) not null,
-			    catName varchar(100),
-			    subName varchar(100),
-			    
-			    primary key(catNo)
-			)
-			
-CREATE TABLE item(
-            
-				itemNo varchar(10) not null ,
-				title varchar(50),
-				category varchar(50),
-				condition_ varchar(50),
-				brand varchar(50),
-				color varchar(50),
-				startDate varchar(20),
-				endDate varchar(20),
-				startPrice varchar(20),
-				buyPrice varchar(20),
-				reservePrice varchar(20),
-				desc_ varchar(1000),
-				
-				primary key(itemNo)
-			)
-			
-CREATE TABLE user(
-            	uId varchar(50) not null,
-				uName varchar(10) ,
-				uMail varchar(50),
-				uPass varchar(50),
-				uR_Pass varchar(50),
-				
-				primary key(uId)
-			)
-			
-CREATE TABLE payment (
-				id varchar(50) not null,
-			    cardNo varchar(20),
-			    cusName varchar(40),
-			    expiryDate varchar(20),
-			    cvv varchar(4),
-			    email varchar(100),
-			    amount varchar(1000),
-			    phone varchar(20),
-			    
-			    PRIMARY KEY(id)
-			)
-			
+-- Create the User table
+CREATE TABLE User (
+    uID VARCHAR(255) PRIMARY KEY,
+    uName VARCHAR(255),
+    uMail VARCHAR(255),
+    uPass VARCHAR(255),
+    uNum VARCHAR(255),
+    uAddress VARCHAR(255),
+    isAdmin BOOLEAN,
+    isActive BOOLEAN
+)
+
+-- Create the ItemCategory table
+CREATE TABLE ItemCategory (
+    CategoryNo INT PRIMARY KEY,
+    CatName VARCHAR(255),
+    isActive BOOLEAN
+)
+
+-- Create the AuctionType table
+CREATE TABLE AuctionType (
+    AuctionTypeID INT PRIMARY KEY,
+    Name VARCHAR(255),
+    isActive BOOLEAN
+)
+
+-- Create the DurationPreset table
+CREATE TABLE DurationPreset (
+    DurationID INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Hours INT,
+    isActive BOOLEAN
+)
+
+-- Create the Item table
+CREATE TABLE Item (
+    ItemNo INT PRIMARY KEY,
+    SellerID VARCHAR(255),
+    Title VARCHAR(255),
+    CategoryNo INT,
+    Condition VARCHAR(255),
+    Description TEXT,
+    AuctionType INT,
+    DurationPreset INT,
+    startDate DATETIME,
+    endDate DATETIME,
+    startPrice DECIMAL(10, 2),
+    minSellPrice DECIMAL(10, 2),
+    ListingStatus VARCHAR(255),
+    isActive BOOLEAN,
+    FOREIGN KEY (SellerID) REFERENCES User(uID),
+    FOREIGN KEY (CategoryNo) REFERENCES ItemCategory(CategoryNo),
+    FOREIGN KEY (AuctionType) REFERENCES AuctionType(AuctionTypeID),
+    FOREIGN KEY (DurationPreset) REFERENCES DurationPreset(DurationID)
+)
+
+-- Create the Bid table
+CREATE TABLE Bid (
+    BidID INT PRIMARY KEY,
+    BidderID VARCHAR(255),
+    ItemNo INT,
+    BidAmount DECIMAL(10, 2),
+    Timestamp DATETIME,
+    isActive BOOLEAN,
+    FOREIGN KEY (BidderID) REFERENCES User(uID),
+    FOREIGN KEY (ItemNo) REFERENCES Item(ItemNo)
+)
+
+-- Create the Transaction table
+CREATE TABLE Transaction (
+    TransactionID INT PRIMARY KEY,
+    BuyerID VARCHAR(255),
+    SellerID VARCHAR(255),
+    ItemNo INT,
+    SaleAmount DECIMAL(10, 2),
+    Status VARCHAR(255),
+    Timestamp DATETIME,
+    isActive BOOLEAN,
+    FOREIGN KEY (BuyerID) REFERENCES User(uID),
+    FOREIGN KEY (SellerID) REFERENCES User(uID),
+    FOREIGN KEY (ItemNo) REFERENCES Item(ItemNo)
+)
+
+-- Create the Feedback table
+CREATE TABLE Feedback (
+    FeedbackID VARCHAR(255) PRIMARY KEY,
+    SenderID VARCHAR(255),
+    Message TEXT,
+    Timestamp DATETIME,
+    FOREIGN KEY (SenderID) REFERENCES User(uID)
+)
+
+-- Create the Watchlist table
+CREATE TABLE Watchlist (
+    WatchlistID INT PRIMARY KEY,
+    BuyerID VARCHAR(255),
+    ItemNo INT,
+    Timestamp DATETIME,
+    isActive BOOLEAN,
+    FOREIGN KEY (BuyerID) REFERENCES User(uID),
+    FOREIGN KEY (ItemNo) REFERENCES Item(ItemNo)
+)
+
+-- Create the TradeRequest table
+CREATE TABLE TradeRequest (
+    TradeID INT PRIMARY KEY,
+    BuyerID VARCHAR(255),
+    SellerID VARCHAR(255),
+    BuyerItemID INT,
+    SellerItemID INT,
+    Status VARCHAR(255),
+    Timestamp DATETIME,
+    isActive BOOLEAN,
+    FOREIGN KEY (BuyerID) REFERENCES User(uID),
+    FOREIGN KEY (SellerID) REFERENCES User(uID),
+    FOREIGN KEY (BuyerItemID) REFERENCES Item(ItemNo),
+    FOREIGN KEY (SellerItemID) REFERENCES Item(ItemNo)
+)

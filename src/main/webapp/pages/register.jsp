@@ -56,6 +56,10 @@
 	     <td>Contact Number</td>
 	     <td><input type="text" name="contact" id="contact"	placeholder="Contact no" /></td>
 	    </tr>
+	     <tr>
+	     <td>Address</td>
+	     <td><input type="text" name="address" id="address"	placeholder="Your Address" /></td>
+	    </tr>
 	    <tr>
 	     <td>Password</td>
 	     <td><input type="password" name="pass" id="pass" placeholder="Password" /></td>
@@ -63,7 +67,8 @@
 	    <tr>
 	     <td>Re-Enter Password</td>
 	     <td><input type="password" name="re_pass" id="re_pass"	placeholder="Repeat your password" /></td>
-	    </tr>	    
+	    </tr>
+	    	    
 	     <tr>
 	 
 	     <td><input type="checkbox" name="agree-term" id="agree-term"
