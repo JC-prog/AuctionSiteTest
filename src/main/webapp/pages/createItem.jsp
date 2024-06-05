@@ -61,7 +61,7 @@
 </head>
 <body>
     <h1>Create Item Listing</h1>
-    <form action="createItem" method="post">
+    <form action="createItem" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" required><br>
 
@@ -103,6 +103,9 @@
 		    %>
 		</select>
 
+		<label for="image">Image:</label>
+        <input type="file" id="image" name="image" required><br><br>
+
 
         <label for="startDate">Start Date:</label>
         <input type="datetime-local" id="startDate" name="startDate" required><br>
@@ -121,5 +124,20 @@
 
         <input type="submit" value="Create Listing">
     </form>
+    <script>
+        function validateForm() {
+            // Additional custom validation if needed
+            
+            // Example: Ensure start date is before end date
+            var startDate = new Date(document.getElementById("startDate").value);
+            var endDate = new Date(document.getElementById("endDate").value);
+            if (startDate >= endDate) {
+                alert("End date must be after start date.");
+                return false;
+            }
+
+            return true; // Submit the form if all validation checks pass
+        }
+    </script>
 </body>
 </html>

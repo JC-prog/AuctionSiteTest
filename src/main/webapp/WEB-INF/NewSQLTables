@@ -48,12 +48,15 @@ CREATE TABLE Item (
     minSellPrice DECIMAL(10, 2),
     ListingStatus VARCHAR(255),
     isActive BOOLEAN,
+    Image BLOB,
     FOREIGN KEY (SellerID) REFERENCES User(uID),
     FOREIGN KEY (CategoryNo) REFERENCES ItemCategory(CategoryNo),
     FOREIGN KEY (AuctionType) REFERENCES AuctionType(AuctionTypeID),
     FOREIGN KEY (DurationPreset) REFERENCES DurationPreset(DurationID)
 );
 
+--use this alter script it item table already created previously
+ALTER TABLE Item ADD COLUMN Image BLOB;
 
 -- Create the Bid table
 CREATE TABLE Bid (
