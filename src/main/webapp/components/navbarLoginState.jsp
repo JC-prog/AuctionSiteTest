@@ -1,9 +1,10 @@
 <html>
 	<body>
 		<div class="login-link">
-	        <div>
-	            <a href="#">Login</a>
-	        </div>
-	    </div>
+		    <div>
+		        <a href="login" class="link">Login</a>
+		        <a href="register" class="link">Register</a>
+		    </div>
+		</div>
 	</body>
 </html>

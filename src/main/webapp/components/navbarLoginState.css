@@ -1,20 +1,17 @@
-.login-link {
-    display: inline-block;
-}
-        
-.login-link a {
-    display: block;
-    padding: 10px 20px;
-    background-color: royalblue;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    text-align: center;
-    transition: background-color 0.3s, color 0.3s;
+.login-link div {
+    display: flex;
+    gap: 10px; 
 }
 
-.login-link a:hover {
-    background-color: white;
-    color: royalblue;
-    border: 1px solid royalblue;
+.login-link .link {
+    text-decoration: none; 
+    padding: 5px 10px;
+    color: #000; 
+    background-color: #f0f0f0; 
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+}
+
+.login-link .link:hover {
+    background-color: #e0e0e0; 
 }
