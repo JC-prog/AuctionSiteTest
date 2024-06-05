@@ -117,3 +117,29 @@ CREATE TABLE TradeRequest (
     FOREIGN KEY (BuyerItemID) REFERENCES Item(ItemNo),
     FOREIGN KEY (SellerItemID) REFERENCES Item(ItemNo)
 )
+
+--add values into auctiontype table
+INSERT INTO AuctionType (AuctionTypeID, Name, isActive) VALUES
+(1, 'Low Start High', true),
+(2, 'Price Up', true),
+(3, 'Normal Auction', true);
+
+
+--added values into DurationPreset
+
+INSERT INTO DurationPreset (DurationID, Name, Hours, isActive) VALUES
+(1, '1 Day', 24, true),
+(2, '3 Days', 72, true),
+(3, '1 Week', 168, true),
+(4, '2 Weeks', 336, true);
+
+
+-- added values into ItemCategory
+INSERT INTO ItemCategory (CategoryNo, CatName, isActive) VALUES
+(1, 'Electronics', true),
+(2, 'Books', true),
+(3, 'Clothing', true),
+(4, 'Home & Garden', true),
+(5, 'Toys', true),
+(6, 'Sports', true);
+

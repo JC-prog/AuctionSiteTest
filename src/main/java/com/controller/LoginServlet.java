@@ -51,15 +51,18 @@ public class LoginServlet extends HttpServlet{
 		String unRegistered = null;
 		
 		try {
-			if (loginVal.validate(loginClass)) {
+			String userId = loginVal.validate(loginClass);
+			if (userId != null) {
 				//HttpSession session = request.getSession();
                 // session.setAttribute("username",username);
-				HttpSession session = request.getSession(false);
+				HttpSession session = request.getSession();
 				if (session !=null) {
 					String uName1 = (String)session.getAttribute("uName");
 					System.out.println("login success");
+					session.setAttribute("uName", uName1);
+					session.setAttribute("uID", userId);
 				}
-				response.sendRedirect("user.jsp");
+				response.sendRedirect("createItem");
 			}else {
 //				session.setAttribute("user", uName);
 //                response.sendRedirect("login.jsp");

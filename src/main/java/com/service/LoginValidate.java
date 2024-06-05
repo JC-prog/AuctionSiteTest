@@ -11,7 +11,7 @@ import com.model.LoginClass;
 public class LoginValidate {
 
 	
-	public boolean validate(LoginClass loginClass) throws ClassNotFoundException {
+	public String validate(LoginClass loginClass) throws ClassNotFoundException {
 		boolean status = false;
 		String url = "jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC";
 		String username = "root";
@@ -60,13 +60,21 @@ public class LoginValidate {
 				System.out.println(preStmt);
 				
 				ResultSet resultSet = preStmt.executeQuery();
-				status = resultSet.next();
+				
+				if(resultSet.next())
+				{
+					String userId = (String)resultSet.getObject(1);
+					
+					
+					return userId;
+				}
+				
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			printSQLException(e);
 		}
-		return status;
+		return null;
 	}
 	
 	private void printSQLException(SQLException ex) {
