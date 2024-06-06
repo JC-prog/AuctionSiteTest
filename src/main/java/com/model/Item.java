@@ -18,6 +18,7 @@ public class Item {
     private BigDecimal minSellPrice;
     private String listingStatus;
     private boolean isActive;
+    private byte[] image; // Blob image field
 
     // Getters and Setters
 
@@ -131,5 +132,13 @@ public class Item {
 
     public void setActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }
