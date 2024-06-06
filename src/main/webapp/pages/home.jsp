@@ -22,7 +22,8 @@
                 <th>Start Price</th>
                 <th>Min Sell Price</th>
                 <th>Listing Status</th>
-                <th>Image</th> <!-- New column for image -->
+                <th>Image</th>
+                <th>View Item</th> <!-- New column for view item -->
             </tr>
         </thead>
         <tbody>
@@ -51,12 +52,17 @@
                         } else {
                             out.println("<td>No Image Available</td>");
                         }
-                        
+
+                        out.println("<td><a href='ViewItemServlet?itemNo=" + item.getItemNo() + "'>View Item</a></td>");
                         out.println("</tr>");
                     }
                 }
             %>
         </tbody>
     </table>
+    <form action="SearchItemServlet" method="get">
+        <input type="text" name="searchQuery" placeholder="Search for items">
+        <input type="submit" value="Search">
+    </form>
 </body>
 </html>
