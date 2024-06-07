@@ -67,35 +67,28 @@ public class PlaceBidServlet extends HttpServlet {
             highestBidStmt.setInt(1, itemNo);
             ResultSet highestBidRs = highestBidStmt.executeQuery();
             BigDecimal highestBid = BigDecimal.ZERO;
+            
+            
             if (highestBidRs.next()) {
-                highestBid = highestBidRs.getBigDecimal("HighestBid");
+            	
+            	if(highestBidRs.getBigDecimal("HighestBid")!=null)
+            	{
+                    highestBid = highestBidRs.getBigDecimal("HighestBid");
+            	}
             }
             highestBidRs.close();
             highestBidStmt.close();
 
-            // Check the user's previous highest bid for this item
-            String userHighestBidQuery = "SELECT MAX(BidAmount) AS UserHighestBid FROM Bid WHERE BidderID = ? AND ItemNo = ?";
-            PreparedStatement userHighestBidStmt = conn.prepareStatement(userHighestBidQuery);
-            userHighestBidStmt.setString(1, bidderID);
-            userHighestBidStmt.setInt(2, itemNo);
-            ResultSet userHighestBidRs = userHighestBidStmt.executeQuery();
-            BigDecimal userHighestBid = BigDecimal.ZERO;
-            if (userHighestBidRs.next()) {
-                userHighestBid = userHighestBidRs.getBigDecimal("UserHighestBid");
-            }
-            userHighestBidRs.close();
-            userHighestBidStmt.close();
+
+
 
             if (bidAmount.compareTo(startPrice) <= 0) {
                 errorMessage = "Your bid must be higher than the item's start price.";
             }
-            /*else if ((bidAmount.compareTo(highestBid) <= 0)||  {
+            else if (bidAmount.compareTo(highestBid) <= 0)  {
                 errorMessage = "Your bid must be higher than the current highest bid.";
             } 
-            /*
-            else if (bidAmount.compareTo(userHighestBid) <= 0) {
-                errorMessage = "Your bid must be higher than your previous bid.";
-            } */else {
+            else {
                 // Insert the new bid
                 String insertBidQuery = "INSERT INTO Bid (BidderID, ItemNo, BidAmount, Timestamp, isActive) VALUES (?, ?, ?, ?, ?)";
                 PreparedStatement insertBidStmt = conn.prepareStatement(insertBidQuery);
