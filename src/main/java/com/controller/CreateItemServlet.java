@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -52,8 +53,8 @@ public class CreateItemServlet extends HttpServlet {
 	    String description = request.getParameter("description");
 	    String auctionTypeParam = request.getParameter("auctionType");
 	    String durationPresetParam = request.getParameter("durationPreset");
-	    String startDateParam = request.getParameter("startDate");
-	    String endDateParam = request.getParameter("endDate");
+	    
+	  
 	    String startPriceParam = request.getParameter("startPrice");
 	    String minSellPriceParam = request.getParameter("minSellPrice");
 	    String listingStatus = request.getParameter("listingStatus");
@@ -62,8 +63,8 @@ public class CreateItemServlet extends HttpServlet {
 	    int categoryNo;
 	    int auctionType;
 	    int durationPreset;
-	    Date startDate;
-	    Date endDate;
+	    Date startDate= new Date();
+	    Date endDate = new Date();
 	    BigDecimal startPrice;
 	    BigDecimal minSellPrice;
 	    try {
@@ -77,8 +78,7 @@ public class CreateItemServlet extends HttpServlet {
 	        categoryNo = Integer.parseInt(categoryParam);
 	        auctionType = Integer.parseInt(auctionTypeParam);
 	        durationPreset = Integer.parseInt(durationPresetParam);
-	        startDate = parseDate(startDateParam);
-	        endDate = parseDate(endDateParam);
+	       
 	        startPrice = new BigDecimal(startPriceParam);
 	        minSellPrice = new BigDecimal(minSellPriceParam);
 	    } catch (NumberFormatException e) {
@@ -104,12 +104,27 @@ public class CreateItemServlet extends HttpServlet {
         System.out.println("Description: " + description);
         System.out.println("Auction Type: " + auctionType);
         System.out.println("Duration Preset: " + durationPreset);
-        System.out.println("Start Date: " + startDate);
-        System.out.println("End Date: " + endDate);
+      
         System.out.println("Start Price: " + startPrice);
         System.out.println("Image: " + filePart.getInputStream());
+        System.out.println("listingStatus : " + listingStatus);
+        
+        
+        int durationInHours = getDurationInHoursFromDB(durationPreset);
+        if(listingStatus.equals("Publish"))
+        {
+        	startDate = new Date();
+        	endDate = new Date(startDate.getTime()+(durationInHours*3600000));
+        	System.out.println("start date =" +startDate);
+        	System.out.println("end date =" +endDate);
+        }
+        else
+        {
+        	System.out.println("Drafted");
+        }
 
      // Assuming a connection method getDBConnection()
+        
         try (Connection conn = getDBConnection()) {
             String sql = "INSERT INTO Item (SellerID, Title, CategoryNo,`Condition`, Description, AuctionType, DurationPreset, startDate, endDate, startPrice, minSellPrice, ListingStatus, isActive,Image) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -156,5 +171,23 @@ public class CreateItemServlet extends HttpServlet {
         String user = "root";
         String password = "password";
         return DriverManager.getConnection(url, user, password);
+    }
+    
+    private int getDurationInHoursFromDB(int durationPresetId) throws ServletException {
+        int durationInHours = 0;
+        try (Connection conn = getDBConnection()) {
+            String sql = "SELECT Hours FROM DurationPreset WHERE DurationId = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, durationPresetId);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        durationInHours = rs.getInt("Hours");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServletException(e);
+        }
+        return durationInHours;
     }
 }

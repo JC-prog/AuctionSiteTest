@@ -107,6 +107,6 @@ public class ListItemsServlet extends HttpServlet {
         }
 
         request.setAttribute("itemList", itemList);
-        request.getRequestDispatcher("/pages/home.jsp").forward(request, response);
+        request.getRequestDispatcher("/pages/listitems.jsp").forward(request, response);
     }
 }

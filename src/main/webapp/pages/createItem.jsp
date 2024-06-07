@@ -37,7 +37,7 @@
         }
 
         // Fetch duration presets
-        rs = stmt.executeQuery("SELECT DurationID, Name FROM DurationPreset WHERE isActive = true");
+        rs = stmt.executeQuery("SELECT DurationID, Name,Hours FROM DurationPreset WHERE isActive = true");
         
         while (rs.next()) {
             Map<String, Object> duration = new HashMap<>();
@@ -107,12 +107,12 @@
         <input type="file" id="image" name="image" required><br><br>
 
 
-        <label for="startDate">Start Date:</label>
+      <!--   <label for="startDate">Start Date:</label>
         <input type="datetime-local" id="startDate" name="startDate" required><br>
 
         <label for="endDate">End Date:</label>
         <input type="datetime-local" id="endDate" name="endDate" required><br>
-
+ -->
         <label for="startPrice">Start Price:</label>
         <input type="number" step="0.01" id="startPrice" name="startPrice" required><br>
 
@@ -120,7 +120,10 @@
         <input type="number" step="0.01" id="minSellPrice" name="minSellPrice" required><br>
 
         <label for="listingStatus">Listing Status:</label>
-        <input type="text" id="listingStatus" name="listingStatus" required><br>
+        <select name="listingStatus" id="listingStatus">
+		  <option value="Draft">Draft</option>
+		  <option value="Publish">Publish</option>
+		</select>
 
         <input type="submit" value="Create Listing">
     </form>

@@ -62,7 +62,7 @@ public class LoginServlet extends HttpServlet{
 					session.setAttribute("uName", uName1);
 					session.setAttribute("uID", userId);
 				}
-				response.sendRedirect("createItem");
+				response.sendRedirect("ListItemsServlet");
 			}else {
 //				session.setAttribute("user", uName);
 //                response.sendRedirect("login.jsp");

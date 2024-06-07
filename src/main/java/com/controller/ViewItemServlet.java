@@ -30,6 +30,8 @@ public class ViewItemServlet extends HttpServlet {
         int itemNo = Integer.parseInt(request.getParameter("itemNo"));
         Item item = null;
         List<Bid> bidList = new ArrayList<>();
+        
+
 
         try {
             // Database connection details
@@ -105,7 +107,7 @@ public class ViewItemServlet extends HttpServlet {
             stmt.close();
 
             // Retrieve bid history
-            String bidSql = "SELECT b.BidID, b.ItemNo, b.BidAmount, b.Timestamp, u.uName AS BidderName " +
+            String bidSql = "SELECT b.BidID, b.ItemNo, b.BidAmount,b.BidderID, b.Timestamp, u.uName AS BidderName " +
                             "FROM Bid b " +
                             "JOIN User u ON b.BidderID = u.uID " +
                             "WHERE b.ItemNo = ? AND b.isActive = true " +
@@ -116,8 +118,15 @@ public class ViewItemServlet extends HttpServlet {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
+				/*
+				 * System.out.println(rs.getString("BidderName"));
+				 * System.out.println(rs.getString("BidID"));
+				 * System.out.println(rs.getString("BidderName"));
+				 * System.out.println(rs.getString("BidID"));
+				 */
                 Bid bid = new Bid();
                 bid.setBidID(rs.getInt("BidID"));
+                bid.setBidderID(rs.getString("BidderID"));
                 bid.setItemNo(rs.getInt("ItemNo"));
                 bid.setBidAmount(rs.getBigDecimal("BidAmount"));
                 bid.setTimestamp(rs.getTimestamp("Timestamp"));
@@ -134,6 +143,6 @@ public class ViewItemServlet extends HttpServlet {
 
         request.setAttribute("item", item);
         request.setAttribute("bidList", bidList);
-        request.getRequestDispatcher("/pages/viewlisting.jsp").forward(request, response);
+        request.getRequestDispatcher("/pages/viewitem.jsp").forward(request, response);
     }
 }
