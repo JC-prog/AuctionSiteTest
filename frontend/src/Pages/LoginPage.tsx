@@ -66,30 +66,39 @@ const LoginPage = () => {
     };
 
   return (
-    <div className="form-container-wrapper">
-		<div className="form-container" id="login-form-container">
-		    <h1 className="form-title">EzAuction</h1>
-		    
-             <form id="login-form" className="form">
-		        <div className="form-row">
-		            <label className="form-label">Username:</label>
-		            <input type="text" id="uName" name="uName" className="form-input" placeholder="Enter your username" 
-						value={username}
-						onChange={handleUsernameChange}
-						required/>
-		        </div>
-		        
-		        <div className="form-row">
-		            <label className="form-label">Password:</label>
-		            <input type="password" id="password" name="password" className="form-input" placeholder="Enter your password" value={password}
-                            onChange={handlePasswordChange}
-                            required/>
-		        </div>
-		        
-		        <input type="submit" value="Login" className="form-submit" onClick={() => handleSubmit()} />
-		    </form>
-		</div>
-	</div>
+    <div className="login-container-wrapper">
+        <div className="login-container">
+            <div className="login-img-container">
+                <img src="test.jpg"></img>
+            </div>
+
+            <div className="login-form-wrapper">
+                <h1 className="form-title">EzAuction</h1>
+                
+                <div className="login-form-container">
+                    <form id="login-form" className="form">
+                        <div className="form-row">
+                            <label className="form-label">Username:</label>
+                            <input type="text" id="uName" name="uName" className="form-input" placeholder="Enter your username" 
+                                value={username}
+                                onChange={handleUsernameChange}
+                                required/>
+                        </div>
+                        
+                        <div className="form-row">
+                            <label className="form-label">Password:</label>
+                            <input type="password" id="password" name="password" className="form-input" placeholder="Enter your password" value={password}
+                                    onChange={handlePasswordChange}
+                                    required/>
+                        </div>
+                        
+                        <input type="submit" value="Login" className="form-submit" onClick={() => handleSubmit()} />
+                    </form>
+                </div>
+               
+            </div>
+        </div>
+    </div>
   )
 }
 
