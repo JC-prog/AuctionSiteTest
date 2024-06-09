@@ -48,7 +48,8 @@ public class ListItemsServlet extends HttpServlet {
                 "JOIN User u ON i.SellerID = u.uID " +
                 "JOIN ItemCategory c ON i.CategoryNo = c.CategoryNo " +
                 "JOIN AuctionType a ON i.AuctionType = a.AuctionTypeID " +
-                "JOIN DurationPreset d ON i.DurationPreset = d.DurationID");
+                "JOIN DurationPreset d ON i.DurationPreset = d.DurationID WHERE i.isActive = TRUE"
+                );
 
             while (rs.next()) {
                 Item item = new Item();
