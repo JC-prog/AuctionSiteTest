@@ -5,17 +5,23 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "item")
+@Table(name = "Item")
 public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer itemID;
 
+    @Column(name = "itemTitle")
     private String title;
+
     private Integer sellerId;
     private Integer categoryNo;
+
+    @Column(name = "itemCondition")
     private String condition;
+
+    @Column(name = "itemDescription")
     private String description;
     private Integer auctionType;
     private Date startDate;
