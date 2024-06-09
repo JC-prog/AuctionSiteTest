@@ -1,0 +1,56 @@
+.item-details-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 800px; /* Optional: limit the maximum width */
+    margin: 20px auto; /* Optional: center the container */
+}
+
+.item-pic-placeholder {
+    flex: 0 0 150px; /* Fixed width for the image container */
+    margin-right: 20px; /* Space between the image and the content */
+}
+
+.item-pic-placeholder img {
+    width: 100%; /* Make the image fill its container */
+    height: auto; /* Maintain the aspect ratio */
+    border-radius: 8px; /* Optional: rounded corners for the image */
+}
+
+.item-content-container {
+    flex: 1; /* Take up the remaining space */
+}
+
+.item-content-container h2 {
+    margin-top: 0; /* Remove default margin */
+    margin-bottom: 10px; /* Space below the heading */
+    font-size: 1.5em; /* Adjust font size as needed */
+}
+
+.item-content-container p {
+    margin: 10px 0; /* Space above and below the paragraph */
+}
+
+.item-action-buttons {
+    margin-top: 20px; /* Space above the buttons */
+}
+
+.item-action-buttons button {
+    margin-right: 10px; /* Space between the buttons */
+    padding: 10px 20px; /* Padding inside the buttons */
+    font-size: 1em; /* Adjust font size as needed */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners for the buttons */
+    background-color: #007bff; /* Button background color */
+    color: white; /* Button text color */
+    cursor: pointer; /* Indicate that the buttons are clickable */
+}
+
+.item-action-buttons button:hover {
+    background-color: #0056b3; /* Darker background on hover */
+}
