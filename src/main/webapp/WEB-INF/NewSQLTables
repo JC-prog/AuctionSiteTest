@@ -146,9 +146,20 @@ INSERT INTO ItemCategory (CategoryNo, CatName, isActive) VALUES
 (5, 'Toys', true),
 (6, 'Sports', true);
 
+--notification table for trade request and auction close notification
+CREATE TABLE `notification` (
+  `NotificationId` int NOT NULL AUTO_INCREMENT,
+  `uID` varchar(45) DEFAULT NULL,
+  `isActive` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`NotificationId`),
+  KEY `uID_idx` (`uID`),
+  CONSTRAINT `uID` FOREIGN KEY (`uID`) REFERENCES `user` (`uID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
 
 --set auto increment
 ALTER  TABLE item MODIFY COLUMN ItemNo AUTO_INCREMENT 
 
 ALTER TABLE BID MODIFY COLUMN BidID INT auto_increment
 ALTER TABLE watchlist MODIFY COLUMN WatchlistID INT auto_increment
+ALTER TABLE TradeRequest MODIFY COLUMN TradeID INT auto_increment

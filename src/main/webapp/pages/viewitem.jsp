@@ -120,6 +120,14 @@
         <input type="hidden" name="itemNo" value="<%= item.getItemNo() %>" />
         <button type="submit">Add to Watchlist</button>
     </form>
+    
+      <form action="InitiateTradeServlet" method="get">
+        <input type="hidden" name="itemNo" value="<%= item.getItemNo() %>" />
+        <input type="hidden" name="SelleruName" value="<%= item.getSeller().getuName() %>" />
+        <input type="hidden" name="SelleruID" value="<%= item.getSeller().getuId() %>" />
+        
+        <button type="submit" style="position: absolute; top: 10px; right: 10px;">Initiate Trade</button>
+    </form>
     <% } else { %>
         <p>Item not found.</p>
     <% } %>

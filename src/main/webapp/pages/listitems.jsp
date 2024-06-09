@@ -5,8 +5,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Home - Item Listings</title>
+    <style>
+        .top-right-button {
+            float: right;
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
+    <div class="top-right-button">
+        <form action="ViewTradeRequestsServlet" method="get">
+            <button type="submit">View Trade Requests</button>
+        </form>
+    </div>
     <h1>Item Listings</h1>
     <table border="1">
         <thead>
