@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class UserController {
 
@@ -17,7 +18,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/user/create")
-    public ResponseEntity<User> createUer(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@RequestBody User user) {
 
         User createdUser = userService.createUser(user);
 
@@ -42,7 +43,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/user/{userID}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Integer userID, @RequestBody User user) {
         Optional<User> existingUser = userService.findUserById(userID);
 

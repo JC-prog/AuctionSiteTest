@@ -11,6 +11,7 @@ import Menubar from "./Components/Menubar";
 import LoginPage from './Pages/LoginPage';
 import SignupPage from './Pages/SignupPage';
 import UserProfile from "./Pages/ProfilePage";
+import ItemPage from "./Pages/ItemPage";
 
 function App() {
 
@@ -25,7 +26,8 @@ function App() {
           <Route path="/login" element={ <LoginPage /> } />
           <Route path="/signup" element={ <SignupPage /> } />
 
-          <Route path="/:userId" element={ <UserProfile /> } />
+          <Route path="/user/:userID" element={ <UserProfile /> } />
+          <Route path="/item/:itemID" element={ <ItemPage /> } />
         </Routes>
       </BrowserRouter>
     </>
