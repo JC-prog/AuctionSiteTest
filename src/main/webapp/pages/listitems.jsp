@@ -64,5 +64,10 @@
         <input type="text" name="searchQuery" placeholder="Search for items">
         <input type="submit" value="Search">
     </form>
+    
+    <form action="GetWatchlistServlet" method="get">
+        <button type="submit">View Watchlist</button>
+    </form>
+    
 </body>
 </html>

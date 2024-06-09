@@ -146,3 +146,9 @@ INSERT INTO ItemCategory (CategoryNo, CatName, isActive) VALUES
 (5, 'Toys', true),
 (6, 'Sports', true);
 
+
+--set auto increment
+ALTER  TABLE item MODIFY COLUMN ItemNo AUTO_INCREMENT 
+
+ALTER TABLE BID MODIFY COLUMN BidID INT auto_increment
+ALTER TABLE watchlist MODIFY COLUMN WatchlistID INT auto_increment
