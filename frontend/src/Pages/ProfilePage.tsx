@@ -1,34 +1,103 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { useParams } from "react-router-dom";
+import { AxiosResponse } from 'axios';
+import { terminal } from 'virtual:terminal';
 
-const ProfilePage = () => {
-  return (
-    <div>
-        <div className="profile-navigation">
-            <h2>John Doe</h2>
-            <div>
-                <h3>Selling</h3>
-            </div>
+// Styles
+import "../Styles/ProfilePage.scss";
 
-            <div>
-                <h3>Bidding</h3>
-            </div>
+// Components
+import ProfileComponent from '../Components/ProfileComponent';
 
-            <div>
-                <h3>Feedback</h3>
-            </div>
+// Config
+import api from '../config/api/loginApi';
 
-        </div>
+// Interface
+interface User {
+    uName: String;
+    uMail: String;
+    uNum: String;
+    uAddress: String;
+}
 
-        <div className="profile-main-view">
-            <div>
-                <h1>Profile</h1>
-                <div></div>
-            </div>
-        </div>
-    </div>
+
+const ProfilePage: React.FC = () => {
+    const { userID } = useParams<{ userID: string }>();
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<Error | null>(null);
+
+    // Fetch User
+    useEffect(() => {
+        const fetchUser = async () => {
+          try {
+            const response: AxiosResponse<User> = await api.get(`/user/${userID}`);
+
+                if (response.status !== 200) {
+                throw new Error('Network response was not ok');
+                }
+                
+                setUser(response.data);
+
+            } catch (error) {
+                setError(error as Error);
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+        fetchUser();
+      }, [userID]);
+    
+      if (loading) {
+        return <div>Loading...</div>;
+      }
+    
+      if (error) {
+        return <div>Error: {error.message}</div>;
+      }
     
 
-  )
-}
+      return (
+        <div>
+          {user ? (
+            <div className= "profile-page-container">
+                <div className= "profile-navigation-container">
+                    <div className="profile-navigation-link">
+                        <h1>{ user.uName }</h1>
+                    </div>
+
+                    <div className="profile-navigation-link">
+                        <h2>Profile</h2>
+                    </div>
+
+                    <div  className="profile-navigation-link">
+                        <h2>Selling</h2>
+                    </div>
+
+                    <div  className="profile-navigation-link">
+                        <h2>Bidding</h2>
+                    </div>
+
+                    <div  className="profile-navigation-link">
+                        <h2>Feedback</h2>
+                    </div>
+
+                </div>
+
+                <div className= "profile-content-container">
+                    <ProfileComponent user= { user } />
+                </div>
+            </div>
+            
+
+          ) : (
+            <div>User not found</div>
+          )}
+
+          
+        </div>
+    );
+};
 
 export default ProfilePage

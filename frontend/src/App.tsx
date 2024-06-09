@@ -12,6 +12,7 @@ import LoginPage from './Pages/LoginPage';
 import SignupPage from './Pages/SignupPage';
 import UserProfile from "./Pages/ProfilePage";
 import ItemPage from "./Pages/ItemPage";
+import ItemCreatePage from "./Pages/ItemCreatePage"
 
 function App() {
 
@@ -27,6 +28,8 @@ function App() {
           <Route path="/signup" element={ <SignupPage /> } />
 
           <Route path="/user/:userID" element={ <UserProfile /> } />
+
+          <Route path="/item/create" element={ <ItemCreatePage />} />
           <Route path="/item/:itemID" element={ <ItemPage /> } />
         </Routes>
       </BrowserRouter>

@@ -54,7 +54,6 @@ public class Item {
     }
 
     // Getters and Setters
-
     public Integer getItemID() {
         return itemID;
     }
