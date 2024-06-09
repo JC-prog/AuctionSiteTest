@@ -3,6 +3,8 @@ import React from 'react'
 import { AxiosResponse } from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
+import { terminal } from 'virtual:terminal';
+
 // CSS
 import "../Styles/Login.scss"
 
@@ -27,12 +29,14 @@ const LoginPage = () => {
 	const handleSubmit = async () => {
 
         try {
-			const response: AxiosResponse = await api.put(`api/v1/login`, {
+			const response: AxiosResponse = await api.get(`/user`, {
 				params: {
-					userId : `${ username }`,
+					id : `${ username }`,
 					password: `${ password }`
 				}
 			});
+
+            terminal.log(response);
 
             if (response.data == 'No Data') {
 
@@ -66,7 +70,7 @@ const LoginPage = () => {
 		<div className="form-container" id="login-form-container">
 		    <h1 className="form-title">EzAuction</h1>
 		    
-             <form action="login" method="post" id="login-form" className="form">
+             <form id="login-form" className="form">
 		        <div className="form-row">
 		            <label className="form-label">Username:</label>
 		            <input type="text" id="uName" name="uName" className="form-input" placeholder="Enter your username" 
