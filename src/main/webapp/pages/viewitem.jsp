@@ -32,6 +32,7 @@
     <%
         Item item = (Item) request.getAttribute("item");
         List<Bid> bidList = (List<Bid>) request.getAttribute("bidList");
+        String watchlistMessage = (String) request.getAttribute("watchlistMessage"); //show watchlist added success or fail
         boolean isBidSuccessful = request.getAttribute("isBidSuccessful") != null && (boolean) request.getAttribute("isBidSuccessful");
         String errorMessage = (String) request.getAttribute("errorMessage");
         String currentUser = (String) session.getAttribute("uName"); // Assuming the user is logged in and you have the username
@@ -102,6 +103,10 @@
     <% } else if (errorMessage != null) { %>
         <p style="color: red;"><%= errorMessage %></p>
     <% } %>
+    
+	<% if (watchlistMessage != null) { %>
+        <p><%= watchlistMessage %></p>
+    <% } %>
 
     <h2>Place a Bid</h2>
     <form action="placebid" method="get">
@@ -109,6 +114,19 @@
         <label for="bidAmount">Bid Amount:</label>
         <input type="text" id="bidAmount" name="bidAmount" required />
         <button type="submit">Place Bid</button>
+    </form>
+     <h2>Add to Watchlist</h2>
+    <form action="AddToWatchlistServlet" method="get">
+        <input type="hidden" name="itemNo" value="<%= item.getItemNo() %>" />
+        <button type="submit">Add to Watchlist</button>
+    </form>
+    
+      <form action="InitiateTradeServlet" method="get">
+        <input type="hidden" name="itemNo" value="<%= item.getItemNo() %>" />
+        <input type="hidden" name="SelleruName" value="<%= item.getSeller().getuName() %>" />
+        <input type="hidden" name="SelleruID" value="<%= item.getSeller().getuId() %>" />
+        
+        <button type="submit" style="position: absolute; top: 10px; right: 10px;">Initiate Trade</button>
     </form>
     <% } else { %>
         <p>Item not found.</p>
