@@ -8,14 +8,28 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Integer uID;
 
+    @Column(name = "user_name")
     private String uName;
+
+    @Column(name = "user_email")
     private String uMail;
+
+    @Column(name = "user_password")
     private String uPass;
+
+    @Column(name = "user_number")
     private String uNum;
+
+    @Column(name = "user_address")
     private String uAddress;
+
+    @Column(name="is_admin", columnDefinition="TINYINT(1)")
     private Boolean isAdmin;
+
+    @Column(name="is_active", columnDefinition="TINYINT(1)")
     private Boolean isActive;
 
     // Default Constructor

@@ -1,7 +1,6 @@
 package com.fyp.auction_app.controllers;
 
 import com.fyp.auction_app.models.Item;
-import com.fyp.auction_app.models.User;
 import org.springframework.http.HttpStatus;
 import com.fyp.auction_app.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
-    @PostMapping("/item/create")
+    @PostMapping("api/item/create")
     public ResponseEntity<Item> createItem(@RequestBody Item item) {
 
         Item createdItem = itemService.createItem(item);
@@ -25,12 +24,12 @@ public class ItemController {
         return new ResponseEntity<>(createdItem, HttpStatus.OK);
     }
 
-    @GetMapping("/item/{itemID}")
+    @GetMapping("api/item/{itemID}")
     public Optional<Item> getItemById(@PathVariable Integer itemID) {
         return itemService.findItemById(itemID);
     }
 
-    @PutMapping("/item/{itemID}")
+    @PutMapping("api/item/{itemID}")
     public ResponseEntity<Item> updateUser(@PathVariable Integer itemID, @RequestBody Item item) {
         Optional<Item> existingUser = itemService.findItemById(itemID);
 
@@ -43,7 +42,7 @@ public class ItemController {
         }
     }
 
-    @DeleteMapping("/item/{itemID}")
+    @DeleteMapping("api/item/{itemID}")
     public ResponseEntity<Void> deleteUser(@PathVariable("itemID") Integer itemID) {
         itemService.deleteById(itemID);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

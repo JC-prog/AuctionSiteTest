@@ -10,26 +10,46 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="item_id")
     private Integer itemID;
 
     @Column(name = "itemTitle")
     private String title;
 
+    @Column(name = "seller_id")
     private Integer sellerId;
+
+    @Column(name = "category_num")
     private Integer categoryNo;
 
-    @Column(name = "itemCondition")
+    @Column(name = "item_condition")
     private String condition;
 
-    @Column(name = "itemDescription")
+    @Column(name = "item_description")
     private String description;
+
+    @Column(name = "auction_type")
     private Integer auctionType;
+
+    @Column(name = "start_date")
     private Date startDate;
+
+    @Column(name = "duration_preset")
     private Integer durationPreset;
+
+    @Column(name = "end_date")
     private Date endDate;
+
+    @Column(name = "start_price")
     private Double startPrice;
+
+    @Column(name = "min_sell_price")
     private Double minSellPrice;
+
+    @Column(name = "listing_status")
     private String listingStatus;
+
+    @Column(name = "is_active")
     private Boolean isActive;
 
     // Default constructor
