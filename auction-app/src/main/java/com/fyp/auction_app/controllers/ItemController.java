@@ -1,6 +1,7 @@
 package com.fyp.auction_app.controllers;
 
 import com.fyp.auction_app.models.Item;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import com.fyp.auction_app.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,16 @@ public class ItemController {
 
     @Autowired
     private ItemService itemService;
+
+    @GetMapping("api/items")
+    public ResponseEntity<Page<Item>> getItems(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+
+        Page<Item> items = itemService.findItems(page, size);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
 
     @PostMapping("api/item/create")
     public ResponseEntity<Item> createItem(@RequestBody Item item) {
