@@ -2,22 +2,46 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Login</title>
+	<head>
+	<meta charset="UTF-8">
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="./index.css"/>	
+    <link rel="stylesheet" type="text/css" href="./components/navbar.css"/>
+    <link rel="stylesheet" type="text/css" href="./components/navbarLoginState.css"/>
+    <link rel="stylesheet" type="text/css" href="./components/menubar.css"/>
+    <link rel="stylesheet" type="text/css" href="./components/footer.css"/>
+    <link rel="stylesheet" type="text/css" href="./pages/login.css"/>
 </head>
 <body>
-	<h2>This is Login Page</h2>
-	<h2>EZ Auction</h2>
+	<jsp:include page="../components/navbar.jsp" />
+	<jsp:include page="../components/menubar.jsp" />
 	
-	<form action="login" method="post">
-		Username : <input type="text" name="uName"><br>
-		Password : <input type="password" name="password"><br>
-		<input type="radio" id="buyer" name="role" value="buyer">
-	    <label for="buyer">Buyer</label><br>
-	    <input type="radio" id="seller" name="role" value="seller">
-	    <label for="seller">Seller</label><br>
-		<input type="submit">
-	</form>
+	<div class="form-container-wrapper">
+		<div class="form-container" id="login-form-container">
+		    <h1 class="form-title">EzAuction</h1>
+		    
+		    <div class="form-links">
+		        <a href="login.jsp" class="form-link-login">Login</a>
+		        <a href="register.jsp" class="form-link">Sign Up</a>
+		    </div>
+		
+		    <form action="login" method="post" id="login-form" class="form">
+		        <div class="form-row">
+		            <label for="uName" class="form-label">Username:</label>
+		            <input type="text" id="uName" name="uName" class="form-input" placeholder="Enter your username">
+		        </div>
+		        
+		        <div class="form-row">
+		            <label for="password" class="form-label">Password:</label>
+		            <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password">
+		        </div>
+		        
+		        <input type="submit" value="Login" class="form-submit">
+		    </form>
+		</div>
+	</div>
+	
+	<jsp:include page="../components/footer.jsp" />
+
 </body>
 </html>

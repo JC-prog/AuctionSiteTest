@@ -184,8 +184,8 @@
 	<!-- Select all customer orders Query -->
 	<query id="insert_user">
         <![CDATA[
-          	insert into user (uId, uName, uMail, uPass, uR_Pass) 
-          	values (?, ?, ?, ?, ?)
+          	insert into user (uId, uName, uMail, uPass,uNum,uAddress,isAdmin,isActive) 
+          	values (?, ?, ?, ?, ?,?,?,?)
         ]]>
 	</query>
 
