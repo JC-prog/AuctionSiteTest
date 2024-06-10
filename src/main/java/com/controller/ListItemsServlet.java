@@ -39,58 +39,58 @@ public class ListItemsServlet extends HttpServlet {
             
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT " +
-                "i.ItemNo, i.Title, i.SellerID, u.uName AS SellerName, u.uMail AS SellerEmail, " +
-                "c.CategoryNo, c.CatName AS CategoryName, i.`Condition`, i.Description, " +
-                "a.AuctionTypeID, a.Name AS AuctionTypeName, " +
-                "d.DurationID, d.Name AS DurationPresetName, d.Hours, " +
-                "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.ListingStatus, i.isActive, i.Image " +
+                "i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
+                "c.categoryNo, c.catName AS categoryName, i.`condition`, i.description, " +
+                "a.auctionTypeID, a.name AS auctionTypeName, " +
+                "d.durationID, d.name AS durationPresetName, d.hours, " +
+                "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
                 "FROM Item i " +
-                "JOIN User u ON i.SellerID = u.uID " +
-                "JOIN ItemCategory c ON i.CategoryNo = c.CategoryNo " +
-                "JOIN AuctionType a ON i.AuctionType = a.AuctionTypeID " +
-                "JOIN DurationPreset d ON i.DurationPreset = d.DurationID WHERE i.isActive = TRUE"
+                "JOIN User u ON i.sellerID = u.uID " +
+                "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
+                "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                "JOIN DurationPreset d ON i.durationPreset = d.durationID WHERE i.isActive = TRUE"
                 );
 
             while (rs.next()) {
                 Item item = new Item();
-                item.setItemNo(rs.getInt("ItemNo"));
+                item.setItemNo(rs.getInt("itemNo"));
 
                 RegisterClass seller = new RegisterClass();
-                seller.setuId(rs.getString("SellerID"));
-                seller.setuName(rs.getString("SellerName"));
-                seller.setuMail(rs.getString("SellerEmail"));
+                seller.setuId(rs.getString("sellerID"));
+                seller.setuName(rs.getString("sellerName"));
+                seller.setuMail(rs.getString("sellerEmail"));
                 item.setSeller(seller);
 
-                item.setTitle(rs.getString("Title"));
+                item.setTitle(rs.getString("title"));
 
                 ItemCategory category = new ItemCategory();
-                category.setCategoryNo(rs.getInt("CategoryNo"));
-                category.setCatName(rs.getString("CategoryName"));
+                category.setCategoryNo(rs.getInt("categoryNo"));
+                category.setCatName(rs.getString("categoryName"));
                 item.setCategory(category);
 
-                item.setCondition(rs.getString("Condition"));
-                item.setDescription(rs.getString("Description"));
+                item.setCondition(rs.getString("condition"));
+                item.setDescription(rs.getString("description"));
 
                 AuctionType auctionType = new AuctionType();
-                auctionType.setAuctionTypeID(rs.getInt("AuctionTypeID"));
-                auctionType.setName(rs.getString("AuctionTypeName"));
+                auctionType.setAuctionTypeID(rs.getInt("auctionTypeID"));
+                auctionType.setName(rs.getString("auctionTypeName"));
                 item.setAuctionType(auctionType);
 
                 DurationPreset durationPreset = new DurationPreset();
-                durationPreset.setDurationID(rs.getInt("DurationID"));
-                durationPreset.setName(rs.getString("DurationPresetName"));
-                durationPreset.setHours(rs.getInt("Hours"));
+                durationPreset.setDurationID(rs.getInt("durationID"));
+                durationPreset.setName(rs.getString("durationPresetName"));
+                durationPreset.setHours(rs.getInt("hours"));
                 item.setDurationPreset(durationPreset);
 
                 item.setStartDate(rs.getTimestamp("startDate"));
                 item.setEndDate(rs.getTimestamp("endDate"));
                 item.setStartPrice(rs.getBigDecimal("startPrice"));
                 item.setMinSellPrice(rs.getBigDecimal("minSellPrice"));
-                item.setListingStatus(rs.getString("ListingStatus"));
+                item.setListingStatus(rs.getString("listingStatus"));
                 item.setActive(rs.getBoolean("isActive"));
                 
                 // Retrieve image blob
-                Blob imageBlob = rs.getBlob("Image");
+                Blob imageBlob = rs.getBlob("image");
                 if (imageBlob != null) {
                     byte[] imageBytes = imageBlob.getBytes(1, (int) imageBlob.length());
                     item.setImage(imageBytes);

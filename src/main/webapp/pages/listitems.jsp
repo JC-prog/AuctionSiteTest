@@ -17,6 +17,9 @@
         <form action="ViewTradeRequestsServlet" method="get">
             <button type="submit">View Trade Requests</button>
         </form>
+         <form action="createItem" method="get">
+            <button type="submit">Sell</button>
+        </form>
     </div>
     <h1>Item Listings</h1>
     <table border="1">

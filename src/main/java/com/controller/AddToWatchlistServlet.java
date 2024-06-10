@@ -25,7 +25,7 @@ public class AddToWatchlistServlet extends HttpServlet {
 
         try (Connection conn = getDBConnection()) {
             // Check for duplicates
-            String checkSql = "SELECT COUNT(*) FROM Watchlist WHERE BuyerID = ? AND ItemNo = ? AND isActive = TRUE";
+            String checkSql = "SELECT COUNT(*) FROM Watchlist WHERE buyerID = ? AND itemNo = ? AND isActive = TRUE";
             try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
                 checkStmt.setString(1, buyerID);
                 checkStmt.setInt(2, itemNo);
@@ -40,7 +40,7 @@ public class AddToWatchlistServlet extends HttpServlet {
             }
 
             // Add to watchlist
-            String insertSql = "INSERT INTO Watchlist (BuyerID, ItemNo, Timestamp, isActive) VALUES (?, ?, ?, ?)";
+            String insertSql = "INSERT INTO Watchlist (buyerID, itemNo, timestamp, isActive) VALUES (?, ?, ?, ?)";
             try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
                 insertStmt.setString(1, buyerID);
                 insertStmt.setInt(2, itemNo);

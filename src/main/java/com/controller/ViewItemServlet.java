@@ -41,17 +41,17 @@ public class ViewItemServlet extends HttpServlet {
             Connection conn = DriverManager.getConnection(url, user, password);
 
             // Retrieve item details
-            String itemSql = "SELECT i.ItemNo, i.Title, i.SellerID, u.uName AS SellerName, u.uMail AS SellerEmail, " +
-                             "c.CategoryNo, c.CatName AS CategoryName, i.`Condition`, i.Description, " +
-                             "a.AuctionTypeID, a.Name AS AuctionTypeName, " +
-                             "d.DurationID, d.Name AS DurationPresetName, d.Hours, " +
-                             "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.ListingStatus, i.isActive, i.Image " +
+            String itemSql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
+                             "c.categoryNo, c.catName AS categoryName, i.`condition`, i.description, " +
+                             "a.auctionTypeID, a.name AS auctionTypeName, " +
+                             "d.durationID, d.name AS durationPresetName, d.hours, " +
+                             "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
                              "FROM Item i " +
-                             "JOIN User u ON i.SellerID = u.uID " +
-                             "JOIN ItemCategory c ON i.CategoryNo = c.CategoryNo " +
-                             "JOIN AuctionType a ON i.AuctionType = a.AuctionTypeID " +
-                             "JOIN DurationPreset d ON i.DurationPreset = d.DurationID " +
-                             "WHERE i.ItemNo = ?";
+                             "JOIN User u ON i.sellerID = u.uID " +
+                             "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
+                             "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                             "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
+                             "WHERE i.itemNo = ?";
 
             PreparedStatement stmt = conn.prepareStatement(itemSql);
             stmt.setInt(1, itemNo);
@@ -59,44 +59,44 @@ public class ViewItemServlet extends HttpServlet {
 
             if (rs.next()) {
                 item = new Item();
-                item.setItemNo(rs.getInt("ItemNo"));
+                item.setItemNo(rs.getInt("itemNo"));
 
                 RegisterClass seller = new RegisterClass();
-                seller.setuId(rs.getString("SellerID"));
-                seller.setuName(rs.getString("SellerName"));
-                seller.setuMail(rs.getString("SellerEmail"));
+                seller.setuId(rs.getString("sellerID"));
+                seller.setuName(rs.getString("sellerName"));
+                seller.setuMail(rs.getString("sellerEmail"));
                 item.setSeller(seller);
 
-                item.setTitle(rs.getString("Title"));
+                item.setTitle(rs.getString("title"));
 
                 ItemCategory category = new ItemCategory();
-                category.setCategoryNo(rs.getInt("CategoryNo"));
-                category.setCatName(rs.getString("CategoryName"));
+                category.setCategoryNo(rs.getInt("categoryNo"));
+                category.setCatName(rs.getString("categoryName"));
                 item.setCategory(category);
 
-                item.setCondition(rs.getString("Condition"));
-                item.setDescription(rs.getString("Description"));
+                item.setCondition(rs.getString("condition"));
+                item.setDescription(rs.getString("description"));
 
                 AuctionType auctionType = new AuctionType();
-                auctionType.setAuctionTypeID(rs.getInt("AuctionTypeID"));
-                auctionType.setName(rs.getString("AuctionTypeName"));
+                auctionType.setAuctionTypeID(rs.getInt("auctionTypeID"));
+                auctionType.setName(rs.getString("auctionTypeName"));
                 item.setAuctionType(auctionType);
 
                 DurationPreset durationPreset = new DurationPreset();
-                durationPreset.setDurationID(rs.getInt("DurationID"));
-                durationPreset.setName(rs.getString("DurationPresetName"));
-                durationPreset.setHours(rs.getInt("Hours"));
+                durationPreset.setDurationID(rs.getInt("durationID"));
+                durationPreset.setName(rs.getString("durationPresetName"));
+                durationPreset.setHours(rs.getInt("hours"));
                 item.setDurationPreset(durationPreset);
 
                 item.setStartDate(rs.getTimestamp("startDate"));
                 item.setEndDate(rs.getTimestamp("endDate"));
                 item.setStartPrice(rs.getBigDecimal("startPrice"));
                 item.setMinSellPrice(rs.getBigDecimal("minSellPrice"));
-                item.setListingStatus(rs.getString("ListingStatus"));
+                item.setListingStatus(rs.getString("listingStatus"));
                 item.setActive(rs.getBoolean("isActive"));
 
                 // Retrieve image blob
-                Blob imageBlob = rs.getBlob("Image");
+                Blob imageBlob = rs.getBlob("image");
                 if (imageBlob != null) {
                     byte[] imageBytes = imageBlob.getBytes(1, (int) imageBlob.length());
                     item.setImage(imageBytes);
@@ -107,11 +107,11 @@ public class ViewItemServlet extends HttpServlet {
             stmt.close();
 
             // Retrieve bid history
-            String bidSql = "SELECT b.BidID, b.ItemNo, b.BidAmount,b.BidderID, b.Timestamp, u.uName AS BidderName " +
+            String bidSql = "SELECT b.bidID, b.itemNo, b.bidAmount,b.bidderID, b.timestamp, u.uName AS bidderName " +
                             "FROM Bid b " +
-                            "JOIN User u ON b.BidderID = u.uID " +
-                            "WHERE b.ItemNo = ? AND b.isActive = true " +
-                            "ORDER BY b.Timestamp DESC";
+                            "JOIN User u ON b.bidderID = u.uID " +
+                            "WHERE b.itemNo = ? AND b.isActive = true " +
+                            "ORDER BY b.timestamp DESC";
 
             stmt = conn.prepareStatement(bidSql);
             stmt.setInt(1, itemNo);
@@ -125,12 +125,12 @@ public class ViewItemServlet extends HttpServlet {
 				 * System.out.println(rs.getString("BidID"));
 				 */
                 Bid bid = new Bid();
-                bid.setBidID(rs.getInt("BidID"));
-                bid.setBidderID(rs.getString("BidderID"));
-                bid.setItemNo(rs.getInt("ItemNo"));
-                bid.setBidAmount(rs.getBigDecimal("BidAmount"));
-                bid.setTimestamp(rs.getTimestamp("Timestamp"));
-                bid.setBidderName(rs.getString("BidderName"));
+                bid.setBidID(rs.getInt("bidID"));
+                bid.setBidderID(rs.getString("bidderID"));
+                bid.setItemNo(rs.getInt("itemNo"));
+                bid.setBidAmount(rs.getBigDecimal("bidAmount"));
+                bid.setTimestamp(rs.getTimestamp("timestamp"));
+                bid.setBidderName(rs.getString("bidderName"));
                 bidList.add(bid);
             }
 

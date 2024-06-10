@@ -33,8 +33,8 @@ public class GetWatchlistServlet extends HttpServlet {
 	        try (Connection conn = getDBConnection()) 
 	        {
 	            // Check for duplicates
-	            String checkSql = "SELECT * FROM Watchlist WHERE BuyerID = ? AND isActive = TRUE";
-	            String sql = "SELECT * FROM Watchlist WHERE BuyerID = ? AND isActive = TRUE";
+	            String checkSql = "SELECT * FROM Watchlist WHERE buyerID = ? AND isActive = TRUE";
+	            String sql = "SELECT * FROM Watchlist WHERE buyerID = ? AND isActive = TRUE";
 	            try (PreparedStatement stmt = conn.prepareStatement(sql)) 
 	            {
 	                stmt.setString(1, buyerID);
@@ -43,10 +43,10 @@ public class GetWatchlistServlet extends HttpServlet {
 	                	while (rs.next()) 
 	                	{
 	                		Watchlist item = new Watchlist();
-	                		item.setWatchlistID(rs.getInt("WatchlistID"));
-	                		item.setBuyerID(rs.getString("BuyerID"));
-	                		item.setItemNo(rs.getInt("ItemNo"));
-	                		item.setTimestamp(rs.getTimestamp("Timestamp"));
+	                		item.setWatchlistID(rs.getInt("watchlistID"));
+	               		    item.setBuyerID(rs.getString("buyerID"));
+	                		item.setItemNo(rs.getInt("itemNo"));
+	                		item.setTimestamp(rs.getTimestamp("timestamp"));
 	                		item.setActive(rs.getBoolean("isActive"));
 	                		watchlist.add(item);
 	                	}

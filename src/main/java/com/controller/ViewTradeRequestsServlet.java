@@ -33,12 +33,12 @@ public class ViewTradeRequestsServlet extends HttpServlet {
         String user = "root";
         String password = "password";
 
-        String sql = "SELECT tr.TradeID, tr.BuyerID, tr.SellerID, tr.BuyerItemID, tr.SellerItemID, tr.Status, tr.Timestamp, " +
-                     "bi.Title AS BuyerItemTitle, si.Title AS SellerItemTitle " +
+        String sql = "SELECT tr.tradeID, tr.buyerID, tr.sellerID, tr.buyerItemID, tr.sellerItemID, tr.status, tr.timestamp, " +
+                     "bi.title AS buyerItemTitle, si.title AS sellerItemTitle " +
                      "FROM TradeRequest tr " +
-                     "JOIN Item bi ON tr.BuyerItemID = bi.ItemNo " +
-                     "JOIN Item si ON tr.SellerItemID = si.ItemNo " +
-                     "WHERE tr.BuyerID = ? OR tr.SellerID = ? AND tr.isActive = TRUE";
+                     "JOIN Item bi ON tr.buyerItemID = bi.itemNo " +
+                     "JOIN Item si ON tr.sellerItemID = si.itemNo " +
+                     "WHERE tr.buyerID = ? OR tr.sellerID = ? AND tr.isActive = TRUE";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -50,15 +50,15 @@ public class ViewTradeRequestsServlet extends HttpServlet {
 
             while (rs.next()) {
                 TradeRequest tradeRequest = new TradeRequest();
-                tradeRequest.setTradeID(rs.getInt("TradeID"));
-                tradeRequest.setBuyerID(rs.getString("BuyerID"));
-                tradeRequest.setSellerID(rs.getString("SellerID"));
-                tradeRequest.setBuyerItemID(rs.getInt("BuyerItemID"));
-                tradeRequest.setSellerItemID(rs.getInt("SellerItemID"));
-                tradeRequest.setStatus(rs.getString("Status"));
-                tradeRequest.setTimestamp(rs.getTimestamp("Timestamp"));
-                tradeRequest.setBuyerItemTitle(rs.getString("BuyerItemTitle"));
-                tradeRequest.setSellerItemTitle(rs.getString("SellerItemTitle"));
+                tradeRequest.setTradeID(rs.getInt("tradeID"));
+                tradeRequest.setBuyerID(rs.getString("buyerID"));
+                tradeRequest.setSellerID(rs.getString("sellerID"));
+                tradeRequest.setBuyerItemID(rs.getInt("buyerItemID"));
+                tradeRequest.setSellerItemID(rs.getInt("sellerItemID"));
+                tradeRequest.setStatus(rs.getString("status"));
+                tradeRequest.setTimestamp(rs.getTimestamp("timestamp"));
+                tradeRequest.setBuyerItemTitle(rs.getString("buyerItemTitle"));
+                tradeRequest.setSellerItemTitle(rs.getString("sellerItemTitle"));
 
                 tradeRequests.add(tradeRequest);
             }
@@ -130,14 +130,14 @@ public class ViewTradeRequestsServlet extends HttpServlet {
     	        Connection conn = DriverManager.getConnection(url, user, password);
 
     	        // Update TradeRequest table to set status to "Accepted"
-    	        String updateSql = "UPDATE TradeRequest SET Status = 'Accepted' WHERE TradeID = ?";
+    	        String updateSql = "UPDATE TradeRequest SET status = 'Accepted' WHERE tradeID = ?";
     	        PreparedStatement updateStmt = conn.prepareStatement(updateSql);
     	        updateStmt.setString(1, tradeID);
     	        updateStmt.executeUpdate();
     	        updateStmt.close();
 
     	        // Set isActive to FALSE for both buyer and seller items
-    	        String deactivateItemsSql = "UPDATE Item SET isActive = FALSE WHERE ItemNo IN (SELECT BuyerItemID FROM TradeRequest WHERE TradeID = ?) OR ItemNo IN (SELECT SellerItemID FROM TradeRequest WHERE TradeID = ?)";
+    	        String deactivateItemsSql = "UPDATE Item SET isActive = FALSE WHERE itemNo IN (SELECT buyerItemID FROM TradeRequest WHERE tradeID = ?) OR itemNo IN (SELECT sellerItemID FROM TradeRequest WHERE tradeID = ?)";
     	        PreparedStatement deactivateStmt = conn.prepareStatement(deactivateItemsSql);
     	        deactivateStmt.setString(1, tradeID);
     	        deactivateStmt.setString(2, tradeID);
@@ -170,7 +170,7 @@ public class ViewTradeRequestsServlet extends HttpServlet {
     	        Connection conn = DriverManager.getConnection(url, user, password);
 
     	        // Update TradeRequest table to set status to "Rejected"
-    	        String updateSql = "UPDATE TradeRequest SET Status = 'Rejected' WHERE TradeID = ?";
+    	        String updateSql = "UPDATE TradeRequest SET status = 'Rejected' WHERE tradeID = ?";
     	        PreparedStatement updateStmt = conn.prepareStatement(updateSql);
     	        updateStmt.setString(1, tradeID);
     	        updateStmt.executeUpdate();
@@ -200,7 +200,7 @@ public class ViewTradeRequestsServlet extends HttpServlet {
     	        Connection conn = DriverManager.getConnection(url, user, password);
 
     	        // Update TradeRequest table to set status to "Cancelled"
-    	        String updateSql = "UPDATE TradeRequest SET Status = 'Cancelled' WHERE TradeID = ?";
+    	        String updateSql = "UPDATE TradeRequest SET status = 'Cancelled' WHERE tradeID = ?";
     	        PreparedStatement updateStmt = conn.prepareStatement(updateSql);
     	        updateStmt.setString(1, tradeID);
     	        updateStmt.executeUpdate();

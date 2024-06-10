@@ -50,7 +50,7 @@ public class PlaceBidServlet extends HttpServlet {
             Connection conn = DriverManager.getConnection(url, user, password);
 
             // Check the item's start price
-            String startPriceQuery = "SELECT startPrice FROM Item WHERE ItemNo = ?";
+            String startPriceQuery = "SELECT startPrice FROM Item WHERE itemNo = ?";
             PreparedStatement startPriceStmt = conn.prepareStatement(startPriceQuery);
             startPriceStmt.setInt(1, itemNo);
             ResultSet startPriceRs = startPriceStmt.executeQuery();
@@ -62,7 +62,7 @@ public class PlaceBidServlet extends HttpServlet {
             startPriceStmt.close();
 
             // Check the current highest bid
-            String highestBidQuery = "SELECT MAX(BidAmount) AS HighestBid FROM Bid WHERE ItemNo = ?";
+            String highestBidQuery = "SELECT MAX(bidAmount) AS highestBid FROM Bid WHERE itemNo = ?";
             PreparedStatement highestBidStmt = conn.prepareStatement(highestBidQuery);
             highestBidStmt.setInt(1, itemNo);
             ResultSet highestBidRs = highestBidStmt.executeQuery();
@@ -71,9 +71,9 @@ public class PlaceBidServlet extends HttpServlet {
             
             if (highestBidRs.next()) {
             	
-            	if(highestBidRs.getBigDecimal("HighestBid")!=null)
+            	if(highestBidRs.getBigDecimal("highestBid")!=null)
             	{
-                    highestBid = highestBidRs.getBigDecimal("HighestBid");
+                    highestBid = highestBidRs.getBigDecimal("highestBid");
             	}
             }
             highestBidRs.close();
@@ -90,7 +90,7 @@ public class PlaceBidServlet extends HttpServlet {
             } 
             else {
                 // Insert the new bid
-                String insertBidQuery = "INSERT INTO Bid (BidderID, ItemNo, BidAmount, Timestamp, isActive) VALUES (?, ?, ?, ?, ?)";
+                String insertBidQuery = "INSERT INTO Bid (bidderID, itemNo, bidAmount, timestamp, isActive) VALUES (?, ?, ?, ?, ?)";
                 PreparedStatement insertBidStmt = conn.prepareStatement(insertBidQuery);
                 insertBidStmt.setString(1, bidderID);
                 insertBidStmt.setInt(2, itemNo);
@@ -111,7 +111,5 @@ public class PlaceBidServlet extends HttpServlet {
         request.setAttribute("isBidSuccessful", isBidSuccessful);
         request.setAttribute("errorMessage", errorMessage);
         request.getRequestDispatcher("ViewItemServlet?itemNo=" + itemNo).forward(request, response);
-        //response.sendRedirect("ViewItemServlet?itemNo=" + itemNo);
-        //request.getRequestDispatcher("ViewItemServlet?itemNo=" + itemNo).forward(request, response);
     }
 }
