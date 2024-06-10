@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { AxiosResponse } from 'axios';
 
 // Components
-import ItemCard from "../Components/ItemCard"
+import ItemCarousel from "../Components/ItemCarousel"
 
 // Config
 import api from '../config/api/loginApi';
@@ -48,7 +48,8 @@ const HomePage = () => {
 
   return (
     <div>
-      
+        <ItemCarousel />
+        <ItemCarousel />
     </div>
   )
 }

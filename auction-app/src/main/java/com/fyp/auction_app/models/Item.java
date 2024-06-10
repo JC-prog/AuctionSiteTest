@@ -13,7 +13,7 @@ public class Item {
     @Column(name="item_id")
     private Integer itemID;
 
-    @Column(name = "itemTitle")
+    @Column(name = "item_title")
     private String title;
 
     @Column(name = "seller_id")

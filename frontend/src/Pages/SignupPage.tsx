@@ -5,6 +5,9 @@ import { toast } from 'react-toastify';
 // API
 import api from '../config/api/loginApi';
 
+// Styles
+import "../Styles/Signup.scss"
+
 const SignupPage = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -63,51 +66,61 @@ const SignupPage = () => {
 
 
   return (
-	<div className="register-form-wrapper">
-		<div className="form-container" id="register-form-container">
-	        <h1>EzAuction</h1>
-	        
-             <form action="<%= request.getContextPath() %>/register" method="post" className="register-form" id="register-form" >
-	            <table className="form-table">
-	                <tr>
-	                    <td><label className="form-label">Username</label></td>
-	                    <td><input type="text" name="name" id="name" className="form-input" placeholder="Your Name" onChange={handleUsernameChange} /></td>
-	                </tr>
-	                <tr>
-	                    <td><label className="form-label">Email</label></td>
-	                    <td><input type="email" name="email" id="email" className="form-input" placeholder="Your Email" onChange={handleEmailChange} /></td>
-	                </tr>
-	                <tr>
-	                    <td><label className="form-label">Contact Number</label></td>
-	                    <td><input type="text" name="contact" id="contact" className="form-input" placeholder="Contact no" onChange={handleContactNumChange}/></td>
-	                </tr>
-	                <tr>
-	                    <td><label className="form-label">Address</label></td>
-	                    <td><input type="text" name="address" id="address" className="form-input" placeholder="Your Address" onChange={handleAddressChange}/></td>
-	                </tr>
-	                <tr>
-	                    <td><label className="form-label">Password</label></td>
-	                    <td><input type="password" name="pass" id="pass" className="form-input" placeholder="Password" onChange={handlePasswordChange}/></td>
-	                </tr>
-	                <tr>
-	                    <td><label className="form-label">Re-Enter Password</label></td>
-	                    <td><input type="password" name="re_pass" id="re_pass" className="form-input" placeholder="Repeat your password" /></td>
-	                </tr>
-	                <tr>
-	                    <td colSpan={2}>
-	                        <input type="checkbox" name="agree-term" id="agree-term" className="form-checkbox" />
-	                        <label className="label-agree-term">
-	                            I agree to all statements in 
-	                            <a href="#" className="term-service">Terms of service</a>
-	                        </label>
-	                    </td>
-	                </tr>
-	            </table>
-	            <input type="submit" name="signup" id="signup" className="form-submit" value="Register" onClick={() => handleSubmit()}  />
-	        </form>
-	        <div className="signup-image">
-	            <a href="login.jsp" className="signup-image-link">I am already a member</a>
-	        </div>
+	<div className="signup-container-wrapper">
+		<div className="signup-container" >
+			<div className="signup-img-container">
+				<img src="test.jpg"></img>
+			</div>
+
+			<div className="signup-form-wrapper">
+				<h1>EzAuction</h1>
+
+				<div className="signup-form-container">
+					<form action="<%= request.getContextPath() %>/register" method="post" className="register-form" id="register-form" >
+						<div className="form-row">
+							<label className="form-label">Username</label>
+							<input type="text" name="name" id="name" className="form-input" placeholder="Your Name" onChange={handleUsernameChange} />
+						</div>
+
+						<div className="form-row">
+							<label className="form-label">Email</label>
+							<input type="email" name="email" id="email" className="form-input" placeholder="Your Email" onChange={handleEmailChange} />
+						</div>
+
+						<div className="form-row">
+							<label className="form-label">Contact Number</label>
+							<input type="text" name="contact" id="contact" className="form-input" placeholder="Contact no" onChange={handleContactNumChange}/>
+						</div>
+
+						<div className="form-row">
+							<label className="form-label">Address</label>
+							<input type="text" name="address" id="address" className="form-input" placeholder="Your Address" onChange={handleAddressChange}/>
+						</div>
+
+						<div className="form-row">
+							<label className="form-label">Password</label>
+							<input type="password" name="pass" id="pass" className="form-input" placeholder="Password" onChange={handlePasswordChange}/>
+						</div>
+
+						<div className="form-row">
+							<label className="form-label">Re-Enter Password</label>
+							<input type="password" name="re_pass" id="re_pass" className="form-input" placeholder="Repeat your password" />
+						</div>
+
+						<div className="form-row">
+							<div className="signup-form-row-terms">
+								<input type="checkbox" name="agree-term" id="agree-term" className="form-checkbox" />
+								<label className="label-agree-term">
+											I agree to all statements in 
+								<a href="#" className="term-service">Terms of service</a>
+								</label>
+							</div>
+						</div>
+								
+						<input type="submit" name="signup" id="signup" className="form-submit" value="Register" onClick={() => handleSubmit()}  />
+					</form>
+				</div>
+			</div>
 	    </div>
     </div>
   )

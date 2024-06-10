@@ -25,7 +25,7 @@ const ItemPage = () => {
     useEffect(() => {
         const fetchItem = async () => {
           try {
-            const response: AxiosResponse<Item> = await api.get(`/item/${itemID}`);
+            const response: AxiosResponse<Item> = await api.get(`api/item/${itemID}`);
 
                 if (response.status !== 200) {
                 throw new Error('Network response was not ok');

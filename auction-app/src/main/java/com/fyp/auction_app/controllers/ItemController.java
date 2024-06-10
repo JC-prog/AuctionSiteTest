@@ -19,10 +19,21 @@ public class ItemController {
 
     @GetMapping("api/items")
     public ResponseEntity<Page<Item>> getItems(
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size) {
-
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
         Page<Item> items = itemService.findItems(page, size);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    @GetMapping("api/items/search")
+    public ResponseEntity<Page<Item>> searchItems(
+        @RequestParam(value = "keyword") String keyword,
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        Page<Item> items = itemService.searchItems(keyword, page, size);
 
         return new ResponseEntity<>(items, HttpStatus.OK);
     }

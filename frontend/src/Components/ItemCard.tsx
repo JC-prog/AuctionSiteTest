@@ -1,5 +1,7 @@
 import React from 'react'
 
+// Style
+import "../Styles/ItemCard.scss"
 
 // interface
 interface Item {
@@ -12,17 +14,19 @@ interface ItemProps {
     item: Item;
 }
 
-const ItemCard: React.FC<ItemProps> = ( { item } ) => {
+const ItemCard= () => {
   return (
-    <div className="item-card-container">
-            <div>
+        <div className="item-card-container">
+            <div className="item-card-img-container">
                 <img src="/test.jpg"></img>
             </div>
             
-            <h2>{ item.title }</h2>
-            <p>{ item.endDate.toString() }</p>
-            <p>1 Bids</p>
-            <p>{ item.startPrice }</p>
+            <div className="item-card-content-container">
+                <h2>Title</h2>
+                <p>Time Left</p>
+                <p>1 Bids</p>
+                <p>$ 1.00 </p>
+            </div>
         </div>
   )
 }
