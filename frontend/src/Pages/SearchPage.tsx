@@ -5,22 +5,18 @@ import { useLocation } from 'react-router-dom';
 // Config
 import api from '../config/api/loginApi';
 
+// Components
+import ItemCard from "../Components/ItemCard";
+
+// Style
+import "../Styles/SearchPage.scss";
+
 // Interface
 interface Item {
-  itemID: number;
-  title: string;
-  sellerId: number;
-  categoryNo: number;
-  condition: string;
-  description: string;
-  auctionType: number;
-  startDate: string | null;
-  durationPreset: string | null;
-  endDate: string | null;
-  startPrice: number;
+  itemId: number;
+  itemTitle: string;
+  itemCategoryNum: number;
   minSellPrice: number;
-  listingStatus: string | null;
-  isActive: boolean;
 }
 
 interface PaginatedResponse {
@@ -60,19 +56,16 @@ const SearchPage: React.FC = () => {
   }, [query]);
 
   return (
-    <div>
+    <div className="search-page-wrapper">
       <h1>Search Results</h1>
       {query && <p>Results for "{query}"</p>}
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      <ul>
+      <div>
         {items.map(item => (
-          <li key={item.itemID}>
-            <h2>{item.title}</h2>
-            <p>{item.description}</p>
-          </li>
+          <ItemCard item={item} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

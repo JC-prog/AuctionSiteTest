@@ -51,14 +51,11 @@ const ItemPage = () => {
         return <div>Error: {error.message}</div>;
       }
 
-
-
-
   return (
-    <div>
+    <div className="item-page-wrapper">
         { item ? (
             <div className="item-details-container">
-                <div className="item-pic-placeholder">
+                <div className="item-img-container">
                     <img src={"/test.jpg"} />
                 </div>
     

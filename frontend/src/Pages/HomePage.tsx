@@ -10,9 +10,10 @@ import api from '../config/api/loginApi';
 
 // Interface
 interface Item {
-  title: String;
-  endDate: Date;
-  startPrice: number;
+  itemId: number;
+  itemTitle: string;
+  itemCategoryNum: number;
+  minSellPrice: number;
 }
 
 interface Items {

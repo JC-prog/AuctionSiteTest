@@ -20,15 +20,7 @@ const ItemCarousel = () => {
             </div>
 
             <div className="item-cards-container">
-                <div>
-                    <ItemCard />
-                </div>
-                <div>
-                    <ItemCard />
-                </div>
-                <div>
-                    <ItemCard />
-                </div>
+
             </div>
 
         </div>
