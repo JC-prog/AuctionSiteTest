@@ -30,5 +30,18 @@ INSERT INTO duration_preset (duration_preset_id, duration_preset_name, duration_
 
 -- Add values into item
 INSERT INTO item (item_id, seller_id, item_title, item_category_num, item_condition, description, auction_type, duration_preset_id, start_date, end_date, start_price, min_sell_price, listing_status, is_active) VALUES
-(1, 4, 'Bicycle 1', 6, 'new', 'New Bicycle', 2, 1, '2024-06-10 00:00:00', '2024-06-11 00:00:00', 1.00, 1.00, 'active', 1);
+(1, 4, 'Bicycle 1', 6, 'new', 'New Bicycle 1', 2, 1, '2024-06-10 00:00:00', '2024-06-11 00:00:00', 1.00, 1.00, 'active', 1),
+(2, 4, 'Bicycle 2', 6, 'new', 'New Bicycle 2', 2, 1, '2024-06-11 00:00:00', '2024-06-12 00:00:00', 2.00, 1.00, 'active', 1),
+(3, 4, 'Bicycle 3', 6, 'new', 'New Bicycle 3', 2, 1, '2024-06-12 00:00:00', '2024-06-13 00:00:00', 3.00, 1.00, 'active', 1),
+(4, 4, 'Bicycle 4', 6, 'new', 'New Bicycle 4 ', 2, 1, '2024-06-13 00:00:00', '2024-06-14 00:00:00', 4.00, 1.00, 'active', 1),
+(5, 4, 'Bicycle 5', 6, 'new', 'New Bicycle 5', 2, 1, '2024-06-14 00:00:00', '2024-06-15 00:00:00', 5.00, 1.00, 'active', 1),
+(6, 4, 'Phone 1', 6, 'new', 'New Phone 1', 2, 1, '2024-06-10 00:00:00', '2024-06-11 00:00:00', 1.00, 1.00, 'active', 1),
+(7, 4, 'Phone 2', 6, 'new', 'New Phone 1', 2, 1, '2024-06-10 00:00:00', '2024-06-11 00:00:00', 1.00, 1.00, 'active', 1),
+(8, 4, 'Phone 3', 6, 'new', 'New Phone 1', 2, 1, '2024-06-10 00:00:00', '2024-06-11 00:00:00', 1.00, 1.00, 'active', 1),
+(9, 4, 'Phone 4', 6, 'old', 'Old Phone 1', 2, 1, '2024-06-10 00:00:00', '2024-06-11 00:00:00', 1.00, 1.00, 'active', 1),
+(10, 4, 'Phone 5', 6, 'new', 'New Phone 1', 2, 1, '2024-06-10 00:00:00', '2024-06-11 00:00:00', 1.00, 1.00, 'active', 1);
+
+
+
+
 

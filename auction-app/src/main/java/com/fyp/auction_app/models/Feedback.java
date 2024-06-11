@@ -1,9 +1,6 @@
 package com.fyp.auction_app.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -12,7 +9,7 @@ import java.util.Date;
 public class Feedback {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer feedback_id;
 
     private Integer sender_id;

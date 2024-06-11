@@ -1,16 +1,13 @@
 package com.fyp.auction_app.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "duration_preset")
 public class DurationPreset {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer duration_preset_id;
 
     private String duration_preset_name;

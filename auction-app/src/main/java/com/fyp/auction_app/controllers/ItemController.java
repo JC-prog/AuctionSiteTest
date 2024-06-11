@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173")
@@ -25,6 +26,13 @@ public class ItemController {
         Page<Item> items = itemService.findItems(page, size);
 
         return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    @GetMapping("api/items/recent-ten")
+    public ResponseEntity<List<Item>> getRecentTenItems() {
+
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @GetMapping("api/items/search")
