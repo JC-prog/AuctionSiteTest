@@ -7,7 +7,7 @@ public class ItemSpecification {
 
     public static Specification<Item> containsKeyword(String keyword) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.or(
-                criteriaBuilder.like(root.get("title"), "%" + keyword + "%")
+                criteriaBuilder.like(root.get("item_title"), "%" + keyword + "%")
         );
     }
 }
