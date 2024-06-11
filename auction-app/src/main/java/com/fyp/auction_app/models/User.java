@@ -3,34 +3,26 @@ package com.fyp.auction_app.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table (name="User")
+@Table (name="user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Integer uID;
+    private Integer user_id;
 
-    @Column(name = "user_name")
-    private String uName;
+    private String user_name;
 
-    @Column(name = "user_email")
-    private String uMail;
+    private String user_email;
 
-    @Column(name = "user_password")
-    private String uPass;
+    private String user_password;
 
-    @Column(name = "user_number")
-    private String uNum;
+    private String user_number;
 
-    @Column(name = "user_address")
-    private String uAddress;
+    private String user_address;
 
-    @Column(name="is_admin", columnDefinition="TINYINT(1)")
-    private Boolean isAdmin;
+    private Boolean is_admin;
 
-    @Column(name="is_active", columnDefinition="TINYINT(1)")
-    private Boolean isActive;
+    private Boolean is_active;
 
     // Default Constructor
     public User() {
@@ -38,80 +30,88 @@ public class User {
     }
 
     // Parameterized constructor
-    public User(Integer uID, String uName, String uMail, String uPass, String uNum, String uAddress, Boolean isAdmin, Boolean isActive) {
-        this.uID = uID;
-        this.uName = uName;
-        this.uMail = uMail;
-        this.uPass = uPass;
-        this.uNum = uNum;
-        this.uAddress = uAddress;
-        this.isAdmin = isAdmin;
-        this.isActive = isActive;
+    public User(
+            Integer user_id,
+            String user_name,
+            String user_email,
+            String user_password,
+            String user_number,
+            String user_address,
+            Boolean is_admin,
+            Boolean is_active
+    ) {
+        this.user_id = user_id;
+        this.user_name = user_name;
+        this.user_email = user_email;
+        this.user_password = user_password;
+        this.user_number = user_number;
+        this.user_address = user_address;
+        this.is_admin = is_admin;
+        this.is_active = is_active;
     }
 
-    // Getters and Setters
-
-    public Integer getuID() {
-        return uID;
+    // Getters and Setter
+    public Integer getUserId() {
+        return user_id;
     }
 
-    public void setuID(Integer uID) {
-        this.uID = uID;
+    public void setUserId(Integer user_id) {
+        this.user_id = user_id;
     }
 
-    public String getuName() {
-        return uName;
+    public String getUserName() {
+        return user_name;
     }
 
-    public void setuName(String uName) {
-        this.uName = uName;
+    public void setUserName(String user_name) {
+        this.user_name = user_name;
     }
 
-    public String getuMail() {
-        return uMail;
+    public String getUserEmail() {
+        return user_email;
     }
 
-    public void setuMail(String uMail) {
-        this.uMail = uMail;
+    public void setUserEmail(String user_email) {
+        this.user_email = user_email;
     }
 
-    public String getuPass() {
-        return uPass;
+    public String getUserPassword() {
+        return user_password;
     }
 
-    public void setuPass(String uPass) {
-        this.uPass = uPass;
+    public void setUserPassword(String user_password) {
+        this.user_password = user_password;
     }
 
-    public String getuNum() {
-        return uNum;
+    public String getUserNumber() {
+        return user_number;
     }
 
-    public void setuNum(String uNum) {
-        this.uNum = uNum;
+    public void setUserNumber(String user_number) {
+        this.user_number = user_number;
     }
 
-    public String getuAddress() {
-        return uAddress;
+    public String getUserAddress() {
+        return user_address;
     }
 
-    public void setuAddress(String uAddress) {
-        this.uAddress = uAddress;
+    public void setUserAddress(String user_address) {
+        this.user_address = user_address;
     }
 
     public Boolean getIsAdmin() {
-        return isAdmin;
+        return is_admin;
     }
 
-    public void setIsAdmin(Boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setIsAdmin(Boolean is_admin) {
+        this.is_admin = is_admin;
     }
 
     public Boolean getIsActive() {
-        return isActive;
+        return is_active;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setIsActive(Boolean is_active) {
+        this.is_active = is_active;
     }
 }

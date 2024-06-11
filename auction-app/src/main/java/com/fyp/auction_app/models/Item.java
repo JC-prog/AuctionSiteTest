@@ -5,113 +5,113 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Item")
+@Table(name = "item")
 public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="item_id")
-    private Integer itemID;
+    private Integer item_id;
 
-    @Column(name = "item_title")
-    private String title;
+    private String item_title;
 
-    @Column(name = "seller_id")
-    private Integer sellerId;
+    private Integer seller_id;
 
-    @Column(name = "category_num")
-    private Integer categoryNo;
+    private Integer item_category_num;
 
-    @Column(name = "item_condition")
-    private String condition;
+    private String item_condition;
 
-    @Column(name = "item_description")
     private String description;
 
-    @Column(name = "auction_type")
-    private Integer auctionType;
+    private Integer auction_type;
 
-    @Column(name = "start_date")
-    private Date startDate;
+    private Date start_date;
 
-    @Column(name = "duration_preset")
-    private Integer durationPreset;
+    private Integer duration_preset;
 
-    @Column(name = "end_date")
-    private Date endDate;
+    private Date end_date;
 
-    @Column(name = "start_price")
-    private Double startPrice;
+    private Double start_price;
 
-    @Column(name = "min_sell_price")
-    private Double minSellPrice;
+    private Double min_sell_price;
 
-    @Column(name = "listing_status")
-    private String listingStatus;
+    private String listing_status;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+    private Boolean is_active;
 
     // Default constructor
     public Item() {
     }
 
     // Parameterized constructor
-    public Item(String title, Integer sellerId, Integer categoryNo, String condition, String description, Integer auctionType, Date startDate, Integer durationPreset, Date endDate, Double startPrice, Double minSellPrice, String listingStatus, Boolean isActive) {
-        this.title = title;
-        this.sellerId = sellerId;
-        this.categoryNo = categoryNo;
-        this.condition = condition;
+    public Item(
+            String item_title,
+            Integer seller_id,
+            Integer item_category_num,
+            String item_condition,
+            String description,
+            Integer auction_type,
+            Date start_date,
+            Integer duration_preset,
+            Date end_date,
+            Double start_price,
+            Double min_sell_price,
+            String listing_status,
+            Boolean is_active
+    ) {
+        this.item_title = item_title;
+        this.seller_id = seller_id;
+        this.item_category_num = item_category_num;
+        this.item_condition = item_condition;
         this.description = description;
-        this.auctionType = auctionType;
-        this.startDate = startDate;
-        this.durationPreset = durationPreset;
-        this.endDate = endDate;
-        this.startPrice = startPrice;
-        this.minSellPrice = minSellPrice;
-        this.listingStatus = listingStatus;
-        this.isActive = isActive;
+        this.auction_type = auction_type;
+        this.start_date = start_date;
+        this.duration_preset = duration_preset;
+        this.end_date = end_date;
+        this.start_price = start_price;
+        this.min_sell_price = min_sell_price;
+        this.listing_status = listing_status;
+        this.is_active = is_active;
     }
 
     // Getters and Setters
-    public Integer getItemID() {
-        return itemID;
+    public Integer getItemId() {
+        return item_id;
     }
 
-    public void setItemID(Integer itemID) {
-        this.itemID = itemID;
+    public void setItemID(Integer item_id) {
+        this.item_id = item_id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getItemTitle() {
+        return item_title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String item_title) {
+        this.item_title = item_title;
     }
 
     public Integer getSellerId() {
-        return sellerId;
+        return seller_id;
     }
 
-    public void setSellerId(Integer sellerId) {
-        this.sellerId = sellerId;
+    public void setSellerId(Integer seller_id) {
+        this.seller_id = seller_id;
     }
 
-    public Integer getCategoryNo() {
-        return categoryNo;
+    public Integer getItemCategoryNum() {
+        return item_category_num;
     }
 
-    public void setCategoryNo(Integer categoryNo) {
-        this.categoryNo = categoryNo;
+    public void setItemCategoryNum(Integer item_category_num) {
+        this.item_category_num = item_category_num;
     }
 
-    public String getCondition() {
-        return condition;
+    public String getItemCondition() {
+        return item_condition;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setCondition(String item_condition) {
+        this.item_condition = item_condition;
     }
 
     public String getDescription() {
@@ -123,66 +123,66 @@ public class Item {
     }
 
     public Integer getAuctionType() {
-        return auctionType;
+        return auction_type;
     }
 
-    public void setAuctionType(Integer auctionType) {
-        this.auctionType = auctionType;
+    public void setAuctionType(Integer auction_type) {
+        this.auction_type = auction_type;
     }
 
     public Date getStartDate() {
-        return startDate;
+        return start_date;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStartDate(Date start_date) {
+        this.start_date = start_date;
     }
 
     public Integer getDurationPreset() {
-        return durationPreset;
+        return duration_preset;
     }
 
-    public void setDurationPreset(Integer durationPreset) {
-        this.durationPreset = durationPreset;
+    public void setDurationPreset(Integer duration_preset) {
+        this.duration_preset = duration_preset;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public Date getEnd_date() {
+        return end_date;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setEnd_date(Date end_date) {
+        this.end_date = end_date;
     }
 
     public Double getStartPrice() {
-        return startPrice;
+        return start_price;
     }
 
     public void setStartPrice(Double startPrice) {
-        this.startPrice = startPrice;
+        this.start_price = startPrice;
     }
 
     public Double getMinSellPrice() {
-        return minSellPrice;
+        return min_sell_price;
     }
 
-    public void setMinSellPrice(Double minSellPrice) {
-        this.minSellPrice = minSellPrice;
+    public void setMinSellPrice(Double min_sell_price) {
+        this.min_sell_price = min_sell_price;
     }
 
     public String getListingStatus() {
-        return listingStatus;
+        return listing_status;
     }
 
-    public void setListingStatus(String listingStatus) {
-        this.listingStatus = listingStatus;
+    public void setListingStatus(String listing_status) {
+        this.listing_status = listing_status;
     }
 
     public Boolean getIsActive() {
-        return isActive;
+        return is_active;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setIsActive(Boolean is_active) {
+        this.is_active = is_active;
     }
 }

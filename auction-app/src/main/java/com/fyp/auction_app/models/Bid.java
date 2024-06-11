@@ -5,89 +5,88 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="Bid")
+@Table(name = "bid")
 public class Bid {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="bid_id")
-    private Integer bidID;
+    private Integer bid_id;
 
-    @Column(name="bidder_id")
-    private Integer bidderID;
+    private Integer bidder_id;
 
-    @Column(name="item_id")
-    private Integer itemID;
+    private Integer item_id;
 
-    @Column(name="bid_amount")
-    private Double bidAmount;
+    private Double bid_amount;
 
-    @Column(name="time_stamp")
-    private Date dateTime;
+    private Date bid_timestamp;
 
-    @Column(name="is_Active", columnDefinition="TINYINT(1)")
-    private Boolean isActive;
+    private Boolean is_active;
 
     // Default constructor
     public Bid() {
     }
 
-    public Bid(Integer bidderID, Integer itemID, Double bidAmount, Date dateTime, Boolean isActive) {
-
-        this.bidderID = bidderID;
-        this.itemID = itemID;
-        this.bidAmount = bidAmount;
-        this.dateTime = dateTime;
-        this.isActive = isActive;
+    public Bid(
+            Integer bidder_id,
+            Integer item_id,
+            Double bid_amount,
+            Date bid_timestamp,
+            Boolean is_active
+    ) {
+        this.bidder_id = bidder_id;
+        this.item_id = item_id;
+        this.bid_amount = bid_amount;
+        this.bid_timestamp = bid_timestamp;
+        this.is_active = is_active;
 
     }
 
-    public Integer getBidID() {
-        return bidID;
+    public Integer getBidId() {
+        return bid_id;
     }
 
-    public void setBidID(Integer bidID) {
-        this.bidID = bidID;
+    public void setBidID(Integer bid_id) {
+        this.bid_id = bid_id;
     }
 
-    public Integer getBidderID() {
-        return bidderID;
+    public Integer getBidderId() {
+        return bidder_id;
     }
 
-    public void setBidderID(Integer bidderID) {
-        this.bidderID = bidderID;
+    public void setBidderId(Integer bidder_id) {
+        this.bidder_id = bidder_id;
     }
 
-    public Integer getItemID() {
-        return itemID;
+    public Integer getItemId() {
+        return item_id;
     }
 
-    public void setItemID(Integer itemID) {
-        this.itemID = itemID;
+    public void setItemId(Integer item_id) {
+        this.item_id = item_id;
     }
 
     public Double getBidAmount() {
-        return bidAmount;
+        return bid_amount;
     }
 
-    public void setBidAmount(Double bidAmount) {
-        this.bidAmount = bidAmount;
+    public void setBidAmount(Double bid_amount) {
+        this.bid_amount = bid_amount;
     }
 
-    public Date getDateTime() {
-        return dateTime;
+    public Date getBidTimestamp() {
+        return bid_timestamp;
     }
 
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
+    public void setBidTimestamp(Date bid_timestamp) {
+        this.bid_timestamp = bid_timestamp;
     }
 
     public Boolean getIsActive() {
-        return isActive;
+        return is_active;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setIsActive(Boolean is_active) {
+        this.is_active = is_active;
     }
 
 }
