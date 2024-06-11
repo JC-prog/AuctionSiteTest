@@ -17,32 +17,32 @@
         stmt = conn.createStatement();
 
         // Fetch categories
-        rs = stmt.executeQuery("SELECT CategoryNo, CatName FROM ItemCategory WHERE isActive = true");
+        rs = stmt.executeQuery("SELECT categoryNo, catName FROM ItemCategory WHERE isActive = true");
      
         while (rs.next()) {
             Map<String, Object> category = new HashMap<>();
-            category.put("CategoryNo", rs.getInt("CategoryNo"));
-            category.put("CatName", rs.getString("CatName"));
+            category.put("CategoryNo", rs.getInt("categoryNo"));
+            category.put("CatName", rs.getString("catName"));
             categories.add(category);
         }
 
         // Fetch auction types
-        rs = stmt.executeQuery("SELECT AuctionTypeID, Name FROM AuctionType WHERE isActive = true");
+        rs = stmt.executeQuery("SELECT auctionTypeID, name FROM AuctionType WHERE isActive = true");
         
         while (rs.next()) {
             Map<String, Object> auctionType = new HashMap<>();
-            auctionType.put("AuctionTypeID", rs.getInt("AuctionTypeID"));
-            auctionType.put("Name", rs.getString("Name"));
+            auctionType.put("AuctionTypeID", rs.getInt("auctionTypeID"));
+            auctionType.put("Name", rs.getString("name"));
             auctionTypes.add(auctionType);
         }
 
         // Fetch duration presets
-        rs = stmt.executeQuery("SELECT DurationID, Name,Hours FROM DurationPreset WHERE isActive = true");
+        rs = stmt.executeQuery("SELECT durationID, name FROM DurationPreset WHERE isActive = true");
         
         while (rs.next()) {
             Map<String, Object> duration = new HashMap<>();
-            duration.put("DurationID", rs.getInt("DurationID"));
-            duration.put("Name", rs.getString("Name"));
+            duration.put("DurationID", rs.getInt("durationID"));
+            duration.put("Name", rs.getString("name"));
             durations.add(duration);
         }
     } catch (SQLException e) {

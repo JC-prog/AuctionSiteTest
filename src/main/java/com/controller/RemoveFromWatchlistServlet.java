@@ -19,7 +19,7 @@ public class RemoveFromWatchlistServlet extends HttpServlet {
         int watchlistID = Integer.parseInt(request.getParameter("watchlistID"));
 
         try (Connection conn = getDBConnection()) {
-            String sql = "UPDATE Watchlist SET isActive = FALSE WHERE WatchlistID = ?";
+            String sql = "UPDATE Watchlist SET isActive = FALSE WHERE watchlistID = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setInt(1, watchlistID);
                 stmt.executeUpdate();

@@ -22,6 +22,7 @@ import java.util.Date;
 
 
 @WebServlet(name = "CreateItem", urlPatterns = "/createItem")
+//@WebServlet("/CreateItemServlet")
 @MultipartConfig
 public class CreateItemServlet extends HttpServlet {
     /**
@@ -126,7 +127,7 @@ public class CreateItemServlet extends HttpServlet {
      // Assuming a connection method getDBConnection()
         
         try (Connection conn = getDBConnection()) {
-            String sql = "INSERT INTO Item (SellerID, Title, CategoryNo,`Condition`, Description, AuctionType, DurationPreset, startDate, endDate, startPrice, minSellPrice, ListingStatus, isActive,Image) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO Item (sellerID, title, categoryNo,`condition`, description, auctionType, durationPreset, startDate, endDate, startPrice, minSellPrice, listingStatus, isActive,image) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 // Assuming SellerID is from a session or another source
 
@@ -176,7 +177,7 @@ public class CreateItemServlet extends HttpServlet {
     private int getDurationInHoursFromDB(int durationPresetId) throws ServletException {
         int durationInHours = 0;
         try (Connection conn = getDBConnection()) {
-            String sql = "SELECT Hours FROM DurationPreset WHERE DurationId = ?";
+            String sql = "SELECT hours FROM DurationPreset WHERE durationId = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setInt(1, durationPresetId);
                 try (ResultSet rs = stmt.executeQuery()) {
