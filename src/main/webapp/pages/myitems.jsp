@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home - Item Listings</title>
+    <title>My Listings</title>
     <style>
         .top-right-button {
             float: right;
@@ -13,18 +13,8 @@
     </style>
 </head>
 <body>
-    <div class="top-right-button">
-        <form action="ViewTradeRequestsServlet" method="get">
-            <button type="submit">View Trade Requests</button>
-        </form>
-         <form action="createItem" method="get">
-            <button type="submit">Sell</button>
-        </form>
-        <form action="ShowMyItemsServlet" method="get">
-            <button type="submit">View My Listings</button>
-        </form>
-    </div>
-    <h1>Item Listings</h1>
+ 
+    <h1>My Listings</h1>
     <table border="1">
         <thead>
             <tr>
@@ -40,14 +30,14 @@
                 <th>Min Sell Price</th>
                 <th>Listing Status</th>
                 <th>Image</th>
-                <th>View Item</th> <!-- New column for view item -->
+                <th>Edit Listing</th>
             </tr>
         </thead>
         <tbody>
             <%
-                List<Item> itemList = (List<Item>) request.getAttribute("itemList");
-                if (itemList != null) {
-                    for (Item item : itemList) {
+                List<Item> myItems = (List<Item>) request.getAttribute("myItems");
+                if (myItems != null) {
+                    for (Item item : myItems) {
                         out.println("<tr>");
                         out.println("<td>" + item.getItemNo() + "</td>");
                         out.println("<td>" + item.getTitle() + "</td>");
@@ -60,7 +50,7 @@
                         out.println("<td>" + item.getStartPrice() + "</td>");
                         out.println("<td>" + item.getMinSellPrice() + "</td>");
                         out.println("<td>" + item.getListingStatus() + "</td>");
-                        
+
                         // Display image if available
                         byte[] imageData = item.getImage();
                         if (imageData != null) {
@@ -70,21 +60,13 @@
                             out.println("<td>No Image Available</td>");
                         }
 
-                        out.println("<td><a href='ViewItemServlet?itemNo=" + item.getItemNo() + "'>View Item</a></td>");
+                        // Edit Listing column
+                        out.println("<td><a href='EditItemServlet?itemNo=" + item.getItemNo() + "'>Edit</a></td>");
                         out.println("</tr>");
                     }
                 }
             %>
         </tbody>
     </table>
-    <form action="SearchItemServlet" method="get">
-        <input type="text" name="searchQuery" placeholder="Search for items">
-        <input type="submit" value="Search">
-    </form>
-    
-    <form action="GetWatchlistServlet" method="get">
-        <button type="submit">View Watchlist</button>
-    </form>
-    
 </body>
 </html>
