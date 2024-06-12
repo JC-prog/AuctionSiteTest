@@ -48,7 +48,7 @@ public class ListItemsServlet extends HttpServlet {
                 "JOIN User u ON i.sellerID = u.uID " +
                 "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
                 "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
-                "JOIN DurationPreset d ON i.durationPreset = d.durationID WHERE i.isActive = TRUE"
+                "JOIN DurationPreset d ON i.durationPreset = d.durationID WHERE i.isActive = TRUE AND i.listingStatus ='Publish'"
                 );
 
             while (rs.next()) {

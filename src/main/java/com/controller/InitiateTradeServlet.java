@@ -56,7 +56,7 @@ public class InitiateTradeServlet extends HttpServlet {
                     "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
                     "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
                     "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
-                    "WHERE i.sellerID = ? AND i.isActive = TRUE";
+                    "WHERE i.sellerID = ? AND i.isActive = TRUE AND i.listingStatus = 'Publish'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, currentUserID);
             ResultSet rs = stmt.executeQuery();
