@@ -1,6 +1,10 @@
 package com.fyp.auction_app.controllers;
 
 import com.fyp.auction_app.models.User;
+import com.fyp.auction_app.repository.UserRepo;
+import com.fyp.auction_app.services.UserService;
+import com.fyp.auction_app.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,7 +23,10 @@ public class AuthController {
     }
 
     @PostMapping("api/auth/login")
-    public ResponseEntity<String> loginUser(@RequestBody User user) {
-        return new ResponseEntity<>("User Logged In", HttpStatus.OK);
+    public ResponseEntity<String> loginUser(@RequestBody User loginUser) {
+
+        String jwtToken = "loginToken";
+
+        return new ResponseEntity<>(jwtToken, HttpStatus.OK);
     }
 }
