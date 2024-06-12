@@ -14,11 +14,15 @@ import api from '../config/api/loginApi';
 
 // Interface
 interface User {
-    uName: String;
-    uMail: String;
-    uNum: String;
-    uAddress: String;
+    userName: string;
+    userPassword: string;
+    userNumber: string;
+    userAddress: string;
+    userEmail: string;
+    isActive: boolean;
+    isAdmin: boolean;
 }
+
 
 
 const ProfilePage: React.FC = () => {
@@ -31,7 +35,7 @@ const ProfilePage: React.FC = () => {
     useEffect(() => {
         const fetchUser = async () => {
           try {
-            const response: AxiosResponse<User> = await api.get(`/user/${userID}`);
+            const response: AxiosResponse<User> = await api.get(`/api/user/${userID}`);
 
                 if (response.status !== 200) {
                 throw new Error('Network response was not ok');
@@ -64,7 +68,7 @@ const ProfilePage: React.FC = () => {
             <div className= "profile-page-container">
                 <div className= "profile-navigation-container">
                     <div className="profile-navigation-link">
-                        <h1>{ user.uName }</h1>
+                        <h1>{ user.userName }</h1>
                     </div>
 
                     <div className="profile-navigation-link">

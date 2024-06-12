@@ -13,6 +13,22 @@ interface Item {
     startPrice: number;
 }
 
+// Enum
+const Categories = {
+    larry: {
+      id: "larry",
+      name: "Larry Fine"
+    },
+    curly: {
+      id: "curly",
+      name: "Curly Howard"
+    },
+    moe: {
+      id: "moe",
+      name: "Moe Howard"
+    }
+  };
+
 const ItemCreatePage: React.FC = () => {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');

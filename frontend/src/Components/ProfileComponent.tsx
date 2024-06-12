@@ -2,10 +2,13 @@ import React from 'react'
 
 // Interface
 interface User {
-    uName: String;
-    uMail: String;
-    uNum: String;
-    uAddress: String;
+    userName: string;
+    userPassword: string;
+    userNumber: string;
+    userAddress: string;
+    userEmail: string;
+    isActive: boolean;
+    isAdmin: boolean;
 }
 
 interface UserProps {
@@ -21,17 +24,17 @@ const ProfileComponent: React.FC<UserProps> = ( {user} ) => {
             <hr></hr>
             <div>
                 <h3>Name</h3>
-                <p>{ user.uName }</p>
+                <p>{ user.userName }</p>
             </div>
 
             <div>
                 <h3>Email</h3>
-                <p>{ user.uMail}</p>
+                <p>{ user.userEmail}</p>
             </div>
 
             <div>
                 <h3>Address</h3>
-                <p>{ user.uAddress }</p>
+                <p>{ user.userAddress }</p>
             </div>
             
         </div>

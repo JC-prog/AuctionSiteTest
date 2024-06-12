@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SearchBar from "./SearchBar";
 import LoginSignup from "./LoginSignup";
 
 // CSS
 import "../Styles/Navbar.scss"
+import { isAuthenticated } from '../services/auth';
 
 
 const Navbar = () => {
+  const [authenticated, setAuthenticated] = useState(true);
   return (
     <>
       <div className="navbar">
@@ -29,7 +31,12 @@ const Navbar = () => {
         </div>
 
         <div>
-          <LoginSignup />
+          {authenticated ? (
+            <h2>Log Out</h2>
+          ) : (
+            <LoginSignup />
+          )}
+
         </div>
       </div>
     </>
