@@ -136,7 +136,7 @@
         <input type="number" step="0.01" id="minSellPrice" name="minSellPrice" value="<%= item.getMinSellPrice() %>"><br>
 
         <label for="listingStatus">Listing Status:</label>
-        <select name="listingStatus" id="listingStatus" onchange="toggleFields()">
+        <select name="listingStatus" id="listingStatus" >
             <option value="Draft" <%= "Draft".equals(item.getListingStatus()) ? "selected" : "" %>>Draft</option>
             <option value="Publish" <%= "Publish".equals(item.getListingStatus()) ? "selected" : "" %>>Publish</option>
         </select><br>

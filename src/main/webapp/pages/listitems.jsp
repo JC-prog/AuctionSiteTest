@@ -30,7 +30,7 @@
             <tr>
                 <th>Item No</th>
                 <th>Title</th>
-                <th>Seller ID</th>
+                <th>Seller Name</th>
                 <th>Category</th>
                 <th>Condition</th>
                 <th>Description</th>
@@ -51,7 +51,7 @@
                         out.println("<tr>");
                         out.println("<td>" + item.getItemNo() + "</td>");
                         out.println("<td>" + item.getTitle() + "</td>");
-                        out.println("<td>" + item.getSeller().getuId() + "</td>");
+                        out.println("<td>" + item.getSeller().getuName() + "</td>");
                         out.println("<td>" + item.getCategory().getCatName() + "</td>");
                         out.println("<td>" + item.getCondition() + "</td>");
                         out.println("<td>" + item.getDescription() + "</td>");

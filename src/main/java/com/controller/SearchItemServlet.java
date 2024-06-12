@@ -25,114 +25,128 @@ import com.model.RegisterClass;
 public class SearchItemServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "password";
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String searchQuery = request.getParameter("searchQuery");
         List<Item> itemList = new ArrayList<>();
 
-        try {
-            // Database connection details
-            String url = "jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC";
-            String user = "root";
-            String password = "password";
-            Connection conn = DriverManager.getConnection(url, user, password);
-
-            String sql;
-            PreparedStatement stmt;
-            
-            if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-                sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
-                      "c.categoryNo, c.catName AS categoryName, i.`condition`, i.description, " +
-                      "a.auctionTypeID, a.name AS auctionTypeName, " +
-                      "d.durationID, d.name AS durationPresetName, d.hours, " +
-                      "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
-                      "FROM Item i " +
-                      "JOIN User u ON i.sellerID = u.uID " +
-                      "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
-                      "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
-                      "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
-                      "WHERE i.title LIKE ? OR u.uName LIKE ? OR c.catName LIKE ? OR i.description LIKE ? " +
-                      "ORDER BY i.startDate ASC";
-
-                stmt = conn.prepareStatement(sql);
-                String wildcardQuery = "%" + searchQuery + "%";
-                stmt.setString(1, wildcardQuery);
-                stmt.setString(2, wildcardQuery);
-                stmt.setString(3, wildcardQuery);
-                stmt.setString(4, wildcardQuery);
-            } else {
-                sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
-                      "c.categoryNo, c.catName AS categoryName, i.`condition`, i.description, " +
-                      "a.auctionTypeID, a.name AS auctionTypeName, " +
-                      "d.durationID, d.name AS durationPresetName, d.hours, " +
-                      "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
-                      "FROM Item i " +
-                      "JOIN User u ON i.sellerID = u.uID " +
-                      "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
-                      "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
-                      "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
-                      "ORDER BY i.startDate ASC";
-
-                stmt = conn.prepareStatement(sql);
-            }
-
+        try (Connection conn = getConnection()) {
+            PreparedStatement stmt = prepareStatement(conn, searchQuery);
             ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Item item = new Item();
-                item.setItemNo(rs.getInt("itemNo"));
-
-                RegisterClass seller = new RegisterClass();
-                seller.setuId(rs.getString("sellerID"));
-                seller.setuName(rs.getString("sellerName"));
-                seller.setuMail(rs.getString("sellerEmail"));
-                item.setSeller(seller);
-
-                item.setTitle(rs.getString("title"));
-
-                ItemCategory category = new ItemCategory();
-                category.setCategoryNo(rs.getInt("categoryNo"));
-                category.setCatName(rs.getString("categoryName"));
-                item.setCategory(category);
-
-                item.setCondition(rs.getString("condition"));
-                item.setDescription(rs.getString("description"));
-
-                AuctionType auctionType = new AuctionType();
-                auctionType.setAuctionTypeID(rs.getInt("auctionTypeID"));
-                auctionType.setName(rs.getString("auctionTypeName"));
-                item.setAuctionType(auctionType);
-
-                DurationPreset durationPreset = new DurationPreset();
-                durationPreset.setDurationID(rs.getInt("durationID"));
-                durationPreset.setName(rs.getString("durationPresetName"));
-                durationPreset.setHours(rs.getInt("hours"));
-                item.setDurationPreset(durationPreset);
-
-                item.setStartDate(rs.getTimestamp("startDate"));
-                item.setEndDate(rs.getTimestamp("endDate"));
-                item.setStartPrice(rs.getBigDecimal("startPrice"));
-                item.setMinSellPrice(rs.getBigDecimal("minSellPrice"));
-                item.setListingStatus(rs.getString("listingStatus"));
-                item.setActive(rs.getBoolean("isActive"));
-                
-                // Retrieve image blob
-                Blob imageBlob = rs.getBlob("image");
-                if (imageBlob != null) {
-                    byte[] imageBytes = imageBlob.getBytes(1, (int) imageBlob.length());
-                    item.setImage(imageBytes);
-                }
-
-                itemList.add(item);
-            }
-
+            itemList = processResultSet(rs);
             rs.close();
             stmt.close();
-            conn.close();
         } catch (Exception e) {
             throw new ServletException(e);
         }
 
         request.setAttribute("itemList", itemList);
         request.getRequestDispatcher("/pages/listitems.jsp").forward(request, response);
+    }
+
+    private Connection getConnection() throws Exception {
+        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+    }
+
+    private PreparedStatement prepareStatement(Connection conn, String searchQuery) throws Exception {
+        String sql;
+        PreparedStatement stmt;
+        //check if search is not empty, display wildcard search, else display all that is published
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
+                  "c.categoryNo, c.catName AS categoryName, i.`condition`, i.description, " +
+                  "a.auctionTypeID, a.name AS auctionTypeName, " +
+                  "d.durationID, d.name AS durationPresetName, d.hours, " +
+                  "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
+                  "FROM Item i " +
+                  "JOIN User u ON i.sellerID = u.uID " +
+                  "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
+                  "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                  "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
+                  "WHERE (i.title LIKE ? OR u.uName LIKE ? OR c.catName LIKE ? OR i.description LIKE ?) " +
+                  "AND i.listingStatus = 'Publish' " +
+                  "ORDER BY i.startDate ASC";
+
+            stmt = conn.prepareStatement(sql);
+            String wildcardQuery = "%" + searchQuery + "%";
+            stmt.setString(1, wildcardQuery);
+            stmt.setString(2, wildcardQuery);
+            stmt.setString(3, wildcardQuery);
+            stmt.setString(4, wildcardQuery);
+        } else {
+            sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
+                  "c.categoryNo, c.catName AS categoryName, i.`condition`, i.description, " +
+                  "a.auctionTypeID, a.name AS auctionTypeName, " +
+                  "d.durationID, d.name AS durationPresetName, d.hours, " +
+                  "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
+                  "FROM Item i " +
+                  "JOIN User u ON i.sellerID = u.uID " +
+                  "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
+                  "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                  "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
+                  "WHERE i.listingStatus = 'Publish' " +
+                  "ORDER BY i.startDate ASC";
+
+            stmt = conn.prepareStatement(sql);
+        }
+
+        return stmt;
+    }
+
+    private List<Item> processResultSet(ResultSet rs) throws Exception {
+        List<Item> itemList = new ArrayList<>();
+
+        while (rs.next()) {
+            Item item = new Item();
+            item.setItemNo(rs.getInt("itemNo"));
+
+            RegisterClass seller = new RegisterClass();
+            seller.setuId(rs.getString("sellerID"));
+            seller.setuName(rs.getString("sellerName"));
+            seller.setuMail(rs.getString("sellerEmail"));
+            item.setSeller(seller);
+
+            item.setTitle(rs.getString("title"));
+
+            ItemCategory category = new ItemCategory();
+            category.setCategoryNo(rs.getInt("categoryNo"));
+            category.setCatName(rs.getString("categoryName"));
+            item.setCategory(category);
+
+            item.setCondition(rs.getString("condition"));
+            item.setDescription(rs.getString("description"));
+
+            AuctionType auctionType = new AuctionType();
+            auctionType.setAuctionTypeID(rs.getInt("auctionTypeID"));
+            auctionType.setName(rs.getString("auctionTypeName"));
+            item.setAuctionType(auctionType);
+
+            DurationPreset durationPreset = new DurationPreset();
+            durationPreset.setDurationID(rs.getInt("durationID"));
+            durationPreset.setName(rs.getString("durationPresetName"));
+            durationPreset.setHours(rs.getInt("hours"));
+            item.setDurationPreset(durationPreset);
+
+            item.setStartDate(rs.getTimestamp("startDate"));
+            item.setEndDate(rs.getTimestamp("endDate"));
+            item.setStartPrice(rs.getBigDecimal("startPrice"));
+            item.setMinSellPrice(rs.getBigDecimal("minSellPrice"));
+            item.setListingStatus(rs.getString("listingStatus"));
+            item.setActive(rs.getBoolean("isActive"));
+            
+            // Retrieve image blob
+            Blob imageBlob = rs.getBlob("image");
+            if (imageBlob != null) {
+                byte[] imageBytes = imageBlob.getBytes(1, (int) imageBlob.length());
+                item.setImage(imageBytes);
+            }
+
+            itemList.add(item);
+        }
+
+        return itemList;
     }
 }
