@@ -5,6 +5,7 @@ import com.model.DurationPreset;
 import com.model.Item;
 import com.model.ItemCategory;
 import com.model.RegisterClass;
+import com.service.TaskScheduler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +16,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
@@ -172,7 +174,10 @@ public class EditItemServlet extends HttpServlet {
             Date endDate = new Date();
             if ("Publish".equals(listingStatus)) {
                 int durationInHours = getDurationInHoursFromDB(durationPreset);
-                endDate = new Date(startDate.getTime() + (durationInHours * 3600000));
+                //endDate = new Date(startDate.getTime() + (durationInHours * 3600000)); original
+                endDate = new Date(startDate.getTime() + (durationInHours * 60000)); // to 1 minute if u set to 1 hour for test only
+                
+                
             }
 
             if (imgcheck) {
@@ -217,7 +222,7 @@ public class EditItemServlet extends HttpServlet {
             throw new ServletException(e);
         }
     }
-
+  //overload for image
     private void updateItemForPublishedStatus(int itemId, String condition, String description) throws ServletException {
         try (Connection conn = getDBConnection()) {
             String sql = "UPDATE Item SET `condition` = ?, description = ? WHERE itemNo = ?";
@@ -250,16 +255,31 @@ public class EditItemServlet extends HttpServlet {
                 stmt.setBytes(12, image);
                 stmt.setInt(13, itemId);
                 stmt.executeUpdate();
-            }
+                
+                System.out.println("I have updated into DB");
+               
+                if("Publish".equals(listingStatus)  )
+                {
+                	System.out.println("I have reached task scheudler no img change");
+                    TaskScheduler task = new TaskScheduler();
+                    task.start(itemId,endDate);
+                         	
+                }
+               else {
+                   throw new SQLException("Creating user failed, no ID obtained.");
+               }
+               }                    
+            
         } catch (SQLException e) {
             throw new ServletException(e);
         }
+        
     }
-
+    //overload for image
     private void updateItem(int itemId, String title, int categoryNo, String condition, String description, int auctionType, int durationPreset, Date startDate, Date endDate, BigDecimal startPrice, BigDecimal minSellPrice, String listingStatus) throws ServletException {
         try (Connection conn = getDBConnection()) {
             String sql = "UPDATE Item SET title = ?, categoryNo = ?, `condition` = ?, description = ?, auctionType = ?, durationPreset = ?, startDate = ?, endDate = ?, startPrice = ?, minSellPrice = ?, listingStatus = ? WHERE itemNo = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (PreparedStatement stmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
                 stmt.setString(1, title);
                 stmt.setInt(2, categoryNo);
                 stmt.setString(3, condition);
@@ -273,7 +293,18 @@ public class EditItemServlet extends HttpServlet {
                 stmt.setString(11, listingStatus);
                 stmt.setInt(12, itemId);
                 stmt.executeUpdate();
+                
+                System.out.println("I have updated into DB no img change");
+                if("Publish".equals(listingStatus)  )
+                {
+                	System.out.println("I have reached task scheudler no img change");
+                    TaskScheduler task = new TaskScheduler();
+                    task.start(itemId,endDate);
+                         	
+                }
             }
+                
+            
         } catch (SQLException e) {
             throw new ServletException(e);
         }

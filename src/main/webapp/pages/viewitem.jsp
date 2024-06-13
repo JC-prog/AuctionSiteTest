@@ -32,7 +32,7 @@
     <%
         Item item = (Item) request.getAttribute("item");
         List<Bid> bidList = (List<Bid>) request.getAttribute("bidList");
-        String watchlistMessage = (String) request.getAttribute("watchlistMessage"); //show watchlist added success or fail
+        String watchlistMessage = (String) request.getAttribute("watchlistMessage"); // show watchlist added success or fail
         boolean isBidSuccessful = request.getAttribute("isBidSuccessful") != null && (boolean) request.getAttribute("isBidSuccessful");
         String errorMessage = (String) request.getAttribute("errorMessage");
         String currentUser = (String) session.getAttribute("uName"); // Assuming the user is logged in and you have the username
@@ -48,15 +48,16 @@
         <tr><th>Start Price</th><td><%= item.getStartPrice() %></td></tr>
         <tr><th>Min Sell Price</th><td><%= item.getMinSellPrice() %></td></tr>
         <tr><th>Seller Name</th><td><%= item.getSeller().getuName() %></td></tr>
-
     </table>
-    <% byte[] imageData = item.getImage();
-                        if (imageData != null) {
-                            String base64Image = "data:image/png;base64," + java.util.Base64.getEncoder().encodeToString(imageData);
-                            out.println("<td><img src=\"" + base64Image + "\" alt=\"Item Image\" style=\"max-width: 100px; max-height: 100px;\"></td>");
-                        } else {
-                            out.println("<td>No Image Available</td>");
-                        }%>
+    <% 
+        byte[] imageData = item.getImage();
+        if (imageData != null) {
+            String base64Image = "data:image/png;base64," + java.util.Base64.getEncoder().encodeToString(imageData);
+            out.println("<td><img src=\"" + base64Image + "\" alt=\"Item Image\" style=\"max-width: 100px; max-height: 100px;\"></td>");
+        } else {
+            out.println("<td>No Image Available</td>");
+        }
+    %>
     <h2>Time Remaining</h2>
     <div id="countdown"></div>
     <script>startCountdown('<%= item.getEndDate() %>');</script>
@@ -74,9 +75,7 @@
             <%
                 boolean isHighestBidder = false;
                 if (bidList != null && !bidList.isEmpty()) {
-                	int i = 0; //for loop index to check if first item in the list, am i the highest bidder. if im not, then fk it
-                	
-                	
+                    int i = 0; // for loop index to check if first item in the list, am i the highest bidder. if im not, then fk it
                     for (Bid bid : bidList) {
                         if (i == 0 && bid.getBidderID().equals(currentUserID) && bid.getBidAmount().compareTo(item.getStartPrice()) > 0) {
                             isHighestBidder = true;
@@ -87,7 +86,7 @@
                         out.println("<td>" + bid.getTimestamp() + "</td>");
                         out.println("</tr>");
                         i++;
-                    } 
+                    }
                 } else {
                     out.println("<tr><td colspan='3'>No current bids.</td></tr>");
                 }
@@ -104,24 +103,29 @@
         <p style="color: red;"><%= errorMessage %></p>
     <% } %>
     
-	<% if (watchlistMessage != null) { %>
+    <% if (watchlistMessage != null) { %>
         <p><%= watchlistMessage %></p>
     <% } %>
 
-    <h2>Place a Bid</h2>
-    <form action="placebid" method="get">
-        <input type="hidden" name="itemNo" value="<%= item.getItemNo() %>" />
-        <label for="bidAmount">Bid Amount:</label>
-        <input type="text" id="bidAmount" name="bidAmount" required />
-        <button type="submit">Place Bid</button>
-    </form>
-     <h2>Add to Watchlist</h2>
+    <% if (!currentUserID.equals(item.getSeller().getuId())) { %>
+        <h2>Place a Bid</h2>
+        <form action="placebid" method="get">
+            <input type="hidden" name="itemNo" value="<%= item.getItemNo() %>" />
+            <label for="bidAmount">Bid Amount:</label>
+            <input type="text" id="bidAmount" name="bidAmount" required />
+            <button type="submit">Place Bid</button>
+        </form>
+    <% } else { %>
+        <p>You cannot bid on your own item.</p>
+    <% } %>
+
+    <h2>Add to Watchlist</h2>
     <form action="AddToWatchlistServlet" method="get">
         <input type="hidden" name="itemNo" value="<%= item.getItemNo() %>" />
         <button type="submit">Add to Watchlist</button>
     </form>
-    
-      <form action="InitiateTradeServlet" method="get">
+
+    <form action="InitiateTradeServlet" method="get">
         <input type="hidden" name="itemNo" value="<%= item.getItemNo() %>" />
         <input type="hidden" name="SelleruName" value="<%= item.getSeller().getuName() %>" />
         <input type="hidden" name="SelleruID" value="<%= item.getSeller().getuId() %>" />

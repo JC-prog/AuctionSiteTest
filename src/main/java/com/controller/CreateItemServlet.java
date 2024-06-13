@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.service.MyTask;
+import com.service.TaskScheduler;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -16,6 +19,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -115,7 +119,9 @@ public class CreateItemServlet extends HttpServlet {
         if(listingStatus.equals("Publish"))
         {
         	startDate = new Date();
-        	endDate = new Date(startDate.getTime()+(durationInHours*3600000));
+        	//endDate = new Date(startDate.getTime()+(durationInHours*3600000));
+        	// if i put 1 hour , enddate will be 1 minute
+        	endDate = new Date(startDate.getTime()+(durationInHours*60000));
         	System.out.println("start date =" +startDate);
         	System.out.println("end date =" +endDate);
         }
@@ -128,7 +134,7 @@ public class CreateItemServlet extends HttpServlet {
         
         try (Connection conn = getDBConnection()) {
             String sql = "INSERT INTO Item (sellerID, title, categoryNo,`condition`, description, auctionType, durationPreset, startDate, endDate, startPrice, minSellPrice, listingStatus, isActive,image) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (PreparedStatement stmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
                 // Assuming SellerID is from a session or another source
 
                 stmt.setString(1, (String) session.getAttribute("uID")); // Replace with actual seller ID
@@ -149,6 +155,19 @@ public class CreateItemServlet extends HttpServlet {
                     stmt.setBytes(14, image);
                 }
                 stmt.executeUpdate();
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                	if("Publish".equals(listingStatus))
+                	{
+                		if (generatedKeys.next()) {
+                        	TaskScheduler task = new TaskScheduler();
+                        	task.start(generatedKeys.getInt(1),endDate);
+                        	
+                        }
+                        else {
+                            throw new SQLException("Creating user failed, no ID obtained.");
+                        }
+                	}                    
+                }
             }
         } catch (SQLException e) {
             throw new ServletException(e);
