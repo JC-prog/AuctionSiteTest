@@ -23,6 +23,9 @@
         <form action="ShowMyItemsServlet" method="get">
             <button type="submit">View My Listings</button>
         </form>
+         <form action="ViewTransactionServlet" method="get">
+         <button type="submit">View Transactions</button>
+          </form>
     </div>
     <h1>Item Listings</h1>
     <table border="1">

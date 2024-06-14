@@ -17,6 +17,12 @@
 	    <version>4.0.1</version>
 	    <scope>provided</scope>
 	</dependency>
+	<dependency>
+    <groupId>com.stripe</groupId>
+    <artifactId>stripe-java</artifactId>
+    <version>20.97.0</version>
+</dependency>
+
 
 	<!-- https://mvnrepository.com/artifact/jstl/jstl -->
 	<dependency>
