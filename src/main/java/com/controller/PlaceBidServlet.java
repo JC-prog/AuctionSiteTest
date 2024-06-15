@@ -82,7 +82,8 @@ public class PlaceBidServlet extends HttpServlet {
 
 
 
-            if (bidAmount.compareTo(startPrice) <= 0) {
+            
+            if (bidAmount.compareTo(startPrice) < 0) {
                 errorMessage = "Your bid must be higher than the item's start price.";
             }
             else if (bidAmount.compareTo(highestBid) <= 0)  {

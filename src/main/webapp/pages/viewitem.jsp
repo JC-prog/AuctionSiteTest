@@ -39,6 +39,7 @@
         String currentUserID = (String) session.getAttribute("uID");
         
         if (item != null) {
+        	 boolean isAuctionEnded = item.getEndDate().before(new java.util.Date());
     %>
     <table border="1">
         <tr><th>Title</th><td><%= item.getTitle() %></td></tr>
@@ -107,14 +108,18 @@
         <p><%= watchlistMessage %></p>
     <% } %>
 
-    <% if (!currentUserID.equals(item.getSeller().getuId())) { %>
-        <h2>Place a Bid</h2>
-        <form action="placebid" method="get">
-            <input type="hidden" name="itemNo" value="<%= item.getItemNo() %>" />
-            <label for="bidAmount">Bid Amount:</label>
-            <input type="text" id="bidAmount" name="bidAmount" required />
-            <button type="submit">Place Bid</button>
-        </form>
+  <% if (!currentUserID.equals(item.getSeller().getuId())) { %>
+        <% if (!isAuctionEnded) { %>
+            <h2>Place a Bid</h2>
+            <form action="placebid" method="get">
+                <input type="hidden" name="itemNo" value="<%= item.getItemNo() %>" />
+                <label for="bidAmount">Bid Amount:</label>
+                <input type="text" id="bidAmount" name="bidAmount" required />
+                <button type="submit">Place Bid</button>
+            </form>
+        <% } else { %>
+            <p>The auction for this item has ended. Bidding is no longer possible.</p>
+        <% } %>
     <% } else { %>
         <p>You cannot bid on your own item.</p>
     <% } %>

@@ -113,15 +113,15 @@
                         	 out.println("<form action='ShippingItemServlet' method='get'>");
                              out.println("<input type='hidden' name='transactionID' value='" + transaction.getTransactionID() + "'>");
                              out.println("<input type='hidden' name='itemNo' value='" + transaction.getItemNo() + "'>");
-                             out.println("<input type='hidden' name='saleAmount' value='" + transaction.getSaleAmount() + "'>");
+                             out.println("<input type='hidden' name='sellerAddress' value='" + transaction.getSellerAddress() + "'>");
                              out.println("<button type='submit'>Send item to Buyer</button>");
                              out.println("</form>");
                         } else if ("Item Received".equals(transaction.getStatus()))
                         {
                         	out.println("Auction Concluded");
-                        }else 
+                        }else if ("Item Shipped".equals(transaction.getStatus()))
                         {
-                        	out.println("Item Shipped");
+                        	out.println("Awaiting Buyer Confirmation");
                         }
                      
                         out.println("</td>");
