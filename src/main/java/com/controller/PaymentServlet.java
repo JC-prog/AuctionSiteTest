@@ -52,7 +52,8 @@ public class PaymentServlet extends HttpServlet {
 	        updatePaymentComplete(conn, ItemNo);
 	        
 	        // Forward to payment confirmation page
-	        request.getRequestDispatcher("/pages/viewallbids.jsp").forward(request, response);
+	        //request.getRequestDispatcher("/pages/viewallbids.jsp").forward(request, response);
+	        response.sendRedirect(request.getContextPath() + "/ViewTransactionServlet");
 	        
 	    } catch (Exception ex) {
 	        System.out.println(ex);
