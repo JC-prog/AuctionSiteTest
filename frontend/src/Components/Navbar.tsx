@@ -1,14 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
+
+// Components
 import SearchBar from "./SearchBar";
 import LoginSignup from "./LoginSignup";
 
 // CSS
 import "../Styles/Navbar.scss"
-import { isAuthenticated } from '../services/auth';
-
 
 const Navbar = () => {
-  const [authenticated, setAuthenticated] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
+
+// Function to check authentication status
+const checkAuthentication = () => {
+  const accessToken = Cookies.get('access_token');
+  if (accessToken) {
+    setAuthenticated(true);
+  } else {
+    setAuthenticated(false);
+  }
+};
+
+// Check authentication status on component mount
+useEffect(() => {
+  checkAuthentication();
+}, []);
+
+// Function to handle logout
+const handleLogout = () => {
+  Cookies.remove('access_token');
+  setAuthenticated(false);
+  
+};
+
   return (
     <>
       <div className="navbar">
@@ -32,7 +56,10 @@ const Navbar = () => {
 
         <div>
           {authenticated ? (
-            <h2>Log Out</h2>
+            <div>
+              <a href = "/profile">profile</a>
+              <button onClick={handleLogout}>Log Out</button>
+            </div>
           ) : (
             <LoginSignup />
           )}

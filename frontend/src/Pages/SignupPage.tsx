@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AxiosResponse } from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 // API
@@ -13,14 +14,13 @@ import IUser from "../models/UserModel.ts";
 
 const SignupPage = () => {
 	const [formData, setFormData] = useState({
-		userName: '',
-		userPassword: '',
-		userNumber: '',
-		userAddress: '',
-		userEmail: '',
-		isActive: true,
-		isAdmin: false
+		username: '',
+		password: '',
+		contactNum: '',
+		address: '',
+		email: '',
 	});
+	const navigate = useNavigate();
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target;
@@ -34,17 +34,15 @@ const SignupPage = () => {
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 
-		const { userName, userPassword, userNumber, userAddress, userEmail, isActive, isAdmin } = formData;
+		const { username, password, contactNum, address, email } = formData;
 
 		try {
-			const response: AxiosResponse = await api.post('/api/user/create', {
-				userName,
-				userPassword,
-				userNumber,
-				userAddress,
-				userEmail,
-				isActive,
-				isAdmin
+			const response: AxiosResponse = await api.post('/api/auth/register', {
+				username,
+				password,
+				contactNum,
+				address,
+				email,
 			});
 
 			if (response.status === 200) {
@@ -52,6 +50,10 @@ const SignupPage = () => {
 					position: toast.POSITION.TOP_RIGHT,
 					autoClose: 2000,
 				});
+
+				navigate("/login")
+
+				window.location.reload();
 			}
 		} catch (error) {
 			console.error('Error:', error);
@@ -79,8 +81,8 @@ const SignupPage = () => {
 								<label className="form-label">Username</label>
 								<input
 									type="text"
-									name="userName"
-									id="userName"
+									name="username"
+									id="username"
 									className="form-input"
 									placeholder="User Name"
 									onChange={handleChange}
@@ -91,8 +93,8 @@ const SignupPage = () => {
 								<label className="form-label">Email</label>
 								<input
 									type="email"
-									name="userEmail"
-									id="userEmail"
+									name="email"
+									id="email"
 									className="form-input"
 									placeholder="Your Email"
 									onChange={handleChange}
@@ -103,8 +105,8 @@ const SignupPage = () => {
 								<label className="form-label">Contact Number</label>
 								<input
 									type="text"
-									name="userNumber"
-									id="userNumber"
+									name="contactNum"
+									id="contactNum"
 									className="form-input"
 									placeholder="Contact no"
 									onChange={handleChange}
@@ -115,8 +117,8 @@ const SignupPage = () => {
 								<label className="form-label">Address</label>
 								<input
 									type="text"
-									name="userAddress"
-									id="userAddress"
+									name="address"
+									id="address"
 									className="form-input"
 									placeholder="Your Address"
 									onChange={handleChange}
@@ -127,8 +129,8 @@ const SignupPage = () => {
 								<label className="form-label">Password</label>
 								<input
 									type="password"
-									name="userPassword"
-									id="userPassword"
+									name="password"
+									id="password"
 									className="form-input"
 									placeholder="Password"
 									onChange={handleChange}
