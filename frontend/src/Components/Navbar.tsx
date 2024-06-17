@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 // Components
 import SearchBar from "./SearchBar";
@@ -8,14 +10,31 @@ import LoginSignup from "./LoginSignup";
 // CSS
 import "../Styles/Navbar.scss"
 
+interface DecodedToken {
+  sub: string; // Assuming 'sub' is the field containing user information
+  // Add other fields as needed based on your JWT payload
+}
+
 const Navbar = () => {
   const [authenticated, setAuthenticated] = useState(false);
+  const [user, setUser] = useState<string | null>(null);
+
 
 // Function to check authentication status
 const checkAuthentication = () => {
   const accessToken = Cookies.get('access_token');
   if (accessToken) {
     setAuthenticated(true);
+
+    try {
+      const decodedToken = jwtDecode<DecodedToken>(accessToken);
+      setUser(decodedToken.sub || null);
+
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      setUser(null);
+    }
+
   } else {
     setAuthenticated(false);
   }
@@ -57,7 +76,9 @@ const handleLogout = () => {
         <div>
           {authenticated ? (
             <div>
-              <a href = "/profile">profile</a>
+              <Link to={`/user/${user}`}>
+                Profile
+              </Link>
               <button onClick={handleLogout}>Log Out</button>
             </div>
           ) : (
