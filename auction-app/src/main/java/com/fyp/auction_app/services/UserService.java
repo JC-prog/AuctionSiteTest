@@ -1,7 +1,7 @@
 package com.fyp.auction_app.services;
 
 import com.fyp.auction_app.models.User;
-import com.fyp.auction_app.repository.UserRepo;
+import com.fyp.auction_app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,26 +12,26 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
-    private UserRepo userRepo;
+    private UserRepository userRepository;
 
     public List<User> findAll() {
-        return userRepo.findAll();
+        return userRepository.findAll();
     }
 
     public Optional<User> findUserById(Integer id) {
-        return userRepo.findById(id);
+        return userRepository.findById(id);
     }
 
     public User createUser(User user) {
 
-        return userRepo.save(user);
+        return userRepository.save(user);
     }
 
     public void updateUser(User user) {
-        userRepo.save(user);
+        userRepository.save(user);
     }
 
     public void deleteById(Integer id) {
-        userRepo.deleteById(id);
+        userRepository.deleteById(id);
     }
 }

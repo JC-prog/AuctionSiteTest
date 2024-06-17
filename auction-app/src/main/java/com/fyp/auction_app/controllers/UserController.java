@@ -48,7 +48,7 @@ public class UserController {
         Optional<User> existingUser = userService.findUserById(userID);
 
         if (existingUser.isPresent()) {
-            user.setUserId(userID);
+
             userService.updateUser(user);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
