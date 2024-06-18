@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
-import { FaUser } from 'react-icons/fa';
+
+// Icons
 
 // Components
 import SearchBar from "./SearchBar";
 import LoginSignup from "./LoginSignup";
+import NavbarNotificationButton from './Buttons/NavbarNotificationButton';
+import NavbarLogoutButton from './Buttons/NavbarLogoutButton';
+import NavbarProfileButton from './Buttons/NavbarProfileButton';
 
 // CSS
 import "../Styles/Navbar.scss"
@@ -19,6 +24,7 @@ interface DecodedToken {
 const Navbar = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState<string | null>(null);
+  const navigate = useNavigate();
 
 
 // Function to check authentication status
@@ -46,10 +52,30 @@ useEffect(() => {
   checkAuthentication();
 }, []);
 
+// Function to navigate to Notification
+const redirectToNotification= () => {
+  if (user) {
+    navigate(`/notification/${user}`);
+  }
+};
+
+// Function to navigate to Profile
+const redirectToProfile = () => {
+  if (user) {
+    navigate(`/user/${user}`);
+  }
+};
+
 // Function to handle logout
 const handleLogout = () => {
   Cookies.remove('access_token');
   setAuthenticated(false);
+
+  toast.success('Logout Successful');
+
+  setTimeout(() => {
+    navigate('/');
+  }, 1000);
   
 };
 
@@ -77,11 +103,11 @@ const handleLogout = () => {
         <div>
           {authenticated ? (
             <div>
-              <Link to={`/user/${user}`}>
-                <FaUser />
-                Profile
-              </Link>
-              <button onClick={handleLogout}>Log Out</button>
+              <NavbarNotificationButton redirectToNotification={ redirectToNotification } />
+
+              <NavbarProfileButton redirectToProfile={ redirectToProfile }/>
+              
+              <NavbarLogoutButton handleLogout={ handleLogout } />
             </div>
           ) : (
             <LoginSignup />

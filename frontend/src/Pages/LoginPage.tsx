@@ -50,9 +50,13 @@ const LoginPage = () => {
                     autoClose: 2000,
                 });
 
-                navigate('/');
+                setTimeout(() => {
+                    navigate('/');
 
-                window.location.reload();
+                    window.location.reload();
+                  }, 2000);
+
+                
 
             } else {
 
