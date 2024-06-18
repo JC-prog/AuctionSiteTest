@@ -14,6 +14,8 @@ import com.fyp.auction_app.models.Response.AuthenticationResponse;
 import com.fyp.auction_app.models.User;
 import org.springframework.security.authentication.AuthenticationManager;
 
+import java.util.Date;
+
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +39,7 @@ public class AuthenticationService {
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
             .role(Role.USER)
+            .createdAt(new Date())
             .build();
 
         repository.save(user);

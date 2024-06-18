@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin
 @RestController
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("api/user/create")
+    @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody User user) {
 
         User createdUser = userService.createUser(user);
@@ -25,16 +26,16 @@ public class UserController {
         return new ResponseEntity<>(createdUser, HttpStatus.OK);
     }
 
-    @GetMapping("api/users")
+    @GetMapping("/allUsers")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.findAll();
 
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
-    @GetMapping("api/user/{userID}")
-    public ResponseEntity<User> getUser(@PathVariable("userID") Integer userID) {
-        Optional<User> user = userService.findUserById(userID);
+    @GetMapping("/{username}")
+    public ResponseEntity<User> getUser(@PathVariable("username") String username) {
+        Optional<User> user = userService.findUserByUsername(username);
 
         if (user.isPresent()) {
             return new ResponseEntity<>(user.get(), HttpStatus.OK);
