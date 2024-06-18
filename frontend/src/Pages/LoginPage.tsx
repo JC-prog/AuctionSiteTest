@@ -40,14 +40,15 @@ const LoginPage = () => {
 
             if (response.status == 200) {
 
+                // Store the access token
+                const { access_token } = response.data;
+                Cookies.set('access_token', access_token, { expires: 1 });
+
+                
                 toast.success("Login Successful!", {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 2000,
                 });
-
-                // Store the access token
-                const { access_token } = response.data;
-                Cookies.set('access_token', access_token, { expires: 1 });
 
                 navigate('/');
 

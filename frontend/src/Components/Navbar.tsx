@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
+import { FaUser } from 'react-icons/fa';
 
 // Components
 import SearchBar from "./SearchBar";
@@ -77,6 +78,7 @@ const handleLogout = () => {
           {authenticated ? (
             <div>
               <Link to={`/user/${user}`}>
+                <FaUser />
                 Profile
               </Link>
               <button onClick={handleLogout}>Log Out</button>

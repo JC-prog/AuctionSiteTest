@@ -1,14 +1,10 @@
-import React from 'react'
+import React from 'react';
+import { FaUser} from 'react-icons/fa';
 
 // Interface
 interface User {
-    userName: string;
-    userPassword: string;
-    userNumber: string;
-    userAddress: string;
-    userEmail: string;
-    isActive: boolean;
-    isAdmin: boolean;
+    username: string;
+    email: string;
 }
 
 interface UserProps {
@@ -24,17 +20,12 @@ const ProfileComponent: React.FC<UserProps> = ( {user} ) => {
             <hr></hr>
             <div>
                 <h3>Name</h3>
-                <p>{ user.userName }</p>
+                <p>{ user.username }</p>
             </div>
 
             <div>
                 <h3>Email</h3>
-                <p>{ user.userEmail}</p>
-            </div>
-
-            <div>
-                <h3>Address</h3>
-                <p>{ user.userAddress }</p>
+                <p>{ user.email}</p>
             </div>
             
         </div>
