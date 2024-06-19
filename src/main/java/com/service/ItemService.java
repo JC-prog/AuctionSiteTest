@@ -12,6 +12,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import com.util.DBConnectionUtil;
 
 import javax.servlet.ServletException;
 
@@ -124,5 +127,79 @@ public class ItemService {
         }
 
         return item;
+    }
+    
+    
+    public List<Item> getRecommendedItems(String userId) {
+        List<Item> recommendedItems = new ArrayList<>();
+        String sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
+                     "c.categoryNo, c.catName AS categoryName, i.`condition`, i.description, " +
+                     "a.auctionTypeID, a.name AS auctionTypeName, " +
+                     "d.durationID, d.name AS durationPresetName, d.hours, " +
+                     "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
+                     "FROM item i " +
+                     "JOIN user_preferences up ON i.categoryNo = up.category_id " +
+                     "JOIN User u ON i.sellerID = u.uID " +
+                     "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
+                     "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                     "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
+                     "WHERE up.user_id = ? " +
+                     "ORDER BY up.preference_score DESC " +
+                     "LIMIT 10";
+
+        try (Connection conn = DBConnectionUtil.getDBConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Item item = new Item();
+                    item.setItemNo(rs.getInt("itemNo"));
+                    item.setTitle(rs.getString("title"));
+
+                    RegisterClass seller = new RegisterClass();
+                    seller.setuId(rs.getString("sellerID"));
+                    seller.setuName(rs.getString("sellerName"));
+                    seller.setuMail(rs.getString("sellerEmail"));
+                    item.setSeller(seller);
+
+                    ItemCategory category = new ItemCategory();
+                    category.setCategoryNo(rs.getInt("categoryNo"));
+                    category.setCatName(rs.getString("categoryName"));
+                    item.setCategory(category);
+
+                    item.setCondition(rs.getString("condition"));
+                    item.setDescription(rs.getString("description"));
+
+                    AuctionType auctionType = new AuctionType();
+                    auctionType.setAuctionTypeID(rs.getInt("auctionTypeID"));
+                    auctionType.setName(rs.getString("auctionTypeName"));
+                    item.setAuctionType(auctionType);
+
+                    DurationPreset durationPreset = new DurationPreset();
+                    durationPreset.setDurationID(rs.getInt("durationID"));
+                    durationPreset.setName(rs.getString("durationPresetName"));
+                    durationPreset.setHours(rs.getInt("hours"));
+                    item.setDurationPreset(durationPreset);
+
+                    item.setStartDate(rs.getTimestamp("startDate"));
+                    item.setEndDate(rs.getTimestamp("endDate"));
+                    item.setStartPrice(rs.getBigDecimal("startPrice"));
+                    item.setMinSellPrice(rs.getBigDecimal("minSellPrice"));
+                    item.setListingStatus(rs.getString("listingStatus"));
+                    item.setActive(rs.getBoolean("isActive"));
+
+                    // Retrieve image blob
+                    byte[] imageBytes = rs.getBytes("image");
+                    if (imageBytes != null) {
+                        item.setImage(imageBytes);
+                    }
+
+                    recommendedItems.add(item);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return recommendedItems;
     }
 }

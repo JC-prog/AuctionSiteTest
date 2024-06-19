@@ -26,6 +26,9 @@
          <form action="ViewTransactionServlet" method="get">
          <button type="submit">View Transactions</button>
           </form>
+           <form action="RecommendItemServlet" method="get">
+            <button type="submit">Recommended Items</button>
+        </form>
     </div>
     <h1>Item Listings</h1>
     <table border="1">

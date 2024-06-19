@@ -13,16 +13,27 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.model.AuctionType;
 import com.model.DurationPreset;
 import com.model.Item;
 import com.model.ItemCategory;
 import com.model.RegisterClass;
+import com.service.ItemService;
+import com.service.UserPreferencesDAO;
 import com.model.Bid;
 
 @WebServlet("/ViewItemServlet")
 public class ViewItemServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private ItemService itemService;
+    private UserPreferencesDAO userPreferencesDAO;
+    
+    public ViewItemServlet() {
+        this.itemService = new ItemService();
+        this.userPreferencesDAO = new UserPreferencesDAO();
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
@@ -30,6 +41,8 @@ public class ViewItemServlet extends HttpServlet {
         int itemNo = Integer.parseInt(request.getParameter("itemNo"));
         Item item = null;
         List<Bid> bidList = new ArrayList<>();
+        HttpSession session = request.getSession();
+        String currentUserID = (String) session.getAttribute("uID");
         
 
 
@@ -102,6 +115,9 @@ public class ViewItemServlet extends HttpServlet {
                     item.setImage(imageBytes);
                 }
             }
+            
+            // Log user preference
+            userPreferencesDAO.logUserPreference(currentUserID, item.getCategory().getCategoryNo());
 
             rs.close();
             stmt.close();
