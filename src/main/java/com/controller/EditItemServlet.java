@@ -174,8 +174,8 @@ public class EditItemServlet extends HttpServlet {
             Date endDate = new Date();
             if ("Publish".equals(listingStatus)) {
                 int durationInHours = getDurationInHoursFromDB(durationPreset);
-                //endDate = new Date(startDate.getTime() + (durationInHours * 3600000)); original
-                endDate = new Date(startDate.getTime() + (durationInHours * 60000)); // to 1 minute if u set to 1 hour for test only
+                endDate = new Date(startDate.getTime() + (durationInHours * 3600000));// original
+                //endDate = new Date(startDate.getTime() + (durationInHours * 60000)); // to 1 minute if u set to 1 hour for test only
                 
                 
             }
