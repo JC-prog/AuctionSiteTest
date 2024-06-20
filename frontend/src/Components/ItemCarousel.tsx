@@ -3,11 +3,6 @@ import React from 'react'
 // Components
 import ItemCard from "../Components/ItemCard"
 
-// Styles
-import "../Styles/ItemCarousel.scss"
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-
 
 const ItemCarousel = () => {
     

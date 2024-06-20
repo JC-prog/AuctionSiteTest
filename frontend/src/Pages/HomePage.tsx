@@ -4,9 +4,12 @@ import { AxiosResponse } from 'axios';
 
 // Components
 import ItemCarousel from "../Components/ItemCarousel"
+import { ImageSlider } from '../Components/ImageSlider';
+import CategoryBar from '../Components/CategoryBar';
 
 // Config
 import api from '../config/api/loginApi';
+
 
 // Interface
 interface Item {
@@ -49,8 +52,7 @@ const HomePage = () => {
 
   return (
     <div>
-        <ItemCarousel />
-        <ItemCarousel />
+        
     </div>
   )
 }

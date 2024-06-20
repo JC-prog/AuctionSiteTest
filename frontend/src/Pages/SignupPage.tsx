@@ -6,9 +6,6 @@ import { toast } from 'react-toastify';
 // API
 import api from '../config/api/loginApi';
 
-// Styles
-import "../Styles/Signup.scss"
-
 // Interface
 import IUser from "../models/UserModel.ts";
 

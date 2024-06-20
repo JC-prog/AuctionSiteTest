@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 
-// Style
-import "../Styles/ItemCreatePage.scss";
-
 // Components
 import ItemForm from "../Components/ItemForm";
 

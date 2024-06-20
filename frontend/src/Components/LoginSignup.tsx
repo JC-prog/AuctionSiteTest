@@ -1,9 +1,5 @@
 import React from 'react'
 
-// CSS
-import "../Styles/LoginSignup.scss"
-
-
 const LoginSignup = () => {
   return (
     <div className="login-link">

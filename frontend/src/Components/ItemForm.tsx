@@ -5,9 +5,6 @@ import { toast } from 'react-toastify';
 // API
 import api from '../config/api/loginApi';
 
-// Config
-import "../Styles/ItemForm.scss";
-
 const ItemForm: React.FC = () => {
   const [itemData, setItemData] = useState({
     "description": "",

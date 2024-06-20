@@ -8,9 +8,6 @@ import api from '../config/api/loginApi';
 // Components
 import ItemCard from "../Components/ItemCard";
 
-// Style
-import "../Styles/SearchPage.scss";
-
 // Interface
 interface Item {
   itemId: number;

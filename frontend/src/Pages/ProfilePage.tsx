@@ -9,9 +9,6 @@ import { GoTag } from "react-icons/go";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { FaRegComment } from "react-icons/fa6";
 
-// Styles
-import "../Styles/ProfilePage.scss";
-
 // Components
 import ProfileComponent from '../Components/ProfileComponent';
 

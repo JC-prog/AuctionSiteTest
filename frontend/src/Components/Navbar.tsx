@@ -13,9 +13,6 @@ import NavbarNotificationButton from './Buttons/NavbarNotificationButton';
 import NavbarLogoutButton from './Buttons/NavbarLogoutButton';
 import NavbarProfileButton from './Buttons/NavbarProfileButton';
 
-// CSS
-import "../Styles/Navbar.scss"
-
 interface DecodedToken {
   sub: string; // Assuming 'sub' is the field containing user information
   // Add other fields as needed based on your JWT payload
@@ -83,17 +80,7 @@ const handleLogout = () => {
     <>
       <div className="navbar">
         <div className="navbar-brand">
-        	<a href="/">EzAuction</a>
-        </div>
-
-        <div className="navbar-menu-container">
-            <a href="/electronics">Electronics</a>
-            <a href="#new-listings">New Listings</a>
-            <a href="#art">Art</a>
-            <a href="#antiques">Antiques & Collectibles</a>
-            <a href="#coins">Coins & Currency</a>
-            <a href="#fashion">Properties</a>
-            <a href="#more-categories">All Categories</a>
+          <a href="/"><img src='./logo.svg' /></a>
         </div>
 
         <div className="menu-search-container">

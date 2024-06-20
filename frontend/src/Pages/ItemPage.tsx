@@ -5,12 +5,9 @@ import { AxiosResponse } from 'axios';
 // Config
 import api from '../config/api/loginApi';
 
-// Styles
-import "../Styles/ItemPage.scss";
-
 // Interface
 interface Item {
-    title: String;
+    itemTitle: String;
     description: String;
     startPrice: number;
 }
@@ -21,7 +18,7 @@ const ItemPage = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
 
-    // Fetch User
+    // Fetch Item
     useEffect(() => {
         const fetchItem = async () => {
           try {
@@ -60,16 +57,38 @@ const ItemPage = () => {
                 </div>
     
                 <div className="item-content-container">
-                    <h2>{ item.title }</h2>
-                    <p>{ item.description }</p>
+                    <div className="item-title-container">
+                        <h1>{ item.itemTitle }</h1>
+                    </div>
+                    
+                    <div>
+                        <p>{ item.description }</p>
+                    </div>
+                    
+                    <div>
+                        <h2>Price</h2>
+                    </div>
+
                     <div className="item-action-buttons">
                         <button>Bid</button>
                         <button>Trade</button>
                     </div>
+
+                    <div className="item-timer">
+                        <h2>Timer</h2>
+                    </div>
+
+                    <div>
+                        <h3>Details</h3>
+                    </div>
+
+                    <div>
+                        <h3>Seller</h3>
+                    </div>
                 </div>
             </div>
         ) : (
-            <div>User not found</div>
+            <div>Item not found</div>
         )}
     </div>
   )

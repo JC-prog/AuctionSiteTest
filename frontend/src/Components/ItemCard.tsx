@@ -1,8 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-// Style
-import "../Styles/ItemCard.scss"
 
 // interface
 interface Item {

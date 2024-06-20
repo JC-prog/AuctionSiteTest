@@ -5,9 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { ToastContainer, toast } from 'react-toastify';
 
-// CSS
-import "../Styles/Login.scss"
-
 // Config
 import api from '../config/api/loginApi';
 
