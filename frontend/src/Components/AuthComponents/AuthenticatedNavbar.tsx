@@ -16,11 +16,11 @@ const AuthenticatedNavbar = () => {
         toast.success('Logout Successful');
     
         setTimeout(() => {
-        navigate('/');
+            navigate('/');
 
-        window.location.reload;
+            window.location.reload;
 
-        }, 1000);
+        }, 2000);
     }
 
   return (
