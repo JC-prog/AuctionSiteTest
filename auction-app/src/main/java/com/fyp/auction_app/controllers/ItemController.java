@@ -28,11 +28,12 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
-    @GetMapping("api/items/recent-ten")
-    public ResponseEntity<List<Item>> getRecentTenItems() {
+    @GetMapping("api/items/all")
+    public ResponseEntity<Page<Item>> getRecentItems() {
 
+        Page<Item> items = itemService.findItems(0, 50);
 
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
     @GetMapping("api/items/search")

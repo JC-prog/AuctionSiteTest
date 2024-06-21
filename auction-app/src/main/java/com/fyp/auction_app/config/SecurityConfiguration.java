@@ -48,7 +48,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/item/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest()
-                        .authenticated()
+                        .permitAll()
             )
             .sessionManagement(
                     sess -> sess
