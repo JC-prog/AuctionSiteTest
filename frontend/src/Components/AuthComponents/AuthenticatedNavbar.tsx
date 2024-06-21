@@ -6,7 +6,11 @@ import Cookies from 'js-cookie';
 // icons
 import { Bell, User, ShoppingBag, ScrollText, Gavel, Bookmark, LogOut } from 'lucide-react';
 
-const AuthenticatedNavbar = () => {
+interface Props {
+    user: string;
+}
+
+const AuthenticatedNavbar : React.FC<Props> = ({ user }) => {
     const navigate = useNavigate();
 
     // Function to handle logout
@@ -16,7 +20,7 @@ const AuthenticatedNavbar = () => {
         toast.success('Logout Successful');
     
         setTimeout(() => {
-            navigate('/');
+            navigate('/login');
 
             window.location.reload;
 
@@ -26,13 +30,13 @@ const AuthenticatedNavbar = () => {
   return (
     <>
         <button>
-            <Link to="/mybids"> 
+            <Link to="/my-bids"> 
                 <Gavel />
             </Link>
         </button>
 
         <button>
-        <Link to="/wishlist">
+        <Link to="/watchlist">
             <Bookmark />
         </Link>
         </button>
@@ -44,23 +48,17 @@ const AuthenticatedNavbar = () => {
         </button>
         
         <button>
-        <Link to="/my-purchase">
-            <ShoppingBag />
-        </Link>
-        </button>
-        
-        <button>
         <Bell />
         </button>
         
         <button>
-        <Link to="/profile">
-            <ShoppingBag />
-        </Link>
+        <Link to={`/my-purchase/${user}`}>
+                <ShoppingBag />
+            </Link>
         </button>
 
         <button>
-            <Link to="/profile">
+            <Link to={`/user/${user}`}>
                 <User />
             </Link>
         </button>

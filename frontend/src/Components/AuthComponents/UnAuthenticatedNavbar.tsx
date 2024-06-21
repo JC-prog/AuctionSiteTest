@@ -12,7 +12,7 @@ const UnAuthenticatedNavbar = () => {
         
         
         <button>
-            <Link to="/register">
+            <Link to="/signup">
                 Sign Up
             </Link>
         </button>

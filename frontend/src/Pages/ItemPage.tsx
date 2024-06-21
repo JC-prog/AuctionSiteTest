@@ -49,15 +49,15 @@ const ItemPage = () => {
       }
 
   return (
-    <div className="item-page-wrapper">
+    <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
         { item ? (
-            <div className="item-details-container">
-                <div className="item-img-container">
+            <div>
+                <div>
                     <img src={"/test.jpg"} />
                 </div>
     
-                <div className="item-content-container">
-                    <div className="item-title-container">
+                <div>
+                    <div >
                         <h1>{ item.itemTitle }</h1>
                     </div>
                     
@@ -69,12 +69,12 @@ const ItemPage = () => {
                         <h2>Price</h2>
                     </div>
 
-                    <div className="item-action-buttons">
+                    <div >
                         <button>Bid</button>
                         <button>Trade</button>
                     </div>
 
-                    <div className="item-timer">
+                    <div>
                         <h2>Timer</h2>
                     </div>
 

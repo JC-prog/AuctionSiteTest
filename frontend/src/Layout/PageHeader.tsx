@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 // icons
 import { Search } from 'lucide-react';
+import { RiAuctionLine } from "react-icons/ri";
 
 // Components
 import AuthenticatedNavbar  from '../Components/AuthComponents/AuthenticatedNavbar';
@@ -10,9 +11,10 @@ import UnAuthenticatedNavbar from '../Components/AuthComponents/UnAuthenticatedN
 
 interface AuthProps {
   isAuth: boolean;
+  user: string;
 }
 
-const PageHeader: React.FC<AuthProps> = ({ isAuth }) => {
+const PageHeader: React.FC<AuthProps> = ({ isAuth, user }) => {
   const [query, setQuery] = useState<string>('');
     const navigate = useNavigate()
 
@@ -25,11 +27,13 @@ const PageHeader: React.FC<AuthProps> = ({ isAuth }) => {
 
   return (
     <div className="flex gap-10 lg:gap-20 justify-between pt-2 mb-6 mx-4">
-      <div className="flex gap-4 items-center flex-shrink-0">
-        <a href="/">
-          <img src="logo.svg" alt="Logo" />
-        </a>
-      </div>
+      <a href="/">
+        <div className="flex gap-4 items-center flex-shrink-0">
+          <RiAuctionLine size={40}/>
+            EzAuction
+        </div>
+      </a>
+      
 
       <form className="flex gap-4 flex-grow justify-center" onSubmit={ handleSearch }>
         <div className="flex flex-grow max-w-[600px]">
@@ -46,7 +50,7 @@ const PageHeader: React.FC<AuthProps> = ({ isAuth }) => {
       </form>
 
       <div className="flex flex-shrink-0 md:gap-2">
-        {isAuth ? <AuthenticatedNavbar /> : <UnAuthenticatedNavbar />}
+        {isAuth ? <AuthenticatedNavbar user={ user } /> : <UnAuthenticatedNavbar />}
       </div>
     </div>
   );

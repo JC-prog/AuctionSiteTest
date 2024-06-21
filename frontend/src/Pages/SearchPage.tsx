@@ -53,15 +53,17 @@ const SearchPage: React.FC = () => {
   }, [query]);
 
   return (
-    <div className="search-page-wrapper">
-      <h1>Search Results</h1>
-      {query && <p>Results for "{query}"</p>}
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
-      <div>
-        {items.map(item => (
-          <ItemCard item={item} />
-        ))}
+    <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
+      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-4xl">
+        <h1 className="text-2xl font-semibold mb-4">Search Results</h1>
+        {query && <p className="text-lg mb-4">Results for "{query}"</p>}
+        {loading && <p className="text-blue-500">Loading...</p>}
+        {error && <p className="text-red-500">Error: {error.message}</p>}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+          {items.map(item => (
+            <ItemCard key={item.itemId} item={item} />
+          ))}
+        </div>
       </div>
     </div>
   );

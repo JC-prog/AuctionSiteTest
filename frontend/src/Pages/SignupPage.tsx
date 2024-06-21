@@ -13,8 +13,6 @@ const SignupPage = () => {
 	const [formData, setFormData] = useState({
 		username: '',
 		password: '',
-		contactNum: '',
-		address: '',
 		email: '',
 	});
 	const navigate = useNavigate();
@@ -31,14 +29,12 @@ const SignupPage = () => {
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 
-		const { username, password, contactNum, address, email } = formData;
+		const { username, password, email } = formData;
 
 		try {
 			const response: AxiosResponse = await api.post('/api/auth/register', {
 				username,
 				password,
-				contactNum,
-				address,
 				email,
 			});
 
@@ -63,115 +59,65 @@ const SignupPage = () => {
 	};
 
 	return (
-		<div className="signup-container-wrapper">
-			<div className="signup-container">
-				<div className="signup-img-container">
-					<img src="test.jpg" alt="Signup" />
-				</div>
-
-				<div className="signup-form-wrapper">
-					<h1>EzAuction</h1>
-
-					<div className="signup-form-container">
-						<form className="register-form" id="register-form" onSubmit={handleSubmit}>
-							<div className="form-row">
-								<label className="form-label">Username</label>
-								<input
-									type="text"
-									name="username"
-									id="username"
-									className="form-input"
-									placeholder="User Name"
-									onChange={handleChange}
-								/>
-							</div>
-
-							<div className="form-row">
-								<label className="form-label">Email</label>
-								<input
-									type="email"
-									name="email"
-									id="email"
-									className="form-input"
-									placeholder="Your Email"
-									onChange={handleChange}
-								/>
-							</div>
-
-							<div className="form-row">
-								<label className="form-label">Contact Number</label>
-								<input
-									type="text"
-									name="contactNum"
-									id="contactNum"
-									className="form-input"
-									placeholder="Contact no"
-									onChange={handleChange}
-								/>
-							</div>
-
-							<div className="form-row">
-								<label className="form-label">Address</label>
-								<input
-									type="text"
-									name="address"
-									id="address"
-									className="form-input"
-									placeholder="Your Address"
-									onChange={handleChange}
-								/>
-							</div>
-
-							<div className="form-row">
-								<label className="form-label">Password</label>
-								<input
-									type="password"
-									name="password"
-									id="password"
-									className="form-input"
-									placeholder="Password"
-									onChange={handleChange}
-								/>
-							</div>
-
-							<div className="form-row">
-								<label className="form-label">Re-Enter Password</label>
-								<input
-									type="password"
-									name="re_pass"
-									id="re_pass"
-									className="form-input"
-									placeholder="Repeat your password"
-								/>
-							</div>
-
-							<div className="form-row">
-								<div className="signup-form-row-terms">
-									<input
-										type="checkbox"
-										name="agree-term"
-										id="agree-term"
-										className="form-checkbox"
-									/>
-									<label className="label-agree-term">
-										I agree to all statements in 
-										<a href="#" className="term-service">Terms of service</a>
-									</label>
-								</div>
-							</div>
-
-							<input
-								type="submit"
-								name="signup"
-								id="signup"
-								className="form-submit"
-								value="Register"
-							/>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div className="flex w-full h-screen items-center justify-center">
+        <div className="w-full flex items-center justify-center lg:w-1/2">
+            <form className=' w-11/12 max-w-[700px] px-10 py-20 rounded-3xl bg-white border-2 border-gray-100'
+                onSubmit = { handleSubmit }>
+                <h1 className='text-5xl font-semibold'>Sign Up</h1>
+                <p className='font-medium text-lg text-gray-500 mt-4'>Welcome! Please enter you details.</p>
+                <div className='mt-8'>
+                    <div className='flex flex-col'>
+                        <label className='text-lg font-medium'>Username</label>
+                        <input 
+                            className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
+                            placeholder="Enter your username"
+							name="username"
+                            value={ formData.username } 
+                            onChange={ handleChange } />
+                    </div>
+                    <div className='flex flex-col mt-4'>
+                        <label className='text-lg font-medium'>Password</label>
+                        <input 
+                            className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
+                            placeholder="Enter your password"
+							name="password"
+                            type={"password"}
+                            value ={ formData.password }
+                            onChange={ handleChange }
+                        />
+                    </div>
+					<div className='flex flex-col mt-4'>
+                        <label className='text-lg font-medium'>Email</label>
+                        <input 
+                            className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
+                            placeholder="Enter your email"
+							name="email"
+                            type={"email"}
+                            value ={ formData.email}
+                            onChange={ handleChange }
+                        />
+                    </div>
+                    <div className='mt-8 flex justify-between items-center'>
+                        <div>
+                            <input  type="checkbox" id='remember'/>
+                            <label className='ml-2 font-medium text-base' htmlFor="remember">Agree to Terms & Conditions</label>
+                        </div>
+                    </div>
+                    <div className='mt-8 flex flex-col gap-y-4'>
+                        <button 
+                            type="submit"
+                            className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01]  ease-in-out transform py-4 bg-violet-500 rounded-xl text-white font-bold text-lg'>Sign in</button>
+                        
+                    </div>
+                    <div className='mt-8 flex justify-center items-center'>
+                        <p className='font-medium text-base'>Already have an account?</p>
+                        <button
+                            className='ml-2 font-medium text-base text-violet-500'>Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 	);
 }
 
