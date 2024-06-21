@@ -69,7 +69,7 @@ function App() {
 
           <Route path="/my-bids" element={ <MyBids /> } />
           <Route path="/watchlist" element={ <MyWatchlist /> } />
-          <Route path="/my-listings" element={ <MyItemListing /> } />
+          <Route path="/my-listings" element={ <MyItemListing user={ user } /> } />
 
 
           <Route path="/user/:username" element={ <UserProfile user={ user } /> } />

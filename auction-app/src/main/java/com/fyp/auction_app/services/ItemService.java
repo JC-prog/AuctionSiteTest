@@ -25,6 +25,11 @@ public class ItemService {
         return itemRepo.findAll(pageable);
     }
 
+    public List<Item> findItemsBySeller(String sellerName) {
+
+        return itemRepo.findBySellerName(sellerName);
+    }
+
     public Page<Item> searchItems(String keyword, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 

@@ -36,6 +36,15 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
+    @GetMapping("api/items/seller")
+    public ResponseEntity<List<Item>> searchItems(
+            @RequestParam(value = "sellerName") String sellerName
+    ) {
+        List<Item> items = itemService.findItemsBySeller(sellerName);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
     @GetMapping("api/items/search")
     public ResponseEntity<Page<Item>> searchItems(
         @RequestParam(value = "keyword") String keyword,
