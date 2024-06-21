@@ -12,12 +12,14 @@ import ItemCard from "../Components/ItemCard";
 import api from '../config/api/loginApi';
 
 
-// Interface
 interface Item {
-  itemId: number;
   itemTitle: string;
-  itemCategoryNum: number;
-  minSellPrice: number;
+  itemCategory: string;
+  itemCondition: string;
+  description: string;
+  auctionType: string;
+  endDate: Date;
+  currentPrice: number;
 }
 
 interface PaginatedResponse {

@@ -72,9 +72,9 @@ function App() {
           <Route path="/my-listings" element={ <MyItemListing /> } />
 
 
-          <Route path="/user/:userID" element={ <UserProfile user={ user } /> } />
+          <Route path="/user/:username" element={ <UserProfile user={ user } /> } />
 
-          <Route path="/item/create" element={ <ItemCreatePage />} />
+          <Route path="/item/create" element={ <ItemCreatePage user={ user }/>} />
           <Route path="/item/edit" element={ <ItemEditPage /> } />
           <Route path="/item/:itemID" element={ <ItemPage /> } />
         </Routes>

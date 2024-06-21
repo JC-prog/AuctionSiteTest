@@ -5,11 +5,19 @@ import { AxiosResponse } from 'axios';
 // Config
 import api from '../config/api/loginApi';
 
+// Compontent
+import Timer from '../Components/Timer';
+
 // Interface
 interface Item {
-    itemTitle: String;
-    description: String;
-    startPrice: number;
+    itemTitle: string;
+    itemCategory: string;
+    itemCondition: string;
+    description: string;
+    auctionType: string;
+    endDate: Date;
+    currentPrice: number;
+    sellerName: string;
 }
 
 const ItemPage = () => {
@@ -17,6 +25,13 @@ const ItemPage = () => {
     const [item, setItem] = useState<Item | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
+
+    // Bid Item
+    const bidItem = async() => {
+
+      
+
+    }
 
     // Fetch Item
     useEffect(() => {
@@ -50,46 +65,77 @@ const ItemPage = () => {
 
   return (
     <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
-        { item ? (
+      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-4xl flex">
+        <div className="flex-shrink-0 mr-6">
+          {/* Placeholder image */}
+          <img src="/upload-photo.png" alt="Item Image" className="w-48 h-48 object-cover rounded-md shadow-md" />
+        </div>
+        <div className="w-full">
+          <h1 className="text-2xl font-semibold mb-4">{ item?.itemTitle }</h1>
+            
+            {/* Category */}
             <div>
-                <div>
-                    <img src={"/test.jpg"} />
-                </div>
-    
-                <div>
-                    <div >
-                        <h1>{ item.itemTitle }</h1>
-                    </div>
-                    
-                    <div>
-                        <p>{ item.description }</p>
-                    </div>
-                    
-                    <div>
-                        <h2>Price</h2>
-                    </div>
-
-                    <div >
-                        <button>Bid</button>
-                        <button>Trade</button>
-                    </div>
-
-                    <div>
-                        <h2>Timer</h2>
-                    </div>
-
-                    <div>
-                        <h3>Details</h3>
-                    </div>
-
-                    <div>
-                        <h3>Seller</h3>
-                    </div>
-                </div>
+              <label htmlFor="category" className="block font-medium">Category</label>
+              <h3>{ item?.itemCategory }</h3>
             </div>
-        ) : (
-            <div>Item not found</div>
-        )}
+
+            {/* Condition */}
+            <div>
+              <label htmlFor="condition" className="block font-medium">Condition</label>
+              <h3>{ item?.itemCondition }</h3>
+            </div>
+
+            {/* Description */}
+            <div>
+              <label htmlFor="description" className="block font-medium">Description</label>
+              <textarea
+                id="description"
+                name="description"
+                readOnly
+                value={ item?.description }
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                rows={4}
+              />
+            </div>
+
+            {/* Type */}
+            <div>
+              <label htmlFor="type" className="block font-medium">Auction Type</label>
+              <h3>{ item?.auctionType }</h3>
+            </div>
+
+            {/* Current Price */}
+            <div>
+              <label htmlFor="startPrice" className="block font-medium">Price ($)</label>
+              <h3>${item.currentPrice.toFixed(2)}</h3>
+            </div>
+
+            {/* Timer*/}
+            <div>
+              <label htmlFor="startPrice" className="block font-medium">Time Remaining</label>
+               <Timer endTime={ item?.endDate }/>
+            </div>
+
+            {/* Seller*/}
+            <div>
+              <label htmlFor="startPrice" className="block font-medium">Seller:</label>
+               <p>{ item?.sellerName }</p>
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex space-x-4">
+                <button 
+                  onClick={ bidItem }
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                    Bid Item
+                </button>
+                <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">
+                    Trade Item
+                </button>
+            </div>
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,33 +1,99 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import { AxiosResponse } from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+// Config
+import api from '../config/api/loginApi';
 
 // Define types for item fields
 interface Item {
-  title: string;
-  category: string;
-  condition: string;
+  itemTitle: string;
+  itemCategory: string;
+  itemCondition: string;
   description: string;
-  type: string;
-  duration: number;
-  startPrice: number;
+  auctionType: string;
+  endDate: Date | null; // Nullable Date to handle initial state
+  currentPrice: number;
+  sellerName: string;
 }
 
-const CreateItemPage: React.FC = () => {
+interface AuthProps {
+  isAuth: boolean;
+  user: string;
+}
+
+const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
   // State to manage form inputs
   const [item, setItem] = useState<Item>({
-    title: '',
-    category: '',
-    condition: '',
+    itemTitle: '',
+    itemCategory: '',
+    itemCondition: '',
     description: '',
-    type: '',
-    duration: 0,
-    startPrice: 0,
+    auctionType: '',
+    endDate: null, // Initialize with null
+    currentPrice: 0,
+    sellerName: user, // Initialize sellerName with user prop
   });
 
-  // Handle form submission
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [duration, setDuration] = useState<number>(0);
+  const navigate = useNavigate();
+
+  // Calculate End Date based on duration
+  const calculateEndDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    const currentDate = new Date();
+    const nextDay = new Date(currentDate);
+    nextDay.setDate(currentDate.getDate() + parseInt(value));
+    setItem(prevItem => ({
+      ...prevItem,
+      endDate: nextDay,
+    }));
+    setDuration(parseInt(value));
+  };
+
+  // Submit form
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Submit item data (e.g., send to backend)
-    console.log(item); // Replace with API call or state management logic
+
+    try {
+      const { itemTitle, itemCategory, itemCondition, description, auctionType, currentPrice, sellerName } = item; // Include sellerName from item state
+      const response: AxiosResponse = await api.post(`/api/item/create`, {
+        itemTitle,
+        itemCategory,
+        itemCondition,
+        description,
+        auctionType,
+        endDate: item.endDate,
+        currentPrice,
+        sellerName,
+      });
+
+      console.log(response);
+
+      if (response.status === 200) {
+        toast.success('Create Listing Successful!', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+
+        setTimeout(() => {
+          navigate('/my-listings');
+          window.location.reload();
+        }, 2000);
+      } else {
+        toast.error('Failed to create listing. Please try again.', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Failed to create listing. Please check your inputs and try again.', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
   };
 
   // Handle input changes
@@ -51,49 +117,65 @@ const CreateItemPage: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Title */}
             <div>
-              <label htmlFor="title" className="block font-medium">Title</label>
+              <label htmlFor="title" className="block font-medium">
+                Title
+              </label>
               <input
                 type="text"
                 id="title"
-                name="title"
-                value={item.title}
+                name="itemTitle"
+                value={item.itemTitle}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               />
             </div>
-            
+
             {/* Category */}
             <div>
-              <label htmlFor="category" className="block font-medium">Category</label>
-              <input
-                type="text"
+              <label htmlFor="category" className="block font-medium">
+                Category
+              </label>
+              <select
                 id="category"
-                name="category"
-                value={item.category}
+                name="itemCategory"
+                value={item.itemCategory}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-              />
+              >
+                <option value="">Select Option</option>
+                <option value="Sports">Sports</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Arts">Arts</option>
+                <option value="Cars">Cars</option>
+              </select>
             </div>
 
             {/* Condition */}
             <div>
-              <label htmlFor="condition" className="block font-medium">Condition</label>
-              <input
-                type="text"
+              <label htmlFor="condition" className="block font-medium">
+                Condition
+              </label>
+              <select
                 id="condition"
-                name="condition"
-                value={item.condition}
+                name="itemCondition"
+                value={item.itemCondition}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-              />
+              >
+                <option value="">Select Option</option>
+                <option value="New">New</option>
+                <option value="Used">Used</option>
+              </select>
             </div>
 
             {/* Description */}
             <div>
-              <label htmlFor="description" className="block font-medium">Description</label>
+              <label htmlFor="description" className="block font-medium">
+                Description
+              </label>
               <textarea
                 id="description"
                 name="description"
@@ -105,51 +187,64 @@ const CreateItemPage: React.FC = () => {
               />
             </div>
 
-            {/* Type */}
+            {/* Auction Type */}
             <div>
-              <label htmlFor="type" className="block font-medium">Type</label>
-              <input
-                type="text"
-                id="type"
-                name="type"
-                value={item.type}
+              <label htmlFor="auctionType" className="block font-medium">
+                Auction Type
+              </label>
+              <select
+                id="auctionType"
+                name="auctionType"
+                value={item.auctionType}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-              />
+              >
+                <option value="">Select Option</option>
+                <option value="price-up">Price Up</option>
+                <option value="low-start-high">Low Start High</option>
+              </select>
             </div>
 
-            {/* Duration */}
+            {/* Duration (days) */}
             <div>
-              <label htmlFor="duration" className="block font-medium">Duration (days)</label>
+              <label htmlFor="duration" className="block font-medium">
+                Duration (days)
+              </label>
               <input
                 type="number"
                 id="duration"
                 name="duration"
-                value={item.duration}
-                onChange={handleChange}
+                value={duration}
+                onChange={calculateEndDate}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               />
             </div>
 
-            {/* Start Price */}
+            {/* Start Price ($) */}
             <div>
-              <label htmlFor="startPrice" className="block font-medium">Start Price ($)</label>
+              <label htmlFor="startPrice" className="block font-medium">
+                Start Price ($)
+              </label>
               <input
                 type="number"
                 id="startPrice"
-                name="startPrice"
-                value={item.startPrice}
+                name="currentPrice"
+                value={item.currentPrice}
                 onChange={handleChange}
                 required
+                step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               />
             </div>
 
             {/* Submit Button */}
             <div>
-              <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+              >
                 Create Item
               </button>
             </div>
@@ -161,3 +256,4 @@ const CreateItemPage: React.FC = () => {
 };
 
 export default CreateItemPage;
+

@@ -65,7 +65,7 @@ public class ItemController {
         Optional<Item> existingUser = itemService.findItemById(itemID);
 
         if (existingUser.isPresent()) {
-            item.setItemID(itemID);
+            item.setItemId(itemID);
             itemService.updateItem(item);
             return new ResponseEntity<>(item, HttpStatus.OK);
         } else {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Example data for items (replace with actual data or fetch from API)
 const items = [
@@ -8,10 +9,21 @@ const items = [
 ];
 
 const ItemsTable: React.FC = () => {
+    const navigate = useNavigate();
+
+    // Navigate to Create Listing Page
+    const navigateToCreateListing = () => {
+        navigate('/item/create');
+      };
+
   return (
     <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-4xl">
         <h1 className="text-2xl font-semibold mb-4">My Listings</h1>
+        <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600 mb-2"
+            onClick={ navigateToCreateListing }>
+            Create New Listing
+        </button>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-200">
             <thead>
