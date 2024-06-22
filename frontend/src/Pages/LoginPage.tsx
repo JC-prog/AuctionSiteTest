@@ -23,6 +23,11 @@ const LoginPage = () => {
         setPassword(event.target.value);
     };
 
+    // 
+    const navigateToSignup = () => {
+        navigate("/signup")
+    }
+
 	// Submit
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -114,12 +119,13 @@ const LoginPage = () => {
                     <div className='mt-8 flex flex-col gap-y-4'>
                         <button 
                             type="submit"
-                            className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01]  ease-in-out transform py-4 bg-violet-500 rounded-xl text-white font-bold text-lg'>Sign in</button>
+                            className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01]  ease-in-out transform py-4 bg-violet-500 rounded-xl text-white font-bold text-lg'>Login</button>
                         
                     </div>
                     <div className='mt-8 flex justify-center items-center'>
                         <p className='font-medium text-base'>Don't have an account?</p>
                         <button
+                            onClick={ navigateToSignup }
                             className='ml-2 font-medium text-base text-violet-500'>Sign up</button>
                     </div>
                 </div>
