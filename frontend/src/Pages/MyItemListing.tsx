@@ -56,7 +56,9 @@ const ItemsTable: React.FC<AuthProps> = ({ isAuth, user }) => {
         }
         console.log('Fetched items:', response.data);
         
-        setItems(response.data.results)
+        setItems(response.data)
+
+        console.log(items)
       } catch (error) {
         console.error('Error fetching items:', error);
         setError(error as Error);
