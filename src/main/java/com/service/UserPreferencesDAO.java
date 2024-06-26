@@ -1,0 +1,24 @@
+package com.service;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import com.util.DBConnectionUtil;
+
+public class UserPreferencesDAO {
+
+    public void logUserPreference(String currentUserID, int categoryId) {
+        String sql = "INSERT INTO user_preferences (user_id, category_id, preference_score) " +
+                     "VALUES (?, ?, 1.00) " +
+                     "ON DUPLICATE KEY UPDATE preference_score = preference_score + 1.00";
+
+        try (Connection conn = DBConnectionUtil.getDBConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, currentUserID);
+            stmt.setInt(2, categoryId);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

@@ -22,6 +22,18 @@
     <artifactId>stripe-java</artifactId>
     <version>20.97.0</version>
 </dependency>
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>jstl</artifactId>
+    <version>1.2</version>
+</dependency>
+<dependency>
+    <groupId>com.sun.mail</groupId>
+    <artifactId>javax.mail</artifactId>
+    <version>1.6.2</version>
+</dependency>
+
+
 
 
 	<!-- https://mvnrepository.com/artifact/jstl/jstl -->

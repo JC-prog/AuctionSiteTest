@@ -119,9 +119,9 @@ public class CreateItemServlet extends HttpServlet {
         if(listingStatus.equals("Publish"))
         {
         	startDate = new Date();
-        	//endDate = new Date(startDate.getTime()+(durationInHours*3600000));
+        	endDate = new Date(startDate.getTime()+(durationInHours*3600000));
         	// if i put 1 hour , enddate will be 1 minute
-        	endDate = new Date(startDate.getTime()+(durationInHours*60000));
+        	//endDate = new Date(startDate.getTime()+(durationInHours*60000));
         	System.out.println("start date =" +startDate);
         	System.out.println("end date =" +endDate);
         }
