@@ -4,6 +4,7 @@ import com.model.Item;
 import com.model.RegisterClass;
 import com.model.ItemCategory;
 import com.model.AuctionType;
+import com.model.Condition;
 import com.model.DurationPreset;
 
 import java.sql.Blob;
@@ -36,7 +37,7 @@ public class ItemService {
 
             // SQL query to fetch item details
             String sql = "SELECT " +
-                "i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
+                "i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail,con.conditionID, con.name AS conditionName, " +
                 "c.categoryNo, c.catName AS categoryName, i.`condition`, i.description, " +
                 "a.auctionTypeID, a.name AS auctionTypeName, " +
                 "d.durationID, d.name AS durationPresetName, d.hours, " +
@@ -45,6 +46,7 @@ public class ItemService {
                 "JOIN User u ON i.sellerID = u.uID " +
                 "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
                 "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                "JOIN ItemCondition con ON i.condition = con.conditionID " +
                 "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
                 "WHERE i.itemNo = ?";
 
@@ -71,7 +73,8 @@ public class ItemService {
                 //category.setCatName(rs.getString("categoryName"));
                 item.setCategory(category);
 
-                item.setCondition(rs.getString("condition"));
+                Condition condition = new Condition(rs.getInt("conditionID"), rs.getString("conditionName"), true);
+                item.setCondition(condition);
                 item.setDescription(rs.getString("description"));
 
                 AuctionType auctionType = new AuctionType();
@@ -135,7 +138,7 @@ public class ItemService {
     public List<Item> getRecommendedItems(String userId) {
         List<Item> recommendedItems = new ArrayList<>();
         String sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
-                     "c.categoryNo, c.catName AS categoryName, i.`condition`, i.description, " +
+                     "c.categoryNo, c.catName AS categoryName, con.conditionID, con.name AS conditionName, i.description, " +
                      "a.auctionTypeID, a.name AS auctionTypeName, " +
                      "d.durationID, d.name AS durationPresetName, d.hours, " +
                      "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
@@ -144,6 +147,7 @@ public class ItemService {
                      "JOIN User u ON i.sellerID = u.uID " +
                      "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
                      "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                     "JOIN ItemCondition con ON i.condition = con.conditionID " +
                      "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
                      "WHERE up.user_id = ? " +
                      "ORDER BY up.preference_score DESC " +
@@ -170,7 +174,8 @@ public class ItemService {
                     //category.setCatName(rs.getString("categoryName"));
                     item.setCategory(category);
 
-                    item.setCondition(rs.getString("condition"));
+                    Condition condition = new Condition(rs.getInt("conditionID"), rs.getString("conditionName"), true);
+                    item.setCondition(condition);
                     item.setDescription(rs.getString("description"));
 
                     AuctionType auctionType = new AuctionType();

@@ -15,7 +15,7 @@ public class DurationPresetDAO {
     // Method to get all duration presets from the database
     public List<DurationPreset> getAllDurations() throws ClassNotFoundException {
         List<DurationPreset> durations = new ArrayList<>();
-        String query = "SELECT durationID, name, hours, isActive FROM DurationPreset";
+        String query = "SELECT durationID, name, hours, isActive FROM DurationPreset WHERE isActive = TRUE";
 
         try (Connection conn = DBConnectionUtil.getDBConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
@@ -75,7 +75,7 @@ public class DurationPresetDAO {
 
     // Method to delete a duration preset from the database
     public boolean deleteDuration(int durationID) throws ClassNotFoundException {
-        String query = "DELETE FROM DurationPreset WHERE durationID = ?";
+        String query = "UPDATE DurationPreset SET isActive = FALSE WHERE durationID = ?";
         try (Connection conn = DBConnectionUtil.getDBConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 

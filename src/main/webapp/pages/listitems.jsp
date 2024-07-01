@@ -59,7 +59,7 @@
                         out.println("<td>" + item.getTitle() + "</td>");
                         out.println("<td>" + item.getSeller().getuName() + "</td>");
                         out.println("<td>" + item.getCategory().getCatName() + "</td>");
-                        out.println("<td>" + item.getCondition() + "</td>");
+                        out.println("<td>" + item.getCondition().getName() + "</td>");
                         out.println("<td>" + item.getDescription() + "</td>");
                         out.println("<td>" + item.getStartDate() + "</td>");
                         out.println("<td>" + item.getEndDate() + "</td>");

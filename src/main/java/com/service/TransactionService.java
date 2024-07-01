@@ -114,7 +114,7 @@ public class TransactionService {
     public List<Item> getAllItemBiddedOn(String sellerID) {
         List<Item> items = new ArrayList<>();
         String sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
-                     "c.categoryNo, c.catName AS categoryName, i.`condition`, i.description, " +
+                     "c.categoryNo, c.catName AS categoryName, i.`condition`, i.description,con.conditionID, con.name AS conditionName, " +
                      "a.auctionTypeID, a.name AS auctionTypeName, " +
                      "d.durationID, d.name AS durationPresetName, d.hours, " +
                      "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
@@ -122,6 +122,7 @@ public class TransactionService {
                      "JOIN User u ON i.sellerID = u.uID " +
                      "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
                      "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                     "JOIN ItemCondition con ON i.condition = con.conditionID " +
                      "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
                      "WHERE i.sellerID = ? AND i.isActive = TRUE AND i.listingStatus = 'Closed'";
 
@@ -146,7 +147,8 @@ public class TransactionService {
                 //category.setCatName(rs.getString("categoryName"));
                 item.setCategory(category);
 
-                item.setCondition(rs.getString("condition"));
+                Condition condition = new Condition(rs.getInt("conditionID"), rs.getString("conditionName"), true);
+                item.setCondition(condition);
                 item.setDescription(rs.getString("description"));
 
                 AuctionType auctionType = new AuctionType();

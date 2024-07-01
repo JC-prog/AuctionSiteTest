@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="com.model.Item, com.model.ItemCategory, com.model.AuctionType, com.model.DurationPreset, java.util.List" %>
+<%@ page import="com.model.Item, com.model.ItemCategory, com.model.AuctionType, com.model.DurationPreset,com.model.Condition, java.util.List" %>
 <%@ page import="java.sql.*, java.util.*" %>
 <%
 	Connection conn = null;
@@ -9,48 +9,58 @@
 	List<Map<String, Object>> categories = new ArrayList<>();
 	List<Map<String, Object>> auctionTypes = new ArrayList<>();
 	List<Map<String, Object>> durations = new ArrayList<>();
+	List<Map<String, Object>> conditions = new ArrayList<>();
 	
-	 try {
-	        // Database connection details
-	        String url = "jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC";
-	        String user = "root";
-	        String password = "password";
-	        conn = DriverManager.getConnection(url, user, password);
-	        stmt = conn.createStatement();
+	try {
+	    // Database connection details
+	    String url = "jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC";
+	    String user = "root";
+	    String password = "password";
+	    conn = DriverManager.getConnection(url, user, password);
+	    stmt = conn.createStatement();
 
-	        // Fetch categories
-	        rs = stmt.executeQuery("SELECT categoryNo, catName FROM ItemCategory WHERE isActive = true");
-	        while (rs.next()) {
-	            Map<String, Object> category = new HashMap<>();
-	            category.put("CategoryNo", rs.getInt("categoryNo"));
-	            category.put("CatName", rs.getString("catName"));
-	            categories.add(category);
-	        }
-
-	        // Fetch auction types
-	        rs = stmt.executeQuery("SELECT auctionTypeID, name FROM AuctionType WHERE isActive = true");
-	        while (rs.next()) {
-	            Map<String, Object> auctionType = new HashMap<>();
-	            auctionType.put("AuctionTypeID", rs.getInt("auctionTypeID"));
-	            auctionType.put("Name", rs.getString("name"));
-	            auctionTypes.add(auctionType);
-	        }
-
-	        // Fetch duration presets
-	        rs = stmt.executeQuery("SELECT durationID, name FROM DurationPreset WHERE isActive = true");
-	        while (rs.next()) {
-	            Map<String, Object> duration = new HashMap<>();
-	            duration.put("DurationID", rs.getInt("durationID"));
-	            duration.put("Name", rs.getString("name"));
-	            durations.add(duration);
-	        }
-	    } catch (SQLException e) {
-	        throw new ServletException(e);
-	    } finally {
-	        if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
-	        if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
-	        if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+	    // Fetch categories
+	    rs = stmt.executeQuery("SELECT categoryNo, catName FROM ItemCategory WHERE isActive = true");
+	    while (rs.next()) {
+	        Map<String, Object> category = new HashMap<>();
+	        category.put("CategoryNo", rs.getInt("categoryNo"));
+	        category.put("CatName", rs.getString("catName"));
+	        categories.add(category);
 	    }
+
+	    // Fetch auction types
+	    rs = stmt.executeQuery("SELECT auctionTypeID, name FROM AuctionType WHERE isActive = true");
+	    while (rs.next()) {
+	        Map<String, Object> auctionType = new HashMap<>();
+	        auctionType.put("AuctionTypeID", rs.getInt("auctionTypeID"));
+	        auctionType.put("Name", rs.getString("name"));
+	        auctionTypes.add(auctionType);
+	    }
+
+	    // Fetch duration presets
+	    rs = stmt.executeQuery("SELECT durationID, name FROM DurationPreset WHERE isActive = true");
+	    while (rs.next()) {
+	        Map<String, Object> duration = new HashMap<>();
+	        duration.put("DurationID", rs.getInt("durationID"));
+	        duration.put("Name", rs.getString("name"));
+	        durations.add(duration);
+	    }
+
+	    // Fetch conditions
+	    rs = stmt.executeQuery("SELECT conditionID, name FROM ItemCondition WHERE isActive = true");
+	    while (rs.next()) {
+	        Map<String, Object> condition = new HashMap<>();
+	        condition.put("ConditionID", rs.getInt("conditionID"));
+	        condition.put("Name", rs.getString("name"));
+	        conditions.add(condition);
+	    }
+	} catch (SQLException e) {
+	    throw new ServletException(e);
+	} finally {
+	    if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+	    if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
+	    if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+	}
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,6 +74,7 @@
 
             document.getElementById("title").disabled = isPublish;
             document.getElementById("category").disabled = isPublish;
+            document.getElementById("condition").disabled = isPublish;
             document.getElementById("auctionType").disabled = isPublish;
             document.getElementById("durationPreset").disabled = isPublish;
             document.getElementById("startPrice").disabled = isPublish;
@@ -89,7 +100,7 @@
 
         <label for="category">Category:</label>
         <select id="category" name="category">
-           <% 
+            <% 
                 for (Map<String, Object> category : categories) {
                     int categoryNo = (int) category.get("CategoryNo");
                     String catName = (String) category.get("CatName");
@@ -100,14 +111,23 @@
         </select><br>
 
         <label for="condition">Condition:</label>
-        <input type="text" id="condition" name="condition" value="<%= item.getCondition() %>"><br>
+        <select id="condition" name="condition">
+            <% 
+                for (Map<String, Object> condition : conditions) {
+                    int conditionID = (int) condition.get("ConditionID");
+                    String name = (String) condition.get("Name");
+                    boolean selected = conditionID == item.getCondition().getConditionID();
+                    out.println("<option value='" + conditionID + "'" + (selected ? " selected" : "") + ">" + name + "</option>");
+                }
+            %>
+        </select><br>
 
         <label for="description">Description:</label>
         <textarea id="description" name="description"><%= item.getDescription() %></textarea><br>
 
         <label for="auctionType">Auction Type:</label>
         <select id="auctionType" name="auctionType">
-             <%
+            <%
                 for (Map<String, Object> auctionType : auctionTypes) {
                     int auctionTypeID = (int) auctionType.get("AuctionTypeID");
                     String name = (String) auctionType.get("Name");
@@ -119,7 +139,7 @@
 
         <label for="durationPreset">Duration:</label>
         <select id="durationPreset" name="durationPreset">
-           <% 
+            <% 
                 for (Map<String, Object> duration : durations) {
                     int durationID = (int) duration.get("DurationID");
                     String name = (String) duration.get("Name");

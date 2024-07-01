@@ -15,7 +15,7 @@ public class ItemCategoryDAO {
     // Method to get all item categories from the database
     public List<ItemCategory> getAllCategories() throws ClassNotFoundException {
         List<ItemCategory> categories = new ArrayList<>();
-        String query = "SELECT categoryNo, catName, isActive FROM ItemCategory";
+        String query = "SELECT categoryNo, catName, isActive FROM ItemCategory WHERE isActive = TRUE";
 
         try (Connection conn = DBConnectionUtil.getDBConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
@@ -72,7 +72,7 @@ public class ItemCategoryDAO {
 
     // Method to delete an item category from the database
     public boolean deleteCategory(int categoryNo) throws ClassNotFoundException {
-        String query = "DELETE FROM ItemCategory WHERE categoryNo = ?";
+        String query = "UPDATE ItemCategory SET isActive = FALSE WHERE categoryNo = ?";
         try (Connection conn = DBConnectionUtil.getDBConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
