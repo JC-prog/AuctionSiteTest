@@ -15,7 +15,7 @@ public class ConditionDAO {
     // Method to get all conditions from the database
     public List<Condition> getAllConditions() throws ClassNotFoundException {
         List<Condition> conditions = new ArrayList<>();
-        String query = "SELECT conditionID, name, isActive FROM itemcondition";
+        String query = "SELECT conditionID, name, isActive FROM itemcondition WHERE isActive = TRUE";
 
         try (Connection conn = DBConnectionUtil.getDBConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
@@ -72,7 +72,7 @@ public class ConditionDAO {
 
     // Method to delete a condition from the database
     public boolean deleteCondition(int conditionID) throws ClassNotFoundException {
-        String query = "DELETE FROM itemcondition WHERE conditionID = ?";
+        String query = "UPDATE itemcondition SET isActive = FALSE WHERE conditionID = ?";
         try (Connection conn = DBConnectionUtil.getDBConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 

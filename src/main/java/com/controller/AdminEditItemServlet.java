@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.model.AuctionType;
+import com.model.Condition;
 import com.model.DurationPreset;
 import com.model.Item;
 import com.model.ItemCategory;
@@ -42,17 +43,19 @@ public class AdminEditItemServlet extends HttpServlet {
         String password = "password";
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            String sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
-                         "c.categoryNo, c.catName AS categoryName, i.`condition`, i.description, " +
-                         "a.auctionTypeID, a.name AS auctionTypeName, " +
-                         "d.durationID, d.name AS durationPresetName, d.hours, " +
-                         "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
-                         "FROM Item i " +
-                         "JOIN User u ON i.sellerID = u.uID " +
-                         "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
-                         "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
-                         "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
-                         "WHERE i.itemNo = ?";
+            String sql = "SELECT " +
+                    "i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
+                    "c.categoryNo, c.catName AS categoryName, con.conditionID, con.name AS conditionName, " +
+                    "i.description, a.auctionTypeID, a.name AS auctionTypeName, " +
+                    "d.durationID, d.name AS durationPresetName, d.hours, " +
+                    "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
+                    "FROM Item i " +
+                    "JOIN User u ON i.sellerID = u.uID " +
+                    "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
+                    "JOIN ItemCondition con ON i.condition = con.conditionID " +
+                    "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                    "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
+                    "WHERE i.itemNo = ?";
 
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setInt(1, itemNo);
@@ -75,7 +78,8 @@ public class AdminEditItemServlet extends HttpServlet {
                         //category.setCatName(rs.getString("categoryName"));
                         item.setCategory(category);
 
-                        item.setCondition(rs.getString("condition"));
+                        Condition condition = new Condition(rs.getInt("conditionID"), rs.getString("conditionName"), true);
+                        item.setCondition(condition);
                         item.setDescription(rs.getString("description"));
 
                         AuctionType auctionType = new AuctionType();

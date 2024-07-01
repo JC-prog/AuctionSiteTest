@@ -8,6 +8,7 @@
     List<Map<String, Object>> categories = new ArrayList<>();
     List<Map<String, Object>> auctionTypes = new ArrayList<>();
     List<Map<String, Object>> durations = new ArrayList<>();
+	List<Map<String, Object>> conditions = new ArrayList<>();
  
     try {
         // Database connection details
@@ -43,6 +44,14 @@
             duration.put("Name", rs.getString("name"));
             durations.add(duration);
         }
+        // Fetch conditions
+	    rs = stmt.executeQuery("SELECT conditionID, name FROM ItemCondition WHERE isActive = true");
+	    while (rs.next()) {
+	        Map<String, Object> condition = new HashMap<>();
+	        condition.put("ConditionID", rs.getInt("conditionID"));
+	        condition.put("Name", rs.getString("name"));
+	        conditions.add(condition);
+	    }
     } catch (SQLException e) {
         throw new ServletException(e);
     } finally {
@@ -100,8 +109,17 @@
         </select><br>
 
         <label for="condition">Condition:</label>
-        <input type="text" id="condition" name="condition" value="<%= item.getCondition() %>"><br>
-
+        <select id="condition" name="condition">
+            <% 
+                for (Map<String, Object> condition : conditions) {
+                    int conditionID = (int) condition.get("ConditionID");
+                    String name = (String) condition.get("Name");
+                    boolean selected = conditionID == item.getCondition().getConditionID();
+                    out.println("<option value='" + conditionID + "'" + (selected ? " selected" : "") + ">" + name + "</option>");
+                }
+            %>
+        </select><br>
+        
         <label for="description">Description:</label>
         <textarea id="description" name="description"><%= item.getDescription() %></textarea><br>
 

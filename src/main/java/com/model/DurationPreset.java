@@ -6,6 +6,8 @@ public class DurationPreset {
     private int hours;
     private boolean isActive;
 
+    public DurationPreset()
+    {}
     // Getters and Setters
     public DurationPreset(int durationID, String name,int hours, boolean isActive) {
         this.durationID = durationID;

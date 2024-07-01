@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.model.Condition;
 import com.model.Item;
 import com.model.ItemCategory;
 import com.model.RegisterClass;
@@ -42,10 +43,11 @@ public class AdminHomeServlet extends HttpServlet {
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
             String sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
-                         "c.categoryNo, c.catName AS categoryName, i.`condition`, i.description, " +
+                         "c.categoryNo, c.catName AS categoryName, con.conditionID, con.name AS conditionName, i.description, " +
                          "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.image " +
                          "FROM Item i " +
                          "JOIN User u ON i.sellerID = u.uID " +
+                         "JOIN ItemCondition con ON i.condition = con.conditionID " +
                          "JOIN ItemCategory c ON i.categoryNo = c.categoryNo";
 
             try (PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
@@ -67,7 +69,8 @@ public class AdminHomeServlet extends HttpServlet {
                     //category.setCatName(rs.getString("categoryName"));
                     item.setCategory(category);
 
-                    item.setCondition(rs.getString("condition"));
+                    Condition condition = new Condition(rs.getInt("conditionID"), rs.getString("conditionName"), true);
+                    item.setCondition(condition);
                     item.setDescription(rs.getString("description"));
                     item.setStartDate(rs.getTimestamp("startDate"));
                     item.setEndDate(rs.getTimestamp("endDate"));

@@ -200,3 +200,17 @@ ALTER TABLE watchlist MODIFY COLUMN WatchlistID INT auto_increment
 ALTER TABLE TradeRequest MODIFY COLUMN TradeID INT auto_increment
 
 ALTER  TABLE Transaction MODIFY COLUMN TransactionID AUTO_INCREMENT 
+
+
+-- Step 1: Drop the foreign key constraint
+ALTER TABLE Item DROP FOREIGN KEY item_ibfk_2;
+ALTER TABLE user_preferences DROP FOREIGN KEY user_preferences_ibfk_2;
+
+-- Step 2: Alter the CategoryNo column to be AUTO_INCREMENT
+ALTER TABLE ItemCategory MODIFY COLUMN CategoryNo INT AUTO_INCREMENT;
+
+-- Step 3: Re-add the foreign key constraint
+ALTER TABLE Item ADD CONSTRAINT item_ibfk_2 FOREIGN KEY (categoryNo) REFERENCES ItemCategory(CategoryNo);
+ALTER TABLE user_preferences ADD CONSTRAINT user_preferences_ibfk_2 FOREIGN KEY (categoryNo) REFERENCES ItemCategory(CategoryNo);
+
+

@@ -8,7 +8,7 @@ public class Item {
     private RegisterClass seller;
     private String title;
     private ItemCategory category;
-    private String condition;
+    private Condition condition;
     private String description;
     private AuctionType auctionType;
     private DurationPreset durationPreset;
@@ -54,11 +54,11 @@ public class Item {
         this.category = category;
     }
 
-    public String getCondition() {
+    public Condition getCondition() {
         return condition;
     }
 
-    public void setCondition(String condition) {
+    public void setCondition(Condition condition) {
         this.condition = condition;
     }
 
