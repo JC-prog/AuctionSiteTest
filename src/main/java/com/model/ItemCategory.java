@@ -5,6 +5,12 @@ public class ItemCategory {
     private String catName;
     private boolean isActive;
 
+    public ItemCategory(int categoryNo, String catName, boolean isActive) {
+        this.categoryNo = categoryNo;
+        this.catName = catName;
+        this.isActive = isActive;
+    }
+
     // Getters and Setters
 
     public int getCategoryNo() {

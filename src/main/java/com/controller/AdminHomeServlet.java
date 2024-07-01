@@ -60,10 +60,11 @@ public class AdminHomeServlet extends HttpServlet {
                     item.setSeller(seller);
 
                     item.setTitle(rs.getString("title"));
-
-                    ItemCategory category = new ItemCategory();
-                    category.setCategoryNo(rs.getInt("categoryNo"));
-                    category.setCatName(rs.getString("categoryName"));
+                    
+                    ItemCategory category = new ItemCategory(rs.getInt("categoryNo"),rs.getString("categoryName"),true);
+                    //ItemCategory category = new ItemCategory();
+                    //category.setCategoryNo(rs.getInt("categoryNo"));
+                    //category.setCatName(rs.getString("categoryName"));
                     item.setCategory(category);
 
                     item.setCondition(rs.getString("condition"));

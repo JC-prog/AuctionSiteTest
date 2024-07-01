@@ -20,6 +20,11 @@
          <form action="ViewUsersServlet" method="get">
             <button type="submit" class="button">View Users</button>
         </form>
+         <form action="EditDropdownServlet" method="get">
+        <button type="submit" name="action" value="editCategory">Edit Category</button>
+        <button type="submit" name="action" value="editDuration">Edit Duration</button>
+        <button type="submit" name="action" value="editCondition">Edit Condition</button>
+    </form>
     </div>
     <h1>Admin - Item Listings</h1>
     <form action="SearchItemServlet" method="get">
