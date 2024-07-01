@@ -50,7 +50,8 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("uID", user.getUserId());
                     if (user.isAdmin()) {
                         //response.sendRedirect("adminhome.jsp");
-                    	request.getRequestDispatcher("/pages/adminhome.jsp").forward(request, response);
+                    	//request.getRequestDispatcher("AdminHomeServlet").forward(request, response);
+                    	response.sendRedirect("AdminHomeServlet");
                     } else {
                         response.sendRedirect("ListItemsServlet");
                     }

@@ -60,6 +60,10 @@
                         out.println("<input type='hidden' name='uMail' value='" + user.getuMail() + "'>");
                         out.println("<button type='submit'>Reset Password</button>");
                         out.println("</form>");
+                        out.println("<form action='EditUserServlet' method='get' style='display:inline;'>");
+                        out.println("<input type='hidden' name='uId' value='" + user.getuId() + "'>");
+                        out.println("<button type='submit'>Edit User</button>");
+                        out.println("</form>");
                         out.println("</td>");
                         out.println("</tr>");
                     }

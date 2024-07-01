@@ -140,9 +140,10 @@ public class TransactionService {
                 seller.setuMail(rs.getString("sellerEmail"));
                 item.setSeller(seller);
 
-                ItemCategory category = new ItemCategory();
-                category.setCategoryNo(rs.getInt("categoryNo"));
-                category.setCatName(rs.getString("categoryName"));
+                ItemCategory category = new ItemCategory(rs.getInt("categoryNo"),rs.getString("categoryName"),true);
+                //ItemCategory category = new ItemCategory();
+                //category.setCategoryNo(rs.getInt("categoryNo"));
+                //category.setCatName(rs.getString("categoryName"));
                 item.setCategory(category);
 
                 item.setCondition(rs.getString("condition"));
@@ -153,10 +154,11 @@ public class TransactionService {
                 auctionType.setName(rs.getString("auctionTypeName"));
                 item.setAuctionType(auctionType);
 
-                DurationPreset durationPreset = new DurationPreset();
-                durationPreset.setDurationID(rs.getInt("durationID"));
-                durationPreset.setName(rs.getString("durationPresetName"));
-                durationPreset.setHours(rs.getInt("hours"));
+                DurationPreset durationPreset = new DurationPreset(rs.getInt("durationID"),rs.getString("durationPresetName"),rs.getInt("hours"),true);
+                //DurationPreset durationPreset = new DurationPreset();
+                //durationPreset.setDurationID(rs.getInt("durationID"));
+                //durationPreset.setName(rs.getString("durationPresetName"));
+                //durationPreset.setHours(rs.getInt("hours"));
                 item.setDurationPreset(durationPreset);
 
                 item.setStartDate(rs.getTimestamp("startDate"));

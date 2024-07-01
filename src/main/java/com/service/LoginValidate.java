@@ -12,7 +12,7 @@ import com.util.DBConnectionUtil;
 public class LoginValidate {
 
     public User validate(LoginClass loginClass) throws ClassNotFoundException {
-        String sql = "SELECT uID, isAdmin FROM user WHERE uName = ? AND uPass = ?";
+        String sql = "SELECT uID, isAdmin FROM user WHERE uName = ? AND uPass = ? AND isActive = TRUE";
         
         try (Connection connection = DBConnectionUtil.getDBConnection();
              PreparedStatement preStmt = connection.prepareStatement(sql)) {
