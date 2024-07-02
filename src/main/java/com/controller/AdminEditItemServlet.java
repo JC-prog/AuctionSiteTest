@@ -9,6 +9,7 @@ import com.model.RegisterClass;
 import com.util.DBConnectionUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,6 +25,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 @MultipartConfig
 @WebServlet("/AdminEditItemServlet")
@@ -150,6 +152,7 @@ public class AdminEditItemServlet extends HttpServlet {
             throw new ServletException(e);
         }
         */
+    	boolean imgcheck = false;
     	try {
             // Retrieve and parse form data
             int itemNo = Integer.parseInt(getParameterOrThrow(request, "itemNo"));
@@ -170,9 +173,30 @@ public class AdminEditItemServlet extends HttpServlet {
             // Convert dates
             Timestamp startDate = Timestamp.valueOf(startDateStr);
             Timestamp endDate = Timestamp.valueOf(endDateStr);
+            
+            byte[] image = null;
+
+            Part filePart = request.getPart("image");
+            if (filePart != null) {
+                try (InputStream imageInputStream = filePart.getInputStream()) {
+                    if (imageInputStream.available() > 0) {
+                        imgcheck = true;
+                        image = imageInputStream.readAllBytes();
+                    }
+                }
+            }
 
             // Update item in the database
-            updateItem(itemNo, title, sellerID, categoryNo, condition, description, auctionTypeID, durationID, startDate, endDate, startPrice, minSellPrice, listingStatus, isActive);
+            if (imgcheck) {
+            	updateItem(itemNo, title, sellerID, categoryNo, condition, description, auctionTypeID, durationID, startDate, endDate, startPrice, minSellPrice, listingStatus, isActive,image);
+                //updateItemForPublishedStatus(itemId, condition, description, image);
+            } else {
+            	updateItem(itemNo, title, sellerID, categoryNo, condition, description, auctionTypeID, durationID, startDate, endDate, startPrice, minSellPrice, listingStatus, isActive);
+                //updateItemForPublishedStatus(itemId, condition, description);
+            }
+            
+            
+            
             response.sendRedirect("AdminHomeServlet");
             //response.sendRedirect(request.getContextPath() + "/AdminItemListServlet");
         } catch (NumberFormatException | NullPointerException e) {
@@ -214,6 +238,36 @@ public class AdminEditItemServlet extends HttpServlet {
             stmt.setString(12, listingStatus);
             stmt.setBoolean(13, isActive);
             stmt.setInt(14, itemNo);
+            stmt.executeUpdate();
+        }
+    }
+    //overload for image
+    private void updateItem(int itemNo, String title, String sellerID, int categoryNo, String condition, String description, int auctionTypeID, int durationID, Timestamp startDate, Timestamp endDate, BigDecimal startPrice, BigDecimal minSellPrice, String listingStatus, boolean isActive,byte[] image) throws SQLException, ClassNotFoundException {
+        /*
+    	String url = "jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC";
+        String user = "root";
+        String password = "password";
+		*/
+        String sql = "UPDATE Item SET title=?, sellerID=?, categoryNo=?, `condition`=?, description=?, auctionType=?, durationPreset=?, startDate=?, endDate=?, startPrice=?, minSellPrice=?, listingStatus=?, isActive=?,Image=? WHERE itemNo=?";
+
+        
+        try (Connection conn = DBConnectionUtil.getDBConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, title);
+            stmt.setString(2, sellerID);
+            stmt.setInt(3, categoryNo);
+            stmt.setString(4, condition);
+            stmt.setString(5, description);
+            stmt.setInt(6, auctionTypeID);
+            stmt.setInt(7, durationID);
+            stmt.setTimestamp(8, startDate);
+            stmt.setTimestamp(9, endDate);
+            stmt.setBigDecimal(10, startPrice);
+            stmt.setBigDecimal(11, minSellPrice);
+            stmt.setString(12, listingStatus);
+            stmt.setBoolean(13, isActive);
+            stmt.setBytes(14, image);
+            stmt.setInt(15, itemNo );
             stmt.executeUpdate();
         }
     }
