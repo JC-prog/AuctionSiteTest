@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.util.DBConnectionUtil;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,7 +26,7 @@ public class AddToWatchlistServlet extends HttpServlet {
         String buyerID = (String) session.getAttribute("uID"); // Assuming buyerID is stored in session
         int itemNo = Integer.parseInt(request.getParameter("itemNo"));
 
-        try (Connection conn = getDBConnection()) {
+        try (Connection conn = DBConnectionUtil.getDBConnection()) {
             // Check for duplicates
             String checkSql = "SELECT COUNT(*) FROM Watchlist WHERE buyerID = ? AND itemNo = ? AND isActive = TRUE";
             try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
@@ -55,7 +58,10 @@ public class AddToWatchlistServlet extends HttpServlet {
 
         } catch (SQLException e) {
             throw new ServletException(e);
-        }
+        } catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     }
 
     private Connection getDBConnection() throws SQLException {

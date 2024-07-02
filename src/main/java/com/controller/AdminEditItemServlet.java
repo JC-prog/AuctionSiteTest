@@ -6,6 +6,7 @@ import com.model.DurationPreset;
 import com.model.Item;
 import com.model.ItemCategory;
 import com.model.RegisterClass;
+import com.util.DBConnectionUtil;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -18,11 +19,13 @@ import java.sql.Timestamp;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@MultipartConfig
 @WebServlet("/AdminEditItemServlet")
 public class AdminEditItemServlet extends HttpServlet {
 
@@ -31,18 +34,20 @@ public class AdminEditItemServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int itemNo = Integer.parseInt(request.getParameter("itemNo"));
-        Item item = getItemById(itemNo);
+        Item item = new Item();
+		try {
+			item = getItemById(itemNo);
+		} catch (ClassNotFoundException | ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         request.setAttribute("item", item);
         request.getRequestDispatcher("/pages/adminEditItem.jsp").forward(request, response);
     }
 
-    private Item getItemById(int itemNo) throws ServletException {
+    private Item getItemById(int itemNo) throws ServletException, ClassNotFoundException {
         Item item = new Item();
-        String url = "jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC";
-        String user = "root";
-        String password = "password";
-
-        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+        try (Connection conn = DBConnectionUtil.getDBConnection()) {
             String sql = "SELECT " +
                     "i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
                     "c.categoryNo, c.catName AS categoryName, con.conditionID, con.name AS conditionName, " +
@@ -117,6 +122,7 @@ public class AdminEditItemServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Retrieve and parse form data
+    	/*
         int itemNo = Integer.parseInt(request.getParameter("itemNo"));
         String title = request.getParameter("title");
         String sellerID = request.getParameter("sellerID");
@@ -143,16 +149,56 @@ public class AdminEditItemServlet extends HttpServlet {
         } catch (Exception e) {
             throw new ServletException(e);
         }
+        */
+    	try {
+            // Retrieve and parse form data
+            int itemNo = Integer.parseInt(getParameterOrThrow(request, "itemNo"));
+            String title = request.getParameter("title");
+            String sellerID = request.getParameter("sellerID");
+            int categoryNo = Integer.parseInt(getParameterOrThrow(request, "category"));
+            String condition = request.getParameter("condition");
+            String description = request.getParameter("description");
+            int auctionTypeID = Integer.parseInt(getParameterOrThrow(request, "auctionType"));
+            int durationID = Integer.parseInt(getParameterOrThrow(request, "durationPreset"));
+            String startDateStr = getParameterOrThrow(request, "startDate").replace('T', ' ') + ":00";
+            String endDateStr = getParameterOrThrow(request, "endDate").replace('T', ' ') + ":00";
+            BigDecimal startPrice = new BigDecimal(getParameterOrThrow(request, "startPrice"));
+            BigDecimal minSellPrice = new BigDecimal(getParameterOrThrow(request, "minSellPrice"));
+            String listingStatus = request.getParameter("listingStatus");
+            boolean isActive = Boolean.parseBoolean(request.getParameter("isActive"));
+
+            // Convert dates
+            Timestamp startDate = Timestamp.valueOf(startDateStr);
+            Timestamp endDate = Timestamp.valueOf(endDateStr);
+
+            // Update item in the database
+            updateItem(itemNo, title, sellerID, categoryNo, condition, description, auctionTypeID, durationID, startDate, endDate, startPrice, minSellPrice, listingStatus, isActive);
+            response.sendRedirect("AdminHomeServlet");
+            //response.sendRedirect(request.getContextPath() + "/AdminItemListServlet");
+        } catch (NumberFormatException | NullPointerException e) {
+            throw new ServletException("Invalid input data", e);
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
+    }
+    private String getParameterOrThrow(HttpServletRequest request, String paramName) {
+        String paramValue = request.getParameter(paramName);
+        if (paramValue == null || paramValue.isEmpty()) {
+            throw new NullPointerException("Parameter " + paramName + " is missing or empty");
+        }
+        return paramValue;
     }
 
-    private void updateItem(int itemNo, String title, String sellerID, int categoryNo, String condition, String description, int auctionTypeID, int durationID, Timestamp startDate, Timestamp endDate, BigDecimal startPrice, BigDecimal minSellPrice, String listingStatus, boolean isActive) throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC";
+    private void updateItem(int itemNo, String title, String sellerID, int categoryNo, String condition, String description, int auctionTypeID, int durationID, Timestamp startDate, Timestamp endDate, BigDecimal startPrice, BigDecimal minSellPrice, String listingStatus, boolean isActive) throws SQLException, ClassNotFoundException {
+        /*
+    	String url = "jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC";
         String user = "root";
         String password = "password";
-
+		*/
         String sql = "UPDATE Item SET title=?, sellerID=?, categoryNo=?, `condition`=?, description=?, auctionType=?, durationPreset=?, startDate=?, endDate=?, startPrice=?, minSellPrice=?, listingStatus=?, isActive=? WHERE itemNo=?";
 
-        try (Connection conn = DriverManager.getConnection(url, user, password);
+        
+        try (Connection conn = DBConnectionUtil.getDBConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, title);
             stmt.setString(2, sellerID);
