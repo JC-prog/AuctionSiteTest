@@ -21,7 +21,7 @@ public class RecommendItemServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String userId = (String) request.getSession().getAttribute("userId");
+    	String userId = (String) request.getSession().getAttribute("uID");
         if (userId != null) {
             List<Item> recommendedItems = itemService.getRecommendedItems(userId);
             request.setAttribute("recommendedItems", recommendedItems);
