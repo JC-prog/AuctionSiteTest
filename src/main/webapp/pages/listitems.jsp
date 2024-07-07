@@ -14,21 +14,27 @@
 </head>
 <body>
     <div class="top-right-button">
-        <form action="ViewTradeRequestsServlet" method="get">
-            <button type="submit">View Trade Requests</button>
+     <form action="LogoutServlet" method="get">
+            <button type="submit">Logout</button>
         </form>
-         <form action="createItem" method="get">
-            <button type="submit">Sell</button>
+        <form action="ViewTradeRequestsServlet" method="get">
+        	<button type="submit">View Trade Requests</button>
+        </form>
+        <form action="createItem" method="get">
+        	<button type="submit">Sell</button>
         </form>
         <form action="ShowMyItemsServlet" method="get">
             <button type="submit">View My Listings</button>
         </form>
-         <form action="ViewTransactionServlet" method="get">
-         <button type="submit">View Transactions</button>
-          </form>
-           <form action="RecommendItemServlet" method="get">
-            <button type="submit">Recommended Items</button>
+        <form action="ViewTransactionServlet" method="get">
+         	<button type="submit">View Transactions</button>
         </form>
+        <form action="RecommendItemServlet" method="get">
+           <button type="submit">Recommended Items</button>
+        </form>
+        <form action="UpdateProfileServlet" method="get">
+        	<button type="submit">Update Profile</button>
+    	</form>
     </div>
     <h1>Item Listings</h1>
     <table border="1">
