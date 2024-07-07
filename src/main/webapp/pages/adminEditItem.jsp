@@ -67,25 +67,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Item</title>
-    <script>
-        function toggleFields() {
-            const listingStatus = document.getElementById("listingStatus").value;
-            const isPublish = listingStatus === "Publish";
-
-            document.getElementById("title").disabled = isPublish;
-            document.getElementById("category").disabled = isPublish;
-            document.getElementById("condition").disabled = isPublish;
-            document.getElementById("auctionType").disabled = isPublish;
-            document.getElementById("durationPreset").disabled = isPublish;
-            document.getElementById("startPrice").disabled = isPublish;
-            document.getElementById("listingStatus").disabled = isPublish;
-            document.getElementById("minSellPrice").disabled = isPublish;
-        }
-
-        window.onload = function() {
-            toggleFields();
-        }
-    </script>
+    
 </head>
 <body>
     <h1>Edit Item</h1>
@@ -162,7 +144,7 @@
         <input type="number" step="0.01" id="minSellPrice" name="minSellPrice" value="<%= item.getMinSellPrice() %>"><br>
 
         <label for="listingStatus">Listing Status:</label>
-        <select name="listingStatus" id="listingStatus" onchange="toggleFields()">
+        <select name="listingStatus" id="listingStatus" >
             <option value="Draft" <%= "Draft".equals(item.getListingStatus()) ? "selected" : "" %>>Draft</option>
             <option value="Publish" <%= "Publish".equals(item.getListingStatus()) ? "selected" : "" %>>Publish</option>
         </select><br>

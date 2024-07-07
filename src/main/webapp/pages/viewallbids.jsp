@@ -27,7 +27,7 @@
                     for (BuyerTransaction transaction : buyerTransactions) {
                         out.println("<tr>");
                         out.println("<td>" + transaction.getItemNo() + "</td>");
-                        
+
                         // Fetch item details based on itemNo
                         Item item = ItemService.getItemDetails(transaction.getItemNo());
                         if (item != null) {
@@ -35,7 +35,7 @@
                         } else {
                             out.println("<td>Item Not Found</td>");
                         }
-                        
+
                         out.println("<td>" + transaction.getSaleAmount() + "</td>");
                         out.println("<td>" + transaction.getBuyerName() + "</td>");
                         out.println("<td>" + transaction.getStatus() + "</td>");
@@ -48,21 +48,17 @@
                             out.println("<input type='hidden' name='saleAmount' value='" + transaction.getSaleAmount() + "'>");
                             out.println("<button type='submit'>Pay</button>");
                             out.println("</form>");
-                        } else if ("Payment Made".equals(transaction.getStatus()))
-                        {
+                        } else if ("Payment Made".equals(transaction.getStatus())) {
                             out.println("Paid, awaiting seller");
-                        } else if ("Item Shipped".equals(transaction.getStatus()))
-                        {
-                        	 out.println("<form action='ReceivedItemServlet' method='get'>");
-                             out.println("<input type='hidden' name='transactionID' value='" + transaction.getTransactionID() + "'>");
-                             out.println("<input type='hidden' name='itemNo' value='" + transaction.getItemNo() + "'>");
-                             out.println("<input type='hidden' name='saleAmount' value='" + transaction.getSaleAmount() + "'>");
-                             out.println("<button type='submit'>Received</button>");
-                             out.println("</form>");
-                        }
-                        else if ("Item Received".equals(transaction.getStatus()))
-                        {
-                        	out.println("Auction Concluded");
+                        } else if ("Item Shipped".equals(transaction.getStatus())) {
+                            out.println("<form action='ReceivedItemServlet' method='get'>");
+                            out.println("<input type='hidden' name='transactionID' value='" + transaction.getTransactionID() + "'>");
+                            out.println("<input type='hidden' name='itemNo' value='" + transaction.getItemNo() + "'>");
+                            out.println("<input type='hidden' name='saleAmount' value='" + transaction.getSaleAmount() + "'>");
+                            out.println("<button type='submit'>Received</button>");
+                            out.println("</form>");
+                        } else if ("Item Received".equals(transaction.getStatus())) {
+                            out.println("Auction Concluded");
                         }
                         out.println("</td>");
                         out.println("</tr>");
@@ -71,7 +67,7 @@
             %>
         </tbody>
     </table>
-    
+
     <h1>Items I Sold</h1>
     <table border="1">
         <thead>
@@ -83,7 +79,6 @@
                 <th>Status</th>
                 <th>Timestamp</th>
                 <th>Action</th>
-                
             </tr>
         </thead>
         <tbody>
@@ -93,7 +88,7 @@
                     for (SellerTransaction transaction : sellerTransactions) {
                         out.println("<tr>");
                         out.println("<td>" + transaction.getItemNo() + "</td>");
-                        
+
                         // Fetch item details based on itemNo
                         Item item = ItemService.getItemDetails(transaction.getItemNo());
                         if (item != null) {
@@ -107,23 +102,25 @@
                         out.println("<td>" + transaction.getTimestamp() + "</td>");
                         out.println("<td>");
                         if ("Completed".equals(transaction.getStatus())) {
-                        	out.println("Awaiting Buyer to pay");
-                        } else if ("Payment Made".equals(transaction.getStatus()))
-                        {
-                        	 out.println("<form action='ShippingItemServlet' method='get'>");
-                             out.println("<input type='hidden' name='transactionID' value='" + transaction.getTransactionID() + "'>");
-                             out.println("<input type='hidden' name='itemNo' value='" + transaction.getItemNo() + "'>");
-                             out.println("<input type='hidden' name='sellerAddress' value='" + transaction.getSellerAddress() + "'>");
-                             out.println("<button type='submit'>Send item to Buyer</button>");
-                             out.println("</form>");
-                        } else if ("Item Received".equals(transaction.getStatus()))
-                        {
-                        	out.println("Auction Concluded");
-                        }else if ("Item Shipped".equals(transaction.getStatus()))
-                        {
-                        	out.println("Awaiting Buyer Confirmation");
+                            out.println("Awaiting Buyer to pay");
+                        } else if ("Payment Made".equals(transaction.getStatus())) {
+                            out.println("<form action='ShippingItemServlet' method='get'>");
+                            out.println("<input type='hidden' name='transactionID' value='" + transaction.getTransactionID() + "'>");
+                            out.println("<input type='hidden' name='itemNo' value='" + transaction.getItemNo() + "'>");
+                            out.println("<input type='hidden' name='sellerAddress' value='" + transaction.getSellerAddress() + "'>");
+                            out.println("<button type='submit'>Send item to Buyer</button>");
+                            out.println("</form>");
+                        } else if ("Item Received".equals(transaction.getStatus())) {
+                            out.println("Auction Concluded");
+                        } else if ("Item Shipped".equals(transaction.getStatus())) {
+                            out.println("Awaiting Buyer Confirmation");
+                        } else if ("Confirm to Sell".equals(transaction.getStatus())) {
+                            out.println("<form action='ConfirmSellServlet' method='post'>");
+                            out.println("<input type='hidden' name='transactionID' value='" + transaction.getTransactionID() + "'>");
+                            out.println("<button type='submit' name='action' value='complete'>Complete</button>");
+                            out.println("<button type='submit' name='action' value='reject'>Reject</button>");
+                            out.println("</form>");
                         }
-                     
                         out.println("</td>");
                         out.println("</tr>");
                     }
@@ -166,7 +163,7 @@
                         out.println("<td>" + item.getStartPrice() + "</td>");
                         out.println("<td>" + item.getMinSellPrice() + "</td>");
                         out.println("<td>" + item.getListingStatus() + "</td>");
-                        
+
                         byte[] imageData = item.getImage();
                         if (imageData != null) {
                             String base64Image = "data:image/png;base64," + java.util.Base64.getEncoder().encodeToString(imageData);

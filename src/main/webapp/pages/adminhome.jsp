@@ -13,7 +13,10 @@
     </style>
 </head>
 <body>
-    <div class="top-right-button">
+    <div class="top-right-button"> 
+      <form action="LogoutServlet" method="get">
+            <button type="submit">Logout</button>
+        </form>
         <form action="AdminHomeServlet" method="get">
             <button type="submit">Refresh</button>
         </form>
