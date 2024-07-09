@@ -122,7 +122,7 @@ public class ViewItemServlet extends HttpServlet {
             }
             
             // Log user preference
-            userPreferencesDAO.logUserPreference(currentUserID, item.getCategory().getCategoryNo());
+            userPreferencesDAO.logUserPreference(currentUserID, item.getCategory().getCategoryNo(),1.0);
 
             rs.close();
             stmt.close();
