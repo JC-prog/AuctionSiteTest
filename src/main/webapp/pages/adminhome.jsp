@@ -28,6 +28,9 @@
         <button type="submit" name="action" value="editDuration">Edit Duration</button>
         <button type="submit" name="action" value="editCondition">Edit Condition</button>
     </form>
+    <form action="ViewFeedbackServlet" method="get">
+    <button type="submit">View Feedbacks</button>
+</form>
     </div>
     <h1>Admin - Item Listings</h1>
     <form action="SearchItemServlet" method="get">

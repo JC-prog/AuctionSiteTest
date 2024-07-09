@@ -35,6 +35,9 @@
         <form action="UpdateProfileServlet" method="get">
         	<button type="submit">Update Profile</button>
     	</form>
+    	 <form action="SendFeedbackServlet" method="get">
+            <button type="submit">Contact Admin</button>
+        </form>
     </div>
     <h1>Item Listings</h1>
     <table border="1">

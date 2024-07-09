@@ -34,8 +34,27 @@ public class SearchItemServlet extends HttpServlet {
         String searchQuery = request.getParameter("searchQuery");
         List<Item> itemList = new ArrayList<>();
 
+        String uID = (String) request.getSession().getAttribute("uID");
+        boolean isAdmin = false;
+
+        // Check if the user is an admin
+        if (uID != null) {
+            try (Connection conn = getConnection()) {
+                PreparedStatement stmt = conn.prepareStatement("SELECT isAdmin FROM user WHERE uID = ?");
+                stmt.setString(1, uID);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    isAdmin = rs.getBoolean("isAdmin");
+                }
+                rs.close();
+                stmt.close();
+            } catch (Exception e) {
+                throw new ServletException(e);
+            }
+        }
+
         try (Connection conn = getConnection()) {
-            PreparedStatement stmt = prepareStatement(conn, searchQuery);
+            PreparedStatement stmt = prepareStatement(conn, searchQuery, isAdmin);
             ResultSet rs = stmt.executeQuery();
             itemList = processResultSet(rs);
             rs.close();
@@ -45,56 +64,101 @@ public class SearchItemServlet extends HttpServlet {
         }
 
         request.setAttribute("itemList", itemList);
-        request.getRequestDispatcher("/pages/listitems.jsp").forward(request, response);
+
+        // Redirect to appropriate page based on user type
+        if (isAdmin) {
+            request.getRequestDispatcher("/pages/adminhome.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("/pages/listitems.jsp").forward(request, response);
+        }
     }
 
     private Connection getConnection() throws Exception {
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
     }
 
-    private PreparedStatement prepareStatement(Connection conn, String searchQuery) throws Exception {
+    private PreparedStatement prepareStatement(Connection conn, String searchQuery, boolean isAdmin) throws Exception {
         String sql;
         PreparedStatement stmt;
-        //check if search is not empty, display wildcard search, else display all that is published
-        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-            sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
-                  "c.categoryNo, c.catName AS categoryName, con.conditionID, con.name AS conditionName, i.description, " +
-                  "a.auctionTypeID, a.name AS auctionTypeName, " +
-                  "d.durationID, d.name AS durationPresetName, d.hours, " +
-                  "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
-                  "FROM Item i " +
-                  "JOIN User u ON i.sellerID = u.uID " +
-                  "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
-                  "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
-                  "JOIN ItemCondition con ON i.condition = con.conditionID " +
-                  "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
-                  "WHERE (i.title LIKE ? OR u.uName LIKE ? OR c.catName LIKE ? OR i.description LIKE ? OR con.name LIKE ?) " +
-                  "AND i.listingStatus = 'Publish' " +
-                  "ORDER BY i.startDate ASC";
 
-            stmt = conn.prepareStatement(sql);
-            String wildcardQuery = "%" + searchQuery + "%";
-            stmt.setString(1, wildcardQuery);
-            stmt.setString(2, wildcardQuery);
-            stmt.setString(3, wildcardQuery);
-            stmt.setString(4, wildcardQuery);
-            stmt.setString(5, wildcardQuery);
+        if (isAdmin) {
+            // Admins can see all items
+            if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+                sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
+                      "c.categoryNo, c.catName AS categoryName, con.conditionID, con.name AS conditionName, i.description, " +
+                      "a.auctionTypeID, a.name AS auctionTypeName, " +
+                      "d.durationID, d.name AS durationPresetName, d.hours, " +
+                      "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
+                      "FROM Item i " +
+                      "JOIN User u ON i.sellerID = u.uID " +
+                      "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
+                      "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                      "JOIN ItemCondition con ON i.condition = con.conditionID " +
+                      "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
+                      "WHERE i.title LIKE ? OR u.uName LIKE ? OR c.catName LIKE ? OR i.description LIKE ? OR con.name LIKE ? " +
+                      "ORDER BY i.startDate ASC";
+                stmt = conn.prepareStatement(sql);
+                String wildcardQuery = "%" + searchQuery + "%";
+                stmt.setString(1, wildcardQuery);
+                stmt.setString(2, wildcardQuery);
+                stmt.setString(3, wildcardQuery);
+                stmt.setString(4, wildcardQuery);
+                stmt.setString(5, wildcardQuery);
+            } else {
+                sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
+                      "c.categoryNo, c.catName AS categoryName, con.conditionID, con.name AS conditionName, i.description, " +
+                      "a.auctionTypeID, a.name AS auctionTypeName, " +
+                      "d.durationID, d.name AS durationPresetName, d.hours, " +
+                      "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
+                      "FROM Item i " +
+                      "JOIN User u ON i.sellerID = u.uID " +
+                      "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
+                      "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                      "JOIN ItemCondition con ON i.condition = con.conditionID " +
+                      "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
+                      "ORDER BY i.startDate ASC";
+                stmt = conn.prepareStatement(sql);
+            }
         } else {
-            sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
-                  "c.categoryNo, c.catName AS categoryName, i.description, con.conditionID, con.name AS conditionName," +
-                  "a.auctionTypeID, a.name AS auctionTypeName, " +
-                  "d.durationID, d.name AS durationPresetName, d.hours, " +
-                  "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
-                  "FROM Item i " +
-                  "JOIN User u ON i.sellerID = u.uID " +
-                  "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
-                  "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
-                  "JOIN ItemCondition con ON i.condition = con.conditionID " +
-                  "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
-                  "WHERE i.listingStatus = 'Publish' " +
-                  "ORDER BY i.startDate ASC";
-
-            stmt = conn.prepareStatement(sql);
+            // Regular users only see published and active items
+            if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+                sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
+                      "c.categoryNo, c.catName AS categoryName, con.conditionID, con.name AS conditionName, i.description, " +
+                      "a.auctionTypeID, a.name AS auctionTypeName, " +
+                      "d.durationID, d.name AS durationPresetName, d.hours, " +
+                      "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
+                      "FROM Item i " +
+                      "JOIN User u ON i.sellerID = u.uID " +
+                      "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
+                      "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                      "JOIN ItemCondition con ON i.condition = con.conditionID " +
+                      "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
+                      "WHERE (i.title LIKE ? OR u.uName LIKE ? OR c.catName LIKE ? OR i.description LIKE ? OR con.name LIKE ?) " +
+                      "AND i.listingStatus = 'Publish' AND i.isActive = TRUE " +
+                      "ORDER BY i.startDate ASC";
+                stmt = conn.prepareStatement(sql);
+                String wildcardQuery = "%" + searchQuery + "%";
+                stmt.setString(1, wildcardQuery);
+                stmt.setString(2, wildcardQuery);
+                stmt.setString(3, wildcardQuery);
+                stmt.setString(4, wildcardQuery);
+                stmt.setString(5, wildcardQuery);
+            } else {
+                sql = "SELECT i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
+                      "c.categoryNo, c.catName AS categoryName, i.description, con.conditionID, con.name AS conditionName," +
+                      "a.auctionTypeID, a.name AS auctionTypeName, " +
+                      "d.durationID, d.name AS durationPresetName, d.hours, " +
+                      "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
+                      "FROM Item i " +
+                      "JOIN User u ON i.sellerID = u.uID " +
+                      "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
+                      "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                      "JOIN ItemCondition con ON i.condition = con.conditionID " +
+                      "JOIN DurationPreset d ON i.durationPreset = d.durationID " +
+                      "WHERE i.listingStatus = 'Publish' AND i.isActive = TRUE " +
+                      "ORDER BY i.startDate ASC";
+                stmt = conn.prepareStatement(sql);
+            }
         }
 
         return stmt;
@@ -115,9 +179,7 @@ public class SearchItemServlet extends HttpServlet {
 
             item.setTitle(rs.getString("title"));
 
-            ItemCategory category = new ItemCategory(rs.getInt("categoryNo"),rs.getString("categoryName"),true);
-            //category.setCategoryNo(rs.getInt("categoryNo"));
-            //category.setCatName(rs.getString("categoryName"));
+            ItemCategory category = new ItemCategory(rs.getInt("categoryNo"), rs.getString("categoryName"), true);
             item.setCategory(category);
 
             Condition condition = new Condition(rs.getInt("conditionID"), rs.getString("conditionName"), true);
@@ -129,10 +191,7 @@ public class SearchItemServlet extends HttpServlet {
             auctionType.setName(rs.getString("auctionTypeName"));
             item.setAuctionType(auctionType);
 
-            DurationPreset durationPreset = new DurationPreset(rs.getInt("durationID"),rs.getString("durationPresetName"),rs.getInt("hours"),true);
-            //durationPreset.setDurationID(rs.getInt("durationID"));
-            //durationPreset.setName(rs.getString("durationPresetName"));
-            //durationPreset.setHours(rs.getInt("hours"));
+            DurationPreset durationPreset = new DurationPreset(rs.getInt("durationID"), rs.getString("durationPresetName"), rs.getInt("hours"), true);
             item.setDurationPreset(durationPreset);
 
             item.setStartDate(rs.getTimestamp("startDate"));
@@ -141,8 +200,7 @@ public class SearchItemServlet extends HttpServlet {
             item.setMinSellPrice(rs.getBigDecimal("minSellPrice"));
             item.setListingStatus(rs.getString("listingStatus"));
             item.setActive(rs.getBoolean("isActive"));
-            
-            // Retrieve image blob
+
             Blob imageBlob = rs.getBlob("image");
             if (imageBlob != null) {
                 byte[] imageBytes = imageBlob.getBytes(1, (int) imageBlob.length());

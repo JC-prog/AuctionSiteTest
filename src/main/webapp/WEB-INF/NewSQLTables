@@ -31,10 +31,13 @@ CREATE TABLE `durationpreset` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 
 
 CREATE TABLE `feedback` (
-  `FeedbackID` varchar(255) NOT NULL,
+  `FeedbackID` int NOT NULL AUTO_INCREMENT,
   `SenderID` varchar(255) DEFAULT NULL,
+  `SenderEmail` varchar(255) DEFAULT NULL,
+  `Subject` varchar(255) DEFAULT NULL,
   `Message` text,
   `Timestamp` datetime DEFAULT NULL,
+  `isActive` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`FeedbackID`),
   KEY `SenderID` (`SenderID`),
   CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`SenderID`) REFERENCES `user` (`uID`)
