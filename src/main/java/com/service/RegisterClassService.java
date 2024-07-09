@@ -68,4 +68,19 @@ public class RegisterClassService {
         }
         return false;
     }
+    public String getUserEmailById(String uID) {
+        String email = null;
+        String sql = "SELECT uMail FROM user WHERE uID = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, uID);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                email = rs.getString("uMail");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return email;
+    }
 }
