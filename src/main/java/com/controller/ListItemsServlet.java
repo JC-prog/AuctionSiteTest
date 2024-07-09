@@ -21,6 +21,7 @@ import com.model.Item;
 import com.model.RegisterClass;
 import com.model.ItemCategory;
 import com.model.AuctionType;
+import com.model.Condition;
 import com.model.DurationPreset;
 
 @WebServlet("/ListItemsServlet")
@@ -39,63 +40,61 @@ public class ListItemsServlet extends HttpServlet {
             
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT " +
-                "i.ItemNo, i.Title, i.SellerID, u.uName AS SellerName, u.uMail AS SellerEmail, " +
-                "c.CategoryNo, c.CatName AS CategoryName, i.`Condition`, i.Description, " +
-                "a.AuctionTypeID, a.Name AS AuctionTypeName, " +
-                "d.DurationID, d.Name AS DurationPresetName, d.Hours, " +
-                "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.ListingStatus, i.isActive, i.Image " +
-                "FROM Item i " +
-                "JOIN User u ON i.SellerID = u.uID " +
-                "JOIN ItemCategory c ON i.CategoryNo = c.CategoryNo " +
-                "JOIN AuctionType a ON i.AuctionType = a.AuctionTypeID " +
-                "JOIN DurationPreset d ON i.DurationPreset = d.DurationID");
+                    "i.itemNo, i.title, i.sellerID, u.uName AS sellerName, u.uMail AS sellerEmail, " +
+                    "c.categoryNo, c.catName AS categoryName, con.conditionID, con.name AS conditionName, " +
+                    "i.description, a.auctionTypeID, a.name AS auctionTypeName, " +
+                    "d.durationID, d.name AS durationPresetName, d.hours, " +
+                    "i.startDate, i.endDate, i.startPrice, i.minSellPrice, i.listingStatus, i.isActive, i.image " +
+                    "FROM Item i " +
+                    "JOIN User u ON i.sellerID = u.uID " +
+                    "JOIN ItemCategory c ON i.categoryNo = c.categoryNo " +
+                    "JOIN ItemCondition con ON i.condition = con.conditionID " +
+                    "JOIN AuctionType a ON i.auctionType = a.auctionTypeID " +
+                    "JOIN DurationPreset d ON i.durationPreset = d.durationID WHERE i.isActive = TRUE AND i.listingStatus ='Publish'"
+                );
 
             while (rs.next()) {
                 Item item = new Item();
-                item.setItemNo(rs.getInt("ItemNo"));
+                item.setItemNo(rs.getInt("itemNo"));
 
                 RegisterClass seller = new RegisterClass();
-                seller.setuId(rs.getString("SellerID"));
-                seller.setuName(rs.getString("SellerName"));
-                seller.setuMail(rs.getString("SellerEmail"));
+                seller.setuId(rs.getString("sellerID"));
+                seller.setuName(rs.getString("sellerName"));
+                seller.setuMail(rs.getString("sellerEmail"));
                 item.setSeller(seller);
 
-                item.setTitle(rs.getString("Title"));
+                item.setTitle(rs.getString("title"));
 
-                ItemCategory category = new ItemCategory();
-                category.setCategoryNo(rs.getInt("CategoryNo"));
-                category.setCatName(rs.getString("CategoryName"));
+                ItemCategory category = new ItemCategory(rs.getInt("categoryNo"), rs.getString("categoryName"), true);
                 item.setCategory(category);
 
-                item.setCondition(rs.getString("Condition"));
-                item.setDescription(rs.getString("Description"));
+                Condition condition = new Condition(rs.getInt("conditionID"), rs.getString("conditionName"), true);
+                item.setCondition(condition);
+
+                item.setDescription(rs.getString("description"));
 
                 AuctionType auctionType = new AuctionType();
-                auctionType.setAuctionTypeID(rs.getInt("AuctionTypeID"));
-                auctionType.setName(rs.getString("AuctionTypeName"));
+                auctionType.setAuctionTypeID(rs.getInt("auctionTypeID"));
+                auctionType.setName(rs.getString("auctionTypeName"));
                 item.setAuctionType(auctionType);
 
-                DurationPreset durationPreset = new DurationPreset();
-                durationPreset.setDurationID(rs.getInt("DurationID"));
-                durationPreset.setName(rs.getString("DurationPresetName"));
-                durationPreset.setHours(rs.getInt("Hours"));
+                DurationPreset durationPreset = new DurationPreset(rs.getInt("durationID"), rs.getString("durationPresetName"), rs.getInt("hours"), true);
                 item.setDurationPreset(durationPreset);
 
                 item.setStartDate(rs.getTimestamp("startDate"));
                 item.setEndDate(rs.getTimestamp("endDate"));
                 item.setStartPrice(rs.getBigDecimal("startPrice"));
                 item.setMinSellPrice(rs.getBigDecimal("minSellPrice"));
-                item.setListingStatus(rs.getString("ListingStatus"));
+                item.setListingStatus(rs.getString("listingStatus"));
                 item.setActive(rs.getBoolean("isActive"));
-                
+
                 // Retrieve image blob
-                Blob imageBlob = rs.getBlob("Image");
+                Blob imageBlob = rs.getBlob("image");
                 if (imageBlob != null) {
                     byte[] imageBytes = imageBlob.getBytes(1, (int) imageBlob.length());
                     item.setImage(imageBytes);
                 }
-                
-                
+
                 itemList.add(item);
             }
 

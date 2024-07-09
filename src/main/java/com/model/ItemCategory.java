@@ -4,6 +4,15 @@ public class ItemCategory {
     private int categoryNo;
     private String catName;
     private boolean isActive;
+    
+    public ItemCategory() {
+    }
+
+    public ItemCategory(int categoryNo, String catName, boolean isActive) {
+        this.categoryNo = categoryNo;
+        this.catName = catName;
+        this.isActive = isActive;
+    }
 
     // Getters and Setters
 

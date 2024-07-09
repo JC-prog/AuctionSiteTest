@@ -7,6 +7,7 @@
     List<Map<String, Object>> categories = new ArrayList<>();
     List<Map<String, Object>> auctionTypes = new ArrayList<>();
     List<Map<String, Object>> durations = new ArrayList<>();
+    List<Map<String, Object>> conditions = new ArrayList<>();
  
     try {
         // Database connection details
@@ -17,34 +18,42 @@
         stmt = conn.createStatement();
 
         // Fetch categories
-        rs = stmt.executeQuery("SELECT CategoryNo, CatName FROM ItemCategory WHERE isActive = true");
+        rs = stmt.executeQuery("SELECT categoryNo, catName FROM ItemCategory WHERE isActive = true");
      
         while (rs.next()) {
             Map<String, Object> category = new HashMap<>();
-            category.put("CategoryNo", rs.getInt("CategoryNo"));
-            category.put("CatName", rs.getString("CatName"));
+            category.put("CategoryNo", rs.getInt("categoryNo"));
+            category.put("CatName", rs.getString("catName"));
             categories.add(category);
         }
 
         // Fetch auction types
-        rs = stmt.executeQuery("SELECT AuctionTypeID, Name FROM AuctionType WHERE isActive = true");
+        rs = stmt.executeQuery("SELECT auctionTypeID, name FROM AuctionType WHERE isActive = true");
         
         while (rs.next()) {
             Map<String, Object> auctionType = new HashMap<>();
-            auctionType.put("AuctionTypeID", rs.getInt("AuctionTypeID"));
-            auctionType.put("Name", rs.getString("Name"));
+            auctionType.put("AuctionTypeID", rs.getInt("auctionTypeID"));
+            auctionType.put("Name", rs.getString("name"));
             auctionTypes.add(auctionType);
         }
 
         // Fetch duration presets
-        rs = stmt.executeQuery("SELECT DurationID, Name,Hours FROM DurationPreset WHERE isActive = true");
+        rs = stmt.executeQuery("SELECT durationID, name FROM DurationPreset WHERE isActive = true");
         
         while (rs.next()) {
             Map<String, Object> duration = new HashMap<>();
-            duration.put("DurationID", rs.getInt("DurationID"));
-            duration.put("Name", rs.getString("Name"));
+            duration.put("DurationID", rs.getInt("durationID"));
+            duration.put("Name", rs.getString("name"));
             durations.add(duration);
         }
+        // Fetch conditions
+	    rs = stmt.executeQuery("SELECT conditionID, name FROM ItemCondition WHERE isActive = true");
+	    while (rs.next()) {
+	        Map<String, Object> condition = new HashMap<>();
+	        condition.put("ConditionID", rs.getInt("conditionID"));
+	        condition.put("Name", rs.getString("name"));
+	        conditions.add(condition);
+	    }
     } catch (SQLException e) {
         throw new ServletException(e);
     } finally {
@@ -77,7 +86,15 @@
         </select><br>
 
         <label for="condition">Condition:</label>
-        <input type="text" id="condition" name="condition" required><br>
+        <select id="condition" name="condition">
+            <% 
+                for (Map<String, Object> condition : conditions) {
+                    int conditionID = (int) condition.get("ConditionID");
+                    String name = (String) condition.get("Name");                   
+                    out.println("<option value='" + conditionID + "'>" + name + "</option>");
+                }
+            %>
+        </select><br>
 
         <label for="description">Description:</label>
         <textarea id="description" name="description" required></textarea><br>
