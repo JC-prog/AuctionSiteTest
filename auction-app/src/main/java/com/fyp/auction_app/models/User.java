@@ -31,6 +31,12 @@ public class User implements UserDetails {
 
     private String password;
 
+    private String contactNumber;
+
+    private String address;
+
+    private Boolean isActive;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

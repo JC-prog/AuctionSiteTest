@@ -1,5 +1,6 @@
 package com.fyp.auction_app.controllers;
 
+import com.fyp.auction_app.models.Requests.EditUserRequest;
 import com.fyp.auction_app.models.User;
 import com.fyp.auction_app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,14 +45,19 @@ public class UserController {
         }
     }
 
-    @PutMapping("api/user/{userID}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") Integer userID, @RequestBody User user) {
-        Optional<User> existingUser = userService.findUserById(userID);
+    @PostMapping("/edit")
+    public ResponseEntity<User> updateUser(@RequestBody EditUserRequest user) {
+        Optional<User> existingUser = userService.findUserByUsername(user.getUsername());
 
         if (existingUser.isPresent()) {
+            User userToUpdate = existingUser.get();
 
-            userService.updateUser(user);
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            userToUpdate.setEmail(user.getEmail());
+            userToUpdate.setContactNumber(user.getContactNumber());
+            userToUpdate.setAddress(user.getAddress());
+            userService.updateUser(userToUpdate);
+
+            return new ResponseEntity<>(userToUpdate, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

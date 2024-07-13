@@ -64,7 +64,7 @@ const ItemPage = () => {
       }
 
   return (
-    <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
+    <div className="m-20 grid gap-4 sm:grid-cols-12 sm:grid-rows-2">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-4xl flex">
         <div className="flex-shrink-0 mr-6">
           {/* Placeholder image */}

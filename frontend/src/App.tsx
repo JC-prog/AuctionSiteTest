@@ -21,6 +21,8 @@ import MyWatchlist from './Pages/MyWatchlist';
 import MyItemListing from './Pages/MyItemListing';
 
 import UserProfile from "./Pages/ProfilePage";
+import UserEditProfile from "./Pages/ProfileEditPage";
+
 import ItemPage from "./Pages/ItemPage";
 import ItemCreatePage from "./Pages/ItemCreatePage"
 import ItemEditPage from "./Pages/ItemEditPage"
@@ -71,12 +73,12 @@ function App() {
           <Route path="/watchlist" element={ <MyWatchlist /> } />
           <Route path="/my-listings" element={ <MyItemListing user={ user } /> } />
 
-
           <Route path="/user/:username" element={ <UserProfile user={ user } /> } />
+          <Route path="/user/edit/:username" element={ <UserEditProfile /> } />
 
           <Route path="/item/create" element={ <ItemCreatePage user={ user }/>} />
-          <Route path="/item/edit" element={ <ItemEditPage /> } />
-          <Route path="/item/:itemID" element={ <ItemPage /> } />
+          <Route path="/item/edit/:itemId" element={ <ItemEditPage /> } />
+          <Route path="/item/:itemId" element={ <ItemPage /> } />
         </Routes>
       </BrowserRouter>
     </div>

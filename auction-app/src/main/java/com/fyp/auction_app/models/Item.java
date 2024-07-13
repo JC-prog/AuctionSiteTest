@@ -40,5 +40,7 @@ public class Item {
 
     private Date createAt;
 
+    private String duration;
 
+    private Date launchDate;
 }

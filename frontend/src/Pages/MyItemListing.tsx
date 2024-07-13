@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 // Config
 import api from '../config/api/loginApi';
@@ -25,6 +26,9 @@ interface AuthProps {
 interface ApiResponse {
   results: Item[]; // Adjusted according to your description
 }
+
+// Utility
+import Timer from '../Components/Timer';
 
 const ItemsTable: React.FC<AuthProps> = ({ isAuth, user }) => {
   const [items, setItems] = useState<Item[]>([]);
@@ -54,11 +58,9 @@ const ItemsTable: React.FC<AuthProps> = ({ isAuth, user }) => {
         if (response.status !== 200) {
           throw new Error('Network response was not ok');
         }
-        console.log('Fetched items:', response.data);
+        console.log('Fetched items:', response.data.results);
         
-        setItems(response.data)
-
-        console.log(items)
+        setItems(response.data);
       } catch (error) {
         console.error('Error fetching items:', error);
         setError(error as Error);
@@ -77,6 +79,42 @@ const ItemsTable: React.FC<AuthProps> = ({ isAuth, user }) => {
 
   if (error) {
     return <div>Error: {error.message}</div>;
+  }
+
+  // Launch Listing
+  const launchListing = async (itemId: number) => {
+    try {
+      const response: AxiosResponse = await api.post(`/api/item/launch`, { itemId });
+
+      if (response.status === 200) {
+        toast.success('Item Launched!', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else {
+        toast.error('Failed to update profile. Please try again.', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Failed to update profile. Please check your inputs and try again.', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
+  };
+
+  // Utilities
+  function calculateEndDate(launchDate: Date, duration: number): Date {
+    const endDate = new Date(launchDate);
+    endDate.setDate(endDate.getDate() + duration);
+    return endDate;
   }
 
   return (
@@ -103,19 +141,34 @@ const ItemsTable: React.FC<AuthProps> = ({ isAuth, user }) => {
                   Item Price
                 </th>
                 <th className="px-6 py-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                  Time Left
+                </th>
+                <th className="px-6 py-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 border-b border-gray-200"></th> {/* Empty cell for Edit button */}
+                <th className="px-6 py-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Action</th>
               </tr>
             </thead>
             <tbody>
               {items?.map((item) => (
                 <tr key={item.itemId}>
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{item.itemId}</td>
-                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{item.itemTitle}</td>
+                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                    <Link to={`/item/${item.itemId}`} className="text-blue-600 hover:text-blue-800">
+                      {item.itemTitle}
+                    </Link>
+                  </td>
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">${item.currentPrice.toFixed(2)}</td>
-                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-right text-sm leading-5 font-medium">
-                    <button className="text-indigo-600 hover:text-indigo-900 focus:outline-none">Edit</button>
+                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200"><Timer endTime={item.endDate} /></td>
+                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{item.itemCondition}</td>
+                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-right text-sm leading-5 font-medium flex space-x-4">
+                    <Link to={`/item/edit/${item.itemId}`} className="text-indigo-600 hover:text-indigo-900 focus:outline-none">Edit</Link>
+                    <button 
+                      className="text-green-600 hover:text-indigo-900 focus:outline-none"
+                      onClick={() => launchListing(item.itemId)}
+                    >
+                      Launch
+                    </button>
                   </td>
                 </tr>
               ))}
