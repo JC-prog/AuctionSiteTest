@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { AxiosResponse } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 // Config
 import api from '../config/api/loginApi';
@@ -16,6 +16,7 @@ interface Item {
   endDate: Date | null; // Nullable Date to handle initial state
   currentPrice: number;
   sellerName: string;
+  duration: string;
 }
 
 interface AuthProps {
@@ -24,6 +25,9 @@ interface AuthProps {
 }
 
 const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
+
+  const navigate = useNavigate();
+
   // State to manage form inputs
   const [item, setItem] = useState<Item>({
     itemTitle: '',
@@ -34,23 +38,39 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
     endDate: null, // Initialize with null
     currentPrice: 0,
     sellerName: user, // Initialize sellerName with user prop
+    duration: ''
   });
 
-  const [duration, setDuration] = useState<number>(0);
-  const navigate = useNavigate();
+  // Duration
+  const [days, setDays] = useState<number>(0);
+  const [hours, setHours] = useState<number>(0);
+  const [minutes, setMinutes] = useState<number>(0);
 
-  // Calculate End Date based on duration
-  const calculateEndDate = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    const currentDate = new Date();
-    const nextDay = new Date(currentDate);
-    nextDay.setDate(currentDate.getDate() + parseInt(value));
-    setItem(prevItem => ({
-      ...prevItem,
-      endDate: nextDay,
-    }));
-    setDuration(parseInt(value));
+  const updateDuration = () => {
+    const validHours = hours >= 0 ? hours % 24 : 0;
+    const validMinutes = minutes >= 0 ? minutes % 60 : 0;
+
+    const totalDays = days + Math.floor(hours / 24) + Math.floor(minutes / 60 / 24);
+    const totalHours = validHours + Math.floor(minutes / 60);
+    
+    const formatted = `${totalDays.toString().padStart(2, '0')}:${(totalHours % 24).toString().padStart(2, '0')}:${validMinutes.toString().padStart(2, '0')}`;
+    setDuration(formatted);
   };
+
+  const handleDaysChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDays(Number(e.target.value));
+    updateDuration();
+  };
+
+  const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHours(Number(e.target.value));
+    updateDuration();
+  };
+
+  const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMinutes(Number(e.target.value));
+    updateDuration();
+  }
 
   // Submit form
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -207,20 +227,66 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
             </div>
 
             {/* Duration (days) */}
-            <div>
-              <label htmlFor="duration" className="block font-medium">
-                Duration (days)
+            <div className="grid grid-cols-3 gap-4">
+              <label htmlFor="duration" className="col-span-3 block font-medium mb-2">
+                Duration
               </label>
-              <input
-                type="number"
-                id="duration"
-                name="duration"
-                value={duration}
-                onChange={calculateEndDate}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-              />
+
+              {/* Days */}
+              <div className="flex flex-col">
+                <label htmlFor="days" className="font-medium mb-1">
+                  Days
+                </label>
+                <input
+                  type="number"
+                  id="days"
+                  name="days"
+                  value={days}
+                  onChange={ handleDaysChange }
+                  required
+                  min="0"
+                  max="7"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Hours */}
+              <div className="flex flex-col">
+                <label htmlFor="hour" className="font-medium mb-1">
+                  Hours
+                </label>
+                <input
+                  type="number"
+                  id="hour"
+                  name="hour"
+                  value={ hours }
+                  onChange={ handleHoursChange }
+                  required
+                  min="0"
+                  max="60"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Minutes */}
+              <div className="flex flex-col">
+                <label htmlFor="minute" className="font-medium mb-1">
+                  Minutes
+                </label>
+                <input
+                  type="number"
+                  id="minute"
+                  name="minute"
+                  value={minutes}
+                  onChange={ handleMinutesChange }
+                  required
+                  min="0"
+                  max="60"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                />
+              </div>
             </div>
+
 
             {/* Start Price ($) */}
             <div>
@@ -234,19 +300,27 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                 value={item.currentPrice}
                 onChange={handleChange}
                 required
-                step="0.01"
+                step="1"
+                min="1.00"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               />
             </div>
 
             {/* Submit Button */}
-            <div>
+            <div className="flex justify-between">
               <button
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
               >
                 Create Item
               </button>
+
+              <Link
+                to="/my-listings"
+                className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
+              >
+                Cancel
+              </Link>
             </div>
           </form>
         </div>
