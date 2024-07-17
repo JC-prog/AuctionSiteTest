@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Cookies from 'js-cookie';
-import { jwtDecode } from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode';
 import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import PageHeader from './Layout/PageHeader';
 
 // Components
+import HomeSidebar from "./Components/Sidebar/HomeSidebar";
+import Navbar from './Components/Navbar';
 
 // Pages
 import HomePage from './Pages/HomePage';
@@ -58,30 +60,34 @@ function App() {
   }, []);
 
   return (
+    
     <div className="max-h-screen flex flex-col">
       <BrowserRouter>
         <ToastContainer />
-        <PageHeader isAuth={ authenticated } user={ user } />
-        <Routes>
-          <Route path="/" element={ <HomePage /> } />
-          <Route path="/search" element={ <SearchPage /> } />
-
-          <Route path="/login" element={ <LoginPage /> } />
-          <Route path="/signup" element={ <SignupPage /> } />
-
-          <Route path="/my-bids" element={ <MyBids /> } />
-          <Route path="/watchlist" element={ <MyWatchlist /> } />
-          <Route path="/my-listings" element={ <MyItemListing user={ user } /> } />
-
-          <Route path="/user/:username" element={ <UserProfile user={ user } /> } />
-          <Route path="/user/edit/:username" element={ <UserEditProfile /> } />
-
-          <Route path="/item/create" element={ <ItemCreatePage user={ user }/>} />
-          <Route path="/item/edit/:itemId" element={ <ItemEditPage /> } />
-          <Route path="/item/:itemId" element={ <ItemPage /> } />
-        </Routes>
-      </BrowserRouter>
-    </div>
+        <div className="flex flex-1">
+          <HomeSidebar isAuth={authenticated} user={user} />
+        <div className="flex flex-col flex-1">
+          <Navbar isAuth={authenticated} />
+          <main className="flex-1 bg-gray-100">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/my-bids" element={<MyBids />} />
+              <Route path="/watchlist" element={<MyWatchlist />} />
+              <Route path="/my-listings" element={<MyItemListing user={user} />} />
+              <Route path="/user/:username" element={<UserProfile user={user} />} />
+              <Route path="/user/edit/:username" element={<UserEditProfile />} />
+              <Route path="/item/create" element={<ItemCreatePage user={user} />} />
+              <Route path="/item/edit/:itemId" element={<ItemEditPage />} />
+              <Route path="/item/:itemId" element={<ItemPage />} />
+            </Routes>
+          </main>
+        </div>
+      </div>
+    </BrowserRouter>
+  </div>
   )
 }
 

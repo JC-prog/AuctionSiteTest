@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { AxiosResponse } from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -17,15 +17,15 @@ interface Item {
   currentPrice: number;
   sellerName: string;
   duration: string;
+  startPrice: number;
 }
 
 interface AuthProps {
-  isAuth: boolean;
+  isAuth: boolean,
   user: string;
 }
 
 const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
-
   const navigate = useNavigate();
 
   // State to manage form inputs
@@ -38,55 +38,44 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
     endDate: null, // Initialize with null
     currentPrice: 0,
     sellerName: user, // Initialize sellerName with user prop
-    duration: ''
+    duration: '',
+    startPrice: 0,
   });
 
-  // Duration
+  // State for duration inputs
   const [days, setDays] = useState<number>(0);
   const [hours, setHours] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
 
-  const updateDuration = () => {
+  // Update duration based on days, hours, and minutes
+  useEffect(() => {
     const validHours = hours >= 0 ? hours % 24 : 0;
     const validMinutes = minutes >= 0 ? minutes % 60 : 0;
-
     const totalDays = days + Math.floor(hours / 24) + Math.floor(minutes / 60 / 24);
     const totalHours = validHours + Math.floor(minutes / 60);
-    
     const formatted = `${totalDays.toString().padStart(2, '0')}:${(totalHours % 24).toString().padStart(2, '0')}:${validMinutes.toString().padStart(2, '0')}`;
-    setDuration(formatted);
-  };
-
-  const handleDaysChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDays(Number(e.target.value));
-    updateDuration();
-  };
-
-  const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHours(Number(e.target.value));
-    updateDuration();
-  };
-
-  const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMinutes(Number(e.target.value));
-    updateDuration();
-  }
+    setItem((prevItem) => ({
+      ...prevItem,
+      duration: formatted,
+    }));
+  }, [days, hours, minutes]);
 
   // Submit form
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      const { itemTitle, itemCategory, itemCondition, description, auctionType, currentPrice, sellerName } = item; // Include sellerName from item state
+      const { itemTitle, itemCategory, itemCondition, description, auctionType, currentPrice, sellerName, duration, endDate } = item; // Include sellerName from item state
       const response: AxiosResponse = await api.post(`/api/item/create`, {
         itemTitle,
         itemCategory,
         itemCondition,
         description,
         auctionType,
-        endDate: item.endDate,
+        endDate,
         currentPrice,
         sellerName,
+        duration,
       });
 
       console.log(response);
@@ -96,11 +85,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000,
         });
-
-        setTimeout(() => {
-          navigate('/my-listings');
-          window.location.reload();
-        }, 2000);
+        navigate('/my-listings'); // Redirect to my listings page on success
       } else {
         toast.error('Failed to create listing. Please try again.', {
           position: toast.POSITION.TOP_RIGHT,
@@ -117,9 +102,9 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
   };
 
   // Handle input changes
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
-    setItem(prevItem => ({
+    setItem((prevItem) => ({
       ...prevItem,
       [name]: value,
     }));
@@ -137,12 +122,12 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Title */}
             <div>
-              <label htmlFor="title" className="block font-medium">
+              <label htmlFor="itemTitle" className="block font-medium">
                 Title
               </label>
               <input
                 type="text"
-                id="title"
+                id="itemTitle"
                 name="itemTitle"
                 value={item.itemTitle}
                 onChange={handleChange}
@@ -153,11 +138,11 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
             {/* Category */}
             <div>
-              <label htmlFor="category" className="block font-medium">
+              <label htmlFor="itemCategory" className="block font-medium">
                 Category
               </label>
               <select
-                id="category"
+                id="itemCategory"
                 name="itemCategory"
                 value={item.itemCategory}
                 onChange={handleChange}
@@ -174,11 +159,11 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
             {/* Condition */}
             <div>
-              <label htmlFor="condition" className="block font-medium">
+              <label htmlFor="itemCondition" className="block font-medium">
                 Condition
               </label>
               <select
-                id="condition"
+                id="itemCondition"
                 name="itemCondition"
                 value={item.itemCondition}
                 onChange={handleChange}
@@ -226,7 +211,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
               </select>
             </div>
 
-            {/* Duration (days) */}
+            {/* Duration */}
             <div className="grid grid-cols-3 gap-4">
               <label htmlFor="duration" className="col-span-3 block font-medium mb-2">
                 Duration
@@ -242,7 +227,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                   id="days"
                   name="days"
                   value={days}
-                  onChange={ handleDaysChange }
+                  onChange={(e) => setDays(Number(e.target.value))}
                   required
                   min="0"
                   max="7"
@@ -252,41 +237,40 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
               {/* Hours */}
               <div className="flex flex-col">
-                <label htmlFor="hour" className="font-medium mb-1">
+                <label htmlFor="hours" className="font-medium mb-1">
                   Hours
                 </label>
                 <input
                   type="number"
-                  id="hour"
-                  name="hour"
-                  value={ hours }
-                  onChange={ handleHoursChange }
+                  id="hours"
+                  name="hours"
+                  value={hours}
+                  onChange={(e) => setHours(Number(e.target.value))}
                   required
                   min="0"
-                  max="60"
+                  max="23"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
                 />
               </div>
 
               {/* Minutes */}
               <div className="flex flex-col">
-                <label htmlFor="minute" className="font-medium mb-1">
+                <label htmlFor="minutes" className="font-medium mb-1">
                   Minutes
                 </label>
                 <input
                   type="number"
-                  id="minute"
-                  name="minute"
+                  id="minutes"
+                  name="minutes"
                   value={minutes}
-                  onChange={ handleMinutesChange }
+                  onChange={(e) => setMinutes(Number(e.target.value))}
                   required
                   min="0"
-                  max="60"
+                  max="59"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
                 />
               </div>
             </div>
-
 
             {/* Start Price ($) */}
             <div>
@@ -296,8 +280,8 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
               <input
                 type="number"
                 id="startPrice"
-                name="currentPrice"
-                value={item.currentPrice}
+                name="startPrice"
+                value={item.startPrice}
                 onChange={handleChange}
                 required
                 step="1"
@@ -308,19 +292,19 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
             {/* Submit Button */}
             <div className="flex justify-between">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-              >
-                Create Item
-              </button>
-
               <Link
                 to="/my-listings"
                 className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
               >
                 Cancel
               </Link>
+
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+              >
+                Create Item
+              </button>
             </div>
           </form>
         </div>
@@ -330,4 +314,3 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 };
 
 export default CreateItemPage;
-

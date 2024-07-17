@@ -1,110 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
-import { jwtDecode } from 'jwt-decode';
 
 // Icons
+import { IoExitOutline } from 'react-icons/io5';
+import { IoMdNotificationsOutline } from 'react-icons/io';
+
+// Interface
+import IAuth from "../Models/IAuth";
 
 // Components
 import SearchBar from "./SearchBar";
-import LoginSignup from "./LoginSignup";
-import NavbarNotificationButton from './Buttons/NavbarNotificationButton';
-import NavbarLogoutButton from './Buttons/NavbarLogoutButton';
-import NavbarProfileButton from './Buttons/NavbarProfileButton';
 
-interface DecodedToken {
-  sub: string; // Assuming 'sub' is the field containing user information
-  // Add other fields as needed based on your JWT payload
-}
+const Navbar: React.FC<IAuth> = ({ isAuth, user }) => {
+    const navigate = useNavigate();
 
-const Navbar = () => {
-  const [authenticated, setAuthenticated] = useState(false);
-  const [user, setUser] = useState<string | null>(null);
-  const navigate = useNavigate();
+    // Function to handle logout
+    const handleLogout = () => {
+        Cookies.remove('access_token');
+        toast.success('Logout Successful');
 
+        setTimeout(() => {
+            navigate('/');
+            window.location.reload();
+        }, 1000);
+    };
 
-// Function to check authentication status
-const checkAuthentication = () => {
-  const accessToken = Cookies.get('access_token');
-  if (accessToken) {
-    setAuthenticated(true);
-
-    try {
-      const decodedToken = jwtDecode<DecodedToken>(accessToken);
-      setUser(decodedToken.sub || null);
-
-    } catch (error) {
-      console.error('Error decoding token:', error);
-      setUser(null);
-    }
-
-  } else {
-    setAuthenticated(false);
-  }
-};
-
-// Check authentication status on component mount
-useEffect(() => {
-  checkAuthentication();
-}, []);
-
-// Function to navigate to Notification
-const redirectToNotification= () => {
-  if (user) {
-    navigate(`/notification/${user}`);
-  }
-};
-
-// Function to navigate to Profile
-const redirectToProfile = () => {
-  if (user) {
-    navigate(`/user/${user}`);
-  }
-};
-
-// Function to handle logout
-const handleLogout = () => {
-  Cookies.remove('access_token');
-  setAuthenticated(false);
-
-  toast.success('Logout Successful');
-
-  setTimeout(() => {
-    navigate('/');
-  }, 1000);
-  
-};
-
-  return (
-    <>
-      <div className="navbar">
-        <div className="navbar-brand">
-          <a href="/"><img src='./logo.svg' /></a>
-        </div>
-
-        <div className="menu-search-container">
-            <SearchBar />
-        </div>
-
-        <div>
-          {authenticated ? (
-            <div>
-              <NavbarNotificationButton redirectToNotification={ redirectToNotification } />
-
-              <NavbarProfileButton redirectToProfile={ redirectToProfile }/>
-              
-              <NavbarLogoutButton handleLogout={ handleLogout } />
+    return (
+        <div className="flex justify-between items-center bg-gray-800 text-gray-100 px-4 py-2">
+            <Link to="/" className="text-2xl font-bold">EzAuction</Link>
+            <div className="flex-1 flex justify-center px-4">
+                <SearchBar />
             </div>
-          ) : (
-            <LoginSignup />
-          )}
-
+            <div className="flex items-center space-x-4 relative">
+                
+                {isAuth && (
+                    <button 
+                        onClick={handleLogout} 
+                        className="flex items-center text-sm gap-2 font-medium p-2 hover:bg-gray-700 rounded-md"
+                    >
+                        <IoExitOutline size={20} />
+                        Logout
+                    </button>
+                )}
+            </div>
         </div>
-      </div>
-    </>
-   
-  )
-}
+    );
+};
 
-export default Navbar
+export default Navbar;

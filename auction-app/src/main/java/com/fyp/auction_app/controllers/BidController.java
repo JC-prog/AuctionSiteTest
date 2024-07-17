@@ -1,12 +1,20 @@
 package com.fyp.auction_app.controllers;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
+import com.fyp.auction_app.models.Item;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin
 @RestController
+@RequestMapping("/api/bid")
 public class BidController {
 
+    @PostMapping("/")
+    public ResponseEntity<Item> createItem() {
 
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }
