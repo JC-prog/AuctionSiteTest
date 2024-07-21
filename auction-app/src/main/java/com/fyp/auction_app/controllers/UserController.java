@@ -45,6 +45,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("/get-role/{username}")
+    public ResponseEntity<String> getUserRole(@PathVariable("username") String username) {
+        Optional<User> user = userService.findUserByUsername(username);
+
+        if (user.isPresent()) {
+            return new ResponseEntity<>(user.get().getRole().toString(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/edit")
     public ResponseEntity<User> updateUser(@RequestBody EditUserRequest user) {
         Optional<User> existingUser = userService.findUserByUsername(user.getUsername());

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { FiEdit, FiUpload } from 'react-icons/fi';
 
 // Config
 import api from '../config/api/loginApi';
@@ -15,7 +16,9 @@ interface Item {
   description: string;
   auctionType: string;
   endDate: Date;
+  startPrice: number;
   currentPrice: number;
+  status: string;
 }
 
 interface AuthProps {
@@ -29,6 +32,7 @@ interface ApiResponse {
 
 // Utility
 import Timer from '../Components/Timer';
+import UserItemList from '../Components/List/UserItemList';
 
 const ItemsTable: React.FC<AuthProps> = ({ isAuth, user }) => {
   const [items, setItems] = useState<Item[]>([]);
@@ -81,45 +85,10 @@ const ItemsTable: React.FC<AuthProps> = ({ isAuth, user }) => {
     return <div>Error: {error.message}</div>;
   }
 
-  // Launch Listing
-  const launchListing = async (itemId: number) => {
-    try {
-      const response: AxiosResponse = await api.post(`/api/item/launch`, { itemId });
-
-      if (response.status === 200) {
-        toast.success('Item Launched!', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      } else {
-        toast.error('Failed to update profile. Please try again.', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      toast.error('Failed to update profile. Please check your inputs and try again.', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-    }
-  };
-
-  // Utilities
-  function calculateEndDate(launchDate: Date, duration: number): Date {
-    const endDate = new Date(launchDate);
-    endDate.setDate(endDate.getDate() + duration);
-    return endDate;
-  }
+  
 
   return (
-    <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-4xl">
+    <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl font-semibold mb-4">My Listings</h1>
         <button
           className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600 mb-2"
@@ -127,56 +96,9 @@ const ItemsTable: React.FC<AuthProps> = ({ isAuth, user }) => {
         >
           Create New Listing
         </button>
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="px-6 py-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                  Item ID
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                  Item Title
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                  Item Price
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                  Time Left
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items?.map((item) => (
-                <tr key={item.itemId}>
-                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{item.itemId}</td>
-                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                    <Link to={`/item/${item.itemId}`} className="text-blue-600 hover:text-blue-800">
-                      {item.itemTitle}
-                    </Link>
-                  </td>
-                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">${item.currentPrice.toFixed(2)}</td>
-                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200"><Timer endTime={item.endDate} /></td>
-                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{item.itemCondition}</td>
-                  <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-right text-sm leading-5 font-medium flex space-x-4">
-                    <Link to={`/item/edit/${item.itemId}`} className="text-indigo-600 hover:text-indigo-900 focus:outline-none">Edit</Link>
-                    <button 
-                      className="text-green-600 hover:text-indigo-900 focus:outline-none"
-                      onClick={() => launchListing(item.itemId)}
-                    >
-                      Launch
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+
+        <UserItemList listTitle='My Listings' items={items} />
       </div>
-    </div>
   );
 };
 

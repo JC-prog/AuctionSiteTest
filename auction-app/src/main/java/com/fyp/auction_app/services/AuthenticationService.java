@@ -1,7 +1,8 @@
 package com.fyp.auction_app.services;
 
 import com.fyp.auction_app.config.JwtService;
-import com.fyp.auction_app.models.Role;
+import com.fyp.auction_app.models.Enums.AccountType;
+import com.fyp.auction_app.models.Enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.fyp.auction_app.repository.UserRepository;
@@ -39,8 +40,28 @@ public class AuthenticationService {
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
             .role(Role.USER)
+            .accountType(AccountType.STANDARD)
             .createdAt(new Date())
             .build();
+
+        repository.save(user);
+
+        var jwtToken = jwtService.generateToken(user);
+
+        return AuthenticationResponse.builder()
+                .accessToken(jwtToken)
+                .build();
+    }
+
+    public AuthenticationResponse registerAdmin(RegisterRequest request) {
+        User user = User.builder()
+                .username(request.getUsername())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.ADMIN)
+                .accountType(AccountType.ADMIN)
+                .createdAt(new Date())
+                .build();
 
         repository.save(user);
 

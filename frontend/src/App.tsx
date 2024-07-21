@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+// Config
+import api from './config/api/loginApi';
 
 // Layouts
 import PageHeader from './Layout/PageHeader';
@@ -29,20 +33,41 @@ import ItemPage from "./Pages/ItemPage";
 import ItemCreatePage from "./Pages/ItemCreatePage"
 import ItemEditPage from "./Pages/ItemEditPage"
 import SearchPage from "./Pages/SearchPage"
+import AnalyticsPage from './Pages/AnalyticsPage';
+import TransactionPage from './Pages/TransactionPage';
+
+// Admin Pages
+import AdminDashboardPage from './Pages/AdminPages/AdminDashboardPage';
+import AdminUserManagementPage from './Pages/AdminPages/AdminUserManagementPage';
+import AdminListingManagementPage from './Pages/AdminPages/AdminListingManagementPage';
+import AdminSystemManagementPage from './Pages/AdminPages/AdminSystemManagementPage';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState<string | null>(null);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   // Function to check authentication status
-  const checkAuthentication = () => {
-    const accessToken = Cookies.get('access_token');
+  const checkAuthentication = async () => {
+    const accessToken = await Cookies.get('access_token');
     if (accessToken) {
       setAuthenticated(true);
 
       try {
         const decodedToken = jwtDecode<DecodedToken>(accessToken);
         setUser(decodedToken.sub);
+
+        console.log(decodedToken.sub);
+
+        const response: AxiosResponse<String> = await api.get(`/api/user/get-role/${decodedToken.sub}`);
+    
+        console.log(response);
+
+        if (response.status !== 200) {
+          throw new Error('Network response was not ok');
+        }
+        
+        setUserRole(response.data);
         
       } catch (error) {
         console.error('Error decoding token:', error);
@@ -59,18 +84,40 @@ function App() {
     checkAuthentication();
   }, []);
 
+
+  const items: Item[] = [
+    {
+        itemId: 1,
+        image: '/bike.jpg',
+        title: 'Bike',
+        price: 20,
+    },
+    {
+        itemId: 2,
+        image: '/bike.jpg',
+        title: 'Laptop',
+        price: 500,
+    },
+    // Add more items here
+];
+
   return (
     
     <div className="max-h-screen flex flex-col">
       <BrowserRouter>
         <ToastContainer />
         <div className="flex flex-1">
-          <HomeSidebar isAuth={authenticated} user={user} />
+          <HomeSidebar isAuth={authenticated} user={user} role={userRole} />
         <div className="flex flex-col flex-1">
           <Navbar isAuth={authenticated} />
           <main className="flex-1 bg-gray-100">
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/admin" element={<AdminDashboardPage />} />
+              <Route path="/admin/user-management" element={<AdminUserManagementPage />} />
+              <Route path="/admin/listing-management" element={<AdminListingManagementPage />} />
+              <Route path="/admin/system-management" element={<AdminSystemManagementPage />} />
+
               <Route path="/search" element={<SearchPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
@@ -81,7 +128,10 @@ function App() {
               <Route path="/user/edit/:username" element={<UserEditProfile />} />
               <Route path="/item/create" element={<ItemCreatePage user={user} />} />
               <Route path="/item/edit/:itemId" element={<ItemEditPage />} />
-              <Route path="/item/:itemId" element={<ItemPage />} />
+              <Route path="/item/:itemId" element={<ItemPage user={user} />} />
+              <Route path="/analytics" element={<AnalyticsPage />} />
+              <Route path="/transactions" element={<TransactionPage items={ items }/>} />
+              
             </Routes>
           </main>
         </div>

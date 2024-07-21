@@ -1,5 +1,6 @@
 package com.fyp.auction_app.models;
 
+import com.fyp.auction_app.models.Enums.ListingStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,4 +44,9 @@ public class Item {
     private String duration;
 
     private Date launchDate;
+
+    @Enumerated(EnumType.STRING)
+    private ListingStatus status;
+
+    private Boolean isActive;
 }

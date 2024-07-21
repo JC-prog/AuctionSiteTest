@@ -1,9 +1,11 @@
 package com.fyp.auction_app.controllers;
 
+import com.fyp.auction_app.models.Enums.ListingStatus;
 import com.fyp.auction_app.models.Item;
 import com.fyp.auction_app.models.Requests.LaunchListingRequest;
 import com.fyp.auction_app.models.User;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import com.fyp.auction_app.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,7 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
+
     @GetMapping("api/items/all")
     public ResponseEntity<Page<Item>> getRecentItems() {
 
@@ -48,6 +51,26 @@ public class ItemController {
     ) {
         List<Item> items = itemService.findItemsBySeller(sellerName);
 
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    @GetMapping("/bySellerNameAndEndDate")
+    public ResponseEntity<Page<Item>> getItemsBySellerNameAndEndDate(
+            @RequestParam("sellerName") String sellerName,
+            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        Page<Item> items = itemService.findItemsBySellerNameAndEndDate(sellerName, endDate, page, size);
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    @GetMapping("/sortedByDuration")
+    public ResponseEntity<Page<Item>> getItemsSortedByDuration(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        Page<Item> items = itemService.findItemsSortedByDuration(page, size);
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
@@ -97,6 +120,7 @@ public class ItemController {
 
             LocalDateTime launchDate = LocalDateTime.now();
             itemToUpdate.setLaunchDate(Date.from(launchDate.atZone(ZoneId.systemDefault()).toInstant()));
+            itemToUpdate.setStatus(ListingStatus.LISTED);
 
             String[] durationParts = itemToUpdate.getDuration().split(":");
             long days = Long.parseLong(durationParts[0]);

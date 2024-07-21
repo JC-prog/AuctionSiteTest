@@ -36,12 +36,22 @@ const Timer: React.FC<TimerProps> = ({ endTime }) => {
         return () => clearInterval(timer);
     }, [endTime]);
 
+    const isTimeLeftZero = () => {
+        return timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0;
+    };
+
     return (
         <div className="timer">
-            {timeLeft.days > 0 && <span>{timeLeft.days}d </span>}
-            {timeLeft.hours > 0 && <span>{timeLeft.hours}h </span>}
-            {timeLeft.minutes > 0 && <span>{timeLeft.minutes}m </span>}
-            <span>{timeLeft.seconds}s</span>
+            {isTimeLeftZero() ? (
+                <span className="text-red-500">Expired</span>
+            ) : (
+                <>
+                    {timeLeft.days > 0 && <span>{timeLeft.days}d </span>}
+                    {timeLeft.hours > 0 && <span>{timeLeft.hours}h </span>}
+                    {timeLeft.minutes > 0 && <span>{timeLeft.minutes}m </span>}
+                    <span>{timeLeft.seconds}s</span>
+                </>
+            )}
         </div>
     );
 };

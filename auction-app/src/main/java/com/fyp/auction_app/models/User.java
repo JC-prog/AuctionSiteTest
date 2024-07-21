@@ -1,5 +1,8 @@
 package com.fyp.auction_app.models;
 
+import com.fyp.auction_app.models.Enums.AccountType;
+import com.fyp.auction_app.models.Enums.Role;
+import com.fyp.auction_app.models.Enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,6 +37,12 @@ public class User implements UserDetails {
     private String contactNumber;
 
     private String address;
+
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
 
     private Boolean isActive;
 

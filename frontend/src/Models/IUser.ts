@@ -7,6 +7,7 @@ interface IUser {
     contactNumber?: string; 
     role?: string;
     createdAt?: Date;
+    accountType?: string;
 }
 
 export default IUser

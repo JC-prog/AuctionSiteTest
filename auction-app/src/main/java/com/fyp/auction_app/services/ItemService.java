@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +29,16 @@ public class ItemService {
     public List<Item> findItemsBySeller(String sellerName) {
 
         return itemRepo.findBySellerName(sellerName);
+    }
+
+    public Page<Item> findItemsBySellerNameAndEndDate(String sellerName, Date endDate, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return itemRepo.findBySellerNameAndEndDate(sellerName, endDate, pageable);
+    }
+
+    public Page<Item> findItemsSortedByDuration(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return itemRepo.findAllSortedByDuration(pageable);
     }
 
     public Page<Item> searchItems(String keyword, int page, int size) {

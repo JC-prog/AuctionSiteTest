@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BidRequest {
 
+    private String bidder_name;
+
     private Integer itemId;
 
+    private Double bid_amount;
 }

@@ -4,24 +4,23 @@ import { RiSettings4Line } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiFolder, FiShoppingCart } from "react-icons/fi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { RiAuctionLine } from "react-icons/ri";
-import { IoExitOutline } from 'react-icons/io5';
 import { SlLogout } from "react-icons/sl";
-import Cookies from 'js-cookie';
-import { toast } from 'react-toastify';
+import { CiCircleList } from "react-icons/ci";
+import { MdDashboard } from "react-icons/md";
 
 import IAuth from "../../Models/IAuth";
 
-const HomeSidebar: React.FC<IAuth> = ({ isAuth, user }) => {
+const HomeSidebar: React.FC<IAuth> = ({ isAuth, user, role }) => {
     const authMenus = [
         { name: "User", link: `/user/${user ? user : ''}`, icon: AiOutlineUser },
         { name: "Notifications", link: "/messages", icon: IoMdNotificationsOutline },
         { name: "Analytics", link: "/analytics", icon: TbReportAnalytics },
-        { name: "My Bids", link: "/bids", icon: RiAuctionLine, margin: true },
+        { name: "My Bids", link: "/my-bids", icon: RiAuctionLine, margin: true },
         { name: "My Listing", link: "/my-listings", icon: FiFolder },
-        { name: "Transactions", link: "/transaction", icon: FiShoppingCart },
+        { name: "Transactions", link: "/transactions", icon: FiShoppingCart },
         { name: "Watchlist", link: "/watchlist", icon: AiOutlineHeart },
         { name: "Settings", link: `/user/edit/${user ? user : ''}`, icon: RiSettings4Line, margin: true },
     ];
@@ -31,11 +30,20 @@ const HomeSidebar: React.FC<IAuth> = ({ isAuth, user }) => {
         { name: "Signup", link: "/signup", icon: SlLogout },
     ];
 
+    const adminMenus = [
+        { name: "Dashboard", link: `/admin`, icon: MdDashboard },
+        { name: "User Management", link: "/admin/user-management", icon: AiOutlineUser, margin: true },
+        { name: "Listing Management", link: "/admin/listing-management", icon: CiCircleList },
+        { name: "System Management", link: "/admin/system-management", icon: RiSettings4Line }
+    ];
+
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
     };
+
+    const menusToRender = isAuth ? (role === "ADMIN" ? adminMenus : authMenus) : notAuthMenus;
 
     return (
         <div className={`bg-gray-800 min-h-screen ${isOpen ? "w-72" : "w-16"} duration-500 text-gray-100 px-4`}>
@@ -47,53 +55,28 @@ const HomeSidebar: React.FC<IAuth> = ({ isAuth, user }) => {
                 />
             </div>
             <div className="mt-4 flex flex-col gap-4">
-                {isAuth ? (
-                    authMenus.map((menu, i) => (
-                        <Link
-                            to={menu.link}
-                            key={i}
-                            className={`${menu.margin ? "mt-5" : ""} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-700 rounded-md`}
+                {menusToRender.map((menu, i) => (
+                    <Link
+                        to={menu.link}
+                        key={i}
+                        className={`${menu.margin ? "mt-5" : ""} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-700 rounded-md`}
+                    >
+                        <div>{React.createElement(menu.icon, { size: "20" })}</div>
+                        <h2
+                            style={{ transitionDelay: `${i + 3}00ms` }}
+                            className={`whitespace-pre duration-500 ${!isOpen ? "opacity-0 translate-x-28 overflow-hidden" : ""}`}
                         >
-                            <div>{React.createElement(menu.icon, { size: "20" })}</div>
-                            <h2
-                                style={{ transitionDelay: `${i + 3}00ms` }}
-                                className={`whitespace-pre duration-500 ${!isOpen ? "opacity-0 translate-x-28 overflow-hidden" : ""}`}
-                            >
-                                {menu.name}
-                            </h2>
-                            <h2
-                                className={`${
-                                    isOpen ? "hidden" : ""
-                                } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}
-                            >
-                                {menu.name}
-                            </h2>
-                        </Link>
-                    ))
-                ) : (
-                    notAuthMenus.map((menu, i) => (
-                        <Link
-                            to={menu.link}
-                            key={i}
-                            className={`${menu.margin ? "mt-5" : ""} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-700 rounded-md`}
+                            {menu.name}
+                        </h2>
+                        <h2
+                            className={`${
+                                isOpen ? "hidden" : ""
+                            } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}
                         >
-                            <div>{React.createElement(menu.icon, { size: "20" })}</div>
-                            <h2
-                                style={{ transitionDelay: `${i + 3}00ms` }}
-                                className={`whitespace-pre duration-500 ${!isOpen ? "opacity-0 translate-x-28 overflow-hidden" : ""}`}
-                            >
-                                {menu.name}
-                            </h2>
-                            <h2
-                                className={`${
-                                    isOpen ? "hidden" : ""
-                                } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}
-                            >
-                                {menu.name}
-                            </h2>
-                        </Link>
-                    ))
-                )}
+                            {menu.name}
+                        </h2>
+                    </Link>
+                ))}
             </div>
         </div>
     );

@@ -13,15 +13,16 @@ interface Item {
   itemCondition: string;
   description: string;
   auctionType: string;
-  endDate: Date | null; // Nullable Date to handle initial state
+  endDate: Date | null;
   currentPrice: number;
   sellerName: string;
   duration: string;
   startPrice: number;
+  bidIncrement: number;
 }
 
 interface AuthProps {
-  isAuth: boolean,
+  isAuth: boolean;
   user: string;
 }
 
@@ -35,11 +36,12 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
     itemCondition: '',
     description: '',
     auctionType: '',
-    endDate: null, // Initialize with null
+    endDate: null,
     currentPrice: 0,
-    sellerName: user, // Initialize sellerName with user prop
+    sellerName: user,
     duration: '',
     startPrice: 0,
+    bidIncrement: 1
   });
 
   // State for duration inputs
@@ -65,20 +67,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
     event.preventDefault();
 
     try {
-      const { itemTitle, itemCategory, itemCondition, description, auctionType, currentPrice, sellerName, duration, endDate } = item; // Include sellerName from item state
-      const response: AxiosResponse = await api.post(`/api/item/create`, {
-        itemTitle,
-        itemCategory,
-        itemCondition,
-        description,
-        auctionType,
-        endDate,
-        currentPrice,
-        sellerName,
-        duration,
-      });
-
-      console.log(response);
+      const response: AxiosResponse = await api.post(`/api/item/create`, item);
 
       if (response.status === 200) {
         toast.success('Create Listing Successful!', {
@@ -122,7 +111,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Title */}
             <div>
-              <label htmlFor="itemTitle" className="block font-medium">
+              <label htmlFor="itemTitle" className="block font-medium mb-1">
                 Title
               </label>
               <input
@@ -138,7 +127,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
             {/* Category */}
             <div>
-              <label htmlFor="itemCategory" className="block font-medium">
+              <label htmlFor="itemCategory" className="block font-medium mb-1">
                 Category
               </label>
               <select
@@ -159,7 +148,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
             {/* Condition */}
             <div>
-              <label htmlFor="itemCondition" className="block font-medium">
+              <label htmlFor="itemCondition" className="block font-medium mb-1">
                 Condition
               </label>
               <select
@@ -178,7 +167,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
             {/* Description */}
             <div>
-              <label htmlFor="description" className="block font-medium">
+              <label htmlFor="description" className="block font-medium mb-1">
                 Description
               </label>
               <textarea
@@ -194,7 +183,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
             {/* Auction Type */}
             <div>
-              <label htmlFor="auctionType" className="block font-medium">
+              <label htmlFor="auctionType" className="block font-medium mb-1">
                 Auction Type
               </label>
               <select
@@ -274,7 +263,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
             {/* Start Price ($) */}
             <div>
-              <label htmlFor="startPrice" className="block font-medium">
+              <label htmlFor="startPrice" className="block font-medium mb-1">
                 Start Price ($)
               </label>
               <input
@@ -282,6 +271,24 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                 id="startPrice"
                 name="startPrice"
                 value={item.startPrice}
+                onChange={handleChange}
+                required
+                step="1"
+                min="1.00"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+              />
+            </div>
+
+            {/* Bid Increment */}
+            <div>
+              <label htmlFor="bidIncrement" className="block font-medium mb-1">
+                Bid Increment ($)
+              </label>
+              <input
+                type="number"
+                id="bidIncrement"
+                name="bidIncrement"
+                value={item.bidIncrement}
                 onChange={handleChange}
                 required
                 step="1"
