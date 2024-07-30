@@ -1,8 +1,8 @@
 Environment Setup Prerequisite
 
-Install NVM https://github.com/coreybutler/nvm-windows#readme
-Install MySQL https://dev.mysql.com/downloads/mysql/
-install Git https://git-scm.com/downloads
+Install NVM https://github.com/coreybutler/nvm-windows#readme  
+Install MySQL https://dev.mysql.com/downloads/mysql/  
+install Git https://git-scm.com/downloads  
 Git Clone
 
 Create Project Folder
