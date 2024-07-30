@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import api from '../config/api/loginApi';
 
 // Interface
-import IUser from '../Models/IUser';
+import IUser from '../interfaces/IUser';
 
 const ProfileEditPage = () => {
   const { username } = useParams<{ username: string }>();

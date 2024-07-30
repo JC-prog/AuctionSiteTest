@@ -2,18 +2,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { addItemToWatchlist } from '../../services/WatchListService';
 
 type LikeButtonProps = {
   imageUrl: string;
   isLiked: boolean;
+  username: string;
+  itemId: number;
 };
 
-const LikeButton: React.FC<LikeButtonProps> = ({ isLiked }) => {
+const LikeButton: React.FC<LikeButtonProps> = ({ isLiked, itemId, username }) => {
   const [liked, setLiked] = useState<boolean>(isLiked);
 
   const handleLikeToggle = async () => {
     try {
-      await axios.post('/like', { liked: !liked });
+      await addItemToWatchlist(itemId, username);
       setLiked(!liked);
     } catch (error) {
       console.error('Failed to like the item:', error);

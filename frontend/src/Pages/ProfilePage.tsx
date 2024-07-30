@@ -7,8 +7,8 @@ import Cookies from 'js-cookie';
 import api from '../config/api/loginApi';
 
 // Models
-import IUser from '../Models/IUser';
-import IItem from '../Models/IItem';
+import IUser from '../interfaces/IUser';
+import IItem from '../interfaces/IItem';
 
 // Components
 import ItemCardListCarousel from '../Components/Carousel/ItemCardListCarousel';

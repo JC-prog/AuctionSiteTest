@@ -8,7 +8,7 @@ import { IoExitOutline } from 'react-icons/io5';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 
 // Interface
-import IAuth from "../Models/IAuth";
+import IAuth from "../interfaces/IAuth";
 
 // Components
 import SearchBar from "./SearchBar";

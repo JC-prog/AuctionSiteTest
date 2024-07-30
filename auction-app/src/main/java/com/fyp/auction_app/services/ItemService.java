@@ -66,4 +66,7 @@ public class ItemService {
         itemRepo.deleteById(id);
     }
 
+    public Optional<Item> findItemByItemId(Integer itemId) {
+        return itemRepo.findById(itemId);
+    }
 }

@@ -18,15 +18,15 @@ public class Bid {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer bid_id;
+    private Integer bidId;
 
-    private String bidder_name;
+    private String bidderName;
 
-    private Integer item_id;
+    private Integer itemId;
 
-    private Double bid_amount;
+    private Double bidAmount;
 
-    private Date bid_timestamp;
+    private Date bidTimestamp;
 
-    private Boolean is_active;
+    private Boolean isActive;
 }

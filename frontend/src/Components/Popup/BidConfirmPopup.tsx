@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 // Config
 import api from '../../config/api/loginApi';
 
+import bidItem from '../../services/BidService';
+
 interface BidConfirmPopupProps {
-    itemid: number;
+    itemId: number;
+    username: string;
     onClose: () => void;
 }
 
-const BidConfirmPopup: React.FC<BidConfirmPopupProps> = ({ itemid, onClose }) => {
+const BidConfirmPopup: React.FC<BidConfirmPopupProps> = ({ itemId, username, onClose }) => {
+    const [bidAmount, setBidAmount] = useState<number | string>('');
+
     const handleConfirm = async () => {
         try {
-            const response = await api.post('/api/bid/', { itemid });
+            const response = await api.post('/api/bid', { itemId, username, bidAmount });
 
             if (response.status === 200) {
                 toast.success('Bid Successful!', {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 2000,
-                  });
+                });
             }
-
-            // Handle success logic here
         } catch (error) {
             console.error('Error:', error);
-            // Handle error logic here
+            toast.error('Bid Failed!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000,
+            });
         } finally {
             onClose();
         }
@@ -35,6 +41,20 @@ const BidConfirmPopup: React.FC<BidConfirmPopupProps> = ({ itemid, onClose }) =>
             <div className="bg-white p-6 rounded shadow-lg w-full max-w-md">
                 <h2 className="text-xl font-semibold">Confirm Your Action</h2>
                 <p className="mt-2">Are you sure you want to proceed with this action?</p>
+
+                <div className="mt-4">
+                    <label htmlFor="bidAmount" className="block text-sm font-medium text-gray-700">
+                        Bid Amount
+                    </label>
+                    <input
+                        type="number"
+                        id="bidAmount"
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        value={bidAmount}
+                        onChange={(e) => setBidAmount(e.target.value)}
+                        placeholder="Enter your bid amount"
+                    />
+                </div>
 
                 <div className="mt-6 flex justify-end space-x-4">
                     <button

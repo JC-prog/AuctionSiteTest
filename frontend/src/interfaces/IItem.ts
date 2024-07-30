@@ -9,6 +9,7 @@ interface IItem {
     duration: string;
     currentPrice: number;
     startPrice: number;
+    status: string;
   }
   
 export default IItem

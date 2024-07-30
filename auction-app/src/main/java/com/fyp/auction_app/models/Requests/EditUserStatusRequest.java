@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SuspendUserRequest {
+public class EditUserStatusRequest {
 
     private String username;
 

@@ -11,7 +11,7 @@ import { SlLogout } from "react-icons/sl";
 import { CiCircleList } from "react-icons/ci";
 import { MdDashboard } from "react-icons/md";
 
-import IAuth from "../../Models/IAuth";
+import IAuth from "../../interfaces/IAuth";
 
 const HomeSidebar: React.FC<IAuth> = ({ isAuth, user, role }) => {
     const authMenus = [

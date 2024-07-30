@@ -50,6 +50,8 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
             try {
                 const response: AxiosResponse<Item> = await api.get(`/api/item/${itemId}`);
 
+                console.log(response)
+
                 if (response.status !== 200) {
                     throw new Error('Network response was not ok');
                 }
@@ -64,36 +66,6 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
         fetchItem();
     }, [itemId]);
-
-    // Bid Item
-    const bidItem = async (itemId: number) => {
-        try {
-          const response: AxiosResponse = await api.post(`/api/bid`, { user, item });
-    
-          if (response.status === 200) {
-            toast.success('Item Successful!', {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
-    
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
-          } else {
-            toast.error('Failed to Bid. Please try again.', {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 2000,
-            });
-          }
-        } catch (error) {
-          console.error('Error:', error);
-          toast.error('Failed to Bid. Please try again later.', {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000,
-          });
-        }
-      };
-    
 
     const openPopup = () => setIsPopupOpen(true);
     const closePopup = () => setIsPopupOpen(false);
@@ -148,7 +120,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                             >
                                 Place Bid
                             </button>
-                            {isBidConfirmPopupOpen && <BidConfirmPopup itemid= {itemId} onClose={() => setIsBidConfirmPopupOpen(false)} />}
+                            {isBidConfirmPopupOpen && <BidConfirmPopup itemId= {itemId} username={ user } onClose={() => setIsBidConfirmPopupOpen(false)} />}
 
                             {/* Trade */}
                             <button 

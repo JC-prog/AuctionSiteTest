@@ -1,7 +1,10 @@
 package com.fyp.auction_app.controllers;
 
 import com.fyp.auction_app.models.Enums.ListingStatus;
+import com.fyp.auction_app.models.Enums.UserStatus;
 import com.fyp.auction_app.models.Item;
+import com.fyp.auction_app.models.Requests.EditItemStatusRequest;
+import com.fyp.auction_app.models.Requests.EditUserStatusRequest;
 import com.fyp.auction_app.models.Requests.LaunchListingRequest;
 import com.fyp.auction_app.models.User;
 import org.springframework.data.domain.Page;
@@ -91,6 +94,40 @@ public class ItemController {
         Item createdItem = itemService.createItem(item);
 
         return new ResponseEntity<>(createdItem, HttpStatus.OK);
+    }
+
+    @PostMapping("api/item/suspend")
+    public ResponseEntity<Item> suspendUser(@RequestBody EditItemStatusRequest item)
+    {
+        Optional<Item> existingItem = itemService.findItemByItemId(item.getItemId());
+
+        if (existingItem.isPresent()) {
+            Item itemToSuspend = existingItem.get();
+
+            itemToSuspend.setStatus(ListingStatus.valueOf("SUSPENDED"));
+            itemService.updateItem(itemToSuspend);
+
+            return new ResponseEntity<>(itemToSuspend, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("api/item/activate")
+    public ResponseEntity<Item> activateItem(@RequestBody EditItemStatusRequest item)
+    {
+        Optional<Item> existingItem = itemService.findItemByItemId(item.getItemId());
+
+        if (existingItem.isPresent()) {
+            Item itemToActivate = existingItem.get();
+
+            itemToActivate.setStatus(ListingStatus.valueOf("ACTIVE"));
+            itemService.updateItem(itemToActivate);
+
+            return new ResponseEntity<>(itemToActivate, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("api/item/{itemID}")
