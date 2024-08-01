@@ -10,6 +10,7 @@ import ItemCard from "../Components/Cards/ItemCard";
 
 // Timer
 import Timer from '../Components/Timer';
+import { fetchItemsByKeyword } from '../services/ItemService';
 
 interface Item {
   itemId: number;
@@ -24,10 +25,9 @@ interface Item {
 
 interface PaginatedResponse {
   content: Item[];
-  // Add other pagination properties if needed
 }
 
-const useQuery = () => {
+const useKeyword = () => {
   return new URLSearchParams(useLocation().search);
 };
 
@@ -35,13 +35,16 @@ const SearchPage: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
-  const query = useQuery().get('keyword');
+  const keyword = useKeyword().get('keyword');
 
+  // Function to search for items based on keyword
   useEffect(() => {
     const fetchItems = async () => {
       setLoading(true);
       try {
-        const response: AxiosResponse<PaginatedResponse> = await api.get(`/api/items/search?keyword=${query}`);
+        const itemData = await fetchItemsByKeyword(keyword);
+
+        const response: AxiosResponse<PaginatedResponse> = await api.get(`/api/items/search?keyword=${keyword}`);
         if (response.status !== 200) {
           throw new Error('Network response was not ok');
         }
@@ -53,17 +56,17 @@ const SearchPage: React.FC = () => {
       }
     };
 
-    if (query) {
+    if (keyword) {
       fetchItems();
     }
-  }, [query]);
+  }, [keyword]);
 
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <h1 className="text-2xl font-semibold mb-4">Search Results</h1>
       
-      {/* Display the search query if it exists */}
-      {query && <p className="text-lg mb-4">Results for "{query}"</p>}
+      {/* Display the search keyword if it exists */}
+      {keyword && <p className="text-lg mb-4">Results for "{keyword}"</p>}
       
       {/* Show loading state */}
       {loading && <p className="text-blue-500">Loading...</p>}

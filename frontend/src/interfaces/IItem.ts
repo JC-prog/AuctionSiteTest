@@ -4,6 +4,7 @@ interface IItem {
     itemCategory: string;
     itemCondition: string;
     description: string;
+    sellerName: string;
     auctionType: string;
     endDate: Date;
     duration: string;

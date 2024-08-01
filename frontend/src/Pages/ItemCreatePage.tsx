@@ -6,37 +6,27 @@ import { useNavigate, Link } from 'react-router-dom';
 // Config
 import api from '../config/api/loginApi';
 
-// Define types for item fields
-interface Item {
-  itemTitle: string;
-  itemCategory: string;
-  itemCondition: string;
-  description: string;
-  auctionType: string;
-  endDate: Date | null;
-  currentPrice: number;
-  sellerName: string;
-  duration: string;
-  startPrice: number;
-  bidIncrement: number;
-}
+// Interface
+import IItem from '../interfaces/IItem';
 
 interface AuthProps {
   isAuth: boolean;
   user: string;
 }
 
+// API Service
+import { createItem } from '../services/ItemService';
+
 const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
   const navigate = useNavigate();
 
   // State to manage form inputs
-  const [item, setItem] = useState<Item>({
+  const [item, setItem] = useState<IItem>({
     itemTitle: '',
     itemCategory: '',
     itemCondition: '',
     description: '',
     auctionType: '',
-    endDate: null,
     currentPrice: 0,
     sellerName: user,
     duration: '',
@@ -271,24 +261,6 @@ const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                 id="startPrice"
                 name="startPrice"
                 value={item.startPrice}
-                onChange={handleChange}
-                required
-                step="1"
-                min="1.00"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-              />
-            </div>
-
-            {/* Bid Increment */}
-            <div>
-              <label htmlFor="bidIncrement" className="block font-medium mb-1">
-                Bid Increment ($)
-              </label>
-              <input
-                type="number"
-                id="bidIncrement"
-                name="bidIncrement"
-                value={item.bidIncrement}
                 onChange={handleChange}
                 required
                 step="1"
