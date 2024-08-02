@@ -4,37 +4,54 @@ import baseUrl from '../config/baseUrl';
 import IUser from '../../interfaces/IUser';
 import { toast } from 'react-toastify';
 
+// Add Item To Watchlist
 export const addItemToWatchlist = async (itemId: number, username: string): Promise<IUser> => {
-  try {
-    const accessToken = Cookies.get('access_token');
-    if (!accessToken) {
-      throw new Error('No access token found');
-    }
-
-    const response: AxiosResponse<IUser> = await baseUrl.post(
-      `/api/watchlist`,
-      { itemId, username }, 
-      {
+  
+    const apiUrl = `/api/watchlist/add`;
+    const payload = { itemId, username };
+    const config = {
         headers: {
-          Authorization: 'Bearer ' + accessToken,
+            Authorization: 'Bearer ' + Cookies.get('access_token'),
         },
-      }
-    );
+    };
 
-    if (response.status === 200) {
-      await toast.success('Item Added to Watchlist', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-    } else {
-      toast.error('Failed. Please try again.', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
+    try {
+        const response: AxiosResponse = await baseUrl.post(apiUrl, payload, config);
+
+        if (response.status !== 200) {
+            throw new Error('Network response was not ok');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        throw error;
     }
 
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+};
+
+// Remove Item from Watchlist
+export const removeItemFromWatchlist = async (watchlistId: number, username: number): Promise<IUser> => {
+  
+    const apiUrl = `/api/watchlist/remove`;
+    const payload = { watchlistId, username };
+    const config = {
+        headers: {
+            Authorization: 'Bearer ' + Cookies.get('access_token'),
+        },
+    };
+
+    try {
+        const response: AxiosResponse = await baseUrl.post(apiUrl, payload, config);
+
+        if (response.status !== 200) {
+            throw new Error('Network response was not ok');
+        }
+
+        return response.data;
+
+    } catch (error) {
+        throw error;
+    }
+
 };
