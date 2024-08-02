@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AdminUserList from '../../Components/List/AdminUserList'
 
-import IUser from '../../interfaces/IUser';
+import IUser from '../../interfaces/User';
 import { fetchUsers } from '../../services/UserService';
 
 const AdminUserManagementPage = () => {

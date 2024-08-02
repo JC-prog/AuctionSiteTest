@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import baseUrl from '../config/baseUrl';
-import IUser from '../../interfaces/IUser';
+import User from '../../interfaces/User';
 import { toast } from 'react-toastify';
 
 // Add Item To Watchlist
-export const addItemToWatchlist = async (itemId: number, username: string): Promise<IUser> => {
+export const addItemToWatchlist = async (itemId: number, username: string) => {
   
     const apiUrl = `/api/watchlist/add`;
     const payload = { itemId, username };
@@ -22,7 +22,7 @@ export const addItemToWatchlist = async (itemId: number, username: string): Prom
             throw new Error('Network response was not ok');
         }
 
-        return response.data;
+        return response;
 
     } catch (error) {
         throw error;

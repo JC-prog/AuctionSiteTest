@@ -17,6 +17,9 @@ public interface ItemRepo extends JpaRepository<Item, Integer>, JpaSpecification
     // Find items by sellerName
     List<Item> findBySellerName(String sellerName);
 
+    // Find items that is not inactive
+    List<Item> findByIsActiveFalse();
+
     // Find items by sellerName and endDate
     @Query("SELECT i FROM Item i WHERE i.sellerName = :sellerName AND i.endDate = :endDate")
     Page<Item> findBySellerNameAndEndDate(

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CiStop1, CiPlay1 } from 'react-icons/ci';
-import IUser from '../../interfaces/IUser';
+import IUser from '../../interfaces/User';
 import { suspendUser, activateUser } from '../../services/AdminService'; 
 import { toast } from 'react-toastify';
 

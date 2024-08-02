@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 
+import { loginUser } from '../services/AuthService';
+
 // Config
 import api from '../config/api/loginApi';
 
@@ -33,19 +35,13 @@ const LoginPage = () => {
         event.preventDefault();
 
         try {
-			const response: AxiosResponse = await api.post(`/api/auth/login`, {
-                username : username ,
-                password : password
-			});
+			const response = await loginUser(username, password);
 
             console.log(response);
 
             if (response.status == 200) {
-
-                // Store the access token
                 const { access_token } = response.data;
                 Cookies.set('access_token', access_token, { expires: 1 });
-
                 
                 toast.success("Login Successful!", {
                     position: toast.POSITION.TOP_RIGHT,

@@ -70,7 +70,7 @@ public class UserController {
     }
 
     @PostMapping("/suspend")
-    public ResponseEntity<User> suspendUser(@RequestBody EditUserStatusRequest user)
+    public ResponseEntity<String> suspendUser(@RequestBody EditUserStatusRequest user)
     {
         Optional<User> existingUser = userService.findUserByUsername(user.getUsername());
 
@@ -80,14 +80,14 @@ public class UserController {
             userToSuspend.setStatus(UserStatus.valueOf("SUSPENDED"));
             userService.updateUser(userToSuspend);
 
-            return new ResponseEntity<>(userToSuspend, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/activate")
-    public ResponseEntity<User> activateUser(@RequestBody EditUserStatusRequest user)
+    public ResponseEntity<String> activateUser(@RequestBody EditUserStatusRequest user)
     {
         Optional<User> existingUser = userService.findUserByUsername(user.getUsername());
 
@@ -97,9 +97,25 @@ public class UserController {
             userToActivate.setStatus(UserStatus.valueOf("ACTIVE"));
             userService.updateUser(userToActivate);
 
-            return new ResponseEntity<>(userToActivate, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/deactivate")
+    public ResponseEntity<String> deactivateUser(@RequestBody EditUserStatusRequest user)
+    {
+        Optional<User> existingUser = userService.findUserByUsername(user.getUsername());
+
+        if (existingUser.isPresent()) {
+            User userToDeactivate = existingUser.get();
+
+            userToDeactivate.setStatus(UserStatus.DEACTIVATED);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

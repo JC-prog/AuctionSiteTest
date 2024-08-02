@@ -6,10 +6,10 @@ import Cookies from 'js-cookie';
 import baseUrl from '../config/baseUrl';
 
 // Interface
-import IItem from '../interfaces/IItem';
+import Item from '../interfaces/IItem';
 
 interface PaginatedResponse {
-  content: IItem[];
+  content: Item[];
 }
 
 // Fetch Items
@@ -40,14 +40,14 @@ export const fetchItems = async (page: number = 0): Promise<IItem[]> => {
   };
 
 // Fetch Item by ItemId
-export const fetchItemByItemId = async (itemId: string): Promise<IItem> => {
+export const fetchItemByItemId = async (itemId: string): Promise<Item> => {
     try {
       const accessToken = Cookies.get('access_token');
       if (!accessToken) {
         throw new Error('No access token found');
       }
   
-      const response: AxiosResponse<IItem> = await baseUrl.get(`/api/item/${itemId}`, {
+      const response: AxiosResponse<Item> = await baseUrl.get(`/api/item/${itemId}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
         },
@@ -64,14 +64,14 @@ export const fetchItemByItemId = async (itemId: string): Promise<IItem> => {
   };
 
   // Fetch Items By Keyword
-  export const fetchItemsByKeyword = async (keyword: string, page: number = 0): Promise<IItem[]> => {
+  export const fetchItemsByKeyword = async (keyword: string, page: number = 0): Promise<Item[]> => {
     try {
       const accessToken = Cookies.get('access_token');
       if (!accessToken) {
         throw new Error('No access token found');
       }
   
-      const response: AxiosResponse<IItem[]> = await baseUrl.get(`/api/items/search?keyword=${keyword}`, {
+      const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/items/search?keyword=${keyword}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
         },
@@ -88,7 +88,7 @@ export const fetchItemByItemId = async (itemId: string): Promise<IItem> => {
   };
 
 // Fetch Items from Category
-export const fetchItemsByCategory = async (page: number = 0): Promise<IItem[]> => {
+export const fetchItemsByCategory = async (page: number = 0): Promise<Item[]> => {
   try {
     const accessToken = Cookies.get('access_token');
     if (!accessToken) {
@@ -112,14 +112,14 @@ export const fetchItemsByCategory = async (page: number = 0): Promise<IItem[]> =
 };
 
 // Fetch Recent Items
-export const fetchItemsByEndDate = async (page: number = 0): Promise<IItem[]> => {
+export const fetchItemsByEndDate = async (page: number = 0): Promise<Item[]> => {
     try {
       const accessToken = Cookies.get('access_token');
       if (!accessToken) {
         throw new Error('No access token found');
       }
   
-      const response: AxiosResponse<IItem[]> = await baseUrl.get(`/api/items?page=${page}`, {
+      const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/items?page=${page}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
         },
@@ -143,7 +143,7 @@ export const fetchItemsByUsername = async (username: string, page: number = 0): 
         throw new Error('No access token found');
         }
 
-        const response: AxiosResponse<IItem[]> = await baseUrl.get(`/api/items/seller?sellerName=${username}`, {
+        const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/items/seller?sellerName=${username}`, {
             headers: {
                 Authorization: 'Bearer ' + accessToken,
             },
@@ -160,7 +160,7 @@ export const fetchItemsByUsername = async (username: string, page: number = 0): 
 };
 
 // Launch Item
-export const launchItem = async (itemId: number): Promise<IItem[]> => {
+export const launchItem = async (itemId: number): Promise<Item[]> => {
     
     const apiUrl = `/api/item/launch`;
     const payload = { itemId };
@@ -171,7 +171,7 @@ export const launchItem = async (itemId: number): Promise<IItem[]> => {
     };
     
     try {
-        const response: AxiosResponse<IItem[]> = await baseUrl.post(apiUrl, payload, config);
+        const response: AxiosResponse<Item[]> = await baseUrl.post(apiUrl, payload, config);
 
         if (response.status !== 200) {
             throw new Error('Network response was not ok');
@@ -185,7 +185,7 @@ export const launchItem = async (itemId: number): Promise<IItem[]> => {
 };
 
 // Create Item
-export const createItem = async (item: IItem): Promise<IItem[]> => {
+export const createItem = async (item: Item): Promise<Item[]> => {
     
     const apiUrl = `/api/item/create`;
     const payload = { item };
@@ -196,7 +196,7 @@ export const createItem = async (item: IItem): Promise<IItem[]> => {
     };
     
     try {
-        const response: AxiosResponse<IItem[]> = await baseUrl.post(apiUrl, payload, config);
+        const response: AxiosResponse<Item[]> = await baseUrl.post(apiUrl, payload, config);
 
         if (response.status !== 200) {
             throw new Error('Network response was not ok');

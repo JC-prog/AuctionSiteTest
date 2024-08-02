@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import api from '../config/api/loginApi';
 
 // Models
-import IUser from '../interfaces/IUser';
+import IUser from '../interfaces/User';
 import IItem from '../interfaces/IItem';
 
 // Components

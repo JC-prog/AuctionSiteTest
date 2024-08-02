@@ -1,5 +1,6 @@
 package com.fyp.auction_app.services;
 
+import com.fyp.auction_app.models.User;
 import com.fyp.auction_app.models.Watchlist;
 import com.fyp.auction_app.repository.WatchlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,10 @@ public class WatchlistService {
 
     @Autowired
     private WatchlistRepository watchlistRepository;
+
+    public void addItemToWatchlist(Watchlist watchlist) {
+        watchlistRepository.save(watchlist);
+    }
 
     public List<Watchlist> findAll() {
         return watchlistRepository.findAll();

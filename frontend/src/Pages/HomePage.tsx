@@ -35,7 +35,12 @@ interface PaginatedResponse {
   // Add other pagination properties if needed
 }
 
-const HomePage = () => {
+interface AuthProps {
+    isAuth: boolean;
+    user: string;
+  }
+
+const HomePage: React.FC<AuthProps> = ({ isAuth, user }) => {
   const [items, setItems] = useState<Items[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -83,7 +88,7 @@ if (error) {
       <div className="bg-white p-6 rounded-lg shadow-md w-full">
           <AdPlacementCarousel />
 
-          <ItemCardListHomeCarousel carouselTitle="Just For You" items={items}/>
+          <ItemCardListHomeCarousel carouselTitle="Just For You" items={items} username={ user }/>
 
           <ItemCardListHomeCarousel carouselTitle="Recently Posted" items={items}/>
         

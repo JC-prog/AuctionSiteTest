@@ -34,7 +34,7 @@ public class AuthenticationService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse registerUser(RegisterRequest request) {
         User user = User.builder()
             .username(request.getUsername())
             .email(request.getEmail())

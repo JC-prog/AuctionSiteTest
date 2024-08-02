@@ -17,10 +17,10 @@ import java.util.Date;
 public class Watchlist {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Integer watchlistId;
 
-    private String buyerName;
+    private String username;
 
     private Integer itemId;
 

@@ -10,4 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddWatchlistRequest {
+
+    private Integer itemId;
+
+    private String username;
+
 }

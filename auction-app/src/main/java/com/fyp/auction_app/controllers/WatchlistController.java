@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -23,13 +24,20 @@ public class WatchlistController {
     public ResponseEntity<List<Watchlist>> getWatchlist()
     {
 
+        List<Watchlist> watchlists = watchlistService.findAll();
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/add")
     public ResponseEntity<String> addWatchlist(@RequestBody AddWatchlistRequest watchlistRequest)
     {
-        Watchlist newWatchlist;
+        Watchlist newWatchlist = new Watchlist();
+        newWatchlist.setUsername(watchlistRequest.getUsername());
+        newWatchlist.setItemId(watchlistRequest.getItemId());
+        newWatchlist.setWatchlistTimestamp(new Date());
+
+        watchlistService.addItemToWatchlist(newWatchlist);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

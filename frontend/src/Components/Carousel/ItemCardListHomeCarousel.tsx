@@ -22,9 +22,10 @@ interface Item {
 type ItemListProps = {
     carouselTitle: string;
     items: Item[];
+    username: string;
 };
 
-const ItemCardListHomeCarousel: React.FC<ItemListProps> = ({ carouselTitle, items }) => {
+const ItemCardListHomeCarousel: React.FC<ItemListProps> = ({ carouselTitle, items, username }) => {
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-4">
@@ -48,7 +49,7 @@ const ItemCardListHomeCarousel: React.FC<ItemListProps> = ({ carouselTitle, item
                                 </div>
                                 <h3 className="text-lg font-medium">{item.itemTitle}</h3>
                             </Link>
-                            <LikeButton imageUrl="https://example.com/image.jpg" isLiked={false} />
+                            <LikeButton imageUrl="https://example.com/image.jpg" isLiked={false} username={ username } itemId={item.itemId}/>
                             <Timer endTime={item.endDate} />
                             <p className="text-sm text-gray-400">${item.currentPrice.toFixed(2)}</p>
                         </div>

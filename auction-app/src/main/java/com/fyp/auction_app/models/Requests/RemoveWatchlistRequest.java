@@ -10,4 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RemoveWatchlistRequest {
+
+    private Integer itemId;
+
+    private String username;
+
 }

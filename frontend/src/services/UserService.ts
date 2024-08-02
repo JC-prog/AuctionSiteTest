@@ -1,51 +1,81 @@
 import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
-import IUser from '../interfaces/IUser';
-
+import User from '../interfaces/User';
 import baseUrl from '../config/baseUrl';
 
-export const fetchUser = async (username: string): Promise<IUser> => {
-  try {
-    const accessToken = Cookies.get('access_token');
-    if (!accessToken) {
-      throw new Error('No access token found');
+const getAuthConfig = () => {
+    const token = Cookies.get('access_token');
+    if (!token) {
+        throw new Error('No access token found');
     }
 
-    const response: AxiosResponse<IUser> = await baseUrl.get(`/api/user/${username}`, {
-      headers: {
-        Authorization: 'Bearer ' + accessToken,
-      },
-    });
+    return {
+        headers: {
+            Authorization: 'Bearer ' + token,
+        },
+    };
+};
 
+const handleResponse = (response: AxiosResponse) => {
     if (response.status !== 200) {
-      throw new Error('Network response was not ok');
+        throw new Error('Network response was not ok');
     }
 
     return response.data;
-  } catch (error) {
-    throw error;
-  }
 };
 
-export const fetchUsers = async (page: number = 0): Promise<IUser[]> => {
-  try {
-    const accessToken = Cookies.get('access_token');
-    if (!accessToken) {
-      throw new Error('No access token found');
+const apiPost = async (url: string, payload: any) => {
+    try {
+        const response = await baseUrl.post(url, payload, getAuthConfig());
+
+        return handleResponse(response);
+
+    } catch (error) {
+
+        throw error;
+
     }
-
-    const response: AxiosResponse<IUser[]> = await baseUrl.get(`/api/user/all?page=${page}`, {
-      headers: {
-        Authorization: 'Bearer ' + accessToken,
-      },
-    });
-
-    if (response.status !== 200) {
-      throw new Error('Network response was not ok');
-    }
-
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
 };
+
+const apiGet = async (url: string) => {
+    try {
+        const response = await baseUrl.get(url, getAuthConfig());
+
+        return handleResponse(response);
+
+    } catch (error) {
+
+        throw error;
+
+    }
+};
+
+// Get User by Username
+export const fetchUser = (username: string): Promise<User> => {
+    const apiUrl = `/api/user/${username}`;
+
+    return apiGet(apiUrl);
+};
+
+// Get Users
+export const fetchUsers = (page: number = 0): Promise<User[]> => {
+    const apiUrl = `/api/user/all?page=${page}`;
+
+    return apiGet(apiUrl);
+};
+
+// Save User
+export const saveUser = (user: User): Promise<User> => {
+    const apiUrl = `/api/user/edit`;
+    const payload = { user };
+
+    return apiPost(apiUrl, payload);
+};
+
+// Deactivate User
+export const deactivateUser = (username: string) => {
+    const apiUrl = `/api/user/deactivate`;
+    const payload = { username };
+
+    return apiPost(apiUrl, payload);
+}
