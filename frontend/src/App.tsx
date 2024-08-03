@@ -121,7 +121,7 @@ function App() {
               <Route path="/search" element={<SearchPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
-              <Route path="/my-bids" element={<MyBids />} />
+              <Route path="/my-bids" element={<MyBids user={user}/>} />
               <Route path="/watchlist" element={<MyWatchlist />} />
               <Route path="/my-listings" element={<MyItemListing user={user} />} />
               <Route path="/user/:username" element={<UserProfile user={user} />} />

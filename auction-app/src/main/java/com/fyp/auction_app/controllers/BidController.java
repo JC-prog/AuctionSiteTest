@@ -5,14 +5,18 @@ import com.fyp.auction_app.models.Enums.ListingStatus;
 import com.fyp.auction_app.models.Item;
 import com.fyp.auction_app.models.Requests.BidRequest;
 import com.fyp.auction_app.models.Requests.EditItemStatusRequest;
+import com.fyp.auction_app.models.Requests.GetUserBidRequest;
+import com.fyp.auction_app.models.User;
 import com.fyp.auction_app.services.BidService;
 import com.fyp.auction_app.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -25,6 +29,13 @@ public class BidController {
 
     @Autowired
     private ItemService itemService;
+
+    @GetMapping("/{username}")
+    public ResponseEntity<List<Bid>> getUserBids(@PathVariable("username") String username) {
+        List<Bid> bids = bidService.findBidsByUsername(username);
+
+        return new ResponseEntity<>(bids, HttpStatus.OK);
+    }
 
     @PostMapping("")
     public ResponseEntity<Bid> createBid(@RequestBody BidRequest bid)

@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import User from '../interfaces/User';
 import baseUrl from '../config/baseUrl';
+import { fetchItemsByUsername } from './ItemService';
 
 const handleResponse = (response: AxiosResponse) => {
     if (response.status !== 200) {
@@ -39,3 +40,23 @@ export const loginUser = (username: string, password: string) => {
 
     return apiPost(apiUrl, payload);
 };
+
+// Change Password
+export const changePassword =(username: string, password: string) => {
+    const apiUrl = `/api/auth/change-password`;
+    const payload = { username, password };
+
+    console.log(payload);
+
+    return apiPost(apiUrl, payload);
+}
+
+// Reset Password
+export const resetPassword =(username: string) => {
+    const apiUrl = `/api/auth/reset-password`;
+    const payload = { username }
+
+    console.log(payload);
+
+    return apiPost(apiUrl, payload);
+}

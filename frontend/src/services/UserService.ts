@@ -43,21 +43,21 @@ const apiGet = async (url: string) => {
 };
 
 // Get User by Username
-export const fetchUser = (username: string): Promise<User> => {
+export const fetchUser = (username: string) => {
     const apiUrl = `/api/user/${username}`;
 
     const response = apiGet(apiUrl);
 
-    return response.data;
+    return response;
 };
 
 // Get Users
-export const fetchUsers = (page: number = 0): Promise<User[]> => {
+export const fetchUsers = (page: number = 0) => {
     const apiUrl = `/api/user/all?page=${page}`;
 
     const response = apiGet(apiUrl);
 
-    return response.data;
+    return response;
 };
 
 // Save User

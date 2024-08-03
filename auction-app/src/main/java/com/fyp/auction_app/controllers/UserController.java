@@ -1,6 +1,7 @@
 package com.fyp.auction_app.controllers;
 
 import com.fyp.auction_app.models.Enums.UserStatus;
+import com.fyp.auction_app.models.Requests.ChangeUserPasswordRequest;
 import com.fyp.auction_app.models.Requests.EditUserRequest;
 import com.fyp.auction_app.models.Requests.EditUserStatusRequest;
 import com.fyp.auction_app.models.User;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
@@ -11,6 +11,7 @@ import api from '../config/api/loginApi';
 import User from '../interfaces/User';
 
 // API Function Call
+import { changePassword } from '../services/AuthService';
 import { saveUser, deactivateUser } from '../services/UserService';
 
 const ProfileEditPage = () => {
@@ -24,6 +25,7 @@ const ProfileEditPage = () => {
     email: '',
     contactNumber: '',
     address: '',
+    password: '',
   });
 
   const [addressParts, setAddressParts] = useState<string[]>(['', '', '', '']);
@@ -74,14 +76,36 @@ const ProfileEditPage = () => {
     fetchUser();
   }, [username]);
 
+  const handleChangePassword = async () => {
+    try {
+      const response: AxiosResponse = await changePassword(username, user.password);
+
+      if (response.status === 200) {
+        toast.success('Password changed successfully.', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      } else {
+        toast.error(`Failed to change password: ${response.data.error}`, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Failed to change password. Please try again.', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
+  };
+
   const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-        const response = await saveUser(user);
-        //const response = await api.post(`/api/user/edit`, user);
+      const response = await saveUser(user);
 
-        console.log(response);
       if (response.status === 200) {
         toast.success('Profile updated successfully!', {
           position: toast.POSITION.TOP_RIGHT,
@@ -109,7 +133,7 @@ const ProfileEditPage = () => {
 
   const handleDeactivate = async () => {
     try {
-      const response: AxiosResponse = await deactivateUser({username});
+      const response: AxiosResponse = await deactivateUser({ username });
 
       if (response.status === 200) {
         Cookies.remove('access_token');
@@ -119,11 +143,11 @@ const ProfileEditPage = () => {
         });
 
         setTimeout(() => {
-            navigate(`/login`);
-            window.location.reload();
-          }, 2000);
+          navigate(`/login`);
+          window.location.reload();
+        }, 2000);
       } else {
-        toast.error(`Failed to deactivate account: ${response.error}`, {
+        toast.error(`Failed to deactivate account: ${response.data.error}`, {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000,
         });
@@ -134,6 +158,58 @@ const ProfileEditPage = () => {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
+    }
+  };
+
+  // Photo Upload
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      setSelectedFile(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!selectedFile) return;
+
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    try {
+      const response = await api.post('/api/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200) {
+        toast.success('Photo uploaded successfully!', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      } else {
+        toast.error('Failed to upload photo. Please try again.', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      toast.error('Error uploading file. Please try again.', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
+  };
+
+  const triggerFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
   };
 
@@ -160,94 +236,128 @@ const ProfileEditPage = () => {
             Cancel
           </Link>
         </div>
+
+        <div className="mb-8">
+          <label className="text-xl font-semibold mb-2">
+            Profile Picture
+          </label>
+          <img
+            src={preview || "/upload-photo.png"}
+            alt="Profile"
+            className="w-32 h-32 rounded-full cursor-pointer object-cover"
+            onClick={triggerFileInput}
+          />
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            className="hidden"
+          />
+        </div>
+        <div className="flex justify-end">
+          <button
+            onClick={handleUpload}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+          >
+            Upload Photo
+          </button>
+        </div>
+
         <form className="space-y-6" onSubmit={handleSave}>
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <div>
               <h3 className="text-xl font-semibold mb-2">Personal Information</h3>
               <label className="block text-gray-700 text-sm font-bold mb-2">Username</label>
               <input
-                className="input-field px-2"
-                readOnly
-                id="username"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                 type="text"
+                name="username"
                 value={user.username}
+                onChange={handleChange}
+                required
               />
-              <label className="block text-gray-700 text-sm font-bold mt-4 mb-2">Password</label>
-              <input
-                className="input-field px-2"
-                id="password"
-                type="password"
-                placeholder="******************"
-              />
-              <button
-                type="button"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-              >
-                Change Password
-              </button>
-              <label className="block text-gray-700 text-sm font-bold mt-4 mb-2">Gender</label>
+
+              <label className="block text-gray-700 text-sm font-bold mb-2">Gender</label>
               <select
-                className="input-field"
-                id="gender"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                 name="gender"
                 value={user.gender}
                 onChange={handleChange}
+                required
               >
-                <option value="" disabled>Select your gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">Contact Information</h3>
-              <label className="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
+
+              <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
               <input
-                className="input-field px-2 border rounded"
-                id="email"
-                type="text"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                type="email"
                 name="email"
                 value={user.email}
                 onChange={handleChange}
+                required
               />
-              <label className="block text-gray-700 text-sm font-bold mt-4 mb-2">Contact Number</label>
+
+              <label className="block text-gray-700 text-sm font-bold mb-2">Contact Number</label>
               <input
-                className="input-field px-2 border rounded"
-                id="contactNumber"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                 type="text"
                 name="contactNumber"
                 value={user.contactNumber}
                 onChange={handleChange}
+                required
               />
-              <h3 className="text-xl font-semibold mt-6 mb-2">Shipping Address</h3>
-              <div className="grid grid-cols-1 gap-4">
-                {['Unit Number', 'Street', 'Post Code', 'Country'].map((label, index) => (
-                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-3" key={label}>
-                    <label className="block text-gray-700 text-sm font-bold mb-2 sm:col-span-1">{label}</label>
-                    <input
-                      className="input-field sm:col-span-2 px-2 border rounded"
-                      id={label.toLowerCase().replace(' ', '-')}
-                      type="text"
-                      value={addressParts[index]}
-                      onChange={(e) => handleAddressChange(index, e.target.value)}
-                    />
-                  </div>
-                ))}
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold mb-2">Address</h3>
+              {addressParts.map((part, index) => (
+                <input
+                  key={index}
+                  className="w-full mb-4 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                  type="text"
+                  placeholder={`Address Line ${index + 1}`}
+                  value={part}
+                  onChange={(e) => handleAddressChange(index, e.target.value)}
+                />
+              ))}
+
+              <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+              <input
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                type="password"
+                name="password"
+                placeholder='*******'
+                onChange={handleChange}
+              />
+
+              <div className="my-2 flex justify-end">
+                <button
+                  type="button"
+                  onClick={handleChangePassword}
+                  className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 focus:outline-none focus:bg-yellow-600"
+                >
+                  Change Password
+                </button>
               </div>
             </div>
           </div>
-          <div className="flex justify-between">
+
+          <div className="flex justify-between mt-6">
             <button
-              type="button"
-              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
-              onClick={handleDeactivate}
+              type="submit"
+              className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600"
             >
-              Deactivate Account
+              Save Changes
             </button>
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-              type="submit"
+              type="button"
+              onClick={handleDeactivate}
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
             >
-              Save
+              Deactivate Account
             </button>
           </div>
         </form>

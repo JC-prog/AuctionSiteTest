@@ -16,8 +16,11 @@ const AdminUserManagementPage = () => {
         const loadUsers = async () => {
           try {
             const usersData = await fetchUsers(currentPage - 1);
-            setUsers(usersData.content);
-            setTotalPages(usersData.totalPages);
+
+            console.log(usersData);
+
+            setUsers(usersData.data.content);
+            setTotalPages(usersData.data.totalPages);
 
           } catch (error) {
             setError(error as Error);

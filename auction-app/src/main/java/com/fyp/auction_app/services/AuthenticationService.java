@@ -4,9 +4,13 @@ import com.fyp.auction_app.config.JwtService;
 import com.fyp.auction_app.models.Enums.AccountType;
 import com.fyp.auction_app.models.Enums.Role;
 import com.fyp.auction_app.models.Enums.UserStatus;
+import com.fyp.auction_app.models.Requests.ChangeUserPasswordRequest;
+import com.fyp.auction_app.models.Requests.ResetPasswordRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.fyp.auction_app.repository.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,8 +19,11 @@ import com.fyp.auction_app.models.Requests.AuthenticationRequest;
 import com.fyp.auction_app.models.Response.AuthenticationResponse;
 import com.fyp.auction_app.models.User;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Date;
+import java.util.Optional;
 
 
 @Service
@@ -97,5 +104,29 @@ public class AuthenticationService {
                     .accessToken(jwtToken)
                     .build();
         }
+    }
+
+    public String changePassword(@RequestBody ChangeUserPasswordRequest request) {
+        User user = repository.findByUsername(request.getUsername())
+                .orElseThrow();
+
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        repository.save(user);
+
+        return "Success";
+    }
+
+    public String resetPassword(@RequestBody ResetPasswordRequest request) {
+        User user = repository.findByUsername(request.getUsername())
+                .orElseThrow();
+
+        String resetPassword = request.getUsername() + "resetpassword";
+
+        user.setPassword(passwordEncoder.encode(resetPassword));
+
+        repository.save(user);
+
+        return "Password Reset Successful";
     }
 }
