@@ -4,7 +4,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FiEdit, FiUpload } from 'react-icons/fi';
 
-import { fetchItemsByUsername } from '../services/ItemService'; 
+// Api Function Call
+import { fetchItemsByUsername } from '../services/ItemService';
 
 // Config
 import api from '../config/api/loginApi';
@@ -60,7 +61,7 @@ const ItemsTable: React.FC<AuthProps> = ({ isAuth, user }) => {
         };
     
         fetchItems();
-      }, [query]);
+      }, [query]); 
 
   if (loading) {
     return <div>Loading...</div>;

@@ -5,6 +5,7 @@ import com.fyp.auction_app.models.Response.AuthenticationResponse;
 import com.fyp.auction_app.models.Requests.RegisterRequest;
 import com.fyp.auction_app.models.User;
 import com.fyp.auction_app.services.AuthenticationService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,8 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> loginUser(@RequestBody AuthenticationRequest request) {
 
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+        AuthenticationResponse authenticationResponse = authenticationService.authenticate(request);
+
+        return ResponseEntity.ok(authenticationResponse);
     }
 }

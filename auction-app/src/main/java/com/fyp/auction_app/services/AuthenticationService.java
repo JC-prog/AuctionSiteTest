@@ -3,6 +3,7 @@ package com.fyp.auction_app.services;
 import com.fyp.auction_app.config.JwtService;
 import com.fyp.auction_app.models.Enums.AccountType;
 import com.fyp.auction_app.models.Enums.Role;
+import com.fyp.auction_app.models.Enums.UserStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.fyp.auction_app.repository.UserRepository;
@@ -84,13 +85,17 @@ public class AuthenticationService {
         User user = repository.findByUsername(request.getUsername())
                 .orElseThrow();
 
-        var jwtToken = jwtService.generateToken(user);
+        if(user.getStatus() == UserStatus.DEACTIVATED || user.getStatus() == UserStatus.SUSPENDED)
+        {
+            return AuthenticationResponse.builder()
+                    .errorMessage("Account " + user.getStatus())
+                    .build();
+        } else {
+            var jwtToken = jwtService.generateToken(user);
 
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .build();
+            return AuthenticationResponse.builder()
+                    .accessToken(jwtToken)
+                    .build();
+        }
     }
-
-
-
 }

@@ -16,19 +16,11 @@ const getAuthConfig = () => {
     };
 };
 
-const handleResponse = (response: AxiosResponse) => {
-    if (response.status !== 200) {
-        throw new Error('Network response was not ok');
-    }
-
-    return response.data;
-};
-
 const apiPost = async (url: string, payload: any) => {
     try {
         const response = await baseUrl.post(url, payload, getAuthConfig());
 
-        return handleResponse(response);
+        return response;
 
     } catch (error) {
 
@@ -41,7 +33,7 @@ const apiGet = async (url: string) => {
     try {
         const response = await baseUrl.get(url, getAuthConfig());
 
-        return handleResponse(response);
+        return response;
 
     } catch (error) {
 
@@ -54,20 +46,24 @@ const apiGet = async (url: string) => {
 export const fetchUser = (username: string): Promise<User> => {
     const apiUrl = `/api/user/${username}`;
 
-    return apiGet(apiUrl);
+    const response = apiGet(apiUrl);
+
+    return response.data;
 };
 
 // Get Users
 export const fetchUsers = (page: number = 0): Promise<User[]> => {
     const apiUrl = `/api/user/all?page=${page}`;
 
-    return apiGet(apiUrl);
+    const response = apiGet(apiUrl);
+
+    return response.data;
 };
 
 // Save User
-export const saveUser = (user: User): Promise<User> => {
+export const saveUser = (user: User) => {
     const apiUrl = `/api/user/edit`;
-    const payload = { user };
+    const payload = user;
 
     return apiPost(apiUrl, payload);
 };
@@ -75,7 +71,7 @@ export const saveUser = (user: User): Promise<User> => {
 // Deactivate User
 export const deactivateUser = (username: string) => {
     const apiUrl = `/api/user/deactivate`;
-    const payload = { username };
+    const payload = username;
 
     return apiPost(apiUrl, payload);
 }

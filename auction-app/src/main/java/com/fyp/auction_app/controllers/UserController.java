@@ -113,6 +113,8 @@ public class UserController {
 
             userToDeactivate.setStatus(UserStatus.DEACTIVATED);
 
+            userService.updateUser(userToDeactivate);
+
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -120,7 +122,7 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<User> updateUser(@RequestBody EditUserRequest user) {
+    public ResponseEntity<String> updateUser(@RequestBody EditUserRequest user) {
         Optional<User> existingUser = userService.findUserByUsername(user.getUsername());
 
         if (existingUser.isPresent()) {
@@ -131,7 +133,7 @@ public class UserController {
             userToUpdate.setAddress(user.getAddress());
             userService.updateUser(userToUpdate);
 
-            return new ResponseEntity<>(userToUpdate, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
