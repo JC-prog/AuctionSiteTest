@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiTrash, FiEdit, FiUpload } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
 // Config
+import api from '../../config/api/loginApi';
 import { launchItem } from '../../services/ItemService'; 
 
 import Timer from '../../Components/Timer';
@@ -15,6 +16,29 @@ interface ItemListProps {
 }
 
 const UserItemList: React.FC<ItemListProps> = ({ items }) => {
+  // State to store item images
+  const [itemImages, setItemImages] = useState<{ [key: number]: string }>({});
+
+  // Fetch item images
+  const fetchItemImage = async (itemId: number) => {
+    try {
+      const response = await api.get(`/api/item/image/${itemId}`, { responseType: 'arraybuffer' });
+      const blob = new Blob([response.data], { type: 'image/jpeg' });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setItemImages((prev) => ({ ...prev, [itemId]: reader.result as string }));
+      };
+      reader.readAsDataURL(blob);
+    } catch (error) {
+      console.error('Failed to fetch item image:', error);
+    }
+  };
+
+  // Fetch images for all items on component mount
+  useEffect(() => {
+    items.forEach((item) => fetchItemImage(item.itemId));
+  }, [items]);
+
   // Launch Listing
   const launchListing = async (itemId: number) => {
     try {
@@ -63,7 +87,11 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
                 <span className="text-gray-500">{index + 1}</span>
               </div>
               <div className="col-span-1">
-                <img src="/bike.jpg" alt="Item" className="w-12 h-12 object-cover rounded-md" />
+                <img
+                  src={itemImages[item.itemId] || "/bike.jpg"} // Fallback image
+                  alt="Item"
+                  className="w-12 h-12 object-cover rounded-md"
+                />
               </div>
               <div className="col-span-2">
                 <Link to={`/item/${item.itemId}`} className="block">

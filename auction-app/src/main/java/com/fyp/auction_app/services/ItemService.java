@@ -1,16 +1,22 @@
 package com.fyp.auction_app.services;
 
 import com.fyp.auction_app.models.Item;
+import com.fyp.auction_app.models.ItemImage;
 import com.fyp.auction_app.models.User;
+import com.fyp.auction_app.models.UserImage;
+import com.fyp.auction_app.repository.ItemImageRepository;
 import com.fyp.auction_app.repository.ItemRepo;
 import com.fyp.auction_app.repository.ItemSpecification;
+import com.fyp.auction_app.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +26,9 @@ public class ItemService {
 
     @Autowired
     private ItemRepo itemRepo;
+
+    @Autowired
+    private ItemImageRepository itemImageRepository;
 
     public Page<Item> findItems(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -68,5 +77,32 @@ public class ItemService {
 
     public Optional<Item> findItemByItemId(Integer itemId) {
         return itemRepo.findById(itemId);
+    }
+
+    public void saveImage(Integer itemId, MultipartFile file) throws IOException {
+
+        byte[] compressedImage = ImageUtils.compressImage(file.getBytes(), "jpeg", 0.75f);
+
+        Optional<ItemImage> userImage = itemImageRepository.findByItemId(itemId);
+
+        if(userImage.isPresent())
+        {
+            ItemImage itemImageToUpdate = userImage.get();
+            itemImageToUpdate.setItemPhoto(compressedImage);
+
+            itemImageRepository.save(itemImageToUpdate);
+        } else {
+            ItemImage itemImageToCreate = ItemImage.builder()
+                    .itemId(itemId)
+                    .itemPhoto(compressedImage)
+                    .build();
+            itemImageRepository.save(itemImageToCreate);
+        }
+    }
+
+    public ItemImage getImage(Integer itemId) {
+        Optional<ItemImage> itemImage = itemImageRepository.findByItemId(itemId);
+
+        return itemImage.orElse(null);
     }
 }

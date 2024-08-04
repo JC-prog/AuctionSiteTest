@@ -3,10 +3,12 @@ package com.fyp.auction_app.controllers;
 import com.fyp.auction_app.models.Enums.ListingStatus;
 import com.fyp.auction_app.models.Enums.UserStatus;
 import com.fyp.auction_app.models.Item;
+import com.fyp.auction_app.models.ItemImage;
 import com.fyp.auction_app.models.Requests.EditItemStatusRequest;
 import com.fyp.auction_app.models.Requests.EditUserStatusRequest;
 import com.fyp.auction_app.models.Requests.LaunchListingRequest;
 import com.fyp.auction_app.models.User;
+import com.fyp.auction_app.models.UserImage;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -14,7 +16,9 @@ import com.fyp.auction_app.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -89,14 +93,14 @@ public class ItemController {
     }
 
     @PostMapping("api/item/create")
-    public ResponseEntity<String> createItem(@RequestBody Item item) {
+    public ResponseEntity<Integer> createItem(@RequestBody Item item) {
 
         item.setStatus(ListingStatus.CREATED);
         item.setCurrentPrice(item.getStartPrice());
 
-        itemService.createItem(item);
+        Item createdItem = itemService.createItem(item);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(createdItem.getItemId(), HttpStatus.OK);
     }
 
     @PostMapping("api/item/suspend")
@@ -178,10 +182,36 @@ public class ItemController {
         }
     }
 
-    @DeleteMapping("api/item/{itemID}")
+    @DeleteMapping("api/item/{itemId}")
     public ResponseEntity<Void> deleteUser(@PathVariable("itemID") Integer itemID) {
         itemService.deleteById(itemID);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/api/item/image/{itemId}")
+    public ResponseEntity<byte[]> getUserImage(@PathVariable Integer itemId) {
+        ItemImage image = itemService.getImage(itemId);
+
+        byte[] itemPhoto = image.getItemPhoto();
+
+        if (itemPhoto != null) {
+            return ResponseEntity.ok()
+                    .header("Content-Type", "image/jpeg")
+                    .body(itemPhoto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/api/item/upload-image/{itemId}")
+    public ResponseEntity<String> uploadPhoto(@PathVariable Integer itemId, @RequestParam("file") MultipartFile file)
+    {
+        try {
+            itemService.saveImage(itemId, file);
+            return ResponseEntity.ok("Image uploaded successfully!");
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body("Failed to upload image!");
+        }
     }
 
 }

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios'; // Assuming you're using axios for API calls
 
 // Timer
 import Timer from '../Timer';
@@ -17,6 +18,35 @@ type ItemListProps = {
 };
 
 const ItemCardListCarousel: React.FC<ItemListProps> = ({ carouselTitle, items }) => {
+    const [itemImages, setItemImages] = useState<Record<number, string>>({});
+
+    useEffect(() => {
+        const fetchImages = async () => {
+            const imagePromises = items.map(async (item) => {
+                try {
+                    const response = await axios.get(`api/item/image/${item.itemId}`, {
+                        responseType: 'blob', // Assuming the response is an image
+                    });
+                    const imageUrl = URL.createObjectURL(response.data);
+                    return { itemId: item.itemId, imageUrl };
+                } catch (error) {
+                    console.error(`Error fetching image for item ${item.itemId}:`, error);
+                    return { itemId: item.itemId, imageUrl: '' };
+                }
+            });
+
+            const images = await Promise.all(imagePromises);
+            const imageMap = images.reduce((acc, { itemId, imageUrl }) => {
+                acc[itemId] = imageUrl;
+                return acc;
+            }, {} as Record<number, string>);
+
+            setItemImages(imageMap);
+        };
+
+        fetchImages();
+    }, [items]);
+
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-4">
@@ -33,7 +63,7 @@ const ItemCardListCarousel: React.FC<ItemListProps> = ({ carouselTitle, items })
                             <Link to={`/item/${item.itemId}`} className="block">
                                 <div className="aspect-w-1 aspect-h-1">
                                     <img
-                                        src={item.image}
+                                        src={itemImages[item.itemId] || item.image}
                                         alt={item.title}
                                         className="w-full h-full object-cover rounded-md mb-4"
                                     />

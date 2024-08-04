@@ -26,6 +26,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
     const [numOfBids, setNumOfBids] = useState(0);
     const [userImage, setUserImage] = useState<string | null>(null);
     const [itemImage, setItemImage] = useState<string | null>(null);
+    const [itemImageError, setItemImageError] = useState(false); // State to handle image fetch errors
 
     // Popup
     const [isBidConfirmPopupOpen, setIsBidConfirmPopupOpen] = useState(false);
@@ -56,8 +57,18 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
                 setItem(itemResponse.data);
                 setNumOfBids(numBidsResponse.data);
+                
+                // Fetch Item Image
+                const imageResponse = await api.get(`/api/item/image/${itemId}`, { responseType: 'arraybuffer' });
+                const blob = new Blob([imageResponse.data], { type: 'image/jpeg' });
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setItemImage(reader.result as string);
+                };
+                reader.readAsDataURL(blob);
             } catch (error) {
-                setError(error as Error);
+                setItemImageError(true); // Set error state when fetching image fails
+                console.error('Failed to fetch item image:', error);
             } finally {
                 setLoading(false);
             }
@@ -105,7 +116,11 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                 <div className="bg-white p-6 rounded-lg shadow-md grid grid-cols-12 gap-4">
                     {/* Photo Section */}
                     <div className="col-span-12 md:col-span-4 flex flex-col items-center">
-                        <img src={itemImage || "/upload-photo.png"} alt="Item Image" className="w-48 h-48 object-cover rounded-md shadow-md mb-4" />
+                        <img
+                            src={itemImageError ? "/upload-photo.png" : itemImage || "/upload-photo.png"}
+                            alt="Item Image"
+                            className="w-48 h-48 object-cover rounded-md shadow-md mb-4"
+                        />
                         <div className="flex space-x-2">
                             <button className="p-2 bg-gray-200 rounded-full">
                                 <FontAwesomeIcon icon={faHeart} />
@@ -157,7 +172,11 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                 {/* Seller Section */}
                 <div className="bg-white p-6 rounded-lg shadow-md grid grid-cols-12 gap-4">
                     <div className="col-span-12 md:col-span-6 flex items-center">
-                        <img src={userImage || "/upload-photo.png"} alt="Seller Image" className="w-24 h-24 object-cover rounded-full shadow-md" />
+                        <img
+                            src={userImage || "/upload-photo.png"}
+                            alt="Seller Image"
+                            className="w-24 h-24 object-cover rounded-full shadow-md"
+                        />
                         <div className="ml-4">
                             <p className="font-semibold">{item?.sellerName}</p>
                             <span className="text-yellow-500 text-lg">5 ★</span>

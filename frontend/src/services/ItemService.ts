@@ -12,6 +12,45 @@ interface PaginatedResponse {
   content: Item[];
 }
 
+const getAuthConfig = () => {
+    const token = Cookies.get('access_token');
+    if (!token) {
+        throw new Error('No access token found');
+    }
+
+    return {
+        headers: {
+            Authorization: 'Bearer ' + token,
+        },
+    };
+};
+
+const apiPost = async (url: string, payload: any) => {
+    try {
+        const response = await baseUrl.post(url, payload, getAuthConfig());
+
+        return response;
+
+    } catch (error) {
+
+        throw error;
+
+    }
+};
+
+const apiGet = async (url: string) => {
+    try {
+        const response = await baseUrl.get(url, getAuthConfig());
+
+        return response;
+
+    } catch (error) {
+
+        throw error;
+
+    }
+};
+
 // Fetch Items
 export const fetchItems = async (page: number = 0): Promise<IItem[]> => {
     try {
@@ -207,4 +246,12 @@ export const createItem = async (item: Item): Promise<Item[]> => {
     } catch (error) {
         throw error;
     }
+};
+
+// Upload Item Image
+export const uploadUserPhoto = (user: string) => {
+    const apiUrl = `/api/item/upload-photo`;
+    const payload = user;
+
+    return apiPost(apiUrl, payload);
 };
