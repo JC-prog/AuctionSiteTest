@@ -9,26 +9,23 @@ import TradePopup from '../Components/Popup/TradePopup';
 import BidConfirmPopup from '../Components/Popup/BidConfirmPopup';
 import { toast } from 'react-toastify';
 
+// API Function Calls
+import { countBids } from '../services/BidService';
+
 // Interface
-interface Item {
-    itemTitle: number;
-    itemCategory: string;
-    itemCondition: string;
-    description: string;
-    auctionType: string;
-    endDate: Date;
-    currentPrice: number;
-    sellerName: string;
-}
+import Item from '../interfaces/IItem';
 
 interface AuthProps {
     isAuth: boolean;
     user: string;
-  }
+}
 
 const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
     const { itemId } = useParams<{ itemId: string }>();
     const [item, setItem] = useState<Item | null>(null);
+    const [numOfBids, setNumOfBids] = useState(0);
+    const [userImage, setUserImage] = useState<string | null>(null);
+    const [itemImage, setItemImage] = useState<string | null>(null);
 
     // Popup
     const [isBidConfirmPopupOpen, setIsBidConfirmPopupOpen] = useState(false);
@@ -48,15 +45,17 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
         const fetchItem = async () => {
             try {
-                const response: AxiosResponse<Item> = await api.get(`/api/item/${itemId}`);
+                const [itemResponse, numBidsResponse]: [AxiosResponse<Item>, AxiosResponse] = await Promise.all([
+                    api.get(`/api/item/${itemId}`),
+                    countBids(itemId)
+                ]);
 
-                console.log(response)
-
-                if (response.status !== 200) {
+                if (itemResponse.status !== 200 || numBidsResponse.status !== 200) {
                     throw new Error('Network response was not ok');
                 }
 
-                setItem(response.data);
+                setItem(itemResponse.data);
+                setNumOfBids(numBidsResponse.data);
             } catch (error) {
                 setError(error as Error);
             } finally {
@@ -66,6 +65,27 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
         fetchItem();
     }, [itemId]);
+
+    // Fetch User Photo
+    useEffect(() => {
+        if (!item?.sellerName) return;
+
+        const fetchProfilePhoto = async () => {
+            try {
+                const response = await api.get(`/api/user/photo/${item.sellerName}`, { responseType: 'arraybuffer' });
+                const blob = new Blob([response.data], { type: 'image/jpeg' });
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setUserImage(reader.result as string);
+                };
+                reader.readAsDataURL(blob);
+            } catch (error) {
+                console.error('Failed to fetch profile photo:', error);
+            }
+        };
+
+        fetchProfilePhoto();
+    }, [item?.sellerName]);
 
     const openPopup = () => setIsPopupOpen(true);
     const closePopup = () => setIsPopupOpen(false);
@@ -85,7 +105,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                 <div className="bg-white p-6 rounded-lg shadow-md grid grid-cols-12 gap-4">
                     {/* Photo Section */}
                     <div className="col-span-12 md:col-span-4 flex flex-col items-center">
-                        <img src="/upload-photo.png" alt="Item Image" className="w-48 h-48 object-cover rounded-md shadow-md mb-4" />
+                        <img src={itemImage || "/upload-photo.png"} alt="Item Image" className="w-48 h-48 object-cover rounded-md shadow-md mb-4" />
                         <div className="flex space-x-2">
                             <button className="p-2 bg-gray-200 rounded-full">
                                 <FontAwesomeIcon icon={faHeart} />
@@ -109,21 +129,21 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                             </div>
                             <div className="flex justify-between">
                                 <p className="font-medium">Bids</p>
-                                <span className="font-medium">0 Bids</span>
+                                <span className="font-medium">{numOfBids} Bids</span>
                             </div>
                         </div>
                         <div className="flex space-x-4 mt-4">
                             {/* Bid */}
-                            <button 
+                            <button
                                 className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
                                 onClick={() => setIsBidConfirmPopupOpen(true)}
                             >
                                 Place Bid
                             </button>
-                            {isBidConfirmPopupOpen && <BidConfirmPopup itemId= {itemId} username={ user } onClose={() => setIsBidConfirmPopupOpen(false)} />}
+                            {isBidConfirmPopupOpen && <BidConfirmPopup itemId={itemId} username={user} onClose={() => setIsBidConfirmPopupOpen(false)} />}
 
                             {/* Trade */}
-                            <button 
+                            <button
                                 className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
                                 onClick={openPopup}
                             >
@@ -137,7 +157,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                 {/* Seller Section */}
                 <div className="bg-white p-6 rounded-lg shadow-md grid grid-cols-12 gap-4">
                     <div className="col-span-12 md:col-span-6 flex items-center">
-                        <img src="/upload-photo.png" alt="Seller Image" className="w-24 h-24 object-cover rounded-full shadow-md" />
+                        <img src={userImage || "/upload-photo.png"} alt="Seller Image" className="w-24 h-24 object-cover rounded-full shadow-md" />
                         <div className="ml-4">
                             <p className="font-semibold">{item?.sellerName}</p>
                             <span className="text-yellow-500 text-lg">5 ★</span>

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 // Config
 import api from '../../config/api/loginApi';
 
-import bidItem from '../../services/BidService';
+import { bidItem } from '../../services/BidService';
 
 interface BidConfirmPopupProps {
     itemId: number;
@@ -17,17 +17,26 @@ const BidConfirmPopup: React.FC<BidConfirmPopupProps> = ({ itemId, username, onC
 
     const handleConfirm = async () => {
         try {
-            const response = await api.post('/api/bid', { itemId, username, bidAmount });
-
+            const response = await bidItem(itemId, username, bidAmount);
+            console.log(response.data);  // Logs the response message
+            
             if (response.status === 200) {
-                toast.success('Bid Successful!', {
+                toast.success(response.data, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 2000,
+                });
+            } else {
+                toast.error(response.data, {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 2000,
                 });
             }
-        } catch (error) {
+    
+        } catch (error: any) {
             console.error('Error:', error);
-            toast.error('Bid Failed!', {
+            
+            const errorMessage = error.response?.data || 'Bid Failed!';
+            toast.error(errorMessage, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000,
             });

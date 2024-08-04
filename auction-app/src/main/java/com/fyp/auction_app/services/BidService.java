@@ -66,4 +66,8 @@ public class BidService {
                 .item(itemDTO)
                 .build();
     }
+
+    public Long getBidCountByItemId(Integer itemId) {
+        return bidRepository.countBidsByItemId(itemId);
+    }
 }

@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { IoMdTrendingUp } from "react-icons/io";
 import Timer from '../Timer';
 
+// API Function Calls
+
 type Item = {
     itemId: number;
     image: string;
@@ -16,6 +18,7 @@ type ItemListProps = {
 };
 
 const UserItemBidsList: React.FC<ItemListProps> = ({ listTitle, items }) => {
+
   return (
     <div className="mb-8 lg:mb-0">
             <h2 className="text-2xl font-semibold mb-4">{listTitle}</h2>
@@ -47,7 +50,6 @@ const UserItemBidsList: React.FC<ItemListProps> = ({ listTitle, items }) => {
                             <div className="col-span-3">
                                 <Link to={`/item/${item.itemId}`} className="block">
                                     <h3 className="text-lg font-medium">{item.title}</h3>
-                                    <p className="text-sm text-gray-500">1 Bid</p>
                                 </Link>
                             </div>
                             <div className="col-span-3 text-center">

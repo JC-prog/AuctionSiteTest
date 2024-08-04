@@ -1,5 +1,6 @@
 package com.fyp.auction_app.repository;
 
+import com.fyp.auction_app.models.Enums.ListingStatus;
 import com.fyp.auction_app.models.Item;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,4 +32,6 @@ public interface ItemRepo extends JpaRepository<Item, Integer>, JpaSpecification
     // Find items sorted by duration
     @Query("SELECT i FROM Item i ORDER BY i.duration DESC")
     Page<Item> findAllSortedByDuration(Pageable pageable);
+
+    List<Item> findByStatus(ListingStatus status);
 }

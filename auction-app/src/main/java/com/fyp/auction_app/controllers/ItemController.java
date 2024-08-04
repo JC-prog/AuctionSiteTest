@@ -89,11 +89,14 @@ public class ItemController {
     }
 
     @PostMapping("api/item/create")
-    public ResponseEntity<Item> createItem(@RequestBody Item item) {
+    public ResponseEntity<String> createItem(@RequestBody Item item) {
 
-        Item createdItem = itemService.createItem(item);
+        item.setStatus(ListingStatus.CREATED);
+        item.setCurrentPrice(item.getStartPrice());
 
-        return new ResponseEntity<>(createdItem, HttpStatus.OK);
+        itemService.createItem(item);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("api/item/suspend")

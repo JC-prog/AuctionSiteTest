@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @CrossOrigin
@@ -40,32 +41,47 @@ public class BidController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Bid> createBid(@RequestBody BidRequest bid)
-    {
-        Optional<Item> itemToBid = itemService.findItemByItemId(bid.getItemId());
+    public ResponseEntity<String> createBid(@RequestBody BidRequest bidRequest) {
+        Optional<Item> itemOptional = itemService.findItemByItemId(bidRequest.getItemId());
 
-        if (itemToBid.isPresent()) {
-            Item itemToUpdate = itemToBid.get();
+        if (itemOptional.isPresent()) {
+            Item item = itemOptional.get();
 
-            if (bid.getBidAmount() > itemToUpdate.getCurrentPrice()) {
-                itemToUpdate.setCurrentPrice(bid.getBidAmount());
-                itemService.updateItem(itemToUpdate);
-
-                Bid bidToAdd = new Bid();
-                bidToAdd.setBidderName(bid.getUsername());
-                //bidToAdd.setItemId(bid.getItemId());
-                bidToAdd.setBidTimestamp(new Date());
-                bidToAdd.setIsActive(Boolean.TRUE);
-                bidService.createBid(bidToAdd);
-
-                return new ResponseEntity<>(bidToAdd, HttpStatus.OK);
+            if (item.getStatus() == ListingStatus.EXPIRED) {
+                return new ResponseEntity<>("Item is expired", HttpStatus.GONE);
             }
 
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            if (bidRequest.getBidAmount() <= item.getCurrentPrice()) {
+                return new ResponseEntity<>("Bid amount must be greater than the current price", HttpStatus.BAD_REQUEST);
+            }
 
+            if (Objects.equals(bidRequest.getUsername(), item.getSellerName()))
+            {
+                return new ResponseEntity<>("Cannot bid on own item", HttpStatus.BAD_REQUEST);
+            }
+
+            item.setCurrentPrice(bidRequest.getBidAmount());
+            itemService.updateItem(item);
+
+            Bid bid = new Bid();
+            bid.setBidderName(bidRequest.getUsername());
+            bid.setBidTimestamp(new Date());
+            bid.setIsActive(Boolean.TRUE);
+            bid.setItem(item);
+            bidService.createBid(bid);
+
+            return new ResponseEntity<>("Bid created successfully", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Item not found", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/count-bid/{itemId}")
+    public ResponseEntity<Long> getNumberOfBids(@PathVariable Integer itemId)
+    {
+        Long numberOfBids = bidService.getBidCountByItemId(itemId);
+
+        return new ResponseEntity<>(numberOfBids, HttpStatus.OK);
     }
 
 }

@@ -52,10 +52,20 @@ export const fetchBids = (username: string) => {
     return response;
 };
 
-export const bidItem = async (itemId: string) => {
-    const apiUrl = `/api/item/bid`
+// Count Bids
+export const countBids = (itemId: string) => {
+    const apiUrl = `/api/bid/count-bid/${itemId}`;
+
+    const response = apiGet(apiUrl);
+
+    return response;
+}
+
+// Bid Item
+export const bidItem = async (itemId: number, username: string, bidAmount: number) => {
+    const apiUrl = `/api/bid`
   
-    const payload = itemId
+    const payload = { itemId, username, bidAmount }
   
     const response = apiPost(apiUrl, payload);
 
