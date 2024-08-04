@@ -1,5 +1,6 @@
 package com.fyp.auction_app.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,11 +23,13 @@ public class Bid {
 
     private String bidderName;
 
-    private Integer itemId;
-
     private Double bidAmount;
 
     private Date bidTimestamp;
 
     private Boolean isActive;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
 }

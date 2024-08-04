@@ -45,44 +45,19 @@ const apiGet = async (url: string) => {
 
 // Get Bids
 export const fetchBids = (username: string) => {
-    const apiUrl = `/api/bids/${username}`;
+    const apiUrl = `/api/bid/${username}`;
 
     const response = apiGet(apiUrl);
 
     return response;
 };
 
-export const bidItem = async (itemId: string): Promise<IUser> => {
-  try {
-    const accessToken = Cookies.get('access_token');
-    if (!accessToken) {
-      throw new Error('No access token found');
-    }
+export const bidItem = async (itemId: string) => {
+    const apiUrl = `/api/item/bid`
+  
+    const payload = itemId
+  
+    const response = apiPost(apiUrl, payload);
 
-    const response: AxiosResponse<IUser> = await baseUrl.post(
-      `/api/item/bid`,
-      { itemId }, 
-      {
-        headers: {
-          Authorization: 'Bearer ' + accessToken,
-        },
-      }
-    );
-
-    if (response.status === 200) {
-      await toast.success('Bid Successful!', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-    } else {
-      toast.error('Bid Failed. Please try again.', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-    }
-
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+    return response;
 };

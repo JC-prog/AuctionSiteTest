@@ -57,11 +57,7 @@ function App() {
         const decodedToken = jwtDecode<DecodedToken>(accessToken);
         setUser(decodedToken.sub);
 
-        console.log(decodedToken.sub);
-
         const response: AxiosResponse<String> = await api.get(`/api/user/get-role/${decodedToken.sub}`);
-    
-        console.log(response);
 
         if (response.status !== 200) {
           throw new Error('Network response was not ok');

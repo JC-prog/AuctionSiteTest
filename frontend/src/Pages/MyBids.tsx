@@ -25,15 +25,13 @@ const ItemsTable: React.FC<AuthProps> = ({ isAuth, user }) => {
     // Fetch Bids
     useEffect(() => {
         const fetchUserBids= async () => {
-        
         console.log(user);
-        
         try {
             const response: AxiosResponse = await fetchBids(username);
 
-                if (response.status !== 200) {
-                    throw new Error('Network response was not ok');
-                }
+            if (response.status !== 200) {
+                throw new Error('Network response was not ok');
+            }
                 
 
             } catch (error) {

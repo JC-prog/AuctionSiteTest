@@ -5,13 +5,16 @@ import com.fyp.auction_app.models.Requests.ChangeUserPasswordRequest;
 import com.fyp.auction_app.models.Requests.EditUserRequest;
 import com.fyp.auction_app.models.Requests.EditUserStatusRequest;
 import com.fyp.auction_app.models.User;
+import com.fyp.auction_app.models.UserImage;
 import com.fyp.auction_app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -146,4 +149,44 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/photo/{username}")
+    public ResponseEntity<byte[]> getUserImage(@PathVariable String username) {
+        UserImage image = userService.getImage(username);
+
+        byte[] profilePhoto = image.getProfilePhoto();
+
+        if (profilePhoto != null) {
+            return ResponseEntity.ok()
+                    .header("Content-Type", "image/jpeg")
+                    .body(profilePhoto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/banner/{username}")
+    public ResponseEntity<byte[]> getUserBanner(@PathVariable String username) {
+        UserImage image = userService.getImage(username);
+
+        byte[] bannerImage = image.getBannerImage();
+
+        if (bannerImage != null) {
+            return ResponseEntity.ok()
+                    .header("Content-Type", "image/jpeg")
+                    .body(bannerImage);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/upload-photo/{username}")
+    public ResponseEntity<String> uploadPhoto(@PathVariable String username, @RequestParam("file") MultipartFile file)
+    {
+        try {
+            userService.saveImage(username, file);
+            return ResponseEntity.ok("Image uploaded successfully!");
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body("Failed to upload image!");
+        }
+    }
 }

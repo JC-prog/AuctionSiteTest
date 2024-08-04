@@ -1,6 +1,7 @@
 package com.fyp.auction_app.controllers;
 
 import com.fyp.auction_app.models.Bid;
+import com.fyp.auction_app.models.DTO.BidDTO;
 import com.fyp.auction_app.models.Enums.ListingStatus;
 import com.fyp.auction_app.models.Item;
 import com.fyp.auction_app.models.Requests.BidRequest;
@@ -9,6 +10,7 @@ import com.fyp.auction_app.models.Requests.GetUserBidRequest;
 import com.fyp.auction_app.models.User;
 import com.fyp.auction_app.services.BidService;
 import com.fyp.auction_app.services.ItemService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -31,8 +33,8 @@ public class BidController {
     private ItemService itemService;
 
     @GetMapping("/{username}")
-    public ResponseEntity<List<Bid>> getUserBids(@PathVariable("username") String username) {
-        List<Bid> bids = bidService.findBidsByUsername(username);
+    public ResponseEntity<List<BidDTO>> getUserBids(@PathVariable("username") String username) {
+        List<BidDTO> bids = bidService.findBidsByUsername(username);
 
         return new ResponseEntity<>(bids, HttpStatus.OK);
     }
@@ -51,7 +53,7 @@ public class BidController {
 
                 Bid bidToAdd = new Bid();
                 bidToAdd.setBidderName(bid.getUsername());
-                bidToAdd.setItemId(bid.getItemId());
+                //bidToAdd.setItemId(bid.getItemId());
                 bidToAdd.setBidTimestamp(new Date());
                 bidToAdd.setIsActive(Boolean.TRUE);
                 bidService.createBid(bidToAdd);

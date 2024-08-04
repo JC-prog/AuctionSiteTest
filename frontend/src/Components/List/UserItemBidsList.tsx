@@ -19,6 +19,21 @@ const UserItemBidsList: React.FC<ItemListProps> = ({ listTitle, items }) => {
   return (
     <div className="mb-8 lg:mb-0">
             <h2 className="text-2xl font-semibold mb-4">{listTitle}</h2>
+
+            <div className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">
+                <div className="grid grid-cols-12 items-center py-4 border-b border-gray-200">
+                    <div className="col-span-1 text-center">
+                    <span className="text-gray-500">Index</span>
+                    </div>
+                    <div className="col-span-1"></div>
+                    <div className="col-span-2">Item Title</div>
+                    <div className="col-span-2">Price</div>
+                    <div className="col-span-2">Time Left</div>
+                    <div className="col-span-1">Status</div>
+                    <div className="col-span-2">Action</div>
+                </div>
+            </div>
+
             <div className="bg-white p-4 rounded-lg shadow-lg">
                 {items.map((item, index) => (
                     <div key={item.itemId} className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">

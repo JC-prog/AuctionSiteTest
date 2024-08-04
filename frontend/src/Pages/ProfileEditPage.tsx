@@ -51,6 +51,7 @@ const ProfileEditPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
+  // Fetch User Info
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -66,6 +67,8 @@ const ProfileEditPage = () => {
         }
 
         setUser(response.data);
+
+
       } catch (error) {
         setError(error as Error);
       } finally {
@@ -75,6 +78,25 @@ const ProfileEditPage = () => {
 
     fetchUser();
   }, [username]);
+
+  // Fetch User Photo
+  useEffect(() => {
+    const fetchProfilePhoto = async () => {
+      try {
+        const response = await api.get(`/api/user/photo/${username}`, { responseType: 'arraybuffer' });
+        const blob = new Blob([response.data], { type: 'image/jpeg' });
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreview(reader.result as string);
+        };
+        reader.readAsDataURL(blob);
+      } catch (error) {
+        console.error('Failed to fetch profile photo:', error);
+      }
+    };
+
+    fetchProfilePhoto();
+  }, []);
 
   const handleChangePassword = async () => {
     try {
@@ -181,7 +203,7 @@ const ProfileEditPage = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await api.post('/api/upload', formData, {
+      const response = await api.post(`/api/user/upload-photo/${username}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -253,6 +275,9 @@ const ProfileEditPage = () => {
             onChange={handleFileChange}
             className="hidden"
           />
+        </div>
+        <div className="flex justify-start">
+            <p>Click on the image to upload</p>
         </div>
         <div className="flex justify-end">
           <button

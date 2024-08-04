@@ -75,3 +75,11 @@ export const deactivateUser = (username: string) => {
 
     return apiPost(apiUrl, payload);
 }
+
+// Upload Profile Photo
+export const uploadUserPhoto = (user: User) => {
+    const apiUrl = `/api/user/upload-photo`;
+    const payload = user;
+
+    return apiPost(apiUrl, payload);
+};
