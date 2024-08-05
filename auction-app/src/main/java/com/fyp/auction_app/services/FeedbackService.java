@@ -20,4 +20,9 @@ public class FeedbackService {
         return feedbackRepo.findAll(pageable);
     }
 
+    public void createFeedback(Feedback feedback)
+    {
+        feedbackRepo.save(feedback);
+    }
+
 }

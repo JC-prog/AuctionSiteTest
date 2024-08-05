@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import { AxiosResponse } from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+// API Function Calls
+import { createFeedback } from '../services/FeedbackService';
 
 interface AuthProps {
   isAuth: boolean;
@@ -6,13 +12,42 @@ interface AuthProps {
 }
 
 const FeedbackPage: React.FC<AuthProps> = ({ user }) => {
-  const [feedback, setFeedback] = useState('');
-  const [rating, setRating] = useState(5);
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    // Handle form submission logic, such as sending feedback to an API
-    console.log({ user, feedback, rating });
+
+    try {
+        const response: AxiosResponse = await createFeedback(user, message);
+  
+        if (response.status === 200) {
+          toast.success('Feedback created successfully.', {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          });
+
+          setTimeout(() => {
+            navigate(`/`);
+            window.location.reload();
+          }, 2000);
+
+        } else {
+          toast.error(`Feedback creation failed: ${response.data.error}`, {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          });
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        toast.error('Failed to create Feedback. Please try again.', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
+
+    
+    console.log({ user, message });
   };
 
   return (
@@ -20,37 +55,18 @@ const FeedbackPage: React.FC<AuthProps> = ({ user }) => {
       <h2 className="text-2xl font-semibold">Platform Feedback Form</h2>
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
         <div>
-          <label htmlFor="feedback" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="message" className="block text-sm font-medium text-gray-700">
             Your Feedback
           </label>
           <textarea
-            id="feedback"
-            name="feedback"
+            id="message"
+            name="fmessage"
             rows={4}
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-            className="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
             required
           />
-        </div>
-        <div>
-          <label htmlFor="rating" className="block text-sm font-medium text-gray-700">
-            Rating
-          </label>
-          <select
-            id="rating"
-            name="rating"
-            value={rating}
-            onChange={(e) => setRating(Number(e.target.value))}
-            className="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
-            required
-          >
-            {[1, 2, 3, 4, 5].map((rate) => (
-              <option key={rate} value={rate}>
-                {rate}
-              </option>
-            ))}
-          </select>
         </div>
         <div>
           <button

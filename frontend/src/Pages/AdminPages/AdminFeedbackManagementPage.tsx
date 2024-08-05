@@ -2,8 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
+import api from '../../config/baseUrl';
+
+interface Feedback {
+  feedback_id: number;
+  username: string;
+  message: string;
+  feedback_timestamp: string; // Use string for date-time formatting
+}
+
 const AdminFeedbackManagementPage: React.FC = () => {
-  const [feedbacks, setFeedbacks] = useState<any[]>([]); // Initialize as an empty array
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]); // Initialize as an empty array
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
@@ -11,9 +20,9 @@ const AdminFeedbackManagementPage: React.FC = () => {
   const fetchFeedbacks = async (pageNumber: number) => {
     setLoading(true);
     try {
-      const response = await axios.get(`/api/feedback/all?page=${pageNumber}`);
+      const response = await api.get(`/api/feedback/all?page=${pageNumber - 1}`);
       // Ensure feedbacks and totalPages are set correctly
-      setFeedbacks(response.data.feedbacks || []);
+      setFeedbacks(response.data.content || []);
       setTotalPages(response.data.totalPages || 1);
     } catch (error) {
       console.error('Error fetching feedbacks:', error);
@@ -45,17 +54,17 @@ const AdminFeedbackManagementPage: React.FC = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feedback</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {feedbacks.map((feedback) => (
-                <tr key={feedback.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{feedback.user}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{feedback.feedback}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{feedback.rating}</td>
+                <tr key={feedback.feedback_id}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{feedback.username}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{feedback.message}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(feedback.feedback_timestamp).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>

@@ -20,7 +20,7 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer feedback_id;
 
-    private Integer sender_id;
+    private String username;
 
     private String message;
 
