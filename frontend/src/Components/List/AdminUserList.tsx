@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { CiStop1, CiPlay1 } from 'react-icons/ci';
 import { GrPowerReset } from "react-icons/gr";
@@ -9,7 +9,8 @@ import { toast } from 'react-toastify';
 
 // API Function Call
 import { resetPassword } from '../../services/AuthService';
-import { suspendUser, activateUser } from '../../services/AdminService'; 
+import { suspendUser, activateUser } from '../../services/AdminService';
+import api from '../../config/Api'
 
 type UserListProps = {
   listTitle: string;
@@ -17,6 +18,30 @@ type UserListProps = {
 };
 
 const AdminUserList: React.FC<UserListProps> = ({ listTitle, users = [] }) => {
+
+  // State to store User images
+  const [userImages, setUserImages] = useState<{ [key: string]: string }>({});
+
+  // Fetch userimages
+  const fetchUserImage = async (username: string) => {
+      try {
+          const response = await api.get(`/api/user/photo/${username}`, { responseType: 'arraybuffer' });
+          const blob = new Blob([response.data], { type: 'image/jpeg' });
+          const reader = new FileReader();
+          reader.onloadend = () => {
+              setUserImages((prev) => ({ ...prev, [username]: reader.result as string }));
+          };
+          reader.readAsDataURL(blob);
+      } catch (error) {
+          console.error('Failed to fetch user image:', error);
+      }
+  };
+
+  // Fetch images for all users on component mount or users change
+  useEffect(() => {
+      users.forEach((user) => fetchUserImage(user.username));
+  }, [users]);
+
 
   const handleUserAction = async (username: string, action: 'suspend' | 'activate') => {
     try {
@@ -83,7 +108,8 @@ const AdminUserList: React.FC<UserListProps> = ({ listTitle, users = [] }) => {
                 <span className="text-gray-500">{index + 1}</span>
               </div>
               <div className="col-span-1">
-                <img src="/bike.jpg" alt={user.username} className="w-12 h-12 object-cover rounded-md" />
+                <img src={userImages[user.username] || '/upload-photo.png'} // Fallback image
+                 alt={user.username} className="w-12 h-12 object-cover rounded-md" />
               </div>
               <div className="col-span-2">
                 <p>{user.username}</p>

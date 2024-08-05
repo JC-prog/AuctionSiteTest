@@ -167,7 +167,7 @@ public class ItemController {
                 return new ResponseEntity<>("Cannot Launch Listed Items", HttpStatus.BAD_REQUEST);
             }
 
-            if(itemToUpdate.getStatus() == ListingStatus.EXPIRED)
+            if(itemToUpdate.getStatus() == ListingStatus.SOLD)
             {
                 return new ResponseEntity<>("Cannot Launch Sold Items", HttpStatus.BAD_REQUEST);
             }
@@ -226,6 +226,42 @@ public class ItemController {
             return ResponseEntity.ok("Image uploaded successfully!");
         } catch (IOException e) {
             return ResponseEntity.status(500).body("Failed to upload image!");
+        }
+    }
+
+    @PostMapping("/api/item/accept-bid/{itemId}")
+    public ResponseEntity<String> acceptBid(@PathVariable Integer itemId)
+    {
+        Optional<Item> itemToAccept = itemService.findItemById(itemId);
+
+        if(itemToAccept.isPresent() && itemToAccept.get().getStatus() == ListingStatus.FINISHED)
+        {
+            Item itemBidAccepted = itemToAccept.get();
+            itemBidAccepted.setStatus(ListingStatus.SOLD);
+
+            itemService.updateItem(itemBidAccepted);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/api/item/reject-bid/{itemId}")
+    public ResponseEntity<String> rejectBid(@PathVariable Integer itemId)
+    {
+        Optional<Item> itemToReject = itemService.findItemById(itemId);
+
+        if(itemToReject.isPresent() && itemToReject.get().getStatus() == ListingStatus.FINISHED)
+        {
+            Item itemBidRejected= itemToReject.get();
+            itemBidRejected.setStatus(ListingStatus.REJECTED);
+
+            itemService.updateItem(itemBidRejected);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

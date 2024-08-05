@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiTrash, FiEdit, FiUpload } from 'react-icons/fi';
+import { TiTick } from "react-icons/ti";
+import { MdCancel } from "react-icons/md";
+import { FaStop } from "react-icons/fa";
 import { toast } from 'react-toastify';
 
 // Config
 import api from '../../config/api/loginApi';
-import { launchItem } from '../../services/ItemService'; 
+import { launchItem, acceptBid, rejectBid } from '../../services/ItemService'; 
 
 import Timer from '../../Components/Timer';
 import IItem from '../../interfaces/IItem'; // Adjust the path to your IItem interface
@@ -50,6 +53,11 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000,
         });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+
       } else {
         toast.error(response.data.message || 'Failed to launch item.', {
           position: toast.POSITION.TOP_RIGHT,
@@ -65,12 +73,74 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
     }
   };
 
+  // Accept Bid
+  const handleAccept = async (itemId: number) => {
+    try {
+      const response = await acceptBid(itemId);
+      console.log(response);
+  
+      if (response.status === 200) {
+        toast.success(response.data.message || 'Bid Accepted', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+
+      } else {
+        toast.error(response.data.message || 'Failed to accept Bid', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Failed to Accept. Please try again later.', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
+  };
+
+  // Reject Bid
+  const handleReject = async (itemId: number) => {
+    try {
+      const response = await rejectBid(itemId);
+      console.log(response);
+  
+      if (response.status === 200) {
+        toast.success(response.data.message || 'Bid Rejected', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+
+      } else {
+        toast.error(response.data.message || 'Failed to reject bid', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Failed to Reject. Please try again later.', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
+  };
+
   // Placeholder function for deleting listing (to be implemented)
   const deleteListing = async (itemId: number) => {
     // Implement your delete functionality here
   };
 
-
+  // Render Status
   const renderStatus = (item) => {
     switch (item.status) {
       case "CREATED":
@@ -83,6 +153,71 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
         return <p>Unknown Status</p>;
     };
   };
+
+  // Render Available Actions
+  const renderActions = (item) => {
+    switch (item.status) {
+      case "CREATED":
+        return (
+            <>
+                <Link 
+                    to={`/item/edit/${item.itemId}`} 
+                    className="text-indigo-600 hover:text-indigo-900 focus:outline-none flex items-center px-1"
+                >
+                    <FiEdit className="mr-1" /> Edit
+                </Link>
+                <button 
+                    className="text-green-600 hover:text-green-900 focus:outline-none flex items-center px-1"
+                    onClick={() => launchListing(item.itemId)}
+                >
+                    <FiUpload className="mr-1" /> Launch
+                </button>
+                <button 
+                    className="text-red-600 hover:text-red-900 focus:outline-none flex items-center px-1"
+                    onClick={() => deleteListing(item.itemId)}
+                >
+                    <FiTrash className="mr-1" /> Delete
+                </button>
+            </>);
+      case "FINISHED":
+        return (
+            <>
+                <button 
+                    className="text-green-600 hover:text-green-900 focus:outline-none flex items-center px-1"
+                    onClick={() => launchListing(item.itemId)}
+                >
+                    <FiUpload className="mr-1" /> Re-Launch
+                </button>
+                <button 
+                    className="text-green-600 hover:text-green-900 focus:outline-none flex items-center px-1"
+                    onClick={() => handleAccept(item.itemId)}
+                >
+                    <TiTick className="mr-1" /> Accept
+                </button>
+                <button 
+                    className="text-red-600 hover:text-red-900 focus:outline-none flex items-center px-1"
+                    onClick={() => handleReject(item.itemId)}
+                >
+                    <MdCancel className="mr-1" /> Reject
+                </button>
+
+
+            </>
+        );
+      case "LISTED":
+        return (
+            <>
+                <button 
+                    className="text-red-600 hover:text-red-900 focus:outline-none flex items-center px-1"
+                    onClick={() => handleReject(item.itemId)}
+                >
+                    <FaStop className="mr-1" /> Stop
+                </button>
+            </>);
+      default:
+        return <p>Unknown Status</p>;
+    };
+  }
 
   return (
     <div className="mb-8 lg:mb-0">
@@ -133,24 +268,8 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
                 {item.status}
               </div>
               <div className="col-span-3 flex items-center">
-                <Link 
-                  to={`/item/edit/${item.itemId}`} 
-                  className="text-indigo-600 hover:text-indigo-900 focus:outline-none flex items-center px-1"
-                >
-                  <FiEdit className="mr-1" /> Edit
-                </Link>
-                <button 
-                  className="text-green-600 hover:text-green-900 focus:outline-none flex items-center px-1"
-                  onClick={() => launchListing(item.itemId)}
-                >
-                  <FiUpload className="mr-1" /> Launch
-                </button>
-                <button 
-                  className="text-red-600 hover:text-red-900 focus:outline-none flex items-center px-1"
-                  onClick={() => deleteListing(item.itemId)}
-                >
-                  <FiTrash className="mr-1" /> Delete
-                </button>
+                {renderActions(item)}
+                
               </div>
             </div>
           </div>

@@ -298,8 +298,7 @@ const ProfileEditPage = () => {
                 type="text"
                 name="username"
                 value={user.username}
-                onChange={handleChange}
-                required
+                readOnly
               />
 
               <label className="block text-gray-700 text-sm font-bold mb-2">Gender</label>

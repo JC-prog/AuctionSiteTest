@@ -249,9 +249,23 @@ export const createItem = async (item: Item): Promise<Item[]> => {
 };
 
 // Upload Item Image
-export const uploadUserPhoto = (user: string) => {
+export const uploadItemPhoto = (user: string) => {
     const apiUrl = `/api/item/upload-photo`;
     const payload = user;
 
     return apiPost(apiUrl, payload);
 };
+
+// Accept Bid
+export const acceptBid = (itemId: number) => {
+    const apiUrl = `/api/item/accept-bid/${itemId}`;
+
+    return apiPost(apiUrl, null);
+}
+
+// Reject Bid
+export const rejectBid = (itemId: number) => {
+  const apiUrl = `/api/item/reject-bid/${itemId}`;
+
+  return apiPost(apiUrl, null);
+}

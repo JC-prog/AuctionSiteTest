@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -32,10 +33,21 @@ public class ItemStatusScheduler {
                 Optional<Bid> lastBidOpt = bidRepository.findLastBidByItemId(item.getItemId());
 
                 if (lastBidOpt.isPresent()) {
-                    item.setStatus(ListingStatus.SOLD);
+
+                    if(Objects.equals(item.getAuctionType(), "low-start-high"))
+                    {
+                        item.setStatus(ListingStatus.FINISHED);
+                    } else
+                    {
+                        item.setStatus(ListingStatus.SOLD);
+                    }
+
                     item.setBidWinner(lastBidOpt.get().getBidderName());
+
                 } else {
+
                     item.setStatus(ListingStatus.EXPIRED); // Safety fallback if no bids are found
+
                 }
 
                 itemRepository.save(item);

@@ -7,5 +7,7 @@ public enum ListingStatus {
     SOLD,
     EXPIRED,
     SUSPENDED,
-    DELETED
+    DELETED,
+    FINISHED,
+    REJECTED
 }
