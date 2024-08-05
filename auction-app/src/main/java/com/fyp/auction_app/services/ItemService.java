@@ -99,9 +99,8 @@ public class ItemService {
         }
     }
 
-    public ItemImage getImage(Integer itemId) {
-        Optional<ItemImage> itemImage = itemImageRepository.findByItemId(itemId);
+    public Optional<ItemImage> getImage(Integer itemId) {
 
-        return itemImage.orElse(null);
+        return itemImageRepository.findByItemId(itemId);
     }
 }

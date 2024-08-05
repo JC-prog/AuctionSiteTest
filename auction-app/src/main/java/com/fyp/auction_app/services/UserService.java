@@ -77,9 +77,8 @@ public class UserService {
         }
     }
 
-    public UserImage getImage(String username) {
-        Optional<UserImage> itemImageOptional = userImageRepository.findByUsername(username);
+    public Optional<UserImage> getImage(String username) {
 
-        return itemImageOptional.orElse(null);
+        return userImageRepository.findByUsername(username);
     }
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import { addItemToWatchlist } from '../../services/WatchListService';
+import { addItemToWatchlist, removeItemFromWatchlist } from '../../services/WatchListService';
 
 type LikeButtonProps = {
   imageUrl: string;
@@ -9,22 +9,27 @@ type LikeButtonProps = {
   itemId: number;
 };
 
-const LikeButton: React.FC<LikeButtonProps> = ({ isLiked, itemId, username }) => {
+const LikeButton: React.FC<LikeButtonProps> = ({ imageUrl, isLiked, itemId, username }) => {
   const [liked, setLiked] = useState<boolean>(isLiked);
 
-  const handleLikeToggle = async () => {
+  const toggleLike = async () => {
     try {
-      await addItemToWatchlist(itemId, username);
+      if (liked) {
+        await removeItemFromWatchlist(itemId, username);
+      } else {
+        await addItemToWatchlist(itemId, username);
+      }
       setLiked(!liked);
     } catch (error) {
-      console.error('Failed to like the item:', error);
+      console.error('Failed to toggle like status:', error);
     }
   };
 
   return (
     <div className="relative">
+      <img src={imageUrl} alt="Item" className="w-full h-auto" />
       <button
-        onClick={handleLikeToggle}
+        onClick={toggleLike}
         className="absolute top-2 right-2 focus:outline-none"
       >
         {liked ? (

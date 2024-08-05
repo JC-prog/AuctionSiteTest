@@ -9,5 +9,6 @@ public enum ListingStatus {
     SUSPENDED,
     DELETED,
     FINISHED,
-    REJECTED
+    REJECTED,
+    REVIEWING
 }

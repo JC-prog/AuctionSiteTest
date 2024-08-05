@@ -204,18 +204,20 @@ public class ItemController {
     }
 
     @GetMapping("/api/item/image/{itemId}")
-    public ResponseEntity<byte[]> getUserImage(@PathVariable Integer itemId) {
-        ItemImage image = itemService.getImage(itemId);
+    public ResponseEntity<byte[]> getItemImage(@PathVariable Integer itemId) {
+        Optional<ItemImage> itemImage = itemService.getImage(itemId);
 
-        byte[] itemPhoto = image.getItemPhoto();
+        if(itemImage.isPresent()) {
+            byte[] itemPhoto = itemImage.get().getItemPhoto();
 
-        if (itemPhoto != null) {
-            return ResponseEntity.ok()
-                    .header("Content-Type", "image/jpeg")
-                    .body(itemPhoto);
-        } else {
-            return ResponseEntity.notFound().build();
+            if (itemPhoto != null) {
+                return ResponseEntity.ok()
+                        .header("Content-Type", "image/jpeg")
+                        .body(itemPhoto);
+            }
         }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/api/item/upload-image/{itemId}")

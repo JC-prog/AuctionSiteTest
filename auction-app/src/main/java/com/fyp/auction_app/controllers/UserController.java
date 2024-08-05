@@ -151,32 +151,37 @@ public class UserController {
 
     @GetMapping("/photo/{username}")
     public ResponseEntity<byte[]> getUserImage(@PathVariable String username) {
-        UserImage image = userService.getImage(username);
+        Optional<UserImage> userImage = userService.getImage(username);
 
-        byte[] profilePhoto = image.getProfilePhoto();
+        if(userImage.isPresent())
+        {
+            byte[] profilePhoto = userImage.get().getProfilePhoto();
 
-        if (profilePhoto != null) {
-            return ResponseEntity.ok()
-                    .header("Content-Type", "image/jpeg")
-                    .body(profilePhoto);
-        } else {
-            return ResponseEntity.notFound().build();
+            if (profilePhoto != null) {
+                return ResponseEntity.ok()
+                        .header("Content-Type", "image/jpeg")
+                        .body(profilePhoto);
+            }
         }
+
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/banner/{username}")
     public ResponseEntity<byte[]> getUserBanner(@PathVariable String username) {
-        UserImage image = userService.getImage(username);
+        Optional<UserImage> userImage = userService.getImage(username);
 
-        byte[] bannerImage = image.getBannerImage();
+        if(userImage.isPresent()) {
+            byte[] bannerImage = userImage.get().getBannerImage();
 
-        if (bannerImage != null) {
-            return ResponseEntity.ok()
-                    .header("Content-Type", "image/jpeg")
-                    .body(bannerImage);
-        } else {
-            return ResponseEntity.notFound().build();
+            if (bannerImage != null) {
+                return ResponseEntity.ok()
+                        .header("Content-Type", "image/jpeg")
+                        .body(bannerImage);
+            }
         }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/upload-photo/{username}")

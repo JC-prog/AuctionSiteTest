@@ -110,7 +110,7 @@ function App() {
           <Navbar isAuth={authenticated} />
           <main className="flex-1 bg-gray-100">
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<HomePage user={user}/>} />
               <Route path="/admin" element={<AdminDashboardPage />} />
               <Route path="/admin/user-management" element={<AdminUserManagementPage />} />
               <Route path="/admin/listing-management" element={<AdminListingManagementPage />} />
@@ -121,7 +121,7 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/my-bids" element={<MyBids user={user}/>} />
-              <Route path="/watchlist" element={<MyWatchlist />} />
+              <Route path="/watchlist" element={<MyWatchlist user={user}/>} />
               <Route path="/my-listings" element={<MyItemListing user={user} />} />
               <Route path="/user/:username" element={<UserProfile user={user} />} />
               <Route path="/user/edit/:username" element={<UserEditProfile />} />

@@ -30,6 +30,7 @@ const ItemCardListHomeCarousel: React.FC<ItemListProps> = ({ carouselTitle, item
 
     // Fetch item images
     const fetchItemImage = async (itemId: number) => {
+        console.log(username);
         try {
             const response = await api.get(`/api/item/image/${itemId}`, { responseType: 'arraybuffer' });
             const blob = new Blob([response.data], { type: 'image/jpeg' });

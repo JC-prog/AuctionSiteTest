@@ -4,6 +4,7 @@ import { FiTrash, FiEdit, FiUpload } from 'react-icons/fi';
 import { TiTick } from "react-icons/ti";
 import { MdCancel } from "react-icons/md";
 import { FaStop } from "react-icons/fa";
+import { FaExclamationCircle } from "react-icons/fa";
 import { toast } from 'react-toastify';
 
 // Config
@@ -150,7 +151,7 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
       case "LISTED":
         return <Timer endTime={item.endDate} />;
       default:
-        return <p>Unknown Status</p>;
+        return <p></p>;
     };
   };
 
@@ -214,8 +215,19 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
                     <FaStop className="mr-1" /> Stop
                 </button>
             </>);
+        case "SUSPENDED":
+            return(
+                <>
+                    <button 
+                    className="text-yellow-500 hover:text-yellow-700 focus:outline-none flex items-center px-1"
+                    onClick={() => handleReject(item.itemId)}
+                >
+                    <FaExclamationCircle className="mr-1" /> Appeal
+                </button>
+                </>
+            );
       default:
-        return <p>Unknown Status</p>;
+        return <p></p>;
     };
   }
 

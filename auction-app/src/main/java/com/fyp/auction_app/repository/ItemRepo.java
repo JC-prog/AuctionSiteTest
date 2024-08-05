@@ -39,4 +39,6 @@ public interface ItemRepo extends JpaRepository<Item, Integer>, JpaSpecification
     @Query("SELECT i FROM Item i ORDER BY i.duration DESC")
     Page<Item> findAllSortedByDuration(Pageable pageable);
 
+    List<Item> findByItemIdIn(List<Integer> itemIds);
+
 }

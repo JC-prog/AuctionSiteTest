@@ -50,11 +50,14 @@ const HomePage: React.FC<AuthProps> = ({ isAuth, user }) => {
   // Fetch Items
   useEffect(() => {
     const fetchItems = async () => {
+        console.log(user);
       try {
         const response: AxiosResponse<PaginatedResponse> = await api.get(`/api/items/all`);
 
+            console.log(response);
+
             if (response.status !== 200) {
-            throw new Error('Network response was not ok');
+                throw new Error('Network response was not ok');
             }
             
             setItems(response.data.content);

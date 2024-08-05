@@ -24,6 +24,8 @@ public class Watchlist {
 
     private Integer itemId;
 
+    private Double priceAdded;
+
     private Date watchlistTimestamp;
 
     private Boolean isActive;

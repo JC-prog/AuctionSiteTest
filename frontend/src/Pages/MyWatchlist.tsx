@@ -1,31 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ItemWatchList from '../Components/List/ItemWatchList';
+import Item from '../interfaces/IItem';
+import { fetchItemsFromWatchlist } from '../services/WatchListService';
 
-const items: Item[] = [
-  {
-      itemId: 1,
-      image: '/bike.jpg',
-      title: 'Bike',
-      price: 20,
-  },
-  {
-      itemId: 2,
-      image: '/bike.jpg',
-      title: 'Laptop',
-      price: 500,
-  },
-  // Add more items here
-];
-
-interface PaginatedResponse {
-  content: Item[];
-  // Add other pagination properties if needed
+interface MyWatchListProps {
+  isAuth: boolean;
+  user: string;
 }
 
-const MyWatchList: React.FC = () => {
+const MyWatchList: React.FC<MyWatchListProps> = ({ isAuth, user }) => {
+  const [items, setItems] = useState<Item[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetchItemsFromWatchlist(user);
+
+        if (response.status !== 200) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data: Item[] = response.data;
+        setItems(data);
+      } catch (error) {
+        setError((error as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchItems();
+  }, [user]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-      <ItemWatchList listTitle="Watchlist" items={items} />
+      <ItemWatchList listTitle="Watchlist" items={items} username={user} />
     </div>
   );
 };
