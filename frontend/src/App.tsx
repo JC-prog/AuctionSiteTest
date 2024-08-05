@@ -35,12 +35,14 @@ import ItemEditPage from "./Pages/ItemEditPage"
 import SearchPage from "./Pages/SearchPage"
 import AnalyticsPage from './Pages/AnalyticsPage';
 import TransactionPage from './Pages/TransactionPage';
+import FeedbackPage from './Pages/FeedbackPage';
 
 // Admin Pages
 import AdminDashboardPage from './Pages/AdminPages/AdminDashboardPage';
 import AdminUserManagementPage from './Pages/AdminPages/AdminUserManagementPage';
 import AdminListingManagementPage from './Pages/AdminPages/AdminListingManagementPage';
 import AdminSystemManagementPage from './Pages/AdminPages/AdminSystemManagementPage';
+import AdminFeedbackManagementPage from './Pages/AdminPages/AdminFeedbackManagementPage';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -113,6 +115,7 @@ function App() {
               <Route path="/admin/user-management" element={<AdminUserManagementPage />} />
               <Route path="/admin/listing-management" element={<AdminListingManagementPage />} />
               <Route path="/admin/system-management" element={<AdminSystemManagementPage />} />
+              <Route path="/admin/feedback-management" element={<AdminFeedbackManagementPage />} />
 
               <Route path="/search" element={<SearchPage />} />
               <Route path="/login" element={<LoginPage />} />
@@ -127,6 +130,7 @@ function App() {
               <Route path="/item/:itemId" element={<ItemPage user={user} />} />
               <Route path="/analytics" element={<AnalyticsPage />} />
               <Route path="/transactions" element={<TransactionPage items={ items }/>} />
+              <Route path="/feedback" element={<FeedbackPage user={user}/>} />
               
             </Routes>
           </main>

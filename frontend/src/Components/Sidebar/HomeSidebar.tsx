@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
-import { RiSettings4Line } from "react-icons/ri";
+import { RiSettings4Line, RiFeedbackLine} from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiFolder, FiShoppingCart } from "react-icons/fi";
@@ -23,6 +23,7 @@ const HomeSidebar: React.FC<IAuth> = ({ isAuth, user, role }) => {
         { name: "Transactions", link: "/transactions", icon: FiShoppingCart },
         { name: "Watchlist", link: "/watchlist", icon: AiOutlineHeart },
         { name: "Settings", link: `/user/edit/${user ? user : ''}`, icon: RiSettings4Line, margin: true },
+        { name: "Feedback", link: "/feedback", icon: RiFeedbackLine }
     ];
 
     const notAuthMenus = [
@@ -34,7 +35,8 @@ const HomeSidebar: React.FC<IAuth> = ({ isAuth, user, role }) => {
         { name: "Dashboard", link: `/admin`, icon: MdDashboard },
         { name: "User Management", link: "/admin/user-management", icon: AiOutlineUser, margin: true },
         { name: "Listing Management", link: "/admin/listing-management", icon: CiCircleList },
-        { name: "System Management", link: "/admin/system-management", icon: RiSettings4Line }
+        { name: "System Management", link: "/admin/system-management", icon: RiSettings4Line },
+        { name: "Feedback Management", link: "/admin/feedback-management", icon: RiFeedbackLine }
     ];
 
     const [isOpen, setIsOpen] = useState(false);

@@ -1,9 +1,14 @@
-import React from 'react'
-
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const AdminSystemManagementPage = () => {
+  
+
   return (
-    <div>AdminSystemManagementPage</div>
+    <div>AdminSystemManagementPage
+    
+    </div>
   )
 }
 
