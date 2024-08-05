@@ -21,6 +21,12 @@ public interface ItemRepo extends JpaRepository<Item, Integer>, JpaSpecification
     // Find items that is not inactive
     List<Item> findByIsActiveFalse();
 
+    // Find Items By Status
+    List<Item> findByStatus(ListingStatus status);
+
+    // Find Items By Status Pageable
+    Page<Item> findByStatus(ListingStatus status, Pageable pageable);
+
     // Find items by sellerName and endDate
     @Query("SELECT i FROM Item i WHERE i.sellerName = :sellerName AND i.endDate = :endDate")
     Page<Item> findBySellerNameAndEndDate(
@@ -33,5 +39,4 @@ public interface ItemRepo extends JpaRepository<Item, Integer>, JpaSpecification
     @Query("SELECT i FROM Item i ORDER BY i.duration DESC")
     Page<Item> findAllSortedByDuration(Pageable pageable);
 
-    List<Item> findByStatus(ListingStatus status);
 }

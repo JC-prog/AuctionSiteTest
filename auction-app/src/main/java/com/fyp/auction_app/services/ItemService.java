@@ -1,9 +1,8 @@
 package com.fyp.auction_app.services;
 
+import com.fyp.auction_app.models.Enums.ListingStatus;
 import com.fyp.auction_app.models.Item;
 import com.fyp.auction_app.models.ItemImage;
-import com.fyp.auction_app.models.User;
-import com.fyp.auction_app.models.UserImage;
 import com.fyp.auction_app.repository.ItemImageRepository;
 import com.fyp.auction_app.repository.ItemRepo;
 import com.fyp.auction_app.repository.ItemSpecification;
@@ -32,7 +31,7 @@ public class ItemService {
 
     public Page<Item> findItems(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return itemRepo.findAll(pageable);
+        return itemRepo.findByStatus(ListingStatus.LISTED, pageable);
     }
 
     public List<Item> findItemsBySeller(String sellerName) {
@@ -83,11 +82,11 @@ public class ItemService {
 
         byte[] compressedImage = ImageUtils.compressImage(file.getBytes(), "jpeg", 0.75f);
 
-        Optional<ItemImage> userImage = itemImageRepository.findByItemId(itemId);
+        Optional<ItemImage> itemImage = itemImageRepository.findByItemId(itemId);
 
-        if(userImage.isPresent())
+        if(itemImage.isPresent())
         {
-            ItemImage itemImageToUpdate = userImage.get();
+            ItemImage itemImageToUpdate = itemImage.get();
             itemImageToUpdate.setItemPhoto(compressedImage);
 
             itemImageRepository.save(itemImageToUpdate);

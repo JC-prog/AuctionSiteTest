@@ -21,6 +21,6 @@ public class ItemImage {
     private Integer itemId;
 
     @Lob
-    @Column(name = "item_photo", columnDefinition = "BLOB")
+    @Column(name = "item_photo", columnDefinition = "LONGBLOB")
     private byte[] itemPhoto;
 }

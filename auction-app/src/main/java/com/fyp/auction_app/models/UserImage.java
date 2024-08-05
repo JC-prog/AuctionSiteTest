@@ -21,10 +21,10 @@ public class UserImage {
     private String username;
 
     @Lob
-    @Column(name = "profile_photo", columnDefinition = "BLOB")
+    @Column(name = "profile_photo", columnDefinition = "LONGBLOB")
     private byte[] profilePhoto;
 
     @Lob
-    @Column(name = "banner_photo", columnDefinition = "BLOB")
+    @Column(name = "banner_photo", columnDefinition = "LONGBLOB")
     private byte[] bannerImage;
 }
