@@ -162,6 +162,21 @@ public class ItemController {
         if (existingItem.isPresent()) {
             Item itemToUpdate = existingItem.get();
 
+            if(itemToUpdate.getStatus() == ListingStatus.LISTED)
+            {
+                return new ResponseEntity<>("Cannot Launch Listed Items", HttpStatus.BAD_REQUEST);
+            }
+
+            if(itemToUpdate.getStatus() == ListingStatus.EXPIRED)
+            {
+                return new ResponseEntity<>("Cannot Launch Sold Items", HttpStatus.BAD_REQUEST);
+            }
+
+            if(itemToUpdate.getStatus() == ListingStatus.SUSPENDED)
+            {
+                return new ResponseEntity<>("Cannot Launch Suspended Items", HttpStatus.BAD_REQUEST);
+            }
+
             LocalDateTime launchDate = LocalDateTime.now();
             itemToUpdate.setLaunchDate(Date.from(launchDate.atZone(ZoneId.systemDefault()).toInstant()));
             itemToUpdate.setStatus(ListingStatus.LISTED);

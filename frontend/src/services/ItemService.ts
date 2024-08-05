@@ -199,7 +199,7 @@ export const fetchItemsByUsername = async (username: string, page: number = 0): 
 };
 
 // Launch Item
-export const launchItem = async (itemId: number): Promise<Item[]> => {
+export const launchItem = async (itemId: number) => {
     
     const apiUrl = `/api/item/launch`;
     const payload = { itemId };
@@ -210,13 +210,13 @@ export const launchItem = async (itemId: number): Promise<Item[]> => {
     };
     
     try {
-        const response: AxiosResponse<Item[]> = await baseUrl.post(apiUrl, payload, config);
+        const response: AxiosResponse = await baseUrl.post(apiUrl, payload, config);
 
         if (response.status !== 200) {
             throw new Error('Network response was not ok');
         }
 
-        return response.data;
+        return response;
 
     } catch (error) {
         throw error;

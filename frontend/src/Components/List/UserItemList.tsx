@@ -42,12 +42,20 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
   // Launch Listing
   const launchListing = async (itemId: number) => {
     try {
-      await launchItem(itemId);
-      toast.success('Item Launched!', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      setTimeout(() => window.location.reload(), 2000);
+      const response = await launchItem(itemId);
+      console.log(response);
+  
+      if (response.status === 200) {
+        toast.success(response.data.message || 'Item launched successfully!', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      } else {
+        toast.error(response.data.message || 'Failed to launch item.', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
     } catch (error) {
       console.error('Error:', error);
       toast.error('Failed to Launch. Please try again later.', {
