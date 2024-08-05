@@ -25,6 +25,10 @@ const BidConfirmPopup: React.FC<BidConfirmPopupProps> = ({ itemId, username, onC
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 2000,
                 });
+
+                setTimeout(() => {
+                    window.location.reload();
+                  }, 2000);
             } else {
                 toast.error(response.data, {
                     position: toast.POSITION.TOP_RIGHT,

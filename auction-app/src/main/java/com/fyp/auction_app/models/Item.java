@@ -46,12 +46,11 @@ public class Item {
 
     private Date launchDate;
 
+    private String bidWinner;
+
     @Enumerated(EnumType.STRING)
     private ListingStatus status;
 
     private Boolean isActive;
-
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Bid> bids;
 
 }

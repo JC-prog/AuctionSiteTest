@@ -31,40 +31,9 @@ public class BidService {
         return bidRepository.save(bid);
     }
 
-    public List<BidDTO> findBidsByUsername(String username) {
+    public List<Bid> findBidsByUsername(String username) {
         List<Bid> bids = bidRepository.findByBidderName(username);
-        return bids.stream().map(this::convertToDTO).collect(Collectors.toList());
-    }
-
-    private BidDTO convertToDTO(Bid bid) {
-        Item item = bid.getItem();
-
-        ItemDTO itemDTO = ItemDTO.builder()
-                .itemId(item.getItemId())
-                .itemTitle(item.getItemTitle())
-                .itemCategory(item.getItemCategory())
-                .itemCondition(item.getItemCondition())
-                .description(item.getDescription())
-                .sellerName(item.getSellerName())
-                .auctionType(item.getAuctionType())
-                .endDate(item.getEndDate())
-                .currentPrice(item.getCurrentPrice())
-                .startPrice(item.getStartPrice())
-                .createAt(item.getCreateAt())
-                .duration(item.getDuration())
-                .launchDate(item.getLaunchDate())
-                .status(item.getStatus())
-                .isActive(item.getIsActive())
-                .build();
-
-        return BidDTO.builder()
-                .bidId(bid.getBidId())
-                .bidderName(bid.getBidderName())
-                .bidAmount(bid.getBidAmount())
-                .bidTimestamp(bid.getBidTimestamp())
-                .isActive(bid.getIsActive())
-                .item(itemDTO)
-                .build();
+        return bids;
     }
 
     public Long getBidCountByItemId(Integer itemId) {

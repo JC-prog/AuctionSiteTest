@@ -109,6 +109,19 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
         return <div className="text-red-500 text-center">Error: {error.message}</div>;
     }
 
+    const renderStatus = (item) => {
+        switch (item.status) {
+          case "CREATED":
+            return <p>Not Started</p>;
+          case "SOLD":
+            return <p>Sold to {item.bidWinner}</p>;
+          case "LISTED":
+            return <Timer endTime={item.endDate} />;
+          default:
+            return <p>Unknown Status</p>;
+        };
+      };
+
     return (
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
             <div className="grid gap-8">
@@ -140,7 +153,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                             </div>
                             <div className="flex justify-between">
                                 <p className="font-medium">Time left</p>
-                                <Timer endTime={item?.endDate} />
+                                {renderStatus(item)}
                             </div>
                             <div className="flex justify-between">
                                 <p className="font-medium">Bids</p>

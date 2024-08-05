@@ -29,7 +29,5 @@ public class Bid {
 
     private Boolean isActive;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", nullable = false)
-    private Item item;
+    private Integer itemId;
 }

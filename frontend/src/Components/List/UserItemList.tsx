@@ -70,6 +70,20 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
     // Implement your delete functionality here
   };
 
+
+  const renderStatus = (item) => {
+    switch (item.status) {
+      case "CREATED":
+        return <p>Not Started</p>;
+      case "SOLD":
+        return <p>Sold</p>;
+      case "LISTED":
+        return <Timer endTime={item.endDate} />;
+      default:
+        return <p>Unknown Status</p>;
+    };
+  };
+
   return (
     <div className="mb-8 lg:mb-0">
       <div className="bg-white p-4 rounded-lg shadow-lg">
@@ -113,11 +127,7 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
                 <p className="text-sm text-gray-500 px-1">${item.currentPrice}</p>
               </div>
               <div className="col-span-2">
-                {item.status === "CREATED" ? (
-                  <p>Not Started</p>
-                ) : (
-                  <Timer endTime={item.endDate} />
-                )}
+                {renderStatus(item)}
               </div>
               <div className="col-span-1 flex items-center">
                 {item.status}

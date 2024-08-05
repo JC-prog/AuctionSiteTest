@@ -34,8 +34,8 @@ public class BidController {
     private ItemService itemService;
 
     @GetMapping("/{username}")
-    public ResponseEntity<List<BidDTO>> getUserBids(@PathVariable("username") String username) {
-        List<BidDTO> bids = bidService.findBidsByUsername(username);
+    public ResponseEntity<List<Bid>> getUserBids(@PathVariable("username") String username) {
+        List<Bid> bids = bidService.findBidsByUsername(username);
 
         return new ResponseEntity<>(bids, HttpStatus.OK);
     }
@@ -67,7 +67,7 @@ public class BidController {
             bid.setBidderName(bidRequest.getUsername());
             bid.setBidTimestamp(new Date());
             bid.setIsActive(Boolean.TRUE);
-            bid.setItem(item);
+            bid.setItemId(item.getItemId());
             bidService.createBid(bid);
 
             return new ResponseEntity<>("Bid created successfully", HttpStatus.OK);
