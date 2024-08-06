@@ -131,7 +131,7 @@ function App() {
               <Route path="/item/edit/:itemId" element={<ItemEditPage />} />
               <Route path="/item/:itemId" element={<ItemPage user={user} />} />
               <Route path="/analytics" element={<AnalyticsPage />} />
-              <Route path="/transactions" element={<TransactionPage items={ items }/>} />
+              <Route path="/transactions" element={<TransactionPage user={user}/>} />
               <Route path="/feedback" element={<FeedbackPage user={user}/>} />
               
             </Routes>

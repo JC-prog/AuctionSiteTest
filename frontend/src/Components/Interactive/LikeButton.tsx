@@ -3,13 +3,12 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { addItemToWatchlist, removeItemFromWatchlist } from '../../services/WatchListService';
 
 type LikeButtonProps = {
-  imageUrl: string;
   isLiked: boolean;
   username: string;
   itemId: number;
 };
 
-const LikeButton: React.FC<LikeButtonProps> = ({ imageUrl, isLiked, itemId, username }) => {
+const LikeButton: React.FC<LikeButtonProps> = ({ isLiked, itemId, username }) => {
   const [liked, setLiked] = useState<boolean>(isLiked);
 
   const toggleLike = async () => {
@@ -27,7 +26,6 @@ const LikeButton: React.FC<LikeButtonProps> = ({ imageUrl, isLiked, itemId, user
 
   return (
     <div className="relative">
-      <img src={imageUrl} alt="Item" className="w-full h-auto" />
       <button
         onClick={toggleLike}
         className="absolute top-2 right-2 focus:outline-none"
