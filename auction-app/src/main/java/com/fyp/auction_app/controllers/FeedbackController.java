@@ -1,6 +1,5 @@
 package com.fyp.auction_app.controllers;
 
-import com.fyp.auction_app.models.DTO.BidDTO;
 import com.fyp.auction_app.models.Feedback;
 import com.fyp.auction_app.models.Requests.CreateFeedbackRequest;
 import com.fyp.auction_app.services.FeedbackService;
@@ -37,7 +36,7 @@ public class FeedbackController {
         Feedback feedbackToCreate = new Feedback();
         feedbackToCreate.setUsername(request.getUsername());
         feedbackToCreate.setMessage(request.getMessage());
-        feedbackToCreate.setFeedback_timestamp(new Date());
+        feedbackToCreate.setFeedbackTimestamp(new Date());
 
         feedbackService.createFeedback(feedbackToCreate);
 

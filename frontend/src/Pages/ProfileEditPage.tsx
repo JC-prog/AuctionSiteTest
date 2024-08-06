@@ -264,7 +264,7 @@ const ProfileEditPage = () => {
             Profile Picture
           </label>
           <img
-            src={preview || "/upload-photo.png"}
+            src={preview || "/profile-pic-placeholder.jpg"}
             alt="Profile"
             className="w-32 h-32 rounded-full cursor-pointer object-cover"
             onClick={triggerFileInput}

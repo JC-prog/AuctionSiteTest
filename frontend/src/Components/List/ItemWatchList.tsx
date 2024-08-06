@@ -7,6 +7,7 @@ import Timer from '../Timer'; // Assuming Timer component is already defined
 import api from '../../config/Api';
 import Item from '../../interfaces/IItem';
 import { removeItemFromWatchlist } from '../../services/WatchListService';
+import { FaHeart } from 'react-icons/fa';
 
 type ItemListProps = {
   listTitle: string;
@@ -68,32 +69,32 @@ const ItemWatchList: React.FC<ItemListProps> = ({ listTitle, items, username }) 
 
   return (
     <div className="mb-8 lg:mb-0">
-      <h2 className="text-2xl font-semibold mb-4">{listTitle}</h2>
-
-      <div className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">
-        <div className="grid grid-cols-12 items-center py-4 border-b border-gray-200">
-          <div className="col-span-1 text-center">
-            <span className="text-gray-500">Index</span>
-          </div>
-          <div className="col-span-1">
-            <span></span>
-          </div>
-          <div className="col-span-4">
-            <span>Item</span>
-          </div>
-          <div className="col-span-3">
-            <span>Status</span>
-          </div>
-          <div className="col-span-2">
-            <span>Price</span>
-          </div>
-          <div className="col-span-1 flex justify-center">
-            <span>Action</span>
-          </div>
-        </div>
-      </div>
+      <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
+        <FaHeart className="text-red-600" /> {listTitle}
+      </h2>
 
       <div className="bg-white p-4 rounded-lg shadow-lg">
+        <div className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">
+          <div className="grid grid-cols-12 items-center py-4 border-b border-gray-200">
+            <div className="col-span-1 text-center">
+              <span className="text-gray-500">Index</span>
+            </div>
+            <div className="col-span-1"></div>
+            <div className="col-span-4">
+              <span className="text-gray-700 font-semibold">Item</span>
+            </div>
+            <div className="col-span-3">
+              <span className="text-gray-700 font-semibold">Status</span>
+            </div>
+            <div className="col-span-2">
+              <span className="text-gray-700 font-semibold">Price</span>
+            </div>
+            <div className="col-span-1 flex justify-center">
+              <span className="text-gray-700 font-semibold">Action</span>
+            </div>
+          </div>
+        </div>
+
         {items.map((item, index) => (
           <div key={item.itemId} className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">
             <div className="grid grid-cols-12 items-center py-4 border-b border-gray-200">
@@ -114,7 +115,7 @@ const ItemWatchList: React.FC<ItemListProps> = ({ listTitle, items, username }) 
               <div className="col-span-2 flex items-center space-x-2">
                 <IoMdTrendingUp className="text-green-600" />
                 <span className="text-gray-500">${item.currentPrice}</span>
-                <p className="text-xs">Since Last Added</p>
+                <p className="text-xs text-gray-400">Since Last Added</p>
               </div>
               <div className="col-span-1 flex justify-center">
                 <button

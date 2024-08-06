@@ -1,12 +1,12 @@
 package com.fyp.auction_app.controllers;
 
 import com.fyp.auction_app.models.Bid;
-import com.fyp.auction_app.models.DTO.BidDTO;
 import com.fyp.auction_app.models.Enums.ListingStatus;
 import com.fyp.auction_app.models.Item;
 import com.fyp.auction_app.models.Requests.BidRequest;
 import com.fyp.auction_app.models.Requests.EditItemStatusRequest;
 import com.fyp.auction_app.models.Requests.GetUserBidRequest;
+import com.fyp.auction_app.models.Response.FetchBidsResponse;
 import com.fyp.auction_app.models.User;
 import com.fyp.auction_app.services.BidService;
 import com.fyp.auction_app.services.ItemService;
@@ -17,10 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -34,10 +31,26 @@ public class BidController {
     private ItemService itemService;
 
     @GetMapping("/{username}")
-    public ResponseEntity<List<Bid>> getUserBids(@PathVariable("username") String username) {
+    public ResponseEntity<List<FetchBidsResponse>> getUserBids(@PathVariable("username") String username) {
         List<Bid> bids = bidService.findBidsByUsername(username);
 
-        return new ResponseEntity<>(bids, HttpStatus.OK);
+        List<FetchBidsResponse> userBids = new ArrayList<>();
+
+        for (Bid bid : bids){
+            Optional<Item> itemToAdd = itemService.findItemById(bid.getItemId());
+
+            if (itemToAdd.isPresent()) {
+                FetchBidsResponse bidsResponseToAdd = new FetchBidsResponse();
+                bidsResponseToAdd.setBidAmount(bid.getBidAmount());
+                bidsResponseToAdd.setItemId(itemToAdd.get().getItemId());
+                bidsResponseToAdd.setItemTitle(itemToAdd.get().getItemTitle());
+                bidsResponseToAdd.setItemStatus(String.valueOf(itemToAdd.get().getStatus()));
+
+                userBids.add(bidsResponseToAdd);
+            }
+        }
+
+        return new ResponseEntity<>(userBids, HttpStatus.OK);
     }
 
     @PostMapping("")
@@ -65,6 +78,7 @@ public class BidController {
 
             Bid bid = new Bid();
             bid.setBidderName(bidRequest.getUsername());
+            bid.setBidAmount(bidRequest.getBidAmount());
             bid.setBidTimestamp(new Date());
             bid.setIsActive(Boolean.TRUE);
             bid.setItemId(item.getItemId());

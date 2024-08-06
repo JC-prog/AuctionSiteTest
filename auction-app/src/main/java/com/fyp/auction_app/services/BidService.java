@@ -1,8 +1,6 @@
 package com.fyp.auction_app.services;
 
 import com.fyp.auction_app.models.Bid;
-import com.fyp.auction_app.models.DTO.BidDTO;
-import com.fyp.auction_app.models.DTO.ItemDTO;
 import com.fyp.auction_app.models.Item;
 import com.fyp.auction_app.models.User;
 import com.fyp.auction_app.repository.BidRepository;

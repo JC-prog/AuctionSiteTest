@@ -52,7 +52,9 @@ const AdminUserList: React.FC<UserListProps> = ({ listTitle, users = [] }) => {
         await activateUser(username);
         toast.success('User activated successfully.');
       }
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.error(`Error ${action}ing user:`, error);
       toast.error(`Failed to ${action} user. Please try again.`);
@@ -63,7 +65,9 @@ const AdminUserList: React.FC<UserListProps> = ({ listTitle, users = [] }) => {
     try {
       await resetPassword(username);
       toast.success('User reset successfully.');
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);;
     } catch (error) {
       console.error('Error resetting user:', error);
       toast.error('Failed to reset user. Please try again.');

@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FiEdit, FiUpload } from 'react-icons/fi';
+import { FaFolder } from "react-icons/fa6";
 
 // Api Function Call
 import { fetchItemsByUsername } from '../services/ItemService';
@@ -73,7 +74,9 @@ const ItemsTable: React.FC<AuthProps> = ({ isAuth, user }) => {
 
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <h1 className="text-2xl font-semibold mb-4">My Listings</h1>
+        <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
+            <FaFolder className="text-blue-600" /> My Listings
+        </h2>
         <button
           className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600 mb-2"
           onClick={navigateToCreateListing}

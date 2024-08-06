@@ -22,7 +22,6 @@ import LoginPage from './Pages/LoginPage';
 import SignupPage from './Pages/SignupPage';
 
 // Navigation Page
-import MyBids from './Pages/MyBids';
 import MyWatchlist from './Pages/MyWatchlist';
 import MyItemListing from './Pages/MyItemListing';
 
@@ -43,6 +42,8 @@ import AdminUserManagementPage from './Pages/AdminPages/AdminUserManagementPage'
 import AdminListingManagementPage from './Pages/AdminPages/AdminListingManagementPage';
 import AdminSystemManagementPage from './Pages/AdminPages/AdminSystemManagementPage';
 import AdminFeedbackManagementPage from './Pages/AdminPages/AdminFeedbackManagementPage';
+import MyNotificationPage from './Pages/MyNotificationPage';
+import MyBidsPage from './Pages/MyBids';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -120,7 +121,8 @@ function App() {
               <Route path="/search" element={<SearchPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
-              <Route path="/my-bids" element={<MyBids user={user}/>} />
+              <Route path="/notification" element={<MyNotificationPage user={user} />} />
+              <Route path="/my-bids" element={<MyBidsPage user={user}/>} />
               <Route path="/watchlist" element={<MyWatchlist user={user}/>} />
               <Route path="/my-listings" element={<MyItemListing user={user} />} />
               <Route path="/user/:username" element={<UserProfile user={user} />} />

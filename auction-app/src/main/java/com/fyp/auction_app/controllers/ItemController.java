@@ -267,4 +267,19 @@ public class ItemController {
         }
     }
 
+    @GetMapping("/api/item/price/{itemId}")
+    public ResponseEntity<Double> getItemPrice(@PathVariable Integer itemId)
+    {
+        Optional<Item> itemToGet = itemService.findItemById(itemId);
+
+        if(itemToGet.isPresent())
+        {
+            Item itemBidRejected= itemToGet.get();
+
+            return new ResponseEntity<>(itemToGet.get().getCurrentPrice(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

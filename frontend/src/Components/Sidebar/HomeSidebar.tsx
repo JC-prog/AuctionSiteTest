@@ -16,7 +16,7 @@ import IAuth from "../../interfaces/IAuth";
 const HomeSidebar: React.FC<IAuth> = ({ isAuth, user, role }) => {
     const authMenus = [
         { name: "User", link: `/user/${user ? user : ''}`, icon: AiOutlineUser },
-        { name: "Notifications", link: "/messages", icon: IoMdNotificationsOutline },
+        { name: "Notifications", link: "/notification", icon: IoMdNotificationsOutline },
         { name: "Analytics", link: "/analytics", icon: TbReportAnalytics },
         { name: "My Bids", link: "/my-bids", icon: RiAuctionLine, margin: true },
         { name: "My Listing", link: "/my-listings", icon: FiFolder },

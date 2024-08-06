@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { FiTrash, FiEdit, FiUpload } from 'react-icons/fi';
 import { TiTick } from "react-icons/ti";
 import { MdCancel } from "react-icons/md";
-import { FaStop } from "react-icons/fa";
-import { FaExclamationCircle } from "react-icons/fa";
+import { FaStop, FaExclamationCircle } from "react-icons/fa";
 import { toast } from 'react-toastify';
 
 // Config
@@ -201,8 +200,6 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
                 >
                     <MdCancel className="mr-1" /> Reject
                 </button>
-
-
             </>
         );
       case "LISTED":
@@ -215,21 +212,21 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
                     <FaStop className="mr-1" /> Stop
                 </button>
             </>);
-        case "SUSPENDED":
-            return(
-                <>
-                    <button 
+      case "SUSPENDED":
+        return (
+            <>
+                <button 
                     className="text-yellow-500 hover:text-yellow-700 focus:outline-none flex items-center px-1"
                     onClick={() => handleReject(item.itemId)}
                 >
                     <FaExclamationCircle className="mr-1" /> Appeal
                 </button>
-                </>
-            );
+            </>
+        );
       default:
         return <p></p>;
     };
-  }
+  };
 
   return (
     <div className="mb-8 lg:mb-0">
@@ -248,44 +245,50 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
             <div className="col-span-3">Action</div>
           </div>
         </div>
-
-        {items.map((item, index) => (
-          <div key={item.itemId} className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">
-            <div className="grid grid-cols-12 items-center py-4 border-b border-gray-200">
-              <div className="col-span-1 text-center">
-                <span className="text-gray-500">{index + 1}</span>
+        <div>
+          {items.length > 0 ? (
+            items.map((item, index) => (
+              <div key={item.itemId} className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">
+                <div className="grid grid-cols-12 items-center py-4 border-b border-gray-200">
+                  <div className="col-span-1 text-center">
+                    <span className="text-gray-500">{index + 1}</span>
+                  </div>
+                  <div className="col-span-1">
+                    <img
+                      src={itemImages[item.itemId] || "/image-placeholder.jpeg"} // Fallback image
+                      alt="Item"
+                      className="w-12 h-12 object-cover rounded-md"
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <Link to={`/item/${item.itemId}`} className="block">
+                      <h3 className="text-lg font-medium">{item.itemTitle}</h3>
+                    </Link>
+                  </div>
+                  <div className="col-span-1">
+                    <p className="text-sm text-gray-500 px-1">${item.startPrice}</p>
+                  </div>
+                  <div className="col-span-1">
+                    <p className="text-sm text-gray-500 px-1">${item.currentPrice}</p>
+                  </div>
+                  <div className="col-span-2">
+                    {renderStatus(item)}
+                  </div>
+                  <div className="col-span-1 flex items-center">
+                    {item.status}
+                  </div>
+                  <div className="col-span-3 flex items-center">
+                    {renderActions(item)}
+                  </div>
+                </div>
               </div>
-              <div className="col-span-1">
-                <img
-                  src={itemImages[item.itemId] || "/bike.jpg"} // Fallback image
-                  alt="Item"
-                  className="w-12 h-12 object-cover rounded-md"
-                />
-              </div>
-              <div className="col-span-2">
-                <Link to={`/item/${item.itemId}`} className="block">
-                  <h3 className="text-lg font-medium">{item.itemTitle}</h3>
-                </Link>
-              </div>
-              <div className="col-span-1">
-                <p className="text-sm text-gray-500 px-1">${item.startPrice}</p>
-              </div>
-              <div className="col-span-1">
-                <p className="text-sm text-gray-500 px-1">${item.currentPrice}</p>
-              </div>
-              <div className="col-span-2">
-                {renderStatus(item)}
-              </div>
-              <div className="col-span-1 flex items-center">
-                {item.status}
-              </div>
-              <div className="col-span-3 flex items-center">
-                {renderActions(item)}
-                
-              </div>
+            ))
+          ) : (
+            <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 bg-gray-200 p-4 rounded-lg shadow-lg flex items-center justify-center">
+              <p className="text-lg text-gray-500">No Listing</p>
             </div>
-          </div>
-        ))}
+          )}
+        </div>
       </div>
     </div>
   );

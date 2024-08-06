@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { MdFeedback } from "react-icons/md";
 
 // API Function Calls
 import { createFeedback } from '../services/FeedbackService';
@@ -52,7 +53,9 @@ const FeedbackPage: React.FC<AuthProps> = ({ user }) => {
 
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-      <h2 className="text-2xl font-semibold">Platform Feedback Form</h2>
+      <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
+            <MdFeedback className="text-blue-600" /> Platform Feedback Form
+        </h2>
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
         <div>
           <label htmlFor="message" className="block text-sm font-medium text-gray-700">

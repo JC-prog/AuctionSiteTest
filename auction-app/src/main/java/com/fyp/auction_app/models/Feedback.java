@@ -24,5 +24,5 @@ public class Feedback {
 
     private String message;
 
-    private Date feedback_timestamp;
+    private Date feedbackTimestamp;
 }
