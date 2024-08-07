@@ -156,8 +156,8 @@ const ProfilePage: React.FC = () => {
     return (
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
             <div className="relative">
-                <img  src={bannerImage || "/banner.jpeg"} alt="Background" className="w-full h-96 object-cover" />
-                <div className="absolute top-0 left-0 w-full h-96 bg-white opacity-50"></div>
+                <img  src={bannerImage || "/banner.jpeg"} alt="Background" className="w-full h-48 object-cover" />
+                <div className="absolute top-0 left-0 w-full h-48 bg-white opacity-50"></div>
             </div>
 
             <div className="p-6">
@@ -168,7 +168,7 @@ const ProfilePage: React.FC = () => {
                     <div className="lg:w-1/2">
                         <h2 className="text-2xl font-semibold mb-4">Seller </h2>
                         <div className="bg-white p-4 rounded-lg shadow-lg flex items-center">
-                            <img src={userImage || "/upload-photo.png"} alt="Liked Song" className="w-12 h-12 object-cover mr-4" />
+                            <img src={userImage || "/upload-photo.png"} alt="Liked Song" className="w-12 h-12 rounded-full object-cover mr-4" />
                             <div>
                                 <h3 className="text-lg font-medium">{user?.username}</h3>
                                 <p className="text-sm text-gray-500">{user?.accountType}</p>

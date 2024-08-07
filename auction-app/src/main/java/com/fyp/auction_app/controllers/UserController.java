@@ -1,11 +1,9 @@
 package com.fyp.auction_app.controllers;
 
 import com.fyp.auction_app.models.Enums.UserStatus;
-import com.fyp.auction_app.models.Requests.ChangeUserPasswordRequest;
 import com.fyp.auction_app.models.Requests.EditUserRequest;
 import com.fyp.auction_app.models.Requests.EditUserStatusRequest;
 import com.fyp.auction_app.models.User;
-import com.fyp.auction_app.models.UserImage;
 import com.fyp.auction_app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,31 +24,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/create")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-
-        User createdUser = userService.createUser(user);
-
-        return new ResponseEntity<>(createdUser, HttpStatus.OK);
-    }
-
-    @GetMapping("/allUsers")
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.findAll();
-
-        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<Page<User>> getItems(
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size
-    ) {
-        Page<User> users = userService.findUsers(page, size);
-
-        return new ResponseEntity<>(users, HttpStatus.OK);
-    }
-
+    // Get ONE User based on Username
     @GetMapping("/{username}")
     public ResponseEntity<User> getUser(@PathVariable("username") String username) {
         Optional<User> user = userService.findUserByUsername(username);
@@ -62,69 +36,27 @@ public class UserController {
         }
     }
 
-    @GetMapping("/get-role/{username}")
-    public ResponseEntity<String> getUserRole(@PathVariable("username") String username) {
-        Optional<User> user = userService.findUserByUsername(username);
+    // Get Paginated All Users
+    @GetMapping("/all")
+    public ResponseEntity<Page<User>> getItems(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        Page<User> users = userService.findUsers(page, size);
 
-        if (user.isPresent()) {
-            return new ResponseEntity<>(user.get().getRole().toString(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @PostMapping("/suspend")
-    public ResponseEntity<String> suspendUser(@RequestBody EditUserStatusRequest user)
-    {
-        Optional<User> existingUser = userService.findUserByUsername(user.getUsername());
+    // Create User
+    @PostMapping("/create")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
 
-        if (existingUser.isPresent()) {
-            User userToSuspend = existingUser.get();
+        User createdUser = userService.createUser(user);
 
-            userToSuspend.setStatus(UserStatus.valueOf("SUSPENDED"));
-            userService.updateUser(userToSuspend);
-
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(createdUser, HttpStatus.OK);
     }
 
-    @PostMapping("/activate")
-    public ResponseEntity<String> activateUser(@RequestBody EditUserStatusRequest user)
-    {
-        Optional<User> existingUser = userService.findUserByUsername(user.getUsername());
-
-        if (existingUser.isPresent()) {
-            User userToActivate = existingUser.get();
-
-            userToActivate.setStatus(UserStatus.valueOf("ACTIVE"));
-            userService.updateUser(userToActivate);
-
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PostMapping("/deactivate")
-    public ResponseEntity<String> deactivateUser(@RequestBody EditUserStatusRequest user)
-    {
-        Optional<User> existingUser = userService.findUserByUsername(user.getUsername());
-
-        if (existingUser.isPresent()) {
-            User userToDeactivate = existingUser.get();
-
-            userToDeactivate.setStatus(UserStatus.DEACTIVATED);
-
-            userService.updateUser(userToDeactivate);
-
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
+    // Edit User
     @PostMapping("/edit")
     public ResponseEntity<String> updateUser(@RequestBody EditUserRequest user) {
         Optional<User> existingUser = userService.findUserByUsername(user.getUsername());
@@ -143,47 +75,88 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("api/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("id") Integer userID) {
-        userService.deleteById(userID);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    // Get User Role
+    @GetMapping("/get-role/{username}")
+    public ResponseEntity<String> getUserRole(@PathVariable("username") String username) {
+        Optional<User> user = userService.findUserByUsername(username);
+
+        if (user.isPresent()) {
+            return new ResponseEntity<>(user.get().getRole().toString(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
+    // Activate User
+    @PostMapping("/activate")
+    public ResponseEntity<String> activateUser(@RequestBody EditUserStatusRequest user)
+    {
+        Optional<User> existingUser = userService.findUserByUsername(user.getUsername());
+
+        if (existingUser.isPresent()) {
+            User userToActivate = existingUser.get();
+
+            userToActivate.setStatus(UserStatus.valueOf("ACTIVE"));
+            userService.updateUser(userToActivate);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // Deactivate User
+    @PostMapping("/deactivate")
+    public ResponseEntity<String> deactivateUser(@RequestBody EditUserStatusRequest user)
+    {
+        Optional<User> existingUser = userService.findUserByUsername(user.getUsername());
+
+        if (existingUser.isPresent()) {
+            User userToDeactivate = existingUser.get();
+
+            userToDeactivate.setStatus(UserStatus.DEACTIVATED);
+
+            userService.updateUser(userToDeactivate);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // Suspend User
+    @PostMapping("/suspend")
+    public ResponseEntity<String> suspendUser(@RequestBody EditUserStatusRequest user)
+    {
+        Optional<User> existingUser = userService.findUserByUsername(user.getUsername());
+
+        if (existingUser.isPresent()) {
+            User userToSuspend = existingUser.get();
+
+            userToSuspend.setStatus(UserStatus.valueOf("SUSPENDED"));
+            userService.updateUser(userToSuspend);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // Get User Profile Photo
     @GetMapping("/photo/{username}")
     public ResponseEntity<byte[]> getUserImage(@PathVariable String username) {
-        Optional<UserImage> userImage = userService.getImage(username);
+        byte[] profilePhoto = userService.getProfilePhoto(username);
 
-        if(userImage.isPresent())
-        {
-            byte[] profilePhoto = userImage.get().getProfilePhoto();
-
-            if (profilePhoto != null) {
-                return ResponseEntity.ok()
-                        .header("Content-Type", "image/jpeg")
-                        .body(profilePhoto);
-            }
+        if (profilePhoto != null) {
+            return ResponseEntity.ok()
+                    .header("Content-Type", "image/jpeg")
+                    .body(profilePhoto);
         }
 
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/banner/{username}")
-    public ResponseEntity<byte[]> getUserBanner(@PathVariable String username) {
-        Optional<UserImage> userImage = userService.getImage(username);
-
-        if(userImage.isPresent()) {
-            byte[] bannerImage = userImage.get().getBannerImage();
-
-            if (bannerImage != null) {
-                return ResponseEntity.ok()
-                        .header("Content-Type", "image/jpeg")
-                        .body(bannerImage);
-            }
-        }
-
-        return ResponseEntity.notFound().build();
-    }
-
+    // Upload User Profile Photo
     @PostMapping("/upload-photo/{username}")
     public ResponseEntity<String> uploadPhoto(@PathVariable String username, @RequestParam("file") MultipartFile file)
     {
@@ -195,6 +168,21 @@ public class UserController {
         }
     }
 
+    // Get User Banner
+    @GetMapping("/banner/{username}")
+    public ResponseEntity<byte[]> getUserBanner(@PathVariable String username) {
+        byte[] bannerImage = userService.findBannerImage(username);
+
+        if (bannerImage != null) {
+            return ResponseEntity.ok()
+                    .header("Content-Type", "image/jpeg")
+                    .body(bannerImage);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    // Upload User Banner
     @PostMapping("/upload-banner/{username}")
     public ResponseEntity<String> uploadBanner(@PathVariable String username, @RequestParam("file") MultipartFile file)
     {

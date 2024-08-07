@@ -28,12 +28,26 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/api/item")
 public class ItemController {
 
     @Autowired
     private ItemService itemService;
 
-    @GetMapping("api/items")
+    // Get ONE Item based on itemId
+    @GetMapping("/{itemId}")
+    public ResponseEntity<Item> getItemById(@PathVariable Integer itemId) {
+        Optional<Item> item = itemService.findItemById(itemId);
+
+        if(item.isPresent())
+        {
+            return new ResponseEntity<>(item.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    // Get Paginated All Items
+    @GetMapping("/all")
     public ResponseEntity<Page<Item>> getItems(
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(value = "size", defaultValue = "10") int size
@@ -43,31 +57,35 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
-    @GetMapping("api/created-items/{username}")
+    // Get Items Filtered By Seller
+    @GetMapping("/seller")
+    public ResponseEntity<List<Item>> searchItems(
+            @RequestParam(value = "sellerName") String sellerName
+    ) {
+        List<Item> items = itemService.findItemsBySeller(sellerName);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    // Get Paginated All Items Recently Listed
+    @GetMapping("/recent/all")
+    public ResponseEntity<Page<Item>> getRecentItems(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        Page<Item> items = itemService.findItems(page, size);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    // Get Paginated Items Created By User
+    @GetMapping("/created/{username}")
     public ResponseEntity<Page<Item>> getUserCreatedItems(
             @PathVariable String username,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size
     ) {
         Page<Item> items = itemService.findCreatedItems(username, page, size);
-
-        return new ResponseEntity<>(items, HttpStatus.OK);
-    }
-
-
-    @GetMapping("api/items/all")
-    public ResponseEntity<Page<Item>> getRecentItems() {
-
-        Page<Item> items = itemService.findItems(0, 50);
-
-        return new ResponseEntity<>(items, HttpStatus.OK);
-    }
-
-    @GetMapping("api/items/seller")
-    public ResponseEntity<List<Item>> searchItems(
-            @RequestParam(value = "sellerName") String sellerName
-    ) {
-        List<Item> items = itemService.findItemsBySeller(sellerName);
 
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
@@ -92,7 +110,7 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
-    @GetMapping("api/items/search")
+    @GetMapping("/search")
     public ResponseEntity<Page<Item>> searchItems(
         @RequestParam(value = "keyword") String keyword,
         @RequestParam(value = "page", defaultValue = "0") int page,
@@ -103,7 +121,7 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
-    @PostMapping("api/item/create")
+    @PostMapping("/create")
     public ResponseEntity<Integer> createItem(@RequestBody Item item) {
 
         item.setStatus(ListingStatus.CREATED);
@@ -114,7 +132,7 @@ public class ItemController {
         return new ResponseEntity<>(createdItem.getItemId(), HttpStatus.OK);
     }
 
-    @PostMapping("api/item/suspend")
+    @PostMapping("/suspend")
     public ResponseEntity<Item> suspendUser(@RequestBody EditItemStatusRequest item)
     {
         Optional<Item> existingItem = itemService.findItemByItemId(item.getItemId());
@@ -131,7 +149,7 @@ public class ItemController {
         }
     }
 
-    @PostMapping("api/item/activate")
+    @PostMapping("/activate")
     public ResponseEntity<Item> activateItem(@RequestBody EditItemStatusRequest item)
     {
         Optional<Item> existingItem = itemService.findItemByItemId(item.getItemId());
@@ -148,12 +166,7 @@ public class ItemController {
         }
     }
 
-    @GetMapping("api/item/{itemID}")
-    public Optional<Item> getItemById(@PathVariable Integer itemID) {
-        return itemService.findItemById(itemID);
-    }
-
-    @PutMapping("api/item/{itemID}")
+    @PutMapping("/{itemID}")
     public ResponseEntity<Item> updateItem(@PathVariable Integer itemID, @RequestBody Item item) {
         Optional<Item> existingUser = itemService.findItemById(itemID);
 
@@ -166,7 +179,7 @@ public class ItemController {
         }
     }
 
-    @PostMapping("api/item/launch")
+    @PostMapping("/launch")
     public ResponseEntity<String> launchItem(@RequestBody LaunchListingRequest launchRequest) {
         Optional<Item> existingItem = itemService.findItemById(launchRequest.getItemId());
 
@@ -208,18 +221,18 @@ public class ItemController {
         }
     }
 
-    @DeleteMapping("api/item/{itemId}")
+    @DeleteMapping("/{itemId}")
     public ResponseEntity<Void> deleteUser(@PathVariable("itemID") Integer itemID) {
         itemService.deleteById(itemID);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/api/item/image/{itemId}")
+    @GetMapping("/image/{itemId}")
     public ResponseEntity<byte[]> getItemImage(@PathVariable Integer itemId) {
-        Optional<ItemImage> itemImage = itemService.getImage(itemId);
+        Optional<Item> item = itemService.findItemById(itemId);
 
-        if(itemImage.isPresent()) {
-            byte[] itemPhoto = itemImage.get().getItemPhoto();
+        if(item.isPresent()) {
+            byte[] itemPhoto = item.get().getItemPhoto();
 
             if (itemPhoto != null) {
                 return ResponseEntity.ok()
@@ -231,7 +244,7 @@ public class ItemController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/api/item/upload-image/{itemId}")
+    @PostMapping("/upload-image/{itemId}")
     public ResponseEntity<String> uploadPhoto(@PathVariable Integer itemId, @RequestParam("file") MultipartFile file)
     {
         try {
@@ -242,7 +255,7 @@ public class ItemController {
         }
     }
 
-    @PostMapping("/api/item/accept-bid/{itemId}")
+    @PostMapping("/accept-bid/{itemId}")
     public ResponseEntity<String> acceptBid(@PathVariable Integer itemId)
     {
         Optional<Item> itemToAccept = itemService.findItemById(itemId);
@@ -260,7 +273,7 @@ public class ItemController {
         }
     }
 
-    @PostMapping("/api/item/reject-bid/{itemId}")
+    @PostMapping("/reject-bid/{itemId}")
     public ResponseEntity<String> rejectBid(@PathVariable Integer itemId)
     {
         Optional<Item> itemToReject = itemService.findItemById(itemId);
@@ -278,7 +291,7 @@ public class ItemController {
         }
     }
 
-    @GetMapping("/api/item/price/{itemId}")
+    @GetMapping("/price/{itemId}")
     public ResponseEntity<Double> getItemPrice(@PathVariable Integer itemId)
     {
         Optional<Item> itemToGet = itemService.findItemById(itemId);

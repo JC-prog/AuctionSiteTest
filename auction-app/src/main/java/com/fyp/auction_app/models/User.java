@@ -40,6 +40,14 @@ public class User implements UserDetails {
 
     private String address;
 
+    @Lob
+    @Column(name = "profile_photo", columnDefinition = "LONGBLOB")
+    private byte[] profilePhoto;
+
+    @Lob
+    @Column(name = "banner_photo", columnDefinition = "LONGBLOB")
+    private byte[] bannerImage;
+
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 

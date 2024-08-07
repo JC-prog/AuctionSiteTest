@@ -36,7 +36,7 @@ const SurveyPopup: React.FC<SurveyPopupProps> = ({ onClose }) => {
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
-        <h2 className="text-xl font-bold mb-4">We value your feedback!</h2>
+        <h2 className="text-xl font-bold mb-4">Let us enhance your experience!</h2>
         <form>
           <div className="mb-4">
             <label className="block font-bold mb-2">What type of products are you most interested in?</label>

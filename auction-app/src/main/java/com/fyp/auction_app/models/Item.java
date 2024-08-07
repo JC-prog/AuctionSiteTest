@@ -48,6 +48,10 @@ public class Item {
 
     private String bidWinner;
 
+    @Lob
+    @Column(name = "item_photo", columnDefinition = "LONGBLOB")
+    private byte[] itemPhoto;
+
     @Enumerated(EnumType.STRING)
     private ListingStatus status;
 

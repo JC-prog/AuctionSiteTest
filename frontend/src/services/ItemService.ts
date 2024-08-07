@@ -59,7 +59,7 @@ export const fetchItems = async (page: number = 0): Promise<IItem[]> => {
         throw new Error('No access token found');
       }
   
-      const response: AxiosResponse<PaginatedResponse> = await baseUrl.get(`/api/items?page=${page}`, {
+      const response: AxiosResponse<PaginatedResponse> = await baseUrl.get(`/api/item?page=${page}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
         },
@@ -110,7 +110,7 @@ export const fetchItemByItemId = async (itemId: string): Promise<Item> => {
         throw new Error('No access token found');
       }
   
-      const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/items/search?keyword=${keyword}`, {
+      const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/item/search?keyword=${keyword}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
         },
@@ -134,7 +134,7 @@ export const fetchItemsByCategory = async (page: number = 0): Promise<Item[]> =>
       throw new Error('No access token found');
     }
 
-    const response: AxiosResponse<IItem[]> = await baseUrl.get(`/api/items?page=${page}`, {
+    const response: AxiosResponse<IItem[]> = await baseUrl.get(`/api/item?page=${page}`, {
       headers: {
         Authorization: 'Bearer ' + accessToken,
       },
@@ -158,7 +158,7 @@ export const fetchItemsByEndDate = async (page: number = 0): Promise<Item[]> => 
         throw new Error('No access token found');
       }
   
-      const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/items?page=${page}`, {
+      const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/item?page=${page}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
         },
@@ -182,7 +182,7 @@ export const fetchItemsByUsername = async (username: string, page: number = 0): 
         throw new Error('No access token found');
         }
 
-        const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/items/seller?sellerName=${username}`, {
+        const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/item/seller?sellerName=${username}`, {
             headers: {
                 Authorization: 'Bearer ' + accessToken,
             },

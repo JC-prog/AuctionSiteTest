@@ -3,6 +3,7 @@ package com.fyp.auction_app.services;
 import com.fyp.auction_app.models.Enums.ListingStatus;
 import com.fyp.auction_app.models.Item;
 import com.fyp.auction_app.models.ItemImage;
+import com.fyp.auction_app.models.User;
 import com.fyp.auction_app.repository.ItemImageRepository;
 import com.fyp.auction_app.repository.ItemRepo;
 import com.fyp.auction_app.repository.ItemSpecification;
@@ -83,29 +84,32 @@ public class ItemService {
         return itemRepo.findById(itemId);
     }
 
+    // Find Item Image
+    public byte[] findImage(Integer itemId) {
+
+        Optional<Item> item = itemRepo.findById(itemId);
+
+        if (item.isPresent())
+        {
+            return item.get().getItemPhoto();
+        }
+
+        return null;
+    }
+
+    // Save Item Image
     public void saveImage(Integer itemId, MultipartFile file) throws IOException {
 
         byte[] compressedImage = ImageUtils.compressImage(file.getBytes(), "jpeg", 0.75f);
 
-        Optional<ItemImage> itemImage = itemImageRepository.findByItemId(itemId);
+        Optional<Item> item = itemRepo.findById(itemId);
 
-        if(itemImage.isPresent())
+        if(item.isPresent())
         {
-            ItemImage itemImageToUpdate = itemImage.get();
-            itemImageToUpdate.setItemPhoto(compressedImage);
+            Item itemToUpdate = item.get();
+            itemToUpdate.setItemPhoto(compressedImage);
 
-            itemImageRepository.save(itemImageToUpdate);
-        } else {
-            ItemImage itemImageToCreate = ItemImage.builder()
-                    .itemId(itemId)
-                    .itemPhoto(compressedImage)
-                    .build();
-            itemImageRepository.save(itemImageToCreate);
+            itemRepo.save(itemToUpdate);
         }
-    }
-
-    public Optional<ItemImage> getImage(Integer itemId) {
-
-        return itemImageRepository.findByItemId(itemId);
     }
 }

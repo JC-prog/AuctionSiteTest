@@ -1,9 +1,6 @@
 package com.fyp.auction_app.services;
 
-import com.fyp.auction_app.models.Item;
 import com.fyp.auction_app.models.User;
-import com.fyp.auction_app.models.UserImage;
-import com.fyp.auction_app.repository.UserImageRepository;
 import com.fyp.auction_app.repository.UserRepository;
 import com.fyp.auction_app.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,83 +20,98 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserImageRepository userImageRepository;
+    // Return User
+    public Optional<User> findUserById(Integer id) {
+        return userRepository.findById(id);
+    }
 
+    // Return User by Username
+    public Optional<User> findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    // Return A list of Users
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
+    // Returns Paginated Users
     public Page<User> findUsers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return userRepository.findAll(pageable);
     }
 
-    public Optional<User> findUserById(Integer id) {
-        return userRepository.findById(id);
-    }
-
-    public Optional<User> findUserByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
+    // Create User
     public User createUser(User user) {
 
         return userRepository.save(user);
     }
 
+    // Update User
     public void updateUser(User user) {
         userRepository.save(user);
     }
 
+    // Delete User by Id
     public void deleteById(Integer id) {
         userRepository.deleteById(id);
     }
 
+    // Find User Profile Photo
+    public byte[] getProfilePhoto(String username) {
+
+        Optional<User> user = findUserByUsername(username);
+
+        if (user.isPresent())
+        {
+            return user.get().getProfilePhoto();
+        }
+
+        return null;
+    }
+
+    // Save User Profile Photo
     public void saveImage(String username, MultipartFile file) throws IOException {
 
         byte[] compressedImage = ImageUtils.compressImage(file.getBytes(), "jpeg", 0.75f);
 
-        Optional<UserImage> userImage = userImageRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByUsername(username);
 
-        if(userImage.isPresent())
+        if(user.isPresent())
         {
-            UserImage userImageToUpdate = userImage.get();
-            userImageToUpdate.setProfilePhoto(compressedImage);
+            User userToUpdate = user.get();
+            userToUpdate.setProfilePhoto(compressedImage);
 
-            userImageRepository.save(userImageToUpdate);
-        } else {
-            UserImage userImageToCreate = UserImage.builder()
-                    .username(username)
-                    .profilePhoto(compressedImage)
-                    .build();
-            userImageRepository.save(userImageToCreate);
+            userRepository.save(userToUpdate);
         }
     }
 
-    public Optional<UserImage> getImage(String username) {
+    // Find User Banner Image
+    public byte[] findBannerImage(String username) {
 
-        return userImageRepository.findByUsername(username);
+        Optional<User> user = findUserByUsername(username);
+
+        if (user.isPresent())
+        {
+            return user.get().getBannerImage();
+        }
+
+        return null;
     }
 
+    // Save User Banner Image
     public void saveBanner(String username, MultipartFile file) throws IOException {
 
         byte[] compressedImage = ImageUtils.compressImage(file.getBytes(), "jpeg", 0.75f);
 
-        Optional<UserImage> userImage = userImageRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByUsername(username);
 
-        if(userImage.isPresent())
+        if(user.isPresent())
         {
-            UserImage userImageToUpdate = userImage.get();
-            userImageToUpdate.setBannerImage(compressedImage);
+            User userToUpdate = user.get();
+            userToUpdate.setBannerImage(compressedImage);
 
-            userImageRepository.save(userImageToUpdate);
-        } else {
-            UserImage userImageToCreate = UserImage.builder()
-                    .username(username)
-                    .profilePhoto(compressedImage)
-                    .build();
-            userImageRepository.save(userImageToCreate);
+            userRepository.save(userToUpdate);
         }
     }
 }

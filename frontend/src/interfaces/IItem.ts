@@ -10,6 +10,7 @@ interface IItem {
     duration: string;
     currentPrice: number;
     startPrice: number;
+    itemPhoto: string | ArrayBuffer | null;
     status: string;
   }
   
