@@ -27,6 +27,9 @@ public interface ItemRepo extends JpaRepository<Item, Integer>, JpaSpecification
     // Find Items By Status Pageable
     Page<Item> findByStatus(ListingStatus status, Pageable pageable);
 
+    // Find Items By Status and Username
+    Page<Item> findBySellerNameAndStatus(String sellerName, ListingStatus status, Pageable pageable);
+
     // Find items by sellerName and endDate
     @Query("SELECT i FROM Item i WHERE i.sellerName = :sellerName AND i.endDate = :endDate")
     Page<Item> findBySellerNameAndEndDate(

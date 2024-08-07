@@ -43,6 +43,17 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
+    @GetMapping("api/created-items/{username}")
+    public ResponseEntity<Page<Item>> getUserCreatedItems(
+            @PathVariable String username,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        Page<Item> items = itemService.findCreatedItems(username, page, size);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
 
     @GetMapping("api/items/all")
     public ResponseEntity<Page<Item>> getRecentItems() {

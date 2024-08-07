@@ -1,19 +1,9 @@
 // src/Popup.tsx
 import React, { useState } from 'react';
+import IItem from '../../interfaces/IItem';
 
 interface PopupProps {
     onClose: () => void;
-}
-
-interface Item {
-    itemTitle: string;
-    itemCategory: string;
-    itemCondition: string;
-    description: string;
-    auctionType: string;
-    endDate: Date;
-    currentPrice: number;
-    sellerName: string;
 }
 
 const TradePopup: React.FC<PopupProps> = ({ onClose }) => {

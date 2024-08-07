@@ -269,3 +269,12 @@ export const rejectBid = (itemId: number) => {
 
   return apiPost(apiUrl, null);
 }
+
+// Fetch Items that are in CREATED
+export const fetchCreatedItem = (username: string) => {
+  const apiUrl = `/api/created-items/${username}`;
+
+  const response = apiGet(apiUrl);
+
+  return response;
+};

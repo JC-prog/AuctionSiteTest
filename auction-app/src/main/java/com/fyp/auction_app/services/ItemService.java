@@ -34,6 +34,11 @@ public class ItemService {
         return itemRepo.findByStatus(ListingStatus.LISTED, pageable);
     }
 
+    public Page<Item> findCreatedItems(String username, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return itemRepo.findBySellerNameAndStatus(username, ListingStatus.CREATED, pageable);
+    }
+
     public List<Item> findItemsBySeller(String sellerName) {
 
         return itemRepo.findBySellerName(sellerName);

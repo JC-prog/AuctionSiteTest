@@ -20,7 +20,7 @@ public class TradeRequestController {
     public ResponseEntity<String> createTradeRequest()
     {
         TradeRequest tradeRequestToCreate = new TradeRequest();
-        
+
         tradeRequestService.createTradeRequest(tradeRequestToCreate);
 
         return new ResponseEntity<>("Trade Request Created", HttpStatus.OK);
