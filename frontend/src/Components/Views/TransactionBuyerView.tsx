@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import Transaction from '../../interfaces/Transaction';
-import { fetchBuyerTransaction } from '../../services/TransactionService';
+import { fetchBuyerTransaction, postPayment } from '../../services/TransactionService';
 import api from '../../config/Api';
+import { toast } from 'react-toastify';
 
 // Custom hook for fetching item images
 const useItemImages = (transactions: Transaction[]) => {
@@ -29,11 +30,56 @@ const useItemImages = (transactions: Transaction[]) => {
   return itemImages;
 };
 
+// Payment Action
+const handlePayment = async (transactionId: number) => {
+  try {
+    const response: AxiosResponse = await postPayment(transactionId);
+
+    if (response.status === 200) {
+      toast.success('Payment Successful', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } else {
+      toast.error(`Payment Failed: ${response.data.error}`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    toast.error('Payment Failed. Please try again.', {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000,
+    });
+  }
+};
+
+
+// Render Available Actions
+const renderActions = (status: string, transactionId: number) => {
+  switch (status) {
+    case "UNPAID":
+      return (
+          <>
+            <button onClick= {() => handlePayment(transactionId)} className="mx-1 bg-green-500 text-white px-2 py-1 rounded">Payment</button>
+            <button className="mx-1 bg-red-500 text-white px-2 py-1 rounded">Cancel</button>
+          </>);
+    default:
+      return (
+        <>
+          <button className="mx-1 bg-yellow-500 text-white px-2 py-1 rounded">Contact Seller</button>
+          <button className="mx-1 bg-red-500 text-white px-2 py-1 rounded">Cancel</button>
+        </>);
+  };
+};
+
 // Transaction row component
 const TransactionRow: React.FC<{ transaction: Transaction; index: number; itemImage: string }> = ({ transaction, index, itemImage }) => (
-
-    
-
   <div className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">
     <div className="grid grid-cols-12 items-center py-4 border-b border-gray-200">
       <div className="col-span-1 text-center">
@@ -62,8 +108,7 @@ const TransactionRow: React.FC<{ transaction: Transaction; index: number; itemIm
       </div>
       <div className="col-span-3 flex items-center">
         <button className="mx-1 bg-blue-500 text-white px-2 py-1 rounded">View</button>
-        <button className="mx-1 bg-green-500 text-white px-2 py-1 rounded">Pay</button>
-        <button className="mx-1 bg-red-500 text-white px-2 py-1 rounded">Cancel</button>
+        {renderActions(transaction.status, transaction.id)}
       </div>
     </div>
   </div>

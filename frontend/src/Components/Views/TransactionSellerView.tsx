@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import Transaction from '../../interfaces/Transaction';
-import { fetchSellerTransaction } from '../../services/TransactionService';
+import { fetchSellerTransaction, postDelivered, postShipment } from '../../services/TransactionService';
 import api from '../../config/Api';
+import { toast } from 'react-toastify';
 
 // Custom hook for fetching item images
 const useItemImages = (transactions: Transaction[]) => {
@@ -27,6 +28,89 @@ const useItemImages = (transactions: Transaction[]) => {
   }, [transactions]);
 
   return itemImages;
+};
+
+// Ship Action
+const handleShip = async (transactionId: number) => {
+  try {
+    const response: AxiosResponse = await postShipment(transactionId);
+
+    if (response.status === 200) {
+      toast.success('Ship Successful', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } else {
+      toast.error(`Ship Failed: ${response.data.error}`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    toast.error('Ship Failed. Please try again.', {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000,
+    });
+  }
+};
+
+// Deliver Action
+const handleDeliver = async (transactionId: number) => {
+  try {
+    const response: AxiosResponse = await postDelivered(transactionId);
+
+    if (response.status === 200) {
+      toast.success('Deliver Successful', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+
+    } else {
+      toast.error(`Deliver Failed: ${response.data.error}`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    toast.error('Deliver Failed. Please try again.', {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000,
+    });
+  }
+};
+
+// Render Available Actions
+const renderActions = (status: string, transactionId: number) => {
+  switch (status) {
+    case "UNPAID":
+      return (
+          <>
+            <button className="mx-1 bg-report-500 text-white px-2 py-1 rounded">Report</button>
+          </>);
+    case "PAID":
+      return (
+          <>
+            <button onClick={() => handleShip(transactionId)} className="mx-1 bg-blue-500 text-white px-2 py-1 rounded">Ship</button>
+          </>
+      );
+    case "SHIPPED":
+      return (
+          <>
+            <button onClick={() => handleDeliver(transactionId)}  className="mx-1 bg-green-500 text-white px-2 py-1 rounded">Mark As Delivered</button>
+          </>);
+    default:
+      return <p></p>;
+  };
 };
 
 // Transaction row component
@@ -59,8 +143,7 @@ const TransactionRow: React.FC<{ transaction: Transaction; index: number; itemIm
       </div>
       <div className="col-span-3 flex items-center">
         <button className="mx-1 bg-blue-500 text-white px-2 py-1 rounded">View</button>
-        <button className="mx-1 bg-blue-500 text-white px-2 py-1 rounded">Ship</button>
-        <button className="mx-1 bg-blue-500 text-white px-2 py-1 rounded">Mark as Delivered</button>
+        {renderActions(transaction.status, transaction.id)}
       </div>
     </div>
   </div>
