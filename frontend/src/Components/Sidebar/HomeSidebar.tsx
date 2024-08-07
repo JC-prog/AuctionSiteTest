@@ -48,7 +48,7 @@ const HomeSidebar: React.FC<IAuth> = ({ isAuth, user, role }) => {
     const menusToRender = isAuth ? (role === "ADMIN" ? adminMenus : authMenus) : notAuthMenus;
 
     return (
-        <div className={`bg-gray-800 min-h-screen ${isOpen ? "w-72" : "w-16"} duration-500 text-gray-100 px-4`}>
+        <div className={`bg-gray-800 min-h-screen ${isOpen ? "w-72" : "w-16"} duration-500 text-gray-100 px-4 z-100`}>
             <div className="py-3 flex justify-end">
                 <HiMenuAlt3
                     size={26}

@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AxiosResponse } from 'axios';
 
 // Components
-import ItemCarousel from "../Components/ItemCarousel"
-import { ImageSlider } from '../Components/ImageSlider';
-import CategoryBar from '../Components/CategoryBar';
-import ItemCard from "../Components/ItemCard";
-import Card from "../Components/Cards/ItemCard";
-import ItemList from "../Components/ItemList";
 import AdPlacementCarousel from '../Components/AdPlacementCarousel';
+import SurveyPopup from '../Components/Popup/SurveyPopup';
 
 // Utilities Component
-import Timer from '../Components/Timer';
 import Spinner from '../Components/Interactive/Spinner';
-import LikeButton from '../Components/Interactive/LikeButton';
 
 // Config
 import api from '../config/api/loginApi';
@@ -36,68 +29,65 @@ interface PaginatedResponse {
 }
 
 interface AuthProps {
-    isAuth: boolean;
-    user: string;
-  }
+  isAuth: boolean;
+  user: string;
+  interestChecked: boolean;
+}
 
-const HomePage: React.FC<AuthProps> = ({ isAuth, user }) => {
-  const [items, setItems] = useState<Items[]>([]);
+const HomePage: React.FC<AuthProps> = ({ isAuth, user, interestChecked }) => {
+  const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
+  const [showSurvey, setShowSurvey] = useState<boolean>(!interestChecked);
 
   const navigate = useNavigate();
 
   // Fetch Items
   useEffect(() => {
     const fetchItems = async () => {
-        console.log(user);
+      console.log(user);
       try {
         const response: AxiosResponse<PaginatedResponse> = await api.get(`/api/items/all`);
 
-            console.log(response);
+        console.log(response);
 
-            if (response.status !== 200) {
-                throw new Error('Network response was not ok');
-            }
-            
-            setItems(response.data.content);
-
-        } catch (error) {
-            setError(error as Error);
-        } finally {
-            setLoading(false);
+        if (response.status !== 200) {
+          throw new Error('Network response was not ok');
         }
+
+        setItems(response.data.content);
+      } catch (error) {
+        setError(error as Error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchItems();
-  }, []);
+  }, [user]);
 
-  const navigateToItem = () => {
+  const navigateToItem = (item: Item) => {
+    navigate(`/item/${item.itemId}`);
+  };
 
-    navigate(`/item/${ item.itemId }`)
+  if (loading) {
+    return <Spinner />;
+  }
 
-}
-
-if (loading) {
-  return <div>Loading...</div>;
-}
-
-if (error) {
-  return <Spinner />;
-}
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      {showSurvey && <SurveyPopup onClose={() => setShowSurvey(false)} />}
       <div className="bg-white p-6 rounded-lg shadow-md w-full">
-          <AdPlacementCarousel />
-
-          <ItemCardListHomeCarousel carouselTitle="Just For You" items={items} username={ user }/>
-
-          <ItemCardListHomeCarousel carouselTitle="Recently Posted" items={items}/>
-        
+        <AdPlacementCarousel />
+        <ItemCardListHomeCarousel carouselTitle="Just For You" items={items} username={user} />
+        <ItemCardListHomeCarousel carouselTitle="Recently Posted" items={items} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

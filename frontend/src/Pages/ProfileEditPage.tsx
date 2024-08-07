@@ -457,7 +457,7 @@ const ProfileEditPage = () => {
           </div>
           </form>
 
-          <div className="mt-8 space-y-6">
+          <div className="mt-8 mb-8 space-y-6">
             <div className="flex justify-between items-center">
               <label className="block text-xl font-semibold mb-2">Upload Profile Picture</label>
               <button
@@ -479,6 +479,75 @@ const ProfileEditPage = () => {
               </button>
             </div>
           </div>
+
+          <h2 className="text-3xl font-semibold">Interests</h2>
+            <form>
+              <div className="mb-4">
+                <label className="block font-bold mb-2">What type of products are you most interested in?</label>
+                <select name="productInterest" onChange={handleChange} className="w-full p-2 border rounded">
+                  <option value="">Select</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Fashion">Fashion</option>
+                  <option value="Home & Kitchen">Home & Kitchen</option>
+                  <option value="Books">Books</option>
+                  <option value="Beauty & Health">Beauty & Health</option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block font-bold mb-2">How often do you shop online?</label>
+                <select name="shoppingFrequency"  onChange={handleChange} className="w-full p-2 border rounded">
+                  <option value="">Select</option>
+                  <option value="Daily">Daily</option>
+                  <option value="Weekly">Weekly</option>
+                  <option value="Monthly">Monthly</option>
+                  <option value="Rarely">Rarely</option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block font-bold mb-2">Which factors influence your purchase decisions the most?</label>
+                <div className="flex flex-wrap">
+                  {['Price', 'Brand', 'Customer Reviews', 'Product Features', 'Discounts and Offers'].map((factor) => (
+                    <label key={factor} className="mr-4">
+                      <input
+                        type="checkbox"
+                        name="purchaseFactors"
+                        value={factor}
+                        
+                        onChange={handleChange}
+                        className="mr-1"
+                      />
+                      {factor}
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div className="mb-4">
+                <label className="block font-bold mb-2">What is your preferred mode of payment?</label>
+                <select name="paymentMethod"  onChange={handleChange} className="w-full p-2 border rounded">
+                  <option value="">Select</option>
+                  <option value="Credit/Debit Card">Credit/Debit Card</option>
+                  <option value="PayPal">PayPal</option>
+                  <option value="Cash on Delivery">Cash on Delivery</option>
+                  <option value="Other">Other (please specify)</option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block font-bold mb-2">How do you usually find new products on our website?</label>
+                <select name="productDiscovery"  onChange={handleChange} className="w-full p-2 border rounded">
+                  <option value="">Select</option>
+                  <option value="Browsing categories">Browsing categories</option>
+                  <option value="Using the search bar">Using the search bar</option>
+                  <option value="Recommendations from the website">Recommendations from the website</option>
+                  <option value="Email/newsletter promotions">Email/newsletter promotions</option>
+                  <option value="Social media ads">Social media ads</option>
+                </select>
+              </div>
+              <div className="flex justify-end">
+                <button type="button"  className="bg-blue-500 text-white px-4 py-2 rounded">
+                  Update Interest
+                </button>
+              </div>
+            </form>
 
       </div>
     </div>

@@ -46,6 +46,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
+    private Boolean interestChecked;
+
     private Boolean isActive;
 
     @Enumerated(EnumType.STRING)

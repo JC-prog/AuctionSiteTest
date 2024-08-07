@@ -17,7 +17,7 @@ const AdPlacementCarousel: React.FC = () => {
   }, [ads.length]);
 
   return (
-    <div className="relative w-full overflow-hidden rounded-lg shadow-lg h-64">
+    <div className="relative w-full overflow-hidden rounded-lg shadow-lg h-64 z-10">
       {ads.map((ad, index) => (
         <div
           key={ad.id}
