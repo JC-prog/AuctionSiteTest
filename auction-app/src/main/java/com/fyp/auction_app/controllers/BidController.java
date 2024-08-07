@@ -45,6 +45,7 @@ public class BidController {
                 bidsResponseToAdd.setItemId(itemToAdd.get().getItemId());
                 bidsResponseToAdd.setItemTitle(itemToAdd.get().getItemTitle());
                 bidsResponseToAdd.setItemStatus(String.valueOf(itemToAdd.get().getStatus()));
+                bidsResponseToAdd.setEndDate(itemToAdd.get().getEndDate());
 
                 userBids.add(bidsResponseToAdd);
             }

@@ -94,40 +94,45 @@ const ItemWatchList: React.FC<ItemListProps> = ({ listTitle, items, username }) 
             </div>
           </div>
         </div>
-
-        {items.map((item, index) => (
-          <div key={item.itemId} className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">
-            <div className="grid grid-cols-12 items-center py-4 border-b border-gray-200">
-              <div className="col-span-1 text-center">
-                <span className="text-gray-500">{index + 1}</span>
-              </div>
-              <div className="col-span-1">
-                <img src={itemImages[item.itemId] || "/bike.jpg"} alt={item.itemTitle} className="w-12 h-12 object-cover rounded-md" />
-              </div>
-              <div className="col-span-4">
-                <Link to={`/item/${item.itemId}`} className="block">
-                  <h3 className="text-lg font-medium">{item.itemTitle}</h3>
-                </Link>
-              </div>
-              <div className="col-span-3">
-                <Timer endTime={item.endDate} />
-              </div>
-              <div className="col-span-2 flex items-center space-x-2">
-                <IoMdTrendingUp className="text-green-600" />
-                <span className="text-gray-500">${item.currentPrice}</span>
-                <p className="text-xs text-gray-400">Since Last Added</p>
-              </div>
-              <div className="col-span-1 flex justify-center">
-                <button
-                  className="text-gray-500 hover:text-red-500"
-                  onClick={() => handleRemove(item.itemId)}
-                >
-                  <FiTrash size={20} />
-                </button>
+        {items.length > 0 ? (
+          items.map((item, index) => (
+            <div key={item.itemId} className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">
+              <div className="grid grid-cols-12 items-center py-4 border-b border-gray-200">
+                <div className="col-span-1 text-center">
+                  <span className="text-gray-500">{index + 1}</span>
+                </div>
+                <div className="col-span-1">
+                  <img src={itemImages[item.itemId] || "/bike.jpg"} alt={item.itemTitle} className="w-12 h-12 object-cover rounded-md" />
+                </div>
+                <div className="col-span-4">
+                  <Link to={`/item/${item.itemId}`} className="block">
+                    <h3 className="text-lg font-medium">{item.itemTitle}</h3>
+                  </Link>
+                </div>
+                <div className="col-span-3">
+                  <Timer endTime={item.endDate} />
+                </div>
+                <div className="col-span-2 flex items-center space-x-2">
+                  <IoMdTrendingUp className="text-green-600" />
+                  <span className="text-gray-500">${item.currentPrice}</span>
+                  <p className="text-xs text-gray-400">Since Last Added</p>
+                </div>
+                <div className="col-span-1 flex justify-center">
+                  <button
+                    className="text-gray-500 hover:text-red-500"
+                    onClick={() => handleRemove(item.itemId)}
+                  >
+                    <FiTrash size={20} />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <div className="w-full bg-gray-200 p-4 rounded-lg shadow-lg flex items-center justify-center">
+              <p className="text-lg text-gray-500">No Items in Watchlist</p>
+            </div>
+        )}
       </div>
     </div>
   );

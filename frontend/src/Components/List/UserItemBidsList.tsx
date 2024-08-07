@@ -75,37 +75,42 @@ const UserItemBidsList: React.FC<ItemListProps> = ({ listTitle, bids }) => {
                         </div>
                     </div>
                 </div>
-
-                {bids.map((bid, index) => (
-                    <div key={bid.id} className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">
-                        <div className="grid grid-cols-12 items-center py-4 border-b border-gray-200">
-                            <div className="col-span-1 text-center">
-                                <span className="text-gray-500">{index + 1}</span>
-                            </div>
-                            <div className="col-span-1">
-                                <img src={itemImages[bid.itemId] || "/upload-photo.jpg"} alt={bid.itemTitle} className="w-12 h-12 object-cover rounded-md" />
-                            </div>
-                            <div className="col-span-3">
-                                <Link to={`/item/${bid.itemId}`} className="block">
-                                    <h3 className="text-lg font-medium">{bid.itemTitle}</h3>
-                                </Link>
-                            </div>
-                            <div className="col-span-2">
-                                <Timer endTime={bid.endDate} />
-                            </div>
-                            <div className="col-span-1">
-                                <span></span>
-                            </div>
-                            <div className="col-span-2 space-x-2">
-                                <span className="text-gray-500">${bid.bidAmount}</span>
-                            </div>
-                            <div className="col-span-2 space-x-2">
-                                <span className="text-gray-500">${itemPrices[bid.itemId]}</span>
+                {bids.length > 0 ? (
+                    bids.map((bid, index) => (
+                        <div key={bid.id} className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">
+                            <div className="grid grid-cols-12 items-center py-4 border-b border-gray-200">
+                                <div className="col-span-1 text-center">
+                                    <span className="text-gray-500">{index + 1}</span>
+                                </div>
+                                <div className="col-span-1">
+                                    <img src={itemImages[bid.itemId] || "/upload-photo.jpg"} alt={bid.itemTitle} className="w-12 h-12 object-cover rounded-md" />
+                                </div>
+                                <div className="col-span-3">
+                                    <Link to={`/item/${bid.itemId}`} className="block">
+                                        <h3 className="text-lg font-medium">{bid.itemTitle}</h3>
+                                    </Link>
+                                </div>
+                                <div className="col-span-2">
+                                    <Timer endTime={bid.endDate} />
+                                </div>
+                                <div className="col-span-1">
+                                    <span></span>
+                                </div>
+                                <div className="col-span-2 space-x-2">
+                                    <span className="text-gray-500">${bid.bidAmount}</span>
+                                </div>
+                                <div className="col-span-2 space-x-2">
+                                    <span className="text-gray-500">${itemPrices[bid.itemId]}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                        ))
+                        ) : (
+                            <div className="w-full bg-gray-200 p-4 rounded-lg shadow-lg flex items-center justify-center">
+                            <p className="text-lg text-gray-500">No Bids</p>
+                            </div>
+                    )}
+                </div>
         </div>
     );
 };

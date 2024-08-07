@@ -284,8 +284,8 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
               </div>
             ))
           ) : (
-            <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 bg-gray-200 p-4 rounded-lg shadow-lg flex items-center justify-center">
-              <p className="text-lg text-gray-500">No Listing</p>
+            <div className="w-full bg-gray-200 p-4 rounded-lg shadow-lg flex items-center justify-center">
+              <p className="text-lg text-gray-500">No Listings</p>
             </div>
           )}
         </div>
