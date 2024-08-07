@@ -10,6 +10,7 @@ import { RiAuctionLine } from "react-icons/ri";
 import { SlLogout } from "react-icons/sl";
 import { CiCircleList } from "react-icons/ci";
 import { MdDashboard } from "react-icons/md";
+import { LuArrowRightLeft } from "react-icons/lu";
 
 import IAuth from "../../interfaces/IAuth";
 
@@ -20,6 +21,7 @@ const HomeSidebar: React.FC<IAuth> = ({ isAuth, user, role }) => {
         { name: "Analytics", link: "/analytics", icon: TbReportAnalytics },
         { name: "My Bids", link: "/my-bids", icon: RiAuctionLine, margin: true },
         { name: "My Listing", link: "/my-listings", icon: FiFolder },
+        { name: "Trade Request", link: "/my-trade", icon: LuArrowRightLeft },
         { name: "Transactions", link: "/transactions", icon: FiShoppingCart },
         { name: "Watchlist", link: "/watchlist", icon: AiOutlineHeart },
         { name: "Settings", link: `/user/edit/${user ? user : ''}`, icon: RiSettings4Line, margin: true },

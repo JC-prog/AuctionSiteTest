@@ -35,6 +35,9 @@ import SearchPage from "./Pages/SearchPage"
 import AnalyticsPage from './Pages/AnalyticsPage';
 import TransactionPage from './Pages/TransactionPage';
 import FeedbackPage from './Pages/FeedbackPage';
+import MyNotificationPage from './Pages/MyNotificationPage';
+import MyBidsPage from './Pages/MyBids';
+import TradeRequestPage from './Pages/TradeRequestPage';
 
 // Admin Pages
 import AdminDashboardPage from './Pages/AdminPages/AdminDashboardPage';
@@ -42,8 +45,7 @@ import AdminUserManagementPage from './Pages/AdminPages/AdminUserManagementPage'
 import AdminListingManagementPage from './Pages/AdminPages/AdminListingManagementPage';
 import AdminSystemManagementPage from './Pages/AdminPages/AdminSystemManagementPage';
 import AdminFeedbackManagementPage from './Pages/AdminPages/AdminFeedbackManagementPage';
-import MyNotificationPage from './Pages/MyNotificationPage';
-import MyBidsPage from './Pages/MyBids';
+
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -126,6 +128,7 @@ function App() {
               <Route path="/my-bids" element={<MyBidsPage user={user}/>} />
               <Route path="/watchlist" element={<MyWatchlist user={user}/>} />
               <Route path="/my-listings" element={<MyItemListing user={user} />} />
+              <Route path="/my-trade" element={<TradeRequestPage user={user} />} />
               <Route path="/user/:username" element={<UserProfile user={user} />} />
               <Route path="/user/edit/:username" element={<UserEditProfile />} />
               <Route path="/item/create" element={<ItemCreatePage user={user} />} />
