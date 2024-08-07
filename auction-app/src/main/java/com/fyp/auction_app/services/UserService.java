@@ -81,4 +81,25 @@ public class UserService {
 
         return userImageRepository.findByUsername(username);
     }
+
+    public void saveBanner(String username, MultipartFile file) throws IOException {
+
+        byte[] compressedImage = ImageUtils.compressImage(file.getBytes(), "jpeg", 0.75f);
+
+        Optional<UserImage> userImage = userImageRepository.findByUsername(username);
+
+        if(userImage.isPresent())
+        {
+            UserImage userImageToUpdate = userImage.get();
+            userImageToUpdate.setBannerImage(compressedImage);
+
+            userImageRepository.save(userImageToUpdate);
+        } else {
+            UserImage userImageToCreate = UserImage.builder()
+                    .username(username)
+                    .profilePhoto(compressedImage)
+                    .build();
+            userImageRepository.save(userImageToCreate);
+        }
+    }
 }

@@ -186,7 +186,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                 <div className="bg-white p-6 rounded-lg shadow-md grid grid-cols-12 gap-4">
                     <div className="col-span-12 md:col-span-6 flex items-center">
                         <img
-                            src={userImage || "/upload-photo.png"}
+                            src={userImage || "/profile-pic-placeholder.jpg"}
                             alt="Seller Image"
                             className="w-24 h-24 object-cover rounded-full shadow-md"
                         />

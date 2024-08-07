@@ -194,4 +194,15 @@ public class UserController {
             return ResponseEntity.status(500).body("Failed to upload image!");
         }
     }
+
+    @PostMapping("/upload-banner/{username}")
+    public ResponseEntity<String> uploadBanner(@PathVariable String username, @RequestParam("file") MultipartFile file)
+    {
+        try {
+            userService.saveBanner(username, file);
+            return ResponseEntity.ok("Banner uploaded successfully!");
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body("Failed to upload banner!");
+        }
+    }
 }

@@ -158,6 +158,7 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
   const renderActions = (item) => {
     switch (item.status) {
       case "CREATED":
+      case "EXPIRED":
         return (
             <>
                 <Link 
