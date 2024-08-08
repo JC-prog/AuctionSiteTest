@@ -21,13 +21,13 @@ const TradeRequestPage: React.FC<IAuth> = ({ isAuth, user }) => {
           className={`mr-2 px-4 py-2 rounded ${buyerView ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
           onClick={() => setBuyerView(true)}
         >
-          Bought
+          Trade Initiated
         </button>
         <button
           className={`px-4 py-2 rounded ${!buyerView ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
           onClick={() => setBuyerView(false)}
         >
-          Sold
+          Trade Requested
         </button>
       </div>
       {buyerView ? (

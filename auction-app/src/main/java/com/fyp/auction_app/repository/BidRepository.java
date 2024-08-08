@@ -13,6 +13,8 @@ public interface BidRepository extends JpaRepository<Bid, Integer> {
 
     List<Bid> findByBidderName(String bidderName);
 
+    Optional<Bid> findByBidderNameAndItemId(String bidderName, Integer itemId);
+
     @Query("SELECT b FROM Bid b WHERE b.itemId = :itemId ORDER BY b.bidTimestamp DESC LIMIT 1")
     Optional<Bid> findLastBidByItemId(@Param("itemId") Integer itemId);
 

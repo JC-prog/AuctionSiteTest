@@ -47,6 +47,7 @@ public class AuthenticationService {
             .username(request.getUsername())
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
+            .interestChecked(false)
             .role(Role.USER)
             .accountType(AccountType.STANDARD)
             .createdAt(new Date())

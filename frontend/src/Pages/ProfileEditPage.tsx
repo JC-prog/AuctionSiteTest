@@ -29,6 +29,7 @@ const ProfileEditPage = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const [bannerPreview, setBannerPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const bannerFileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (user.address) {
@@ -205,6 +206,19 @@ const ProfileEditPage = () => {
     }
   };
 
+  const triggerProfilePhotoInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const triggerBannerPhotoInput = () => {
+    if (bannerFileInputRef.current) {
+      bannerFileInputRef.current.click();
+    }
+  };
+
+
   const handleUploadPhoto = async () => {
     if (!selectedFile) return;
 
@@ -304,33 +318,51 @@ const ProfileEditPage = () => {
         <div className="flex mb-8 space-x-4">
           <div className="w-1/3">
             <label className="text-xl font-semibold mb-2 block">Profile Picture</label>
-            <img
-              src={preview || "/profile-pic-placeholder.jpg"}
-              alt="Profile"
-              className="w-32 h-32 rounded-full cursor-pointer object-cover"
-              onClick={triggerFileInput}
-            />
+            {preview ? (
+              <img
+                src={preview}
+                alt="Profile"
+                className="rounded-full w-40 h-40 object-cover cursor-pointer"
+                onClick={triggerProfilePhotoInput}
+              />
+            ) : (
+              <div
+                className="rounded-full w-40 h-40 bg-gray-300 flex items-center justify-center cursor-pointer"
+                onClick={triggerProfilePhotoInput}
+              >
+                <span>Upload Profile Photo</span>
+              </div>
+            )}
             <input
               type="file"
               ref={fileInputRef}
+              style={{ display: 'none' }}
               onChange={handleFileChange}
-              className="hidden"
             />
           </div>
 
           <div className="w-2/3">
             <label className="text-xl font-semibold mb-2 block">Banner Picture</label>
-            <img
-              src={bannerPreview || "/upload-photo.png"}
-              alt="Banner"
-              className="w-full h-32 rounded-md cursor-pointer object-cover"
-              onClick={triggerFileInput}
-            />
+            {bannerPreview ? (
+              <img
+                src={bannerPreview}
+                alt="Banner"
+                className="w-full h-40 object-cover cursor-pointer"
+                onClick={triggerBannerPhotoInput}
+              />
+            ) : (
+              <div
+                className="w-full h-40 bg-gray-300 flex items-center justify-center cursor-pointer"
+                onClick={triggerBannerPhotoInput}
+              >
+                <span>Upload Banner Photo</span>
+              </div>
+            )}
             <input
               type="file"
-              ref={fileInputRef}
+              ref={bannerFileInputRef}
+              style={{ display: 'none' }}
               onChange={handleBannerFileChange}
-              className="hidden"
             />
           </div>
         </div>

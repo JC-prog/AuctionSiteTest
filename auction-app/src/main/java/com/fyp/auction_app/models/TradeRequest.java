@@ -19,15 +19,19 @@ public class TradeRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer  id;
-
-    private String buyerName;
+    private Integer id;
 
     private Integer buyerItemId;
 
-    private Integer sellerId;
+    private String buyerItemTitle;
+
+    private String buyerName;
 
     private Integer sellerItemId;
+
+    private String sellerItemTitle;
+
+    private String sellerName;
 
     @Enumerated(EnumType.STRING)
     private TradeRequestStatus status;

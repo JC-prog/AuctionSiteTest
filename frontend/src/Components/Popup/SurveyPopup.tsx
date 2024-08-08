@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { checkInterestUser } from '../../services/UserService';
+import { toast } from 'react-toastify';
 
 interface SurveyPopupProps {
-  onClose: () => void;
+    username: string;
+    onClose: () => void;
 }
 
-const SurveyPopup: React.FC<SurveyPopupProps> = ({ onClose }) => {
+const SurveyPopup: React.FC<SurveyPopupProps> = ({ username, onClose }) => {
   const [responses, setResponses] = useState({
     productInterest: '',
     shoppingFrequency: '',
@@ -27,10 +30,28 @@ const SurveyPopup: React.FC<SurveyPopupProps> = ({ onClose }) => {
     }
   };
 
-  const handleSubmit = () => {
-    // Handle form submission
-    console.log('Survey responses:', responses);
-    onClose();
+  const handleSubmit = async () => {
+    try {
+            const response = await checkInterestUser(username);
+            const message = response.data;
+
+            toast[response.status === 200 ? 'success' : 'error'](message, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000,
+            });
+
+            if (response.status === 200) {
+                setTimeout(() => window.location.reload(), 2000);
+            }
+        } catch (error: any) {
+            const errorMessage = error.response?.data || 'Failed!';
+            toast.error(errorMessage, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000,
+            });
+        } finally {
+            onClose();
+        }
   };
 
   return (

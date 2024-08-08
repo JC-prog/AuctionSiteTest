@@ -38,10 +38,13 @@ interface AuthProps {
 const HomePage: React.FC<AuthProps> = ({ isAuth, user, interestChecked }) => {
   const [showSurvey, setShowSurvey] = useState<boolean>(!interestChecked);
 
+  useEffect(() => {
+    console.log("Interest Check: " + interestChecked)
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-      {showSurvey && <SurveyPopup onClose={() => setShowSurvey(false)} />}
+      {showSurvey && <SurveyPopup username={user} onClose={() => setShowSurvey(false)} />}
       <div className="bg-white p-6 rounded-lg shadow-md w-full">
         <AdPlacementCarousel />
         <ProductGrid  username={user}/>

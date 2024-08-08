@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +28,11 @@ public class BidService {
     public Bid createBid(Bid bid) {
 
         return bidRepository.save(bid);
+    }
+
+    public Optional<Bid> findBidByItemIdAndBidderName(String username, Integer itemId)
+    {
+        return bidRepository.findByBidderNameAndItemId(username, itemId);
     }
 
     public List<Bid> findBidsByUsername(String username) {

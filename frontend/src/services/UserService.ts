@@ -76,6 +76,13 @@ export const deactivateUser = (username: string) => {
     return apiPost(apiUrl, payload);
 }
 
+// Mark User Interest as True
+export const checkInterestUser = (username: string) => {
+    const apiUrl = `/api/user/check-interest/${username}`;
+
+    return apiPost(apiUrl, null);
+}
+
 // Upload Profile Photo
 export const uploadUserPhoto = (user: User) => {
     const apiUrl = `/api/user/upload-photo`;

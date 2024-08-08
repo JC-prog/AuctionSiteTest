@@ -51,13 +51,14 @@ function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState<string | null>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
-  const [interestChecked, setInterestCheck] = useState(false);
+  const [interestChecked, setInterestCheck] = useState(true);
 
   // Function to check authentication status
   const checkAuthentication = async () => {
     const accessToken = await Cookies.get('access_token');
     if (accessToken) {
       setAuthenticated(true);
+      setInterestCheck(false);
 
       try {
         const decodedToken = jwtDecode<DecodedToken>(accessToken);
@@ -81,9 +82,33 @@ function App() {
     }
   };
 
+  const checkInterest = () => {
+
+    if(authenticated)
+    {
+        
+      try {
+        const response: AxiosResponse<String> = api.get(`/api/user/interest/${user}`);
+        if (response.status !== 200) {
+            throw new Error('Network response was not ok');
+        } 
+          
+        setInterestCheck(response.data);
+        
+    } catch (error) {
+        console.error('Error decoding token:', error);
+        setInterestCheck(true);
+    }
+
+  }
+}
+
   // Check authentication status on component mount
   useEffect(() => {
     checkAuthentication();
+    checkInterest();
+    console.log("Authenticated: " + authenticated)
+    console.log("Interest Check: " + interestChecked)
   }, []);
 
 
@@ -114,7 +139,7 @@ function App() {
           <Navbar isAuth={authenticated} />
           <main className="flex-1 bg-gray-100">
             <Routes>
-              <Route path="/" element={<HomePage user={user} interestChecked={false}/>} />
+              <Route path="/" element={<HomePage user={user} interestChecked={interestChecked}/>} />
               <Route path="/admin" element={<AdminDashboardPage />} />
               <Route path="/admin/user-management" element={<AdminUserManagementPage />} />
               <Route path="/admin/listing-management" element={<AdminListingManagementPage />} />

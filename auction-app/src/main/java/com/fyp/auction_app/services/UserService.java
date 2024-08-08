@@ -42,9 +42,9 @@ public class UserService {
     }
 
     // Create User
-    public User createUser(User user) {
+    public void createUser(User user) {
 
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     // Update User

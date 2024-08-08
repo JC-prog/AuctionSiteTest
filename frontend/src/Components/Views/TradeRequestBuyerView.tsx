@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
-import Transaction from '../../interfaces/Transaction';
-import { fetchBuyerTransaction, postPayment } from '../../services/TransactionService';
+import TradeRequest from '../../interfaces/TradeRequest.ts';
+import { fetchBuyerTradeRequest } from '../../services/TradeRequestService';
 import api from '../../config/Api';
 import { toast } from 'react-toastify';
 
 // Custom hook for fetching item images
-const useItemImages = (transactions: Transaction[]) => {
+const useItemImages = (tradeRequests: TradeRequest[]) => {
   const [itemImages, setItemImages] = useState<{ [key: number]: string }>({});
 
   useEffect(() => {
@@ -24,62 +24,28 @@ const useItemImages = (transactions: Transaction[]) => {
       }
     };
 
-    transactions.forEach((transaction) => fetchItemImage(transaction.itemId));
-  }, [transactions]);
+    tradeRequests.forEach((tradeRequest) => fetchItemImage(tradeRequest.id));
+  }, [tradeRequests]);
 
   return itemImages;
 };
 
-// Payment Action
-const handlePayment = async (transactionId: number) => {
-  try {
-    const response: AxiosResponse = await postPayment(transactionId);
-
-    if (response.status === 200) {
-      toast.success('Payment Successful', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
-    } else {
-      toast.error(`Payment Failed: ${response.data.error}`, {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    toast.error('Payment Failed. Please try again.', {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 2000,
-    });
-  }
-};
-
-
 // Render Available Actions
-const renderActions = (status: string, transactionId: number) => {
+const renderActions = (status: string, tradeRequestId: number) => {
   switch (status) {
-    case "UNPAID":
+    case "PENDING":
       return (
           <>
-            <button onClick= {() => handlePayment(transactionId)} className="mx-1 bg-green-500 text-white px-2 py-1 rounded">Payment</button>
+            <button  className="mx-1 bg-green-500 text-white px-2 py-1 rounded">Contact Seller</button>
             <button className="mx-1 bg-red-500 text-white px-2 py-1 rounded">Cancel</button>
           </>);
     default:
-      return (
-        <>
-          <button className="mx-1 bg-yellow-500 text-white px-2 py-1 rounded">Contact Seller</button>
-          <button className="mx-1 bg-red-500 text-white px-2 py-1 rounded">Cancel</button>
-        </>);
+      return <p></p>;
   };
 };
 
-// Transaction row component
-const TransactionRow: React.FC<{ transaction: Transaction; index: number; itemImage: string }> = ({ transaction, index, itemImage }) => (
+// tradeRequest row component
+const TradeRequestRow: React.FC<{ tradeRequest: TradeRequest; index: number; itemImage: string }> = ({ tradeRequest, index, itemImage }) => (
   <div className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">
     <div className="grid grid-cols-12 items-center py-4 border-b border-gray-200">
       <div className="col-span-1 text-center">
@@ -87,28 +53,35 @@ const TransactionRow: React.FC<{ transaction: Transaction; index: number; itemIm
       </div>
       <div className="col-span-1">
         <img
-          src={itemImage || "/image-placeholder.jpeg"} // Ensure you have the itemImage property or handle the image URL
+          src={itemImage || "/image-placeholder.jpeg"} 
           alt="Item"
           className="w-12 h-12 object-cover rounded-md"
         />
       </div>
       <div className="col-span-2">
-        <a href={`/item/${transaction.itemId}`} className="block">
-          <h3 className="text-lg font-medium">{transaction.itemTitle}</h3>
+        <a href={`/item/${tradeRequest.buyerItemId}`} className="block">
+          <h3 className="text-sm text-gray-500 px-1">{tradeRequest.buyerItemId}</h3>
         </a>
       </div>
       <div className="col-span-1">
-        <p className="text-sm text-gray-500 px-1">${transaction.saleAmount}</p>
+        <img
+          src={itemImage || "/image-placeholder.jpeg"} 
+          alt="Item"
+          className="w-12 h-12 object-cover rounded-md"
+        />
       </div>
       <div className="col-span-2">
-        <p className="text-sm text-gray-500 px-1">{new Date(transaction.transactionTimestamp).toLocaleString()}</p>
+        <p className="text-sm text-gray-500 px-1">{tradeRequest.sellerItemId}</p>
+      </div>
+      <div className="col-span-2">
+        <p className="text-sm text-gray-500 px-1">{new Date(tradeRequest.timestamp).toLocaleString()}</p>
       </div>
       <div className="col-span-1 flex items-center">
-        {transaction.status}
+        {tradeRequest.status}
       </div>
-      <div className="col-span-3 flex items-center">
+      <div className="col-span-2 flex items-center">
         <button className="mx-1 bg-blue-500 text-white px-2 py-1 rounded">View</button>
-        {renderActions(transaction.status, transaction.id)}
+        {renderActions(tradeRequest.status, tradeRequest.id)}
       </div>
     </div>
   </div>
@@ -116,15 +89,15 @@ const TransactionRow: React.FC<{ transaction: Transaction; index: number; itemIm
 
 // Main component
 const TradeRequestBuyerView: React.FC<{ username: string }> = ({ username }) => {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [tradeRequests, settradeRequests] = useState<TradeRequest[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const fetchTransaction = async () => {
+    const fetchtradeRequest = async () => {
       try {
-        const response: AxiosResponse<Transaction[]> = await fetchBuyerTransaction(username);
-        setTransactions(response.data.content);
+        const response: AxiosResponse<TradeRequest[]> = await fetchBuyerTradeRequest(username);
+        settradeRequests(response.data.content);
       } catch (error) {
         setError(error as Error);
       } finally {
@@ -132,10 +105,10 @@ const TradeRequestBuyerView: React.FC<{ username: string }> = ({ username }) => 
       }
     };
 
-    fetchTransaction();
+    fetchtradeRequest();
   }, [username]);
 
-  const itemImages = useItemImages(transactions);
+  const itemImages = useItemImages(tradeRequests);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -154,21 +127,22 @@ const TradeRequestBuyerView: React.FC<{ username: string }> = ({ username }) => 
               <span className="text-gray-500">Index</span>
             </div>
             <div className="col-span-1"></div>
-            <div className="col-span-2">Item Title</div>
-            <div className="col-span-1">Sale Amount</div>
-            <div className="col-span-2">Transaction Timestamp</div>
+            <div className="col-span-2">Buyer Item</div>
+            <div className="col-span-1"></div>
+            <div className="col-span-2">Seller Item</div>
+            <div className="col-span-2">Timestamp</div>
             <div className="col-span-1">Status</div>
-            <div className="col-span-3">Action</div>
+            <div className="col-span-2">Action</div>
           </div>
         </div>
         <div>
-          {transactions.length > 0 ? (
-            transactions.map((transaction, index) => (
-              <TransactionRow
-                key={transaction.id}
-                transaction={transaction}
+          {tradeRequests.length > 0 ? (
+            tradeRequests.map((tradeRequest, index) => (
+              <TradeRequestRow
+                key={tradeRequest.id}
+                tradeRequest={tradeRequest}
                 index={index}
-                itemImage={itemImages[transaction.itemId]}
+                itemImage={itemImages[tradeRequest.id]}
               />
             ))
           ) : (

@@ -14,6 +14,10 @@ import IItem from '../interfaces/IItem';
 import ItemCardListCarousel from '../Components/Carousel/ItemCardListCarousel';
 import ItemCardListCarouselWithTimer from '../Components/Carousel/ItemCardListCarouselWithTimer';
 import ItemList from '../Components/List/ItemList';
+import ProductGrid from '../Components/Carousel/ProductGrid';
+import UserItemExpringCarousel from '../Components/Carousel/UserItemExpiringCarousel';
+import UserItemSoldCarousel from '../Components/Carousel/UserItemSoldCarousel';
+import UserItemListedCarousel from '../Components/Carousel/UserItemListedCarousel';
 
 const items: Item[] = [
     {
@@ -116,28 +120,7 @@ const ProfilePage: React.FC = () => {
     }, []);
   
 
-    // Fetch Items
-    useEffect(() => {
-        const fetchItems = async () => {
-          try {
-            const response: AxiosResponse<PaginatedResponse> = await api.get(`/sortedByDuration`);
     
-                if (response.status !== 200) {
-                throw new Error('Network response was not ok');
-                }
-                
-                setRecentItems(response.data.content);
-    
-            } catch (error) {
-                setError(error as Error);
-            } finally {
-                setLoading(false);
-            }
-        };
-    
-        fetchItems();
-      }, []);
-
     // Fetch Top Items
 
 
@@ -175,15 +158,16 @@ const ProfilePage: React.FC = () => {
                             </div>
                         </div>
                     </div>
+
+
+                    
                 </div>
             </div>
+            <UserItemListedCarousel  username={user}/>
 
-            <ItemCardListCarouselWithTimer carouselTitle="Expiring Soon" items={items}/>
+            <UserItemExpringCarousel username={user}/>
 
-            <ItemCardListCarouselWithTimer carouselTitle="Recently Posted" items={recentItems}/>
-
-           <ItemCardListCarousel carouselTitle="Recently Sold" items={items}/>
-
+            <UserItemSoldCarousel username={user} />
             
         </div>
     );

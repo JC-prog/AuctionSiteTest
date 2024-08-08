@@ -14,6 +14,7 @@ import { countBids } from '../services/BidService';
 
 // Interface
 import Item from '../interfaces/IItem';
+import Bid from '../interfaces/Bid';
 
 interface AuthProps {
     isAuth: boolean;
@@ -26,7 +27,8 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
     const [numOfBids, setNumOfBids] = useState(0);
     const [userImage, setUserImage] = useState<string | null>(null);
     const [itemImage, setItemImage] = useState<string | null>(null);
-    const [itemImageError, setItemImageError] = useState(false); // State to handle image fetch errors
+    const [itemImageError, setItemImageError] = useState(false);
+    const [bid, setBid] = useState<Bid | null>(null);
 
     // Popup
     const [isBidConfirmPopupOpen, setIsBidConfirmPopupOpen] = useState(false);
@@ -97,6 +99,11 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
         fetchProfilePhoto();
     }, [item?.sellerName]);
+
+    // Fetch Bid
+
+    // Fetch Trade Requests
+
 
     const openPopup = () => setIsPopupOpen(true);
     const closePopup = () => setIsPopupOpen(false);
@@ -177,7 +184,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                             >
                                 Trade
                             </button>
-                            {isPopupOpen && <TradePopup onClose={closePopup} />}
+                            {isPopupOpen && <TradePopup itemId={itemId} username={user} onClose={closePopup} />}
                         </div>
                     </div>
                 </div>

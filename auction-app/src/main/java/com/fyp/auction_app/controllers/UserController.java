@@ -49,11 +49,13 @@ public class UserController {
 
     // Create User
     @PostMapping("/create")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<String> createUser(@RequestBody User user) {
 
-        User createdUser = userService.createUser(user);
+        User createdUser = user;
+        createdUser.setInterestChecked(false);
+        userService.createUser(createdUser);
 
-        return new ResponseEntity<>(createdUser, HttpStatus.OK);
+        return new ResponseEntity<>("Successful", HttpStatus.OK);
     }
 
     // Edit User
@@ -82,6 +84,39 @@ public class UserController {
 
         if (user.isPresent()) {
             return new ResponseEntity<>(user.get().getRole().toString(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Get User Interest
+    @GetMapping("/interest/{username}")
+    public ResponseEntity<Boolean> getUserInterest(@PathVariable String username)
+    {
+        Optional<User> user = userService.findUserByUsername(username);
+
+        if (user.isPresent()) {
+
+            return new ResponseEntity<>(user.get().getInterestChecked(), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    // Mark User Interest as True
+    @PostMapping("/check-interest/{username}")
+    public ResponseEntity<String> checkUserInterest(@PathVariable String username)
+    {
+        Optional<User> user = userService.findUserByUsername(username);
+
+        if (user.isPresent()) {
+
+            User userToUpdate = user.get();
+
+            userToUpdate.setInterestChecked(true);
+            userService.updateUser(userToUpdate);
+
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
