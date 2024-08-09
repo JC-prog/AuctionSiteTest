@@ -1,6 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
-import User from '../interfaces/User';
 import baseUrl from '../config/baseUrl';
 
 const getAuthConfig = () => {
@@ -43,7 +41,7 @@ const apiGet = async (url: string) => {
 };
 
 // Get Transaction as Buyer
-export const fetchBuyerTransaction = (username: string) => {
+export const fetchBuyerTransaction = (username: string | null | undefined) => {
     const apiUrl = `/api/transaction/buyer/${username}`;
     console.log(apiUrl);
     const response = apiGet(apiUrl);
@@ -52,7 +50,7 @@ export const fetchBuyerTransaction = (username: string) => {
 };
 
 // Get Transaction as Seller
-export const fetchSellerTransaction = (username: string) => {
+export const fetchSellerTransaction = (username: string | null | undefined) => {
     const apiUrl = `/api/transaction/seller/${username}`;
     console.log(apiUrl);
     const response = apiGet(apiUrl);

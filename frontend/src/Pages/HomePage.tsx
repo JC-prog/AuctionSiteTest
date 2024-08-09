@@ -1,41 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import { AxiosResponse } from 'axios';
 
 // Components
 import AdPlacementCarousel from '../Components/AdPlacementCarousel';
 import SurveyPopup from '../Components/Popup/SurveyPopup';
 
-// Utilities Component
-import Spinner from '../Components/Interactive/Spinner';
-
 // Config
-import api from '../config/api/loginApi';
-import ItemCardListHomeCarousel from '../Components/Carousel/ItemCardListHomeCarousel';
 import ProductGrid from '../Components/Carousel/ProductGrid';
 
-interface Item {
-  itemTitle: string;
-  itemCategory: string;
-  itemCondition: string;
-  description: string;
-  auctionType: string;
-  endDate: Date;
-  currentPrice: number;
-}
-
-interface PaginatedResponse {
-  content: Item[];
-  // Add other pagination properties if needed
-}
 
 interface AuthProps {
-  isAuth: boolean;
-  user: string;
+  isAuth?: boolean;
+  user: string | null | undefined;
   interestChecked: boolean;
 }
 
-const HomePage: React.FC<AuthProps> = ({ isAuth, user, interestChecked }) => {
+const HomePage: React.FC<AuthProps> = ({ user, interestChecked }) => {
   const [showSurvey, setShowSurvey] = useState<boolean>(!interestChecked);
 
   useEffect(() => {

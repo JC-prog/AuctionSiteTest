@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import ItemWatchList from '../Components/List/ItemWatchList';
-import Item from '../interfaces/IItem';
+import Item from '../interfaces/Item';
 import { fetchItemsFromWatchlist } from '../services/WatchListService';
 
 interface MyWatchListProps {
-  isAuth: boolean;
-  user: string;
+  isAuth?: boolean;
+  user: string | null | undefined;
 }
 
-const MyWatchList: React.FC<MyWatchListProps> = ({ isAuth, user }) => {
+const MyWatchList: React.FC<MyWatchListProps> = ({ user }) => {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

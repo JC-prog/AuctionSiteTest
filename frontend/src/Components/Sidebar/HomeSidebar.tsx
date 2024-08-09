@@ -30,7 +30,7 @@ const HomeSidebar: React.FC<IAuth> = ({ isAuth, user, role }) => {
 
     const notAuthMenus = [
         { name: "Login", link: `/login`, icon: AiOutlineUser },
-        { name: "Signup", link: "/signup", icon: SlLogout },
+        { name: "Signup", link: "/signup", icon: SlLogout, margin: false },
     ];
 
     const adminMenus = [

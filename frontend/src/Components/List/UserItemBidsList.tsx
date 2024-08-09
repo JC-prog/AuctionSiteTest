@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IoMdTrendingUp } from 'react-icons/io';
 import { RiAuctionFill } from 'react-icons/ri';
 import Timer from '../Timer';
 import FetchBidResponse from '../../interfaces/FetchBidResponse';

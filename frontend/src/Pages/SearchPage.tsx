@@ -6,11 +6,10 @@ import { useLocation, Link } from 'react-router-dom';
 import api from '../config/api/loginApi';
 
 // Components
-import ItemCard from "../Components/Cards/ItemCard";
 
 // Timer
 import Timer from '../Components/Timer';
-import { fetchItemsByKeyword } from '../services/ItemService';
+// import { fetchItemsByKeyword } from '../services/ItemService';
 
 interface Item {
   itemId: number;
@@ -42,7 +41,7 @@ const SearchPage: React.FC = () => {
     const fetchItems = async () => {
       setLoading(true);
       try {
-        const itemData = await fetchItemsByKeyword(keyword);
+        // const itemData = await fetchItemsByKeyword(keyword);
 
         const response: AxiosResponse<PaginatedResponse> = await api.get(`/api/items/search?keyword=${keyword}`);
         if (response.status !== 200) {

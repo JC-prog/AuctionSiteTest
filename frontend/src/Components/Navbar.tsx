@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 
 // Icons
 import { IoExitOutline } from 'react-icons/io5';
-import { IoMdNotificationsOutline } from 'react-icons/io';
 
 // Interface
 import IAuth from "../interfaces/IAuth";
@@ -13,7 +12,7 @@ import IAuth from "../interfaces/IAuth";
 // Components
 import SearchBar from "./SearchBar";
 
-const Navbar: React.FC<IAuth> = ({ isAuth, user }) => {
+const Navbar: React.FC<IAuth> = ({ isAuth }) => {
     const navigate = useNavigate();
 
     // Function to handle logout

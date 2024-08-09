@@ -1,7 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import baseUrl from '../config/baseUrl';
-import { toast } from 'react-toastify';
 
 const getAuthConfig = () => {
     const token = Cookies.get('access_token');
@@ -52,7 +50,7 @@ export const fetchFeedback = () => {
 };
 
 // Create Feedback
-export const createFeedback = async (username: string, message: string) => {
+export const createFeedback = async (username: string | null | undefined, message: string) => {
     const apiUrl = `/api/feedback/create`
   
     const payload = { username, message}

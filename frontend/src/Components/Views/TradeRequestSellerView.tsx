@@ -147,7 +147,7 @@ const TradeRequestRow: React.FC<{ tradeRequest: TradeRequest; index: number; ite
 );
 
 // Main component
-const TradeRequestSellerView: React.FC<{ username: string }> = ({ username }) => {
+const TradeRequestSellerView: React.FC<{ username: string | null | undefined }> = ({ username }) => {
   const [tradeRequests, settradeRequests] = useState<TradeRequest[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -155,7 +155,7 @@ const TradeRequestSellerView: React.FC<{ username: string }> = ({ username }) =>
   useEffect(() => {
     const fetchtradeRequest = async () => {
       try {
-        const response: AxiosResponse<TradeRequest[]> = await fetchSellerTradeRequest(username);
+        const response = await fetchSellerTradeRequest(username);
         settradeRequests(response.data.content);
       } catch (error) {
         setError(error as Error);

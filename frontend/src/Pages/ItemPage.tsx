@@ -7,28 +7,25 @@ import api from '../config/api/loginApi';
 import Timer from '../Components/Timer';
 import TradePopup from '../Components/Popup/TradePopup';
 import BidConfirmPopup from '../Components/Popup/BidConfirmPopup';
-import { toast } from 'react-toastify';
 
 // API Function Calls
 import { countBids } from '../services/BidService';
 
 // Interface
-import Item from '../interfaces/IItem';
-import Bid from '../interfaces/Bid';
+import Item from '../interfaces/Item';
 
 interface AuthProps {
-    isAuth: boolean;
-    user: string;
+    isAuth?: boolean;
+    user: string | null | undefined;
 }
 
-const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
+const ItemPage: React.FC<AuthProps> = ({user }) => {
     const { itemId } = useParams<{ itemId: string }>();
-    const [item, setItem] = useState<Item | null>(null);
+    const [item, setItem] = useState<Item>();
     const [numOfBids, setNumOfBids] = useState(0);
     const [userImage, setUserImage] = useState<string | null>(null);
     const [itemImage, setItemImage] = useState<string | null>(null);
     const [itemImageError, setItemImageError] = useState(false);
-    const [bid, setBid] = useState<Bid | null>(null);
 
     // Popup
     const [isBidConfirmPopupOpen, setIsBidConfirmPopupOpen] = useState(false);
@@ -116,8 +113,8 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
         return <div className="text-red-500 text-center">Error: {error.message}</div>;
     }
 
-    const renderStatus = (item) => {
-        switch (item.status) {
+    const renderStatus = (item?: Item) => {
+        switch (item?.status) {
           case "CREATED":
             return <p>Not Started</p>;
           case "SOLD":
@@ -175,7 +172,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                             >
                                 Place Bid
                             </button>
-                            {isBidConfirmPopupOpen && <BidConfirmPopup itemId={itemId} username={user} onClose={() => setIsBidConfirmPopupOpen(false)} />}
+                            {isBidConfirmPopupOpen && <BidConfirmPopup itemId={item?.itemId} username={user} onClose={() => setIsBidConfirmPopupOpen(false)} />}
 
                             {/* Trade */}
                             <button
@@ -184,7 +181,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                             >
                                 Trade
                             </button>
-                            {isPopupOpen && <TradePopup itemId={itemId} username={user} onClose={closePopup} />}
+                            {isPopupOpen && <TradePopup itemId={item?.itemId} username={user} onClose={closePopup} />}
                         </div>
                     </div>
                 </div>

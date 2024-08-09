@@ -1,8 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import baseUrl from '../config/baseUrl';
-import IUser from '../../interfaces/IUser';
-import { toast } from 'react-toastify';
 
 const getAuthConfig = () => {
     const token = Cookies.get('access_token');
@@ -44,7 +41,7 @@ const apiGet = async (url: string) => {
 };
 
 // Get Bids
-export const fetchBids = (username: string) => {
+export const fetchBids = (username: string | null | undefined) => {
     const apiUrl = `/api/bid/${username}`;
 
     const response = apiGet(apiUrl);
@@ -62,7 +59,7 @@ export const countBids = (itemId: string) => {
 }
 
 // Bid Item
-export const bidItem = async (itemId: number, username: string, bidAmount: number) => {
+export const bidItem = async (itemId: number | null | undefined, username: string | null | undefined, bidAmount: number) => {
     const apiUrl = `/api/bid`
   
     const payload = { itemId, username, bidAmount }

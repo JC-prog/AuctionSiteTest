@@ -5,11 +5,11 @@ import FetchBidResponse from '../interfaces/FetchBidResponse';
 import { fetchBids } from '../services/BidService';
 
 interface AuthProps {
-    isAuth: boolean;
-    user: string;
+    isAuth?: boolean;
+    user: string | null | undefined;
 }
 
-const MyBidsPage: React.FC<AuthProps> = ({ isAuth, user }) => {
+const MyBidsPage: React.FC<AuthProps> = ({ user }) => {
     const [bids, setBids] = useState<FetchBidResponse[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);

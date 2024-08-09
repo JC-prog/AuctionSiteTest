@@ -3,7 +3,7 @@ import { checkInterestUser } from '../../services/UserService';
 import { toast } from 'react-toastify';
 
 interface SurveyPopupProps {
-    username: string;
+    username: string | null | undefined;
     onClose: () => void;
 }
 
@@ -17,41 +17,43 @@ const SurveyPopup: React.FC<SurveyPopupProps> = ({ username, onClose }) => {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target;
-    if (type === 'checkbox') {
+    const { name, value, type } = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+
+    if (type === 'select-one') {
+      setResponses((prevResponses) => ({ ...prevResponses, [name]: value }));
+    } else if (type === 'textarea') {
+      setResponses((prevResponses) => ({ ...prevResponses, [name]: value }));
+    } else {
+      
       setResponses((prevResponses) => ({
         ...prevResponses,
-        [name]: checked
-          ? [...prevResponses.purchaseFactors, value]
-          : prevResponses.purchaseFactors.filter((factor) => factor !== value)
+        [name]: value
       }));
-    } else {
-      setResponses({ ...responses, [name]: value });
     }
   };
 
   const handleSubmit = async () => {
     try {
-            const response = await checkInterestUser(username);
-            const message = response.data;
+      const response = await checkInterestUser(username);
+      const message = response.data;
 
-            toast[response.status === 200 ? 'success' : 'error'](message, {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2000,
-            });
+      toast[response.status === 200 ? 'success' : 'error'](message, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
 
-            if (response.status === 200) {
-                setTimeout(() => window.location.reload(), 2000);
-            }
-        } catch (error: any) {
-            const errorMessage = error.response?.data || 'Failed!';
-            toast.error(errorMessage, {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2000,
-            });
-        } finally {
-            onClose();
-        }
+      if (response.status === 200) {
+        setTimeout(() => window.location.reload(), 2000);
+      }
+    } catch (error: any) {
+      const errorMessage = error.response?.data || 'Failed!';
+      toast.error(errorMessage, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    } finally {
+      onClose();
+    }
   };
 
   return (
@@ -86,10 +88,9 @@ const SurveyPopup: React.FC<SurveyPopupProps> = ({ username, onClose }) => {
               {['Price', 'Brand', 'Customer Reviews', 'Product Features', 'Discounts and Offers'].map((factor) => (
                 <label key={factor} className="mr-4">
                   <input
-                    type="checkbox"
+                    type="text"
                     name="purchaseFactors"
                     value={factor}
-                    checked={responses.purchaseFactors.includes(factor)}
                     onChange={handleChange}
                     className="mr-1"
                   />

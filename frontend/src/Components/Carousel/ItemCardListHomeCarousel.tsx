@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import LikeButton from '../../Components/Interactive/LikeButton';
 import { Link } from 'react-router-dom';
-import { IoIosArrowDropright } from "react-icons/io";
 
 // Utilities Component
 import Timer from '../../Components/Timer';

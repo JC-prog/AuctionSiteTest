@@ -116,7 +116,7 @@ public class UserController {
             userToUpdate.setInterestChecked(true);
             userService.updateUser(userToUpdate);
 
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("Thank You for the response", HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

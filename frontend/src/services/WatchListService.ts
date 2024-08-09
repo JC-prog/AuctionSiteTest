@@ -1,11 +1,9 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import baseUrl from '../config/baseUrl';
-import User from '../../interfaces/User';
-import { toast } from 'react-toastify';
 
 // Add Item To Watchlist
-export const addItemToWatchlist = async ( itemId: number, username: string ) => {
+export const addItemToWatchlist = async ( itemId: number, username: string | null | undefined ) => {
   
     const apiUrl = `/api/watchlist/add`;
     const payload = { itemId, username };
@@ -31,7 +29,7 @@ export const addItemToWatchlist = async ( itemId: number, username: string ) => 
 };
 
 // Remove Item from Watchlist
-export const removeItemFromWatchlist = async ( itemId: number, username: string ) => {
+export const removeItemFromWatchlist = async ( itemId: number, username: string | null | undefined ) => {
   
     const apiUrl = `/api/watchlist/remove`;
     const payload = { itemId, username };
@@ -55,11 +53,11 @@ export const removeItemFromWatchlist = async ( itemId: number, username: string 
     }
 };
 
-// Remove Item from Watchlist
-export const fetchItemsFromWatchlist = async ( username: string ) => {
+// Fetche Item from Watchlist
+export const fetchItemsFromWatchlist = async ( username: string | null | undefined ) => {
   
     const apiUrl = `/api/watchlist/items/${username}`;
-    const payload = {  username };
+
     const config = {
         headers: {
             Authorization: 'Bearer ' + Cookies.get('access_token'),

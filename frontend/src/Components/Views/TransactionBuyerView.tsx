@@ -115,7 +115,7 @@ const TransactionRow: React.FC<{ transaction: Transaction; index: number; itemIm
 );
 
 // Main component
-const TransactionBuyerView: React.FC<{ username: string }> = ({ username }) => {
+const TransactionBuyerView: React.FC<{ username: string | null | undefined }> = ({ username }) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -123,7 +123,7 @@ const TransactionBuyerView: React.FC<{ username: string }> = ({ username }) => {
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const response: AxiosResponse<Transaction[]> = await fetchBuyerTransaction(username);
+        const response = await fetchBuyerTransaction(username);
         setTransactions(response.data.content);
       } catch (error) {
         setError(error as Error);

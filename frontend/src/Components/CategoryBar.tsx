@@ -1,4 +1,3 @@
-import React from 'react'
 
 // Icons
 import { FaComputer} from 'react-icons/fa6';

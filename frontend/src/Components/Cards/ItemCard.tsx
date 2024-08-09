@@ -7,7 +7,7 @@ interface CardProps {
   imageUrl: string;
 }
 
-const ItemCard: React.FC<CardProps> = ({ title, price, timeLeft, imageUrl }) => {
+const ItemCard: React.FC<CardProps> = () => {
   return (
     
 

@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'; // Assuming you're using axios for API calls
 
-// Timer
-import Timer from '../Timer';
-
 type Item = {
     itemId: number;
     image: string;

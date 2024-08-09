@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../config/Api';
-import { Item } from '../../interfaces/IItem';
+import Item  from '../../interfaces/Item';
 import LikeButton from '../../Components/Interactive/LikeButton';
 import Timer from '../../Components/Timer';
 
 type ItemListProps = {
   item: Item;
-  username: string;
+  username: string | null | undefined;
 };
 
 const ProductCard: React.FC<ItemListProps> = ({ item, username }) => {

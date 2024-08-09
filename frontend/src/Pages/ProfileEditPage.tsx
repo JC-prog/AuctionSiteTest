@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 import api from '../config/api/loginApi';
@@ -9,10 +8,10 @@ import { changePassword } from '../services/AuthService';
 import { saveUser, deactivateUser } from '../services/UserService';
 
 const ProfileEditPage = () => {
-  const { username } = useParams<{ username: string }>();
+  const { username } = useParams<{ username: string | undefined }>();
   const navigate = useNavigate();
 
-  const [user, setUser] = useState<User>({
+  const [user, setUser] = useState<Partial<User>>({
     username: '',
     gender: '',
     email: '',
@@ -31,166 +30,99 @@ const ProfileEditPage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const bannerFileInputRef = useRef<HTMLInputElement>(null);
 
+  // Fetch user data, profile photo, and banner on component mount
+  useEffect(() => {
+    fetchUserData();
+    fetchPhoto(`/api/user/photo/${username}`, setPreview);
+    fetchPhoto(`/api/user/banner/${username}`, setBannerPreview);
+  }, [username]);
+
   useEffect(() => {
     if (user.address) {
       setAddressParts(user.address.split(','));
     }
   }, [user.address]);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const accessToken = Cookies.get('access_token');
-        const response = await api.get(`/api/user/${username}`, {
-          headers: {
-            Authorization: 'Bearer ' + accessToken,
-          },
-        });
-
-        if (response.status !== 200) {
-          throw new Error('Network response was not ok');
-        }
-
-        setUser(response.data);
-      } catch (error) {
-        setError(error as Error);
-      } finally {
-        setLoading(false);
+  const fetchUserData = async () => {
+    try {
+      const accessToken = Cookies.get('access_token');
+      const response = await api.get(`/api/user/${username}`, {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      });
+      if (response.status !== 200) {
+        throw new Error('Network response was not ok');
       }
-    };
+      setUser(response.data);
+    } catch (error) {
+      setError(error as Error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchUser();
-  }, [username]);
-
-  useEffect(() => {
-    const fetchProfilePhoto = async () => {
-      try {
-        const response = await api.get(`/api/user/photo/${username}`, { responseType: 'arraybuffer' });
-        const blob = new Blob([response.data], { type: 'image/jpeg' });
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setPreview(reader.result as string);
-        };
-        reader.readAsDataURL(blob);
-      } catch (error) {
-        console.error('Failed to fetch profile photo:', error);
-      }
-    };
-
-    fetchProfilePhoto();
-  }, [username]);
-
-  useEffect(() => {
-    const fetchBannerPhoto = async () => {
-      try {
-        const response = await api.get(`/api/user/banner/${username}`, { responseType: 'arraybuffer' });
-        const blob = new Blob([response.data], { type: 'image/jpeg' });
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setBannerPreview(reader.result as string);
-        };
-        reader.readAsDataURL(blob);
-      } catch (error) {
-        console.error('Failed to fetch banner photo:', error);
-      }
-    };
-
-    fetchBannerPhoto();
-  }, [username]);
-
-  const concatenateAddress = (parts: string[]): string => parts.join(',');
-
-  const handleAddressChange = (index: number, value: string) => {
-    const updatedAddressParts = [...addressParts];
-    updatedAddressParts[index] = value;
-    setAddressParts(updatedAddressParts);
-    setUser((prevUser) => ({
-      ...prevUser,
-      address: concatenateAddress(updatedAddressParts),
-    }));
+  const fetchPhoto = async (url: string, setPreview: React.Dispatch<React.SetStateAction<string | null>>) => {
+    try {
+      const response = await api.get(url, { responseType: 'arraybuffer' });
+      const blob = new Blob([response.data], { type: 'image/jpeg' });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result as string);
+      };
+      reader.readAsDataURL(blob);
+    } catch (error) {
+      console.error('Failed to fetch photo:', error);
+    }
   };
 
   const handleChangePassword = async () => {
     try {
-      const response: AxiosResponse = await changePassword(username, user.password);
-
+      const response = await changePassword(username, user.password);
       if (response.status === 200) {
-        toast.success('Password changed successfully.', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
+        toast.success('Password changed successfully.', { position: toast.POSITION.TOP_RIGHT, autoClose: 2000 });
       } else {
-        toast.error(`Failed to change password: ${response.data.error}`, {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
+        toast.error(`Failed to change password: ${response.data.error}`, { position: toast.POSITION.TOP_RIGHT, autoClose: 2000 });
       }
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Failed to change password. Please try again.', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
+      toast.error('Failed to change password. Please try again.', { position: toast.POSITION.TOP_RIGHT, autoClose: 2000 });
     }
   };
 
   const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     try {
       const response = await saveUser(user);
-
-      if (response.status === 200) {
-        toast.success('Profile updated successfully!', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-      } else {
-        toast.error('Failed to update profile. Please try again.', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
-      }
+      response.status === 200
+        ? toast.success('Profile updated successfully!', { position: toast.POSITION.TOP_RIGHT, autoClose: 1000 })
+        : toast.error('Failed to update profile. Please try again.', { position: toast.POSITION.TOP_RIGHT, autoClose: 2000 });
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Failed to update profile. Please check your inputs and try again.', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
+      toast.error('Failed to update profile. Please check your inputs and try again.', { position: toast.POSITION.TOP_RIGHT, autoClose: 2000 });
     }
   };
 
   const handleDeactivate = async () => {
     try {
-      const response: AxiosResponse = await deactivateUser({ username });
-
+      const response = await deactivateUser(username);
       if (response.status === 200) {
         Cookies.remove('access_token');
-        toast.success('Account deactivated successfully.', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
-
+        toast.success('Account deactivated successfully.', { position: toast.POSITION.TOP_RIGHT, autoClose: 2000 });
         setTimeout(() => {
           navigate(`/login`);
           window.location.reload();
         }, 2000);
       } else {
-        toast.error(`Failed to deactivate account: ${response.data.error}`, {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
+        toast.error(`Failed to deactivate account: ${response.data.error}`, { position: toast.POSITION.TOP_RIGHT, autoClose: 2000 });
       }
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Failed to deactivate account. Please try again.', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
+      toast.error('Failed to deactivate account. Please try again.', { position: toast.POSITION.TOP_RIGHT, autoClose: 2000 });
     }
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, setSelectedFile: React.Dispatch<React.SetStateAction<File | null>>, setPreview: React.Dispatch<React.SetStateAction<string | null>>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       setSelectedFile(file);
@@ -198,105 +130,41 @@ const ProfileEditPage = () => {
     }
   };
 
-  const handleBannerFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      setSelectedBanner(file);
-      setBannerPreview(URL.createObjectURL(file));
-    }
-  };
-
-  const triggerProfilePhotoInput = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
-  const triggerBannerPhotoInput = () => {
-    if (bannerFileInputRef.current) {
-      bannerFileInputRef.current.click();
-    }
-  };
-
-
-  const handleUploadPhoto = async () => {
-    if (!selectedFile) return;
-
+  const handleUpload = async (url: string, file: File | null, successMessage: string, errorMessage: string) => {
+    if (!file) return;
     const formData = new FormData();
-    formData.append('file', selectedFile);
-
+    formData.append('file', file);
     try {
-      const response = await api.post(`/api/user/upload-photo/${username}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const response = await api.post(url, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
-
-      if (response.status === 200) {
-        toast.success('Photo uploaded successfully!', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
-      } else {
-        toast.error('Failed to upload photo. Please try again.', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
-      }
+      response.status === 200
+        ? toast.success(successMessage, { position: toast.POSITION.TOP_RIGHT, autoClose: 2000 })
+        : toast.error(errorMessage, { position: toast.POSITION.TOP_RIGHT, autoClose: 2000 });
     } catch (error) {
       console.error('Error uploading file:', error);
-      toast.error('Error uploading file. Please try again.', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
+      toast.error('Error uploading file. Please try again.', { position: toast.POSITION.TOP_RIGHT, autoClose: 2000 });
     }
   };
 
-  const handleUploadBanner = async () => {
-    if (!selectedBanner) return;
+  const concatenateAddress = (parts: string[]): string => parts.join(',');
 
-    const formData = new FormData();
-    formData.append('file', selectedBanner);
-
-    try {
-      const response = await api.post(`/api/user/upload-banner/${username}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      if (response.status === 200) {
-        toast.success('Banner uploaded successfully!', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
-      } else {
-        toast.error('Failed to upload banner. Please try again.', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
-      }
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      toast.error('Error uploading file. Please try again.', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-    }
-  };
-
-  const triggerFileInput = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+  const handleAddressChange = (index: number, value: string) => {
+    const updatedAddressParts = [...addressParts];
+    updatedAddressParts[index] = value;
+    setAddressParts(updatedAddressParts);
+    setUser((prevUser) => ({ ...prevUser, address: concatenateAddress(updatedAddressParts) }));
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
+    setUser((prevUser) => ({ ...prevUser, [name]: value }));
+  };
+
+  const triggerFileInput = (inputRef: React.RefObject<HTMLInputElement>) => {
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
   };
 
   if (loading) return <div>Loading...</div>;
@@ -307,283 +175,141 @@ const ProfileEditPage = () => {
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-8">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-semibold">Edit Profile</h2>
-          <Link
-            to={`/user/${user.username}`}
-            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
-          >
+          <Link to={`/user/${user.username}`} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">
             Cancel
           </Link>
         </div>
 
         <div className="flex mb-8 space-x-4">
-          <div className="w-1/3">
-            <label className="text-xl font-semibold mb-2 block">Profile Picture</label>
-            {preview ? (
-              <img
-                src={preview}
-                alt="Profile"
-                className="rounded-full w-40 h-40 object-cover cursor-pointer"
-                onClick={triggerProfilePhotoInput}
-              />
-            ) : (
-              <div
-                className="rounded-full w-40 h-40 bg-gray-300 flex items-center justify-center cursor-pointer"
-                onClick={triggerProfilePhotoInput}
-              >
-                <span>Upload Profile Photo</span>
-              </div>
-            )}
-            <input
-              type="file"
-              ref={fileInputRef}
-              style={{ display: 'none' }}
-              onChange={handleFileChange}
+            <ProfilePhotoSection
+                preview={preview}
+                onClick={() => triggerFileInput(fileInputRef)}
+                onFileChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFileChange(e, setSelectedFile, setPreview)}
+                fileInputRef={fileInputRef}
             />
-          </div>
-
-          <div className="w-2/3">
-            <label className="text-xl font-semibold mb-2 block">Banner Picture</label>
-            {bannerPreview ? (
-              <img
-                src={bannerPreview}
-                alt="Banner"
-                className="w-full h-40 object-cover cursor-pointer"
-                onClick={triggerBannerPhotoInput}
-              />
-            ) : (
-              <div
-                className="w-full h-40 bg-gray-300 flex items-center justify-center cursor-pointer"
-                onClick={triggerBannerPhotoInput}
-              >
-                <span>Upload Banner Photo</span>
-              </div>
-            )}
-            <input
-              type="file"
-              ref={bannerFileInputRef}
-              style={{ display: 'none' }}
-              onChange={handleBannerFileChange}
+            <BannerPhotoSection
+                bannerPreview={bannerPreview}
+                onClick={() => triggerFileInput(bannerFileInputRef)}
+                onFileChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFileChange(e, setSelectedBanner, setBannerPreview)}
+                bannerFileInputRef={bannerFileInputRef}
             />
-          </div>
         </div>
 
-
         <form onSubmit={handleSave} className="space-y-6">
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <label className="block text-lg font-semibold mb-2">Username</label>
-              <input
-                type="text"
-                name="username"
-                value={user.username}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-                disabled
-              />
-            </div>
-            <div>
-              <label className="block text-lg font-semibold mb-2">Gender</label>
-              <select
-                name="gender"
-                value={user.gender}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-              >
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-          </div>
+          <UserDetailsSection user={user} onChange={handleChange} />
+          <AddressSection addressParts={addressParts} onAddressChange={handleAddressChange} />
+          <PasswordSection password={user.password} onChange={handleChange} onChangePassword={handleChangePassword} />
+          <ActionsSection onDeactivate={handleDeactivate} />
+        </form>
 
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <label className="block text-lg font-semibold mb-2">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={user.email}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-              />
-            </div>
-            <div>
-              <label className="block text-lg font-semibold mb-2">Contact Number</label>
-              <input
-                type="text"
-                name="contactNumber"
-                value={user.contactNumber}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-lg font-semibold mb-2">Address</label>
-            <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="Street"
-                value={addressParts[0]}
-                onChange={(e) => handleAddressChange(0, e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-              />
-              <input
-                type="text"
-                placeholder="City"
-                value={addressParts[1]}
-                onChange={(e) => handleAddressChange(1, e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-              />
-              <input
-                type="text"
-                placeholder="State"
-                value={addressParts[2]}
-                onChange={(e) => handleAddressChange(2, e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-              />
-              <input
-                type="text"
-                placeholder="Postal Code"
-                value={addressParts[3]}
-                onChange={(e) => handleAddressChange(3, e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-lg font-semibold mb-2">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={user.password}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
-
-          <div className="flex justify-end space-x-4">
-            <button
-              type="button"
-              onClick={handleChangePassword}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-            >
-              Change Password
-            </button>
-            <button
-              type="submit"
-              className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600"
-            >
-              Save
-            </button>
-            <button
-              type="button"
-              onClick={handleDeactivate}
-              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
-            >
-              Deactivate Account
-            </button>
-          </div>
-          </form>
-
-          <div className="mt-8 mb-8 space-y-6">
-            <div className="flex justify-between items-center">
-              <label className="block text-xl font-semibold mb-2">Upload Profile Picture</label>
-              <button
-                type="button"
-                onClick={handleUploadPhoto}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-              >
-                Upload Photo
-              </button>
-            </div>
-            <div className="flex justify-between items-center">
-              <label className="block text-xl font-semibold mb-2">Upload Profile Banner</label>
-              <button
-                type="button"
-                onClick={handleUploadBanner}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-              >
-                Upload Banner
-              </button>
-            </div>
-          </div>
-
-          <h2 className="text-3xl font-semibold">Interests</h2>
-            <form>
-              <div className="mb-4">
-                <label className="block font-bold mb-2">What type of products are you most interested in?</label>
-                <select name="productInterest" onChange={handleChange} className="w-full p-2 border rounded">
-                  <option value="">Select</option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="Fashion">Fashion</option>
-                  <option value="Home & Kitchen">Home & Kitchen</option>
-                  <option value="Books">Books</option>
-                  <option value="Beauty & Health">Beauty & Health</option>
-                </select>
-              </div>
-              <div className="mb-4">
-                <label className="block font-bold mb-2">How often do you shop online?</label>
-                <select name="shoppingFrequency"  onChange={handleChange} className="w-full p-2 border rounded">
-                  <option value="">Select</option>
-                  <option value="Daily">Daily</option>
-                  <option value="Weekly">Weekly</option>
-                  <option value="Monthly">Monthly</option>
-                  <option value="Rarely">Rarely</option>
-                </select>
-              </div>
-              <div className="mb-4">
-                <label className="block font-bold mb-2">Which factors influence your purchase decisions the most?</label>
-                <div className="flex flex-wrap">
-                  {['Price', 'Brand', 'Customer Reviews', 'Product Features', 'Discounts and Offers'].map((factor) => (
-                    <label key={factor} className="mr-4">
-                      <input
-                        type="checkbox"
-                        name="purchaseFactors"
-                        value={factor}
-                        
-                        onChange={handleChange}
-                        className="mr-1"
-                      />
-                      {factor}
-                    </label>
-                  ))}
-                </div>
-              </div>
-              <div className="mb-4">
-                <label className="block font-bold mb-2">What is your preferred mode of payment?</label>
-                <select name="paymentMethod"  onChange={handleChange} className="w-full p-2 border rounded">
-                  <option value="">Select</option>
-                  <option value="Credit/Debit Card">Credit/Debit Card</option>
-                  <option value="PayPal">PayPal</option>
-                  <option value="Cash on Delivery">Cash on Delivery</option>
-                  <option value="Other">Other (please specify)</option>
-                </select>
-              </div>
-              <div className="mb-4">
-                <label className="block font-bold mb-2">How do you usually find new products on our website?</label>
-                <select name="productDiscovery"  onChange={handleChange} className="w-full p-2 border rounded">
-                  <option value="">Select</option>
-                  <option value="Browsing categories">Browsing categories</option>
-                  <option value="Using the search bar">Using the search bar</option>
-                  <option value="Recommendations from the website">Recommendations from the website</option>
-                  <option value="Email/newsletter promotions">Email/newsletter promotions</option>
-                  <option value="Social media ads">Social media ads</option>
-                </select>
-              </div>
-              <div className="flex justify-end">
-                <button type="button"  className="bg-blue-500 text-white px-4 py-2 rounded">
-                  Update Interest
-                </button>
-              </div>
-            </form>
-
+        <UploadSection
+          onUploadPhoto={() => handleUpload(`/api/user/upload-photo/${username}`, selectedFile, 'Photo uploaded successfully!', 'Failed to upload photo. Please try again.')}
+          onUploadBanner={() => handleUpload(`/api/user/upload-banner/${username}`, selectedBanner, 'Banner uploaded successfully!', 'Failed to upload banner. Please try again.')}
+        />
       </div>
     </div>
   );
 };
+
+const ProfilePhotoSection = ({ preview, onClick, onFileChange, fileInputRef }: any) => (
+  <div className="flex flex-col items-center space-y-4">
+    <img src={preview || '/default-profile.jpg'} alt="Profile" className="w-32 h-32 object-cover rounded-full" />
+    <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={onFileChange} />
+    <button type="button" onClick={onClick} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+      Upload Profile Photo
+    </button>
+  </div>
+);
+
+const BannerPhotoSection = ({ bannerPreview, onClick, onFileChange, bannerFileInputRef }: any) => (
+  <div className="flex flex-col items-center space-y-4">
+    <img src={bannerPreview || '/default-banner.jpg'} alt="Banner" className="w-full h-32 object-cover rounded-lg" />
+    <input type="file" ref={bannerFileInputRef} style={{ display: 'none' }} onChange={onFileChange} />
+    <button type="button" onClick={onClick} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+      Upload Profile Banner
+    </button>
+  </div>
+);
+
+const UserDetailsSection = ({ user, onChange }: any) => (
+  <>
+    <div className="flex justify-between items-center">
+      <label className="block text-xl font-semibold mb-2">Username</label>
+      <input type="text" name="username" value={user.username || ''} onChange={onChange} className="w-2/3 p-2 border rounded-md" />
+    </div>
+    <div className="flex justify-between items-center">
+      <label className="block text-xl font-semibold mb-2">Email</label>
+      <input type="email" name="email" value={user.email || ''} onChange={onChange} className="w-2/3 p-2 border rounded-md" />
+    </div>
+    <div className="flex justify-between items-center">
+      <label className="block text-xl font-semibold mb-2">Contact Number</label>
+      <input type="tel" name="contactNumber" value={user.contactNumber || ''} onChange={onChange} className="w-2/3 p-2 border rounded-md" />
+    </div>
+    <div className="flex justify-between items-center">
+      <label className="block text-xl font-semibold mb-2">Gender</label>
+      <select name="gender" value={user.gender || ''} onChange={onChange} className="w-2/3 p-2 border rounded-md">
+        <option value="">Select Gender</option>
+        <option value="MALE">Male</option>
+        <option value="FEMALE">Female</option>
+        <option value="OTHER">Other</option>
+      </select>
+    </div>
+  </>
+);
+
+const AddressSection = ({ addressParts, onAddressChange }: any) => (
+  <>
+    <div className="flex justify-between items-center">
+      <label className="block text-xl font-semibold mb-2">Street</label>
+      <input type="text" name="street" value={addressParts[0]} onChange={(e) => onAddressChange(0, e.target.value)} className="w-2/3 p-2 border rounded-md" />
+    </div>
+    <div className="flex justify-between items-center">
+      <label className="block text-xl font-semibold mb-2">City</label>
+      <input type="text" name="city" value={addressParts[1]} onChange={(e) => onAddressChange(1, e.target.value)} className="w-2/3 p-2 border rounded-md" />
+    </div>
+    <div className="flex justify-between items-center">
+      <label className="block text-xl font-semibold mb-2">State</label>
+      <input type="text" name="state" value={addressParts[2]} onChange={(e) => onAddressChange(2, e.target.value)} className="w-2/3 p-2 border rounded-md" />
+    </div>
+    <div className="flex justify-between items-center">
+      <label className="block text-xl font-semibold mb-2">ZIP Code</label>
+      <input type="text" name="zipCode" value={addressParts[3]} onChange={(e) => onAddressChange(3, e.target.value)} className="w-2/3 p-2 border rounded-md" />
+    </div>
+  </>
+);
+
+const PasswordSection = ({ password, onChange, onChangePassword }: any) => (
+  <>
+    <div className="flex justify-between items-center">
+      <label className="block text-xl font-semibold mb-2">Password</label>
+      <input type="password" name="password" value={password || ''} onChange={onChange} className="w-2/3 p-2 border rounded-md" />
+    </div>
+    <button type="button" onClick={onChangePassword} className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">
+      Change Password
+    </button>
+  </>
+);
+
+const ActionsSection = ({ onDeactivate }: any) => (
+  <div className="flex justify-end space-x-4">
+    <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+      Save
+    </button>
+    <button type="button" onClick={onDeactivate} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">
+      Deactivate Account
+    </button>
+  </div>
+);
+
+const UploadSection = ({ onUploadPhoto, onUploadBanner }: any) => (
+  <div className="flex justify-between items-center mt-8">
+    <button type="button" onClick={onUploadPhoto} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+      Upload Profile Photo
+    </button>
+    <button type="button" onClick={onUploadBanner} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+      Upload Profile Banner
+    </button>
+  </div>
+);
 
 export default ProfileEditPage;

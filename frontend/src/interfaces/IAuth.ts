@@ -1,6 +1,6 @@
 interface AuthProps {
     isAuth?: boolean,
-    user: string | null;
+    user?: string | null;
     role?: string | null;
   }
 

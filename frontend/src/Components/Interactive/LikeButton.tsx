@@ -4,7 +4,7 @@ import { addItemToWatchlist, removeItemFromWatchlist } from '../../services/Watc
 
 type LikeButtonProps = {
   isLiked: boolean;
-  username: string;
+  username: string | null | undefined;
   itemId: number;
 };
 

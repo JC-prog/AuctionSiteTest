@@ -1,6 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
-import User from '../interfaces/User';
 import baseUrl from '../config/baseUrl';
 
 const getAuthConfig = () => {
@@ -16,6 +14,7 @@ const getAuthConfig = () => {
     };
 };
 
+/*
 const apiPost = async (url: string, payload: any) => {
     try {
         const response = await baseUrl.post(url, payload, getAuthConfig());
@@ -28,6 +27,7 @@ const apiPost = async (url: string, payload: any) => {
 
     }
 };
+*/
 
 const apiGet = async (url: string) => {
     try {
@@ -43,7 +43,7 @@ const apiGet = async (url: string) => {
 };
 
 // Get Notification by User
-export const fetchNotification = (username: string) => {
+export const fetchNotification = (username: string | null | undefined) => {
     const apiUrl = `/api/notification/${username}`;
     console.log(apiUrl);
     const response = apiGet(apiUrl);

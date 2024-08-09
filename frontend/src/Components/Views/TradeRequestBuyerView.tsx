@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { AxiosResponse } from 'axios';
 import TradeRequest from '../../interfaces/TradeRequest.ts';
 import { fetchBuyerTradeRequest } from '../../services/TradeRequestService';
-import api from '../../config/Api';
-import { toast } from 'react-toastify';
+import api from '../../config/Api';;
 
 // Custom hook for fetching item images
 const useItemImages = (tradeRequests: TradeRequest[]) => {
@@ -31,7 +29,7 @@ const useItemImages = (tradeRequests: TradeRequest[]) => {
 };
 
 // Render Available Actions
-const renderActions = (status: string, tradeRequestId: number) => {
+const renderActions = (status: string) => {
   switch (status) {
     case "PENDING":
       return (
@@ -81,14 +79,14 @@ const TradeRequestRow: React.FC<{ tradeRequest: TradeRequest; index: number; ite
       </div>
       <div className="col-span-2 flex items-center">
         <button className="mx-1 bg-blue-500 text-white px-2 py-1 rounded">View</button>
-        {renderActions(tradeRequest.status, tradeRequest.id)}
+        {renderActions(tradeRequest.status)}
       </div>
     </div>
   </div>
 );
 
 // Main component
-const TradeRequestBuyerView: React.FC<{ username: string }> = ({ username }) => {
+const TradeRequestBuyerView: React.FC<{ username: string | null | undefined }> = ({ username }) => {
   const [tradeRequests, settradeRequests] = useState<TradeRequest[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -96,7 +94,7 @@ const TradeRequestBuyerView: React.FC<{ username: string }> = ({ username }) => 
   useEffect(() => {
     const fetchtradeRequest = async () => {
       try {
-        const response: AxiosResponse<TradeRequest[]> = await fetchBuyerTradeRequest(username);
+        const response = await fetchBuyerTradeRequest(username);
         settradeRequests(response.data.content);
       } catch (error) {
         setError(error as Error);

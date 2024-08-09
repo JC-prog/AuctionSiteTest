@@ -1,6 +1,6 @@
 interface User {
     id: number;
-    username: string;
+    username: string | null | undefined;
     password: string;
     email: string;
     gender: string;

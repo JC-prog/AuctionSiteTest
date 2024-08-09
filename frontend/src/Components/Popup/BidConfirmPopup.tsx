@@ -3,8 +3,8 @@ import { toast } from 'react-toastify';
 import { bidItem } from '../../services/BidService';
 
 interface BidConfirmPopupProps {
-    itemId: number;
-    username: string;
+    itemId: number | null | undefined;
+    username: string | null | undefined;
     onClose: () => void;
 }
 
@@ -13,7 +13,7 @@ const BidConfirmPopup: React.FC<BidConfirmPopupProps> = ({ itemId, username, onC
 
     const handleConfirm = async () => {
         try {
-            const response = await bidItem(itemId, username, bidAmount);
+            const response = await bidItem(itemId, username, Number(bidAmount));
             const message = response.data;
 
             toast[response.status === 200 ? 'success' : 'error'](message, {

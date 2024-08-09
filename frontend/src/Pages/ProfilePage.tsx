@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 
@@ -7,19 +7,16 @@ import Cookies from 'js-cookie';
 import api from '../config/api/loginApi';
 
 // Models
-import IUser from '../interfaces/User';
-import IItem from '../interfaces/IItem';
+import User from '../interfaces/User';
 
 // Components
-import ItemCardListCarousel from '../Components/Carousel/ItemCardListCarousel';
-import ItemCardListCarouselWithTimer from '../Components/Carousel/ItemCardListCarouselWithTimer';
 import ItemList from '../Components/List/ItemList';
-import ProductGrid from '../Components/Carousel/ProductGrid';
-import UserItemExpringCarousel from '../Components/Carousel/UserItemExpiringCarousel';
+import UserItemExpiringCarousel from '../Components/Carousel/UserItemExpiringCarousel';
 import UserItemSoldCarousel from '../Components/Carousel/UserItemSoldCarousel';
 import UserItemListedCarousel from '../Components/Carousel/UserItemListedCarousel';
 
-const items: Item[] = [
+
+const items = [
     {
         itemId: 1,
         image: '/bike.jpg',
@@ -35,40 +32,29 @@ const items: Item[] = [
     // Add more items here
 ];
 
-interface PaginatedResponse {
-    content: IItem[];
-    // Add other pagination properties if needed
-  }
 
 const ProfilePage: React.FC = () => {
     const { username } = useParams<{ username: string }>();
-    const [user, setUser] = useState<IUser | null>(null);
-
-    const [recentItems, setRecentItems] = useState<IItem[]>([]);
-
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
-    const navigate = useNavigate();
+    const [userImage, setUserImage] = useState<string | null>(null);
+    const [bannerImage, setBannerImage] = useState<string | null>(null);
 
     // Fetch User
     useEffect(() => {
         const fetchUser = async () => {
             try {
                 const accessToken = Cookies.get('access_token');
-
-                const response: AxiosResponse<IUser> = await api.get(`/api/user/${username}`, 
-                    { 
-                        headers: {
-                            'Authorization': 'Bearer ' + accessToken
-                        } 
-                    });
+                const response: AxiosResponse<User> = await api.get(`/api/user/${username}`, {
+                    headers: { 'Authorization': 'Bearer ' + accessToken },
+                });
 
                 if (response.status !== 200) {
                     throw new Error('Network response was not ok');
                 }
 
                 setUser(response.data);
-
             } catch (error) {
                 setError(error as Error);
             } finally {
@@ -80,7 +66,6 @@ const ProfilePage: React.FC = () => {
     }, [username]);
 
     // Fetch User Photo
-    const [userImage, setUserImage] = useState<string | null>(null);
     useEffect(() => {
         const fetchProfilePhoto = async () => {
             try {
@@ -97,10 +82,9 @@ const ProfilePage: React.FC = () => {
         };
 
         fetchProfilePhoto();
-    }, []);
+    }, [username]);
 
     // Fetch Banner Image
-    const [bannerImage, setBannerImage] = useState<string | null>(null);
     useEffect(() => {
         const fetchBannerImage = async () => {
             try {
@@ -108,7 +92,7 @@ const ProfilePage: React.FC = () => {
                 const blob = new Blob([response.data], { type: 'image/jpeg' });
                 const reader = new FileReader();
                 reader.onloadend = () => {
-                    setUserImage(reader.result as string);
+                    setBannerImage(reader.result as string);
                 };
                 reader.readAsDataURL(blob);
             } catch (error) {
@@ -117,17 +101,8 @@ const ProfilePage: React.FC = () => {
         };
 
         fetchBannerImage();
-    }, []);
-  
+    }, [username]);
 
-    
-    // Fetch Top Items
-
-
-    // Fetch Recent Items
-
-
-    // State Handling
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -139,36 +114,34 @@ const ProfilePage: React.FC = () => {
     return (
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
             <div className="relative">
-                <img  src={bannerImage || "/banner.jpeg"} alt="Background" className="w-full h-48 object-cover" />
+                <img src={bannerImage || '/banner.jpeg'} alt="Background" className="w-full h-48 object-cover" />
                 <div className="absolute top-0 left-0 w-full h-48 bg-white opacity-50"></div>
             </div>
 
             <div className="p-6">
                 <div className="flex flex-col lg:flex-row lg:space-x-8">
-
                     <ItemList listTitle="Popular" items={items} />
 
                     <div className="lg:w-1/2">
-                        <h2 className="text-2xl font-semibold mb-4">Seller </h2>
+                        <h2 className="text-2xl font-semibold mb-4">Seller</h2>
                         <div className="bg-white p-4 rounded-lg shadow-lg flex items-center">
-                            <img src={userImage || "/upload-photo.png"} alt="Liked Song" className="w-12 h-12 rounded-full object-cover mr-4" />
+                            <img
+                                src={userImage || '/upload-photo.png'}
+                                alt="Profile"
+                                className="w-12 h-12 rounded-full object-cover mr-4"
+                            />
                             <div>
                                 <h3 className="text-lg font-medium">{user?.username}</h3>
                                 <p className="text-sm text-gray-500">{user?.accountType}</p>
                             </div>
                         </div>
                     </div>
-
-
-                    
                 </div>
             </div>
-            <UserItemListedCarousel  username={user}/>
 
-            <UserItemExpringCarousel username={user}/>
-
-            <UserItemSoldCarousel username={user} />
-            
+            <UserItemListedCarousel username={username} />
+            <UserItemExpiringCarousel username={username} />
+            <UserItemSoldCarousel username={username} />
         </div>
     );
 };

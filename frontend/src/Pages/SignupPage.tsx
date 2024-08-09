@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import api from '../config/api/loginApi';
 
 // Interface
-import User from "../interfaces/UserModel.ts";
 
 const SignupPage = () => {
 	const [formData, setFormData] = useState({

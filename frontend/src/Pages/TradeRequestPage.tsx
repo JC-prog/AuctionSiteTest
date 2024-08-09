@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import TradeRequestBuyerView from '../Components/Views/TradeRequestBuyerView';
 import TradeRequestSellerView from '../Components/Views/TradeRequestSellerView';
-import { FaCartShopping } from "react-icons/fa6";
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
 
 // Interface
 import IAuth from '../interfaces/IAuth';
 
-const TradeRequestPage: React.FC<IAuth> = ({ isAuth, user }) => {
+const TradeRequestPage: React.FC<IAuth> = ({ user }) => {
   const [buyerView, setBuyerView] = useState<boolean>(true);
   
 

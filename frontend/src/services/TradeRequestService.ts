@@ -1,6 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
-import User from '../interfaces/User';
 import baseUrl from '../config/baseUrl';
 
 const getAuthConfig = () => {
@@ -43,7 +41,7 @@ const apiGet = async (url: string) => {
 };
 
 // Fetch Buyer Trade Request
-export const fetchBuyerTradeRequest = (username: string) => {
+export const fetchBuyerTradeRequest = (username: string | null | undefined) => {
     const apiUrl = `/api/trade/buyer/${username}`;
     console.log(apiUrl);
     const response = apiGet(apiUrl);
@@ -52,7 +50,7 @@ export const fetchBuyerTradeRequest = (username: string) => {
 };
 
 // Fetch Seller Trade Request 
-export const fetchSellerTradeRequest = (username: string) => {
+export const fetchSellerTradeRequest = (username: string | null | undefined) => {
     const apiUrl = `/api/trade/buyer/${username}`;
     console.log(apiUrl);
     const response = apiGet(apiUrl);
@@ -61,7 +59,7 @@ export const fetchSellerTradeRequest = (username: string) => {
 };
 
 // Initiate Trade
-export const initiateTrade = (buyerItemId: number, buyerName: string, sellerItemId: number) => {
+export const initiateTrade = (buyerItemId: number, buyerName: string | null | undefined, sellerItemId: number | null |  undefined) => {
     const apiUrl = `/api/trade`;
     console.log(apiUrl);
 

@@ -11,11 +11,11 @@ import api from '../../config/api/loginApi';
 import { launchItem, acceptBid, rejectBid } from '../../services/ItemService'; 
 
 import Timer from '../../Components/Timer';
-import IItem from '../../interfaces/IItem'; // Adjust the path to your IItem interface
+import Item from '../../interfaces/Item'; 
 
 interface ItemListProps {
   listTitle: string;
-  items: IItem[];
+  items: Item[];
 }
 
 const UserItemList: React.FC<ItemListProps> = ({ items }) => {
@@ -135,13 +135,8 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
     }
   };
 
-  // Placeholder function for deleting listing (to be implemented)
-  const deleteListing = async (itemId: number) => {
-    // Implement your delete functionality here
-  };
-
   // Render Status
-  const renderStatus = (item) => {
+  const renderStatus = (item: Item) => {
     switch (item.status) {
       case "CREATED":
         return <p>Not Started</p>;
@@ -155,7 +150,7 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
   };
 
   // Render Available Actions
-  const renderActions = (item) => {
+  const renderActions = (item: Item) => {
     switch (item.status) {
       case "CREATED":
       case "EXPIRED":
@@ -175,7 +170,6 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
                 </button>
                 <button 
                     className="text-red-600 hover:text-red-900 focus:outline-none flex items-center px-1"
-                    onClick={() => deleteListing(item.itemId)}
                 >
                     <FiTrash className="mr-1" /> Delete
                 </button>

@@ -1,33 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { AxiosResponse } from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { FiEdit, FiUpload } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 import { FaFolder } from "react-icons/fa6";
 
 // Api Function Call
 import { fetchItemsByUsername } from '../services/ItemService';
 
-// Config
-import api from '../config/api/loginApi';
 
 // Interfaces
-import IItem from '../interfaces/IItem';
+import IItem from '../interfaces/Item';
 
 interface AuthProps {
-  isAuth: boolean;
-  user: string;
-}
-
-interface ApiResponse {
-  results: Item[]; 
+  isAuth?: boolean;
+  user: string | null | undefined;
 }
 
 // Utility
-import Timer from '../Components/Timer';
 import UserItemList from '../Components/List/UserItemList';
 
-const ItemsTable: React.FC<AuthProps> = ({ isAuth, user }) => {
+const ItemsTable: React.FC<AuthProps> = ({ user }) => {
     const [items, setItems] = useState<IItem[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
@@ -39,9 +29,10 @@ const ItemsTable: React.FC<AuthProps> = ({ isAuth, user }) => {
         navigate('/item/create');
     };
 
+    /*
     const navigateToEditListing = () => {
         navigate('/item/edit');
-    };
+    }; */
 
     // Get items by seller
     useEffect(() => {

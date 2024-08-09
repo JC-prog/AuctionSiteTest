@@ -1,5 +1,3 @@
-import React from 'react'
-
 import PlanCard from '../Components/Cards/PlanCard'
 
 const AnalyticsPage = () => {

@@ -1,7 +1,4 @@
-import React from 'react'
 
-// Components
-import ItemCard from "../Components/ItemCard"
 
 
 const ItemCarousel = () => {
@@ -15,7 +12,7 @@ const ItemCarousel = () => {
             </div>
 
             <div className="item-cards-container">
-              <ItemCard />
+
             </div>
 
         </div>

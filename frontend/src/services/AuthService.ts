@@ -1,8 +1,6 @@
-import axios, { AxiosResponse } from 'axios';
-import Cookies from 'js-cookie';
+import { AxiosResponse } from 'axios';
 import User from '../interfaces/User';
 import baseUrl from '../config/baseUrl';
-import { fetchItemsByUsername } from './ItemService';
 
 const handleResponse = (response: AxiosResponse) => {
     if (response.status !== 200) {
@@ -34,7 +32,7 @@ export const registerUser = (user: User) => {
 };
 
 // Login User
-export const loginUser = (username: string, password: string) => {
+export const loginUser = (username: string | null | undefined, password: string | null | undefined) => {
     const apiUrl = `/api/auth/login`;
     const payload = { username, password };
 
@@ -42,7 +40,7 @@ export const loginUser = (username: string, password: string) => {
 };
 
 // Change Password
-export const changePassword =(username: string, password: string) => {
+export const changePassword =(username: string | null | undefined, password: string | null | undefined) => {
     const apiUrl = `/api/auth/change-password`;
     const payload = { username, password };
 
@@ -52,7 +50,7 @@ export const changePassword =(username: string, password: string) => {
 }
 
 // Reset Password
-export const resetPassword =(username: string) => {
+export const resetPassword =(username: string | null | undefined) => {
     const apiUrl = `/api/auth/reset-password`;
     const payload = { username }
 

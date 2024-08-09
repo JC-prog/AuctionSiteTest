@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiTrash } from 'react-icons/fi';
-import { IoMdTrendingUp, IoMdTrendingDown } from 'react-icons/io';
+import { IoMdTrendingUp } from 'react-icons/io';
 import { toast } from 'react-toastify';
 import Timer from '../Timer'; // Assuming Timer component is already defined
 import api from '../../config/Api';
-import Item from '../../interfaces/IItem';
+import Item from '../../interfaces/Item';
 import { removeItemFromWatchlist } from '../../services/WatchListService';
 import { FaHeart } from 'react-icons/fa';
 
 type ItemListProps = {
   listTitle: string;
   items: Item[];
-  username: string;
+  username: string | null | undefined;
 };
 
 const ItemWatchList: React.FC<ItemListProps> = ({ listTitle, items, username }) => {

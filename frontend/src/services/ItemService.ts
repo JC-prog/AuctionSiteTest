@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 
 
@@ -6,11 +6,7 @@ import Cookies from 'js-cookie';
 import baseUrl from '../config/baseUrl';
 
 // Interface
-import Item from '../interfaces/IItem';
-
-interface PaginatedResponse {
-  content: Item[];
-}
+import Item from '../interfaces/Item';
 
 const getAuthConfig = () => {
     const token = Cookies.get('access_token');
@@ -52,14 +48,14 @@ const apiGet = async (url: string) => {
 };
 
 // Fetch Items
-export const fetchItems = async (page: number = 0): Promise<IItem[]> => {
+export const fetchItems = async (page: number = 0) => {
     try {
       const accessToken = Cookies.get('access_token');
       if (!accessToken) {
         throw new Error('No access token found');
       }
   
-      const response: AxiosResponse<PaginatedResponse> = await baseUrl.get(`/api/item?page=${page}`, {
+      const response = await baseUrl.get(`/api/item?page=${page}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
         },
@@ -79,7 +75,7 @@ export const fetchItems = async (page: number = 0): Promise<IItem[]> => {
   };
 
 // Fetch Item by ItemId
-export const fetchItemByItemId = async (itemId: string): Promise<Item> => {
+export const fetchItemByItemId = async (itemId: string) => {
     try {
       const accessToken = Cookies.get('access_token');
       if (!accessToken) {
@@ -103,7 +99,7 @@ export const fetchItemByItemId = async (itemId: string): Promise<Item> => {
   };
 
   // Fetch Items By Keyword
-  export const fetchItemsByKeyword = async (keyword: string, page: number = 0): Promise<Item[]> => {
+  export const fetchItemsByKeyword = async (keyword: string): Promise<Item[]> => {
     try {
       const accessToken = Cookies.get('access_token');
       if (!accessToken) {
@@ -134,7 +130,7 @@ export const fetchItemsByCategory = async (page: number = 0): Promise<Item[]> =>
       throw new Error('No access token found');
     }
 
-    const response: AxiosResponse<IItem[]> = await baseUrl.get(`/api/item?page=${page}`, {
+    const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/item?page=${page}`, {
       headers: {
         Authorization: 'Bearer ' + accessToken,
       },
@@ -175,7 +171,7 @@ export const fetchItemsByEndDate = async (page: number = 0): Promise<Item[]> => 
   };
 
 // Fetch Items By User
-export const fetchItemsByUsername = async (username: string, page: number = 0): Promise<IItem[]> => {
+export const fetchItemsByUsername = async (username: string | null | undefined): Promise<Item[]> => {
     try {
         const accessToken = Cookies.get('access_token');
         if (!accessToken) {

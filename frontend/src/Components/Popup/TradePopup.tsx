@@ -1,15 +1,15 @@
 // src/Popup.tsx
 import React, { useState, useEffect } from 'react';
-import Item from '../../interfaces/IItem';
-import axios, { AxiosResponse } from 'axios';
+import Item from '../../interfaces/Item';
+import { AxiosResponse } from 'axios';
 import api from '../../config/Api';
 import { toast } from 'react-toastify';
 import { initiateTrade } from '../../services/TradeRequestService';
 
 interface PopupProps {
     onClose: () => void;
-    itemId: number;
-    username: string;
+    itemId: number | null | undefined;
+    username: string | null | undefined;
 }
 
 interface PaginatedResponse {

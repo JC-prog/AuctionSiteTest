@@ -1,8 +1,7 @@
 import React from 'react'
-import { useNavigate, Link } from 'react-router-dom';
-import { FiTrash } from 'react-icons/fi';
+import { Link } from 'react-router-dom';;
 import { CiStop1, CiPlay1 } from 'react-icons/ci';
-import IItem from '../../interfaces/IItem';
+import IItem from '../../interfaces/Item';
 import { suspendItem, activateItem } from '../../services/AdminService'; 
 
 type ItemListProps = {

@@ -6,7 +6,7 @@ import { FaCartShopping } from "react-icons/fa6";
 // Interface
 import IAuth from '../interfaces/IAuth';
 
-const TransactionPage: React.FC<IAuth> = ({ isAuth, user }) => {
+const TransactionPage: React.FC<IAuth> = ({ user }) => {
   const [buyerView, setBuyerView] = useState<boolean>(true);
   
 

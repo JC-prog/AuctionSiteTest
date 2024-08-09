@@ -1,17 +1,17 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import baseUrl from '../config/baseUrl';
-import IUser from '../../interfaces/IUser';
+import User from '../interfaces/User'
 import { toast } from 'react-toastify';
 
-export const suspendUser = async (username: string): Promise<IUser> => {
+export const suspendUser = async (username: string | null | undefined): Promise<User> => {
   try {
     const accessToken = Cookies.get('access_token');
     if (!accessToken) {
       throw new Error('No access token found');
     }
 
-    const response: AxiosResponse<IUser> = await baseUrl.post(
+    const response: AxiosResponse<User> = await baseUrl.post(
       `/api/user/suspend`,
       { username }, 
       {
@@ -39,14 +39,14 @@ export const suspendUser = async (username: string): Promise<IUser> => {
   }
 };
 
-export const activateUser = async (username: string): Promise<IUser> => {
+export const activateUser = async (username: string | null | undefined): Promise<User> => {
   try {
     const accessToken = Cookies.get('access_token');
     if (!accessToken) {
       throw new Error('No access token found');
     }
 
-    const response: AxiosResponse<IUser> = await baseUrl.post(
+    const response: AxiosResponse<User> = await baseUrl.post(
       `/api/user/activate`,
       { username }, 
       {
@@ -74,14 +74,14 @@ export const activateUser = async (username: string): Promise<IUser> => {
   }
 };
 
-export const suspendItem = async (itemId: number): Promise<IUser> => {
+export const suspendItem = async (itemId: number): Promise<User> => {
   try {
     const accessToken = Cookies.get('access_token');
     if (!accessToken) {
       throw new Error('No access token found');
     }
 
-    const response: AxiosResponse<IUser> = await baseUrl.post(
+    const response: AxiosResponse<User> = await baseUrl.post(
       `/api/item/suspend`,
       { itemId }, 
       {
@@ -109,14 +109,14 @@ export const suspendItem = async (itemId: number): Promise<IUser> => {
   }
 };
 
-export const activateItem = async (itemId: number): Promise<IUser> => {
+export const activateItem = async (itemId: number): Promise<User> => {
   try {
     const accessToken = Cookies.get('access_token');
     if (!accessToken) {
       throw new Error('No access token found');
     }
 
-    const response: AxiosResponse<IUser> = await baseUrl.post(
+    const response: AxiosResponse<User> = await baseUrl.post(
       `/api/item/activate`,
       { itemId }, 
       {

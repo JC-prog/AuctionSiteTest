@@ -3,14 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdOutlineNotificationsActive } from 'react-icons/md';
 import { BsArrowRightShort } from 'react-icons/bs';
-import axios from 'axios';
 import IAuth from '../interfaces/IAuth';
 import INotification from '../interfaces/INotification';
 
 // API Function Call
 import { fetchNotification } from '../services/NotificationService';
 
-const MyNotificationPage: React.FC<IAuth> = ({ isAuth, user, role }) => {
+const MyNotificationPage: React.FC<IAuth> = ({ isAuth, user }) => {
   const [notifications, setNotifications] = useState<INotification[]>([]);
 
   useEffect(() => {

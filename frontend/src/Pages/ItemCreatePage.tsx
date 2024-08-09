@@ -3,23 +3,19 @@ import { toast } from 'react-toastify';
 import { AxiosResponse } from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../config/api/loginApi'; // Adjust the import path as necessary
-import IItem from '../interfaces/IItem';
+import Item from '../interfaces/Item';
 
-// Define a type for the file upload
-interface IFileUpload {
-  file: File;
-}
 
 interface AuthProps {
-  isAuth: boolean;
-  user: string;
+  isAuth?: boolean;
+  user: string | null | undefined;
 }
 
-const CreateItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
+const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
   const navigate = useNavigate();
 
   // State to manage form inputs
-  const [item, setItem] = useState<IItem>({
+  const [item, setItem] = useState<Partial<Item>>({
     itemId: 0,
     itemTitle: '',
     itemCategory: '',

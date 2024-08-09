@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AxiosResponse } from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { MdFeedback } from "react-icons/md";
 
@@ -8,8 +8,8 @@ import { MdFeedback } from "react-icons/md";
 import { createFeedback } from '../services/FeedbackService';
 
 interface AuthProps {
-  isAuth: boolean;
-  user: string;
+  isAuth?: boolean;
+  user: string | null | undefined;
 }
 
 const FeedbackPage: React.FC<AuthProps> = ({ user }) => {

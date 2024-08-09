@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../Cards/ProductCard';
 import { Link } from 'react-router-dom';
-import axios, { AxiosResponse } from 'axios'; 
+import { AxiosResponse } from 'axios'; 
 
 // Interface
-import Item from '../../interfaces/IItem';
+import Item from '../../interfaces/Item';
 
 // API Function Call
 import api from '../../config/Api';
 
 type ItemProps = {
-    username: string;
+    username: string | null | undefined;
 };
 
 interface PaginatedResponse {

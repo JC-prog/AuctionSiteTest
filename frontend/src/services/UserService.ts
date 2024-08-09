@@ -1,4 +1,3 @@
-import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import User from '../interfaces/User';
 import baseUrl from '../config/baseUrl';
@@ -43,7 +42,7 @@ const apiGet = async (url: string) => {
 };
 
 // Get User by Username
-export const fetchUser = (username: string) => {
+export const fetchUser = (username: string | null | undefined) => {
     const apiUrl = `/api/user/${username}`;
 
     const response = apiGet(apiUrl);
@@ -61,7 +60,7 @@ export const fetchUsers = (page: number = 0) => {
 };
 
 // Save User
-export const saveUser = (user: User) => {
+export const saveUser = (user: Partial<User>) => {
     const apiUrl = `/api/user/edit`;
     const payload = user;
 
@@ -69,7 +68,7 @@ export const saveUser = (user: User) => {
 };
 
 // Deactivate User
-export const deactivateUser = (username: string) => {
+export const deactivateUser = (username: string | undefined ) => {
     const apiUrl = `/api/user/deactivate`;
     const payload = username;
 
@@ -77,7 +76,7 @@ export const deactivateUser = (username: string) => {
 }
 
 // Mark User Interest as True
-export const checkInterestUser = (username: string) => {
+export const checkInterestUser = (username: string | null | undefined) => {
     const apiUrl = `/api/user/check-interest/${username}`;
 
     return apiPost(apiUrl, null);

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { ToastContainer} from "react-toastify";
@@ -10,7 +9,6 @@ import "react-toastify/dist/ReactToastify.css";
 import api from './config/api/loginApi';
 
 // Layouts
-import PageHeader from './Layout/PageHeader';
 
 // Components
 import HomeSidebar from "./Components/Sidebar/HomeSidebar";
@@ -49,7 +47,7 @@ import AdminFeedbackManagementPage from './Pages/AdminPages/AdminFeedbackManagem
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<string | null | undefined>();
   const [userRole, setUserRole] = useState<string | null>(null);
   const [interestChecked, setInterestCheck] = useState(true);
 
@@ -61,10 +59,10 @@ function App() {
       setInterestCheck(false);
 
       try {
-        const decodedToken = jwtDecode<DecodedToken>(accessToken);
+        const decodedToken = jwtDecode(accessToken);
         setUser(decodedToken.sub);
 
-        const response: AxiosResponse<String> = await api.get(`/api/user/get-role/${decodedToken.sub}`);
+        const response = await api.get(`/api/user/get-role/${decodedToken.sub}`);
 
         if (response.status !== 200) {
           throw new Error('Network response was not ok');
@@ -82,17 +80,14 @@ function App() {
     }
   };
 
-  const checkInterest = () => {
+  const checkInterest = async() => {
 
     if(authenticated)
     {
         
       try {
-        const response: AxiosResponse<String> = api.get(`/api/user/interest/${user}`);
-        if (response.status !== 200) {
-            throw new Error('Network response was not ok');
-        } 
-          
+        const response = await api.get(`/api/user/interest/${user}`);
+       
         setInterestCheck(response.data);
         
     } catch (error) {
@@ -111,23 +106,6 @@ function App() {
     console.log("Interest Check: " + interestChecked)
   }, []);
 
-
-  const items: Item[] = [
-    {
-        itemId: 1,
-        image: '/bike.jpg',
-        title: 'Bike',
-        price: 20,
-    },
-    {
-        itemId: 2,
-        image: '/bike.jpg',
-        title: 'Laptop',
-        price: 500,
-    },
-    // Add more items here
-];
-
   return (
     
     <div className="max-h-screen flex flex-col">
@@ -136,7 +114,7 @@ function App() {
         <div className="flex flex-1">
           <HomeSidebar isAuth={authenticated} user={user} role={userRole} />
         <div className="flex flex-col flex-1">
-          <Navbar isAuth={authenticated} />
+          <Navbar isAuth={authenticated} user={user}/>
           <main className="flex-1 bg-gray-100">
             <Routes>
               <Route path="/" element={<HomePage user={user} interestChecked={interestChecked}/>} />
@@ -154,7 +132,7 @@ function App() {
               <Route path="/watchlist" element={<MyWatchlist user={user}/>} />
               <Route path="/my-listings" element={<MyItemListing user={user} />} />
               <Route path="/my-trade" element={<TradeRequestPage user={user} />} />
-              <Route path="/user/:username" element={<UserProfile user={user} />} />
+              <Route path="/user/:username" element={<UserProfile />} />
               <Route path="/user/edit/:username" element={<UserEditProfile />} />
               <Route path="/item/create" element={<ItemCreatePage user={user} />} />
               <Route path="/item/edit/:itemId" element={<ItemEditPage />} />

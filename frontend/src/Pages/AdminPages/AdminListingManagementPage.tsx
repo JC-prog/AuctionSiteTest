@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import AdminItemList from '../../Components/List/AdminItemList'
-import IItem from '../../interfaces/IItem';
+import IItem from '../../interfaces/Item';
 import { fetchItems } from '../../services/ItemService';
 
 const AdminListingManagementPage = () => {
