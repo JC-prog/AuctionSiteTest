@@ -13,13 +13,14 @@ import { countBids } from '../services/BidService';
 
 // Interface
 import Item from '../interfaces/Item';
+import { logClickCategory } from '../services/ClickstreamService';
 
 interface AuthProps {
     isAuth?: boolean;
     user: string | null | undefined;
 }
 
-const ItemPage: React.FC<AuthProps> = ({user }) => {
+const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
     const { itemId } = useParams<{ itemId: string }>();
     const [item, setItem] = useState<Item>();
     const [numOfBids, setNumOfBids] = useState(0);
@@ -56,6 +57,10 @@ const ItemPage: React.FC<AuthProps> = ({user }) => {
 
                 setItem(itemResponse.data);
                 setNumOfBids(numBidsResponse.data);
+                
+                if (isAuth && item?.itemCategory != null) {
+                    logClickCategory(user, item?.itemCategory);
+                }
                 
                 // Fetch Item Image
                 const imageResponse = await api.get(`/api/item/image/${itemId}`, { responseType: 'arraybuffer' });

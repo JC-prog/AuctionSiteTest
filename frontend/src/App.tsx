@@ -136,7 +136,7 @@ function App() {
               <Route path="/user/edit/:username" element={<UserEditProfile />} />
               <Route path="/item/create" element={<ItemCreatePage user={user} />} />
               <Route path="/item/edit/:itemId" element={<ItemEditPage />} />
-              <Route path="/item/:itemId" element={<ItemPage user={user} />} />
+              <Route path="/item/:itemId" element={<ItemPage isAuth={authenticated} user={user} />} />
               <Route path="/analytics" element={<AnalyticsPage />} />
               <Route path="/transactions" element={<TransactionPage user={user}/>} />
               <Route path="/feedback" element={<FeedbackPage user={user}/>} />
