@@ -6,6 +6,8 @@ interface User {
     gender: string;
     contactNumber: string;
     address: string;
+    bannerPhoto: string,
+    profilePhoto: string,
     accountType: string;
     status: string;
     isActive: boolean;

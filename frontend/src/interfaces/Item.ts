@@ -9,6 +9,7 @@ interface Item {
     endDate: Date;
     duration: string;
     bidWinner: string;
+    minSellPrice: number;
     currentPrice: number;
     startPrice: number;
     itemPhoto: string | ArrayBuffer | null;

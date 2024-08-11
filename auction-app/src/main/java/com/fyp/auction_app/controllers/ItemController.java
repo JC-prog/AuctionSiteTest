@@ -24,6 +24,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @CrossOrigin
@@ -289,6 +290,29 @@ public class ItemController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping("/stop/{itemId}")
+    public ResponseEntity<String> stopListing(@PathVariable Integer itemId)
+    {
+        Optional<Item> itemToStop = itemService.findItemById(itemId);
+
+        if(itemToStop.isPresent())
+        {
+            if(!Objects.equals(itemToStop.get().getAuctionType(), "low-start-high"))
+            {
+                return new ResponseEntity<>("Auction Type is not Low Start High", HttpStatus.BAD_REQUEST);
+            }
+
+            Item itemToUpdate = itemToStop.get();
+            itemToUpdate.setStatus(ListingStatus.CREATED);
+
+            itemService.updateItem(itemToUpdate);
+
+            return new ResponseEntity<>("Listing Stopped Successfully", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("Stop Listing Failed", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/price/{itemId}")

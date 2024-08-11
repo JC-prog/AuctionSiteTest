@@ -165,28 +165,37 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                                 {renderStatus(item)}
                             </div>
                             <div className="flex justify-between">
-                                <p className="font-medium">Bids</p>
-                                <span className="font-medium">{numOfBids} Bids</span>
+                                {item?.auctionType === 'trade' ? (
+                                    <>
+                                        <p className="font-medium">Trade</p>
+                                        <span className="font-medium">{numOfBids} Trade Requests</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p className="font-medium">Bids</p>
+                                        <span className="font-medium">{numOfBids} Bids</span>
+                                    </>
+                                )}
+                                
                             </div>
                         </div>
-                        <div className="flex space-x-4 mt-4">
-                            {/* Bid */}
-                            <button
-                                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                                onClick={() => setIsBidConfirmPopupOpen(true)}
-                            >
-                                Place Bid
-                            </button>
-                            {isBidConfirmPopupOpen && <BidConfirmPopup itemId={item?.itemId} username={user} onClose={() => setIsBidConfirmPopupOpen(false)} />}
 
-                            {/* Trade */}
-                            <button
-                                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
-                                onClick={openPopup}
-                            >
-                                Trade
-                            </button>
-                            {isPopupOpen && <TradePopup itemId={item?.itemId} username={user} onClose={closePopup} />}
+                        <div className="flex space-x-4 mt-4">
+                            {item?.auctionType === 'trade' ? (
+                                <>
+                                    <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600" onClick={openPopup}>
+                                        Trade
+                                    </button>
+                                    {isPopupOpen && <TradePopup itemId={item?.itemId} username={user} onClose={closePopup} />}
+                                </>
+                            ) : (
+                                <>
+                                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" onClick={() => setIsBidConfirmPopupOpen(true)}>
+                                        Place Bid
+                                    </button>
+                                    {isBidConfirmPopupOpen && <BidConfirmPopup itemId={item?.itemId} username={user} onClose={() => setIsBidConfirmPopupOpen(false)} />}
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>

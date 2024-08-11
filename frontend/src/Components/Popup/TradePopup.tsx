@@ -94,7 +94,7 @@ const TradePopup: React.FC<PopupProps> = ({ onClose, itemId, username }) => {
                             <table className="w-full bg-white border border-gray-200 rounded-lg shadow-sm">
                                 <thead>
                                     <tr className="bg-gray-200 text-gray-600">
-                                        <th className="px-4 py-3 border-b border-gray-300 text-left text-xs font-medium uppercase">Select</th>
+                                        <th className="px-4 py-3 border-b border-gray-300 text-left text-xs font-medium uppercase text-center">Select</th>
                                         <th className="px-4 py-3 border-b border-gray-300 text-left text-xs font-medium uppercase">Item Title</th>
                                         <th className="px-4 py-3 border-b border-gray-300 text-left text-xs font-medium uppercase">Item Price</th>
                                     </tr>

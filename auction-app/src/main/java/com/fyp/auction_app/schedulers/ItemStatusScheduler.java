@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -28,30 +27,31 @@ public class ItemStatusScheduler {
         List<Item> listedItems = itemRepository.findByStatus(ListingStatus.LISTED);
         Date now = new Date();
 
-        for (Item item : listedItems) {
+        listedItems.forEach(item -> {
             if (item.getEndDate().before(now)) {
-                Optional<Bid> lastBidOpt = bidRepository.findLastBidByItemId(item.getItemId());
-
-                if (lastBidOpt.isPresent()) {
-
-                    if(Objects.equals(item.getAuctionType(), "low-start-high"))
-                    {
-                        item.setStatus(ListingStatus.FINISHED);
-                    } else
-                    {
-                        item.setStatus(ListingStatus.SOLD);
-                    }
-
-                    item.setBidWinner(lastBidOpt.get().getBidderName());
-
-                } else {
-
-                    item.setStatus(ListingStatus.EXPIRED); // Safety fallback if no bids are found
-
-                }
-
-                itemRepository.save(item);
+                processItemStatusUpdate(item);
             }
+        });
+    }
+
+    private void processItemStatusUpdate(Item item) {
+        Optional<Bid> lastBidOpt = bidRepository.findLastBidByItemId(item.getItemId());
+
+        if (lastBidOpt.isPresent()) {
+            updateStatusBasedOnAuctionType(item);
+            item.setBidWinner(lastBidOpt.get().getBidderName());
+        } else {
+            item.setStatus(ListingStatus.EXPIRED); // Safety fallback if no bids are found
+        }
+
+        itemRepository.save(item);
+    }
+
+    private void updateStatusBasedOnAuctionType(Item item) {
+        if ("low-start-high".equals(item.getAuctionType())) {
+            item.setStatus(item.getMinSellPrice() > item.getCurrentPrice() ? ListingStatus.FINISHED : ListingStatus.EXPIRED);
+        } else {
+            item.setStatus(ListingStatus.SOLD);
         }
     }
 }

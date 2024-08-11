@@ -70,7 +70,7 @@ export const saveUser = (user: Partial<User>) => {
 // Deactivate User
 export const deactivateUser = (username: string | undefined ) => {
     const apiUrl = `/api/user/deactivate`;
-    const payload = username;
+    const payload = { username };
 
     return apiPost(apiUrl, payload);
 }

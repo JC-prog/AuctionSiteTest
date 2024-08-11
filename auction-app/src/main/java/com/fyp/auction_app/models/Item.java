@@ -36,6 +36,8 @@ public class Item {
 
     private Date endDate;
 
+    private Double minSellPrice;
+
     private Double currentPrice;
 
     private Double startPrice;

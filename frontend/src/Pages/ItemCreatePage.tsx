@@ -5,7 +5,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import api from '../config/api/loginApi'; // Adjust the import path as necessary
 import Item from '../interfaces/Item';
 
-
 interface AuthProps {
   isAuth?: boolean;
   user: string | null | undefined;
@@ -26,6 +25,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
     endDate: new Date(),
     duration: '',
     currentPrice: 0,
+    minSellPrice: 0,
     startPrice: 0,
     status: 'CREATED',
   });
@@ -34,9 +34,12 @@ const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
   const [days, setDays] = useState<number>(0);
   const [hours, setHours] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
+  const [isCustomDuration, setIsCustomDuration] = useState<boolean>(false);
 
   // Update duration based on days, hours, and minutes
   useEffect(() => {
+    if (!isCustomDuration) return;
+
     const validHours = hours >= 0 ? hours % 24 : 0;
     const validMinutes = minutes >= 0 ? minutes % 60 : 0;
     const totalDays = days + Math.floor(hours / 24) + Math.floor(minutes / 60 / 24);
@@ -46,7 +49,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
       ...prevItem,
       duration: formatted,
     }));
-  }, [days, hours, minutes]);
+  }, [days, hours, minutes, isCustomDuration]);
 
   // Photo upload state
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -97,6 +100,49 @@ const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
   const triggerFileInput = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
+    }
+  };
+
+  // Handle Auction Type Selection
+  const [isLowStartHigh, setIsLowStartHigh] = useState<boolean>(false);
+
+  const handleAuctionTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value;
+
+    if (selectedValue === 'low-start-high') {
+      setIsLowStartHigh(true);
+      setItem((prevItem) => ({
+        ...prevItem,
+        auctionType: selectedValue,
+        minSellPrice: 0, 
+      }));
+    } else {
+      setIsLowStartHigh(false);
+      setItem((prevItem) => ({
+        ...prevItem,
+        auctionType: selectedValue,
+        minSellPrice: item.minSellPrice || 0, 
+      }));
+    }
+  };
+
+  // Handle duration selection
+
+  const handleDurationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value;
+
+    if (selectedValue === 'custom') {
+      setIsCustomDuration(true);
+      setItem((prevItem) => ({
+        ...prevItem,
+        duration: '',
+      }));
+    } else {
+      setIsCustomDuration(false);
+      setItem((prevItem) => ({
+        ...prevItem,
+        duration: selectedValue,
+      }));
     }
   };
 
@@ -228,7 +274,6 @@ const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-                rows={4}
               />
             </div>
 
@@ -239,69 +284,33 @@ const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
                 id="auctionType"
                 name="auctionType"
                 value={item.auctionType}
-                onChange={handleChange}
+                onChange={handleAuctionTypeChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               >
                 <option value="">Select Option</option>
                 <option value="price-up">Price Up</option>
                 <option value="low-start-high">Low Start High</option>
+                <option value="trade">Trade</option>
               </select>
             </div>
 
-            {/* Duration */}
-            <div className="grid grid-cols-3 gap-4">
-              <label htmlFor="duration" className="col-span-3 block font-medium mb-2">Duration</label>
-              {/* Days */}
-              <div className="flex flex-col">
-                <label htmlFor="days" className="font-medium mb-1">Days</label>
+            {isLowStartHigh && (
+              <div>
+                <label htmlFor="minSellPrice" className="block font-medium mb-1">Min Sell Price ($)</label>
                 <input
                   type="number"
-                  id="days"
-                  name="days"
-                  value={days}
-                  onChange={(e) => setDays(Number(e.target.value))}
+                  id="minSellPrice"
+                  name="minSellPrice"
+                  value={item.minSellPrice}
+                  onChange={handleChange}
                   required
-                  min="0"
-                  max="7"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
                 />
               </div>
+            )}
 
-              {/* Hours */}
-              <div className="flex flex-col">
-                <label htmlFor="hours" className="font-medium mb-1">Hours</label>
-                <input
-                  type="number"
-                  id="hours"
-                  name="hours"
-                  value={hours}
-                  onChange={(e) => setHours(Number(e.target.value))}
-                  required
-                  min="0"
-                  max="23"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-                />
-              </div>
-
-              {/* Minutes */}
-              <div className="flex flex-col">
-                <label htmlFor="minutes" className="font-medium mb-1">Minutes</label>
-                <input
-                  type="number"
-                  id="minutes"
-                  name="minutes"
-                  value={minutes}
-                  onChange={(e) => setMinutes(Number(e.target.value))}
-                  required
-                  min="0"
-                  max="59"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-                />
-              </div>
-            </div>
-
-            {/* Start Price ($) */}
+            {/* Start Price */}
             <div>
               <label htmlFor="startPrice" className="block font-medium mb-1">Start Price ($)</label>
               <input
@@ -310,30 +319,84 @@ const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
                 name="startPrice"
                 value={item.startPrice}
                 onChange={handleChange}
+                min={0}
                 required
-                step="1"
-                min="1.00"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               />
             </div>
 
-            {/* Submit Button */}
-            <div className="flex justify-between">
-              <Link
-                to="/my-listings"
-                className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
-              >
-                Cancel
-              </Link>
+            {/* Duration */}
+            <div>
+                <label htmlFor="duration" className="block font-medium mb-1">Duration</label>
+                <select
+                    id="duration"
+                    name="duration"
+                    value={item.duration}
+                    onChange={handleDurationChange}
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                >
+                    <option value="">Select Option</option>
+                    <option value="01:00:00">1 Hour</option>
+                    <option value="01:00:00:00">1 Day</option>
+                    <option value="07:00:00:00">7 Days</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div>
 
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-              >
-                Create Item
-              </button>
+            {/* Custom Duration Form */}
+            {isCustomDuration && (
+              <div className="flex space-x-2">
+                <div>
+                  <label htmlFor="days" className="block font-medium mb-1">Days</label>
+                  <input
+                    type="number"
+                    id="days"
+                    name="days"
+                    value={days}
+                    onChange={(e) => setDays(parseInt(e.target.value))}
+                    min={0}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="hours" className="block font-medium mb-1">Hours</label>
+                  <input
+                    type="number"
+                    id="hours"
+                    name="hours"
+                    value={hours}
+                    onChange={(e) => setHours(parseInt(e.target.value))}
+                    min={0}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="minutes" className="block font-medium mb-1">Minutes</label>
+                  <input
+                    type="number"
+                    id="minutes"
+                    name="minutes"
+                    value={minutes}
+                    onChange={(e) => setMinutes(parseInt(e.target.value))}
+                    min={0}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Submit */}
+            <div className="flex justify-between items-center mt-6">
+                <Link to="/my-listings" className="text-red-600 hover:underline" >
+                    Cancel
+                </Link>
+                <button type="submit" className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Create Item
+                </button>
             </div>
           </form>
+          
         </div>
       </div>
     </div>

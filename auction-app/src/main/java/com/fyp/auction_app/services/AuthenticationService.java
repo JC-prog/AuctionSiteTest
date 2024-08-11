@@ -43,6 +43,16 @@ public class AuthenticationService {
     private AuthenticationManager authenticationManager;
 
     public AuthenticationResponse registerUser(RegisterRequest request) {
+
+        Optional<User> existingUser = repository.findByUsername(request.getUsername());
+
+        if (existingUser.isPresent())
+        {
+            return AuthenticationResponse.builder()
+                    .errorMessage("User is already registered")
+                    .build();
+        }
+
         User user = User.builder()
             .username(request.getUsername())
             .email(request.getEmail())
@@ -50,6 +60,7 @@ public class AuthenticationService {
             .interestChecked(false)
             .role(Role.USER)
             .accountType(AccountType.STANDARD)
+            .status(UserStatus.ACTIVE)
             .createdAt(new Date())
             .build();
 
@@ -67,8 +78,10 @@ public class AuthenticationService {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .interestChecked(true)
                 .role(Role.ADMIN)
                 .accountType(AccountType.ADMIN)
+                .status(UserStatus.ACTIVE)
                 .createdAt(new Date())
                 .build();
 

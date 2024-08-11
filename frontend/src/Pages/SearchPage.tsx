@@ -43,7 +43,7 @@ const SearchPage: React.FC = () => {
       try {
         // const itemData = await fetchItemsByKeyword(keyword);
 
-        const response: AxiosResponse<PaginatedResponse> = await api.get(`/api/items/search?keyword=${keyword}`);
+        const response: AxiosResponse<PaginatedResponse> = await api.get(`/api/item/search?keyword=${keyword}`);
         if (response.status !== 200) {
           throw new Error('Network response was not ok');
         }

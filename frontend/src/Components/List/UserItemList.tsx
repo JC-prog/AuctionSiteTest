@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 // Config
 import api from '../../config/api/loginApi';
-import { launchItem, acceptBid, rejectBid } from '../../services/ItemService'; 
+import { launchItem, acceptBid, rejectBid, stopListing } from '../../services/ItemService'; 
 
 import Timer from '../../Components/Timer';
 import Item from '../../interfaces/Item'; 
@@ -135,6 +135,37 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
     }
   };
 
+  // Handle Stop
+  const handleStop = async (itemId: number) => {
+    try {
+      const response = await stopListing(itemId);
+      console.log(response);
+  
+      if (response.status === 200) {
+        toast.success(response.data.message || 'Stop Successful', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+
+      } else {
+        toast.error(response.data.message || 'Failed to stop Listing', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Failed to Stop. Please try again later.', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
+  };
+
   // Render Status
   const renderStatus = (item: Item) => {
     switch (item.status) {
@@ -200,19 +231,30 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
       case "LISTED":
         return (
             <>
-                <button 
-                    className="text-red-600 hover:text-red-900 focus:outline-none flex items-center px-1"
-                    onClick={() => handleReject(item.itemId)}
-                >
-                    <FaStop className="mr-1" /> Stop
-                </button>
-            </>);
+            {item.auctionType === 'low-start-high' && (
+              <button
+                className="text-red-600 hover:text-red-900 focus:outline-none flex items-center px-1"
+                onClick={() => handleStop(item.itemId)}
+              >
+                <FaStop className="mr-1" /> Stop
+              </button>
+            )}
+
+            {item.auctionType !== 'low-start-high' && (
+              <button
+                className="text-yellow-600 hover:text-yellow-900 focus:outline-none flex items-center px-1"
+              >
+                <FaExclamationCircle className="mr-1" /> Contact Admin
+              </button>
+            )}
+          </>
+          );
       case "SUSPENDED":
         return (
             <>
                 <button 
                     className="text-yellow-500 hover:text-yellow-700 focus:outline-none flex items-center px-1"
-                    onClick={() => handleReject(item.itemId)}
+                   
                 >
                     <FaExclamationCircle className="mr-1" /> Appeal
                 </button>

@@ -55,7 +55,7 @@ export const fetchItems = async (page: number = 0) => {
         throw new Error('No access token found');
       }
   
-      const response = await baseUrl.get(`/api/item?page=${page}`, {
+      const response = await baseUrl.get(`/api/item/all?page=${page}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
         },
@@ -274,3 +274,10 @@ export const fetchCreatedItem = (username: string) => {
 
   return response;
 };
+
+// Stop Listing
+export const stopListing = (itemId: number) => {
+    const apiUrl = `/api/item/stop/${itemId}`;
+  
+    return apiPost(apiUrl, null);
+  }

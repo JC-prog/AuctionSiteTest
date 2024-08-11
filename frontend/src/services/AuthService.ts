@@ -24,9 +24,9 @@ const apiPost = async (url: string, payload: any) => {
 };
 
 // Register User
-export const registerUser = (user: User) => {
+export const registerUser = (username : string, password: string, email: string) => {
     const apiUrl = `/api/auth/register`;
-    const payload = { user };
+    const payload = { username, password, email };
 
     return apiPost(apiUrl, payload);
 };
@@ -44,8 +44,6 @@ export const changePassword =(username: string | null | undefined, password: str
     const apiUrl = `/api/auth/change-password`;
     const payload = { username, password };
 
-    console.log(payload);
-
     return apiPost(apiUrl, payload);
 }
 
@@ -53,8 +51,6 @@ export const changePassword =(username: string | null | undefined, password: str
 export const resetPassword =(username: string | null | undefined) => {
     const apiUrl = `/api/auth/reset-password`;
     const payload = { username }
-
-    console.log(payload);
 
     return apiPost(apiUrl, payload);
 }
