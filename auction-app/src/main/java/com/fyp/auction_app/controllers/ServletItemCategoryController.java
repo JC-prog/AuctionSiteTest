@@ -1,6 +1,5 @@
 package com.fyp.auction_app.controllers;
 
-import org.springframework.ui.Model;
 import com.fyp.auction_app.models.ItemCategory;
 import com.fyp.auction_app.services.ItemCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +29,19 @@ public class ServletItemCategoryController {
     }
 
     @PostMapping("/category/delete")
-    public String deleteCategory(@RequestParam("categoryNo") int categoryNo) {
-        itemCategoryService.deleteCategory(categoryNo);
+    public String deleteCategory(@RequestParam("id") int id) {
+        itemCategoryService.deleteCategory(id);
         return "redirect:/category";
     }
 
     @PostMapping("/category/create")
-    public String createCategory(@RequestParam("catName") String catName,
-                                 @RequestParam(value = "isActive", required = false, defaultValue = "false") boolean isActive) {
+    public String createCategory(@RequestParam("catName") String catName) {
+
         ItemCategory category = new ItemCategory();
         category.setCatName(catName);
+
         itemCategoryService.addCategory(category);
+
         return "redirect:/category";
     }
 }
