@@ -106,6 +106,33 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
     // Fetch Trade Requests
 
+    // Render Auction Type
+    const renderAuctionType = (item?: Item) => {
+        switch (item?.auctionType) {
+            case "low-start-high":
+                return <>Low Start High</>;
+            case "price-up":
+                return <>Price Up</>;
+            case "trade":
+                return <>Trade</>;
+            default:
+                return <>Unknown Auction</>;
+        };
+    };
+
+    // Render Status
+    const renderStatus = (item?: Item) => {
+        switch (item?.status) {
+            case "CREATED":
+            return <p>Not Started</p>;
+            case "SOLD":
+            return <p>Sold</p>;
+            case "LISTED":
+            return <Timer endTime={item.endDate} />;
+            default:
+            return <p></p>;
+        };
+    };
 
     const openPopup = () => setIsPopupOpen(true);
     const closePopup = () => setIsPopupOpen(false);
@@ -117,19 +144,6 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
     if (error) {
         return <div className="text-red-500 text-center">Error: {error.message}</div>;
     }
-
-    const renderStatus = (item?: Item) => {
-        switch (item?.status) {
-          case "CREATED":
-            return <p>Not Started</p>;
-          case "SOLD":
-            return <p>Sold to {item.bidWinner}</p>;
-          case "LISTED":
-            return <Timer endTime={item.endDate} />;
-          default:
-            return <p>Unknown Status</p>;
-        };
-      };
 
     return (
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -156,6 +170,18 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                     <div className="col-span-12 md:col-span-8 flex flex-col justify-between">
                         <h1 className="text-2xl font-semibold mb-4">{item?.itemTitle}</h1>
                         <div className="flex flex-col space-y-2">
+                            <div className="flex justify-between">
+                                <p className="font-medium">Auction Type</p>
+                                <span className="font-medium">{renderAuctionType(item)}</span>
+                            </div>
+
+                            {item?.auctionType == 'low-start-high' && ( 
+                                <div className="flex justify-between">
+                                    <p className="font-medium">Minimum Sell Price</p>
+                                    <span className="font-medium">${item?.minSellPrice.toFixed(2)}</span>
+                                </div>
+                            )}
+                            
                             <div className="flex justify-between">
                                 <p className="font-medium">Current Price</p>
                                 <span className="font-medium">${item?.currentPrice.toFixed(2)}</span>

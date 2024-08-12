@@ -9,6 +9,7 @@ import com.fyp.auction_app.models.Requests.EditUserStatusRequest;
 import com.fyp.auction_app.models.Requests.LaunchListingRequest;
 import com.fyp.auction_app.models.User;
 import com.fyp.auction_app.models.UserImage;
+import com.fyp.auction_app.services.BidService;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,9 @@ public class ItemController {
 
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private BidService bidService;
 
     // Get ONE Item based on itemId
     @GetMapping("/{itemId}")
@@ -302,6 +306,13 @@ public class ItemController {
             if(!Objects.equals(itemToStop.get().getAuctionType(), "low-start-high"))
             {
                 return new ResponseEntity<>("Auction Type is not Low Start High", HttpStatus.BAD_REQUEST);
+            }
+
+            Long numberOfBids = bidService.getBidCountByItemId(itemId);
+
+            if(numberOfBids > 0 )
+            {
+                return new ResponseEntity<>("Auction has ongoing bids", HttpStatus.BAD_REQUEST);
             }
 
             Item itemToUpdate = itemToStop.get();

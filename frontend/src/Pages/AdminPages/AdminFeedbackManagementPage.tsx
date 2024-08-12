@@ -7,7 +7,7 @@ interface Feedback {
   feedback_id: number;
   username: string;
   message: string;
-  feedback_timestamp: string; // Use string for date-time formatting
+  feedback_timestamp: Date; 
 }
 
 const AdminFeedbackManagementPage: React.FC = () => {
@@ -63,7 +63,9 @@ const AdminFeedbackManagementPage: React.FC = () => {
                 <tr key={feedback.feedback_id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{feedback.username}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{feedback.message}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(feedback.feedback_timestamp).toLocaleString()}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {feedback.feedbackTimestamp ? new Date(feedback.feedbackTimestamp).toLocaleString() : "N/A"}
+                  </td>
                 </tr>
               ))}
             </tbody>

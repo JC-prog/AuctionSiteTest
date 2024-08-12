@@ -39,17 +39,18 @@ const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
   // Update duration based on days, hours, and minutes
   useEffect(() => {
     if (!isCustomDuration) return;
-
+  
     const validHours = hours >= 0 ? hours % 24 : 0;
     const validMinutes = minutes >= 0 ? minutes % 60 : 0;
     const totalDays = days + Math.floor(hours / 24) + Math.floor(minutes / 60 / 24);
     const totalHours = validHours + Math.floor(minutes / 60);
     const formatted = `${totalDays.toString().padStart(2, '0')}:${(totalHours % 24).toString().padStart(2, '0')}:${validMinutes.toString().padStart(2, '0')}`;
+  
     setItem((prevItem) => ({
       ...prevItem,
       duration: formatted,
     }));
-  }, [days, hours, minutes, isCustomDuration]);
+  }, [days, hours, minutes, isCustomDuration]);  
 
   // Photo upload state
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -130,12 +131,12 @@ const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
 
   const handleDurationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
-
+  
     if (selectedValue === 'custom') {
       setIsCustomDuration(true);
       setItem((prevItem) => ({
         ...prevItem,
-        duration: '',
+        duration: 'custom',
       }));
     } else {
       setIsCustomDuration(false);
@@ -327,21 +328,21 @@ const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
 
             {/* Duration */}
             <div>
-                <label htmlFor="duration" className="block font-medium mb-1">Duration</label>
-                <select
-                    id="duration"
-                    name="duration"
-                    value={item.duration}
-                    onChange={handleDurationChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-                >
-                    <option value="">Select Option</option>
-                    <option value="01:00:00">1 Hour</option>
-                    <option value="01:00:00:00">1 Day</option>
-                    <option value="07:00:00:00">7 Days</option>
-                    <option value="custom">Custom</option>
-                </select>
+              <label htmlFor="duration" className="block font-medium mb-1">Duration</label>
+              <select
+                id="duration"
+                name="duration"
+                value={isCustomDuration ? 'custom' : item.duration}
+                onChange={handleDurationChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+              >
+                <option value="">Select Option</option>
+                <option value="01:00:00">1 Hour</option>
+                <option value="01:00:00:00">1 Day</option>
+                <option value="07:00:00:00">7 Days</option>
+                <option value="custom">Custom</option>
+              </select>
             </div>
 
             {/* Custom Duration Form */}
