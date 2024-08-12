@@ -1,5 +1,7 @@
 package com.fyp.auction_app.schedulers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.fyp.auction_app.models.Bid;
 import com.fyp.auction_app.models.Enums.ListingStatus;
 import com.fyp.auction_app.models.Item;
@@ -22,8 +24,13 @@ public class ItemStatusScheduler {
     @Autowired
     private BidRepository bidRepository;
 
+    @Autowired
+    private static final Logger logger = LoggerFactory.getLogger(ItemStatusScheduler.class);
+
     @Scheduled(fixedRate = 60000)  // 60000 milliseconds = 1 minute
     public void updateItemStatus() {
+        logger.info("Update Item Status Started");
+
         List<Item> listedItems = itemRepository.findByStatus(ListingStatus.LISTED);
         Date now = new Date();
 
@@ -32,6 +39,8 @@ public class ItemStatusScheduler {
                 processItemStatusUpdate(item);
             }
         });
+
+        logger.info("Update Item Status Ended");
     }
 
     private void processItemStatusUpdate(Item item) {
