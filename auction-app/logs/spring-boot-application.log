@@ -18560,3 +18560,13 @@ Stacktrace:
 2024-08-12 16:08:48 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2024-08-12 16:08:56 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - POST "/category/create", parameters={masked}
 2024-08-12 16:08:56 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#createCategory(String)
+2024-08-12 16:08:59 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.view.RedirectView - View name 'redirect:', model {}
+2024-08-12 16:08:59 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 302 FOUND
+2024-08-12 16:08:59 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 16:08:59 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 16:09:00 [http-nio-8080-exec-6] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 16:09:00 [http-nio-8080-exec-6] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 16:09:00 [http-nio-8080-exec-6] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 16:09:00 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 16:09:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:09:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
