@@ -1,52 +1,91 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.fyp.auction_app.models.ItemCategory" %>
-<%
-    List<ItemCategory> categories = (List<ItemCategory>) request.getAttribute("categories");
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Categories</title>
+    <title>Admin Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-container-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .form-row {
+            margin-bottom: 15px;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .form-submit {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-submit:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>Categories</h1>
+    <div class="form-container-wrapper">
+        <h1>Login</h1>
+        <div class="form-container" id="login-form-container">
+            <form action="/login" method="post" id="login-form" class="form">
+                <div class="form-row">
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="text" id="username" name="username" class="form-input" placeholder="Enter your username">
+                </div>
 
-    <!-- Form to Create a New Category -->
-    <h2>Create a New Category</h2>
-    <form action="${pageContext.request.contextPath}/category/create" method="post">
-        <label for="catName">Category Name:</label>
-        <input type="text" id="catName" name="catName" required>
-        <button type="submit">Create</button>
-    </form>
+                <div class="form-row">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password">
+                </div>
 
-    <!-- Table to Display Categories -->
-    <h2>Existing Categories</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Category ID</th>
-                <th>Category Name</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% if (categories != null) {
-                for (ItemCategory category : categories) { %>
-                    <tr>
-                        <td><%= category.getId() %></td>
-                        <td><%= category.getCatName() %></td>
-                        <td>
-                            <!-- Delete Form -->
-                            <form action="${pageContext.request.contextPath}/category/delete" method="post" style="display:inline;">
-                                <input type="hidden" name="id" value="<%= category.getId() %>">
-                                <button type="submit">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-            <%  } } %>
-        </tbody>
-    </table>
+                <input type="submit" value="Login" class="form-submit">
+            </form>
+        </div>
+    </div>
 </body>
 </html>

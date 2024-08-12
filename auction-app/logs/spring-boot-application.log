@@ -18570,3 +18570,661 @@ Stacktrace:
 2024-08-12 16:09:00 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2024-08-12 16:09:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
 2024-08-12 16:09:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:10:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:10:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:11:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:11:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:12:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:12:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:13:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:13:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:14:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:14:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:15:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:15:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:16:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:16:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:17:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:17:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:18:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:18:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:19:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:19:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:20:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:20:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:21:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:21:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:22:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:22:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:23:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:23:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:24:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:24:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:25:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:25:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:26:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:26:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:27:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:27:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:28:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:28:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:29:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:29:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:30:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:30:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:31:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:31:01 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:31:37 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12 16:31:37 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-12 16:31:37 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-08-12 16:31:39 [main] INFO  c.f.a.AuctionAppApplication - Starting AuctionAppApplication using Java 21 with PID 49632 (C:\Rovisys\Test\AuctionSiteTest\auction-app\target\classes started by jeffrey.chong in C:\Rovisys\Test\AuctionSiteTest\auction-app)
+2024-08-12 16:31:39 [main] INFO  c.f.a.AuctionAppApplication - No active profile set, falling back to 1 default profile: "default"
+2024-08-12 16:31:40 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-12 16:31:40 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 107 ms. Found 14 JPA repository interfaces.
+2024-08-12 16:31:41 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-12 16:31:41 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-12 16:31:41 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2024-08-12 16:31:41 [main] INFO  o.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2024-08-12 16:31:41 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-12 16:31:41 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2022 ms
+2024-08-12 16:31:42 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-12 16:31:42 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.8.Final
+2024-08-12 16:31:42 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-12 16:31:42 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-12 16:31:42 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-08-12 16:31:42 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@46a388cc
+2024-08-12 16:31:42 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-08-12 16:31:42 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-12 16:31:43 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-12 16:31:43 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12 16:31:44 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-08-12 16:31:45 [main] INFO  o.s.b.f.a.AutowiredAnnotationBeanPostProcessor - Autowired annotation is not supported on static fields: private static final org.slf4j.Logger com.fyp.auction_app.schedulers.ItemStatusScheduler.logger
+2024-08-12 16:31:45 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-12 16:31:45 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 71 mappings in 'requestMappingHandlerMapping'
+2024-08-12 16:31:45 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-08-12 16:31:45 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7b0f5814, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4eef2522, org.springframework.security.web.context.SecurityContextHolderFilter@7b14e7dc, org.springframework.security.web.header.HeaderWriterFilter@5e24f013, org.springframework.security.web.authentication.logout.LogoutFilter@5a1e28ee, com.fyp.auction_app.config.JwtAuthenticationFilter@1e4bf55b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@31741bb6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@64903a20, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@c62d08a, org.springframework.security.web.session.SessionManagementFilter@453d2a55, org.springframework.security.web.access.ExceptionTranslationFilter@73daf6a6, org.springframework.security.web.access.intercept.AuthorizationFilter@406ea770]
+2024-08-12 16:31:45 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-08-12 16:31:45 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-08-12 16:31:46 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-12 16:31:46 [main] INFO  c.f.a.AuctionAppApplication - Started AuctionAppApplication in 6.778 seconds (process running for 7.299)
+2024-08-12 16:31:46 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:31:46 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:31:47 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-12 16:31:47 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-12 16:31:47 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2024-08-12 16:31:47 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2024-08-12 16:31:47 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2024-08-12 16:31:47 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@19f72e12
+2024-08-12 16:31:47 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@69aecbba
+2024-08-12 16:31:47 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-08-12 16:31:47 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-08-12 16:31:47 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 16:31:47 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 16:31:49 [http-nio-8080-exec-1] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 16:31:49 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 16:31:49 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 16:31:50 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 16:32:46 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:32:46 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:33:11 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12 16:33:11 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-12 16:33:11 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-08-12 16:33:14 [main] INFO  c.f.a.AuctionAppApplication - Starting AuctionAppApplication using Java 21 with PID 44288 (C:\Rovisys\Test\AuctionSiteTest\auction-app\target\classes started by jeffrey.chong in C:\Rovisys\Test\AuctionSiteTest\auction-app)
+2024-08-12 16:33:14 [main] INFO  c.f.a.AuctionAppApplication - No active profile set, falling back to 1 default profile: "default"
+2024-08-12 16:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-12 16:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 105 ms. Found 14 JPA repository interfaces.
+2024-08-12 16:33:16 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-12 16:33:16 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-12 16:33:16 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2024-08-12 16:33:16 [main] INFO  o.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2024-08-12 16:33:16 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-12 16:33:16 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2068 ms
+2024-08-12 16:33:16 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-12 16:33:16 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.8.Final
+2024-08-12 16:33:16 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-12 16:33:17 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-12 16:33:17 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-08-12 16:33:17 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3e39f08c
+2024-08-12 16:33:17 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-08-12 16:33:17 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-12 16:33:18 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-12 16:33:18 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12 16:33:19 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-08-12 16:33:19 [main] INFO  o.s.b.f.a.AutowiredAnnotationBeanPostProcessor - Autowired annotation is not supported on static fields: private static final org.slf4j.Logger com.fyp.auction_app.schedulers.ItemStatusScheduler.logger
+2024-08-12 16:33:19 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-12 16:33:20 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 71 mappings in 'requestMappingHandlerMapping'
+2024-08-12 16:33:20 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-08-12 16:33:20 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6682e9b0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@27f7db5a, org.springframework.security.web.context.SecurityContextHolderFilter@5e24f013, org.springframework.security.web.header.HeaderWriterFilter@62fee9c3, org.springframework.security.web.authentication.logout.LogoutFilter@435b944c, com.fyp.auction_app.config.JwtAuthenticationFilter@60510791, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2ba0b7cf, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@23138317, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6245303e, org.springframework.security.web.session.SessionManagementFilter@3d8d926f, org.springframework.security.web.access.ExceptionTranslationFilter@2d4e6bb2, org.springframework.security.web.access.intercept.AuthorizationFilter@4d619aa0]
+2024-08-12 16:33:20 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-08-12 16:33:20 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-08-12 16:33:20 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-12 16:33:20 [main] INFO  c.f.a.AuctionAppApplication - Started AuctionAppApplication in 6.698 seconds (process running for 7.25)
+2024-08-12 16:33:20 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:33:20 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:33:29 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-12 16:33:29 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-12 16:33:29 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2024-08-12 16:33:29 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2024-08-12 16:33:29 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2024-08-12 16:33:29 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@35852b6
+2024-08-12 16:33:29 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@5d796665
+2024-08-12 16:33:29 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-08-12 16:33:29 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-08-12 16:33:29 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/login", parameters={}
+2024-08-12 16:33:29 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletLoginController#loginPage()
+2024-08-12 16:33:29 [http-nio-8080-exec-1] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 16:33:29 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - View name 'login', model {}
+2024-08-12 16:33:29 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/login.jsp]
+2024-08-12 16:33:30 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 16:33:54 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12 16:33:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-12 16:33:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-08-12 16:33:57 [main] INFO  c.f.a.AuctionAppApplication - Starting AuctionAppApplication using Java 21 with PID 46604 (C:\Rovisys\Test\AuctionSiteTest\auction-app\target\classes started by jeffrey.chong in C:\Rovisys\Test\AuctionSiteTest\auction-app)
+2024-08-12 16:33:57 [main] INFO  c.f.a.AuctionAppApplication - No active profile set, falling back to 1 default profile: "default"
+2024-08-12 16:33:58 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-12 16:33:58 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 114 ms. Found 14 JPA repository interfaces.
+2024-08-12 16:33:58 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-12 16:33:58 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-12 16:33:58 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2024-08-12 16:33:59 [main] INFO  o.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2024-08-12 16:33:59 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-12 16:33:59 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1967 ms
+2024-08-12 16:33:59 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-12 16:33:59 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.8.Final
+2024-08-12 16:33:59 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-12 16:33:59 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-12 16:33:59 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-08-12 16:34:00 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@598778cc
+2024-08-12 16:34:00 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-08-12 16:34:00 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-12 16:34:01 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-12 16:34:01 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12 16:34:01 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-08-12 16:34:02 [main] INFO  o.s.b.f.a.AutowiredAnnotationBeanPostProcessor - Autowired annotation is not supported on static fields: private static final org.slf4j.Logger com.fyp.auction_app.schedulers.ItemStatusScheduler.logger
+2024-08-12 16:34:02 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-12 16:34:02 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 71 mappings in 'requestMappingHandlerMapping'
+2024-08-12 16:34:03 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-08-12 16:34:03 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5a1e28ee, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2b208574, org.springframework.security.web.context.SecurityContextHolderFilter@23138317, org.springframework.security.web.header.HeaderWriterFilter@71586f, org.springframework.security.web.authentication.logout.LogoutFilter@648e25f2, com.fyp.auction_app.config.JwtAuthenticationFilter@a1689e8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@d884e9a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@23389e2b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3294b641, org.springframework.security.web.session.SessionManagementFilter@5e24f013, org.springframework.security.web.access.ExceptionTranslationFilter@64f3f849, org.springframework.security.web.access.intercept.AuthorizationFilter@6682e9b0]
+2024-08-12 16:34:03 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-08-12 16:34:03 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-08-12 16:34:03 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-12 16:34:03 [main] INFO  c.f.a.AuctionAppApplication - Started AuctionAppApplication in 6.79 seconds (process running for 7.289)
+2024-08-12 16:34:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:34:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:35:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:35:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:36:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:36:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:37:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:37:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:38:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:38:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:39:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:39:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:40:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:40:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:40:24 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-12 16:40:24 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-12 16:40:24 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2024-08-12 16:40:24 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2024-08-12 16:40:24 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2024-08-12 16:40:24 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@39a809db
+2024-08-12 16:40:24 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@2efda33d
+2024-08-12 16:40:24 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-08-12 16:40:24 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-08-12 16:40:24 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/login", parameters={}
+2024-08-12 16:40:24 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletLoginController#loginPage()
+2024-08-12 16:40:24 [http-nio-8080-exec-1] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 16:40:24 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - View name 'login', model {}
+2024-08-12 16:40:24 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/login.jsp]
+2024-08-12 16:40:25 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 16:40:29 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/login", parameters={}
+2024-08-12 16:40:29 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletLoginController#loginPage()
+2024-08-12 16:40:29 [http-nio-8080-exec-2] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 16:40:29 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - View name 'login', model {}
+2024-08-12 16:40:29 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/login.jsp]
+2024-08-12 16:40:29 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 16:41:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:41:03 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:41:20 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12 16:41:20 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-12 16:41:20 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-08-12 16:41:23 [main] INFO  c.f.a.AuctionAppApplication - Starting AuctionAppApplication using Java 21 with PID 424 (C:\Rovisys\Test\AuctionSiteTest\auction-app\target\classes started by jeffrey.chong in C:\Rovisys\Test\AuctionSiteTest\auction-app)
+2024-08-12 16:41:23 [main] INFO  c.f.a.AuctionAppApplication - No active profile set, falling back to 1 default profile: "default"
+2024-08-12 16:41:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-12 16:41:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 105 ms. Found 14 JPA repository interfaces.
+2024-08-12 16:41:24 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-12 16:41:24 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-12 16:41:24 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2024-08-12 16:41:25 [main] INFO  o.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2024-08-12 16:41:25 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-12 16:41:25 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2103 ms
+2024-08-12 16:41:25 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-12 16:41:25 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.8.Final
+2024-08-12 16:41:25 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-12 16:41:26 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-12 16:41:26 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-08-12 16:41:26 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@61993d18
+2024-08-12 16:41:26 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-08-12 16:41:26 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-12 16:41:27 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-12 16:41:27 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12 16:41:28 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-08-12 16:41:29 [main] INFO  o.s.b.f.a.AutowiredAnnotationBeanPostProcessor - Autowired annotation is not supported on static fields: private static final org.slf4j.Logger com.fyp.auction_app.schedulers.ItemStatusScheduler.logger
+2024-08-12 16:41:29 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-12 16:41:29 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 71 mappings in 'requestMappingHandlerMapping'
+2024-08-12 16:41:29 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-08-12 16:41:29 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2b208574, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3294b641, org.springframework.security.web.context.SecurityContextHolderFilter@5ace5b0e, org.springframework.security.web.header.HeaderWriterFilter@15d41953, org.springframework.security.web.authentication.logout.LogoutFilter@7b6824db, com.fyp.auction_app.config.JwtAuthenticationFilter@cef23a8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@23389e2b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1c0cba60, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@799bb4ed, org.springframework.security.web.session.SessionManagementFilter@feb0f52, org.springframework.security.web.access.ExceptionTranslationFilter@3abe1c9e, org.springframework.security.web.access.intercept.AuthorizationFilter@27f7db5a]
+2024-08-12 16:41:29 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-08-12 16:41:29 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-08-12 16:41:30 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-12 16:41:30 [main] INFO  c.f.a.AuctionAppApplication - Started AuctionAppApplication in 7.324 seconds (process running for 7.839)
+2024-08-12 16:41:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:41:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:41:34 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-12 16:41:34 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-12 16:41:34 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2024-08-12 16:41:34 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2024-08-12 16:41:34 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2024-08-12 16:41:34 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@39a809db
+2024-08-12 16:41:34 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@71dbfe64
+2024-08-12 16:41:34 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-08-12 16:41:34 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-08-12 16:41:34 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/login", parameters={}
+2024-08-12 16:41:34 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletLoginController#loginPage()
+2024-08-12 16:41:34 [http-nio-8080-exec-1] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 16:41:34 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - View name 'login', model {}
+2024-08-12 16:41:34 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/login.jsp]
+2024-08-12 16:41:35 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 16:41:39 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 16:41:39 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 16:41:41 [http-nio-8080-exec-2] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 16:41:41 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 16:41:41 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 16:41:41 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 16:41:44 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 16:41:44 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 16:41:49 [http-nio-8080-exec-3] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 16:41:49 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 16:41:49 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 16:41:49 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 16:42:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:42:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:43:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:43:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:44:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:44:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:45:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:45:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:46:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:46:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:47:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:47:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:48:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:48:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:49:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:49:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:50:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:50:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:51:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:51:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:52:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:52:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:53:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:53:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:54:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:54:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:55:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:55:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:56:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:56:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:57:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:57:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:58:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:58:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 16:59:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 16:59:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:00:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:00:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:01:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:01:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:02:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:02:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:03:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:03:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:04:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:04:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:05:00 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:00 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:02 [http-nio-8080-exec-6] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:02 [http-nio-8080-exec-6] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:02 [http-nio-8080-exec-6] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:02 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:05 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:05 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:05 [http-nio-8080-exec-7] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:05 [http-nio-8080-exec-7] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:05 [http-nio-8080-exec-7] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:05 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:20 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:20 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:20 [http-nio-8080-exec-8] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:20 [http-nio-8080-exec-8] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:20 [http-nio-8080-exec-8] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:20 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:21 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:21 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:21 [http-nio-8080-exec-9] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:21 [http-nio-8080-exec-9] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:21 [http-nio-8080-exec-9] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:21 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:21 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:21 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:21 [http-nio-8080-exec-10] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:21 [http-nio-8080-exec-10] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:21 [http-nio-8080-exec-10] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:21 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:21 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:21 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:21 [http-nio-8080-exec-1] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:21 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:21 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:21 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:21 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:21 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:21 [http-nio-8080-exec-2] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:21 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:21 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:21 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:21 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:21 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:21 [http-nio-8080-exec-3] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:21 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:21 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:21 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:21 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:21 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:21 [http-nio-8080-exec-4] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:21 [http-nio-8080-exec-4] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:21 [http-nio-8080-exec-4] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:21 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:22 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:22 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:22 [http-nio-8080-exec-5] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:22 [http-nio-8080-exec-5] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:22 [http-nio-8080-exec-5] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:22 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:22 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:22 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:22 [http-nio-8080-exec-6] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:22 [http-nio-8080-exec-6] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:22 [http-nio-8080-exec-6] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:22 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:22 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:22 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:22 [http-nio-8080-exec-7] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:22 [http-nio-8080-exec-7] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:22 [http-nio-8080-exec-7] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:22 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:22 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:22 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:22 [http-nio-8080-exec-8] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:22 [http-nio-8080-exec-8] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:22 [http-nio-8080-exec-8] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:22 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:22 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:22 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:22 [http-nio-8080-exec-9] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:22 [http-nio-8080-exec-9] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:22 [http-nio-8080-exec-9] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:22 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:22 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:22 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:22 [http-nio-8080-exec-10] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:22 [http-nio-8080-exec-10] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:22 [http-nio-8080-exec-10] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:22 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:23 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:23 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:23 [http-nio-8080-exec-1] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:23 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:23 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:23 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:23 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:23 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:23 [http-nio-8080-exec-2] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:23 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:23 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:23 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:23 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:23 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:23 [http-nio-8080-exec-3] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:23 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:23 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:23 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:23 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:23 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:23 [http-nio-8080-exec-4] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:23 [http-nio-8080-exec-4] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:23 [http-nio-8080-exec-4] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:23 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:23 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:23 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:23 [http-nio-8080-exec-5] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:23 [http-nio-8080-exec-5] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:23 [http-nio-8080-exec-5] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:23 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:23 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:23 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:23 [http-nio-8080-exec-6] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:23 [http-nio-8080-exec-6] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:23 [http-nio-8080-exec-6] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:23 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:24 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:24 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:24 [http-nio-8080-exec-7] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:24 [http-nio-8080-exec-7] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:24 [http-nio-8080-exec-7] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:24 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:24 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:24 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:24 [http-nio-8080-exec-8] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:24 [http-nio-8080-exec-8] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:24 [http-nio-8080-exec-8] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:24 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:24 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:24 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:24 [http-nio-8080-exec-9] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:24 [http-nio-8080-exec-9] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:24 [http-nio-8080-exec-9] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:24 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:24 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:24 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:24 [http-nio-8080-exec-10] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:24 [http-nio-8080-exec-10] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:24 [http-nio-8080-exec-10] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:24 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:24 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:24 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:24 [http-nio-8080-exec-1] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:24 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:24 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:24 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:25 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:25 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:25 [http-nio-8080-exec-2] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:25 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:25 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:25 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:05:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:05:30 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:05:58 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:05:58 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:05:58 [http-nio-8080-exec-3] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:05:58 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:05:58 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:05:58 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:06:01 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12 17:06:01 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-12 17:06:01 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-08-12 17:06:04 [main] INFO  c.f.a.AuctionAppApplication - Starting AuctionAppApplication using Java 21 with PID 43300 (C:\Rovisys\Test\AuctionSiteTest\auction-app\target\classes started by jeffrey.chong in C:\Rovisys\Test\AuctionSiteTest\auction-app)
+2024-08-12 17:06:04 [main] INFO  c.f.a.AuctionAppApplication - No active profile set, falling back to 1 default profile: "default"
+2024-08-12 17:06:05 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-12 17:06:05 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 112 ms. Found 14 JPA repository interfaces.
+2024-08-12 17:06:06 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-12 17:06:06 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-12 17:06:06 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2024-08-12 17:06:06 [main] INFO  o.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2024-08-12 17:06:06 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-12 17:06:06 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2088 ms
+2024-08-12 17:06:06 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-12 17:06:06 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.8.Final
+2024-08-12 17:06:06 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-12 17:06:07 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-12 17:06:07 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-08-12 17:06:07 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@67dc6b48
+2024-08-12 17:06:07 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-08-12 17:06:07 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-12 17:06:08 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-12 17:06:08 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12 17:06:09 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-08-12 17:06:09 [main] INFO  o.s.b.f.a.AutowiredAnnotationBeanPostProcessor - Autowired annotation is not supported on static fields: private static final org.slf4j.Logger com.fyp.auction_app.schedulers.ItemStatusScheduler.logger
+2024-08-12 17:06:09 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-12 17:06:09 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 71 mappings in 'requestMappingHandlerMapping'
+2024-08-12 17:06:10 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-08-12 17:06:10 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4eef2522, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@c62d08a, org.springframework.security.web.context.SecurityContextHolderFilter@57d71569, org.springframework.security.web.header.HeaderWriterFilter@feb0f52, org.springframework.security.web.authentication.logout.LogoutFilter@2b208574, com.fyp.auction_app.config.JwtAuthenticationFilter@23b3afb4, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@64903a20, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@38e61b69, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@598b15ba, org.springframework.security.web.session.SessionManagementFilter@31cae1e4, org.springframework.security.web.access.ExceptionTranslationFilter@59ea2a36, org.springframework.security.web.access.intercept.AuthorizationFilter@4ad113d6]
+2024-08-12 17:06:10 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-08-12 17:06:10 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-08-12 17:06:10 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-12 17:06:10 [main] INFO  c.f.a.AuctionAppApplication - Started AuctionAppApplication in 6.603 seconds (process running for 7.08)
+2024-08-12 17:06:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:06:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:06:13 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-12 17:06:13 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-12 17:06:13 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2024-08-12 17:06:13 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2024-08-12 17:06:13 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2024-08-12 17:06:13 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@f62ae87
+2024-08-12 17:06:13 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@4a0934a8
+2024-08-12 17:06:13 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-08-12 17:06:13 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2024-08-12 17:06:13 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:06:13 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:06:13 [http-nio-8080-exec-1] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:06:13 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:06:13 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:06:14 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:06:42 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:06:42 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:06:42 [http-nio-8080-exec-2] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:06:42 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:06:42 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:06:42 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:06:45 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:06:45 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:06:45 [http-nio-8080-exec-3] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:06:45 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:06:45 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:06:45 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:06:46 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:06:46 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:06:46 [http-nio-8080-exec-4] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:06:46 [http-nio-8080-exec-4] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:06:46 [http-nio-8080-exec-4] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:06:46 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:06:46 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:06:46 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:06:46 [http-nio-8080-exec-5] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:06:46 [http-nio-8080-exec-5] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:06:46 [http-nio-8080-exec-5] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:06:46 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:06:46 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:06:46 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:06:46 [http-nio-8080-exec-6] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:06:46 [http-nio-8080-exec-6] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:06:46 [http-nio-8080-exec-6] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:06:46 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:06:46 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:06:46 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:06:47 [http-nio-8080-exec-7] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:06:47 [http-nio-8080-exec-7] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:06:47 [http-nio-8080-exec-7] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:06:47 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:06:47 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:06:47 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:06:47 [http-nio-8080-exec-8] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:06:47 [http-nio-8080-exec-8] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:06:47 [http-nio-8080-exec-8] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:06:47 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:06:47 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:06:47 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:06:47 [http-nio-8080-exec-9] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:06:47 [http-nio-8080-exec-9] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:06:47 [http-nio-8080-exec-9] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:06:47 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:06:47 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:06:47 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:06:47 [http-nio-8080-exec-10] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:06:47 [http-nio-8080-exec-10] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:06:47 [http-nio-8080-exec-10] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:06:47 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:06:47 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:06:47 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:06:47 [http-nio-8080-exec-1] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:06:47 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:06:47 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:06:47 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:06:48 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/category", parameters={}
+2024-08-12 17:06:48 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletItemCategoryController#categoryPage()
+2024-08-12 17:06:48 [http-nio-8080-exec-2] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:06:48 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - View name 'categoryPage', model {categories=[ItemCategory(id=2, catName=Electronics), ItemCategory(id=3, catName=Sports)]}
+2024-08-12 17:06:48 [http-nio-8080-exec-2] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/categoryPage.jsp]
+2024-08-12 17:06:48 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:07:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:07:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:07:37 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/login", parameters={}
+2024-08-12 17:07:37 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletLoginController#loginPage()
+2024-08-12 17:07:37 [http-nio-8080-exec-4] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:07:37 [http-nio-8080-exec-4] DEBUG o.s.w.s.view.InternalResourceView - View name 'login', model {}
+2024-08-12 17:07:37 [http-nio-8080-exec-4] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/login.jsp]
+2024-08-12 17:07:37 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:07:50 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/login", parameters={}
+2024-08-12 17:07:50 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletLoginController#loginPage()
+2024-08-12 17:07:50 [http-nio-8080-exec-6] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:07:50 [http-nio-8080-exec-6] DEBUG o.s.w.s.view.InternalResourceView - View name 'login', model {}
+2024-08-12 17:07:50 [http-nio-8080-exec-6] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/login.jsp]
+2024-08-12 17:07:50 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:07:56 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/login", parameters={}
+2024-08-12 17:07:56 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletLoginController#loginPage()
+2024-08-12 17:07:56 [http-nio-8080-exec-8] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:07:56 [http-nio-8080-exec-8] DEBUG o.s.w.s.view.InternalResourceView - View name 'login', model {}
+2024-08-12 17:07:56 [http-nio-8080-exec-8] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/login.jsp]
+2024-08-12 17:07:56 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:08:01 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/login", parameters={}
+2024-08-12 17:08:01 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletLoginController#loginPage()
+2024-08-12 17:08:01 [http-nio-8080-exec-9] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:08:01 [http-nio-8080-exec-9] DEBUG o.s.w.s.view.InternalResourceView - View name 'login', model {}
+2024-08-12 17:08:01 [http-nio-8080-exec-9] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/login.jsp]
+2024-08-12 17:08:01 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:08:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:08:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:08:10 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/login", parameters={}
+2024-08-12 17:08:10 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletLoginController#loginPage()
+2024-08-12 17:08:10 [http-nio-8080-exec-1] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:08:10 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - View name 'login', model {}
+2024-08-12 17:08:10 [http-nio-8080-exec-1] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/login.jsp]
+2024-08-12 17:08:10 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:09:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:09:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:10:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:10:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:11:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:11:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:12:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:12:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended
+2024-08-12 17:12:56 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/login", parameters={}
+2024-08-12 17:12:56 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fyp.auction_app.controllers.ServletLoginController#loginPage()
+2024-08-12 17:12:56 [http-nio-8080-exec-3] DEBUG o.s.w.s.v.ContentNegotiatingViewResolver - Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2024-08-12 17:12:56 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - View name 'login', model {}
+2024-08-12 17:12:56 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/login.jsp]
+2024-08-12 17:12:56 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
