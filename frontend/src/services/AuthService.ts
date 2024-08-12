@@ -1,5 +1,4 @@
 import { AxiosResponse } from 'axios';
-import User from '../interfaces/User';
 import baseUrl from '../config/baseUrl';
 
 const handleResponse = (response: AxiosResponse) => {
