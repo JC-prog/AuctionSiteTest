@@ -19228,3 +19228,5 @@ Stacktrace:
 2024-08-12 17:12:56 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - View name 'login', model {}
 2024-08-12 17:12:56 [http-nio-8080-exec-3] DEBUG o.s.w.s.view.InternalResourceView - Forwarding to [/WEB-INF/jsp/login.jsp]
 2024-08-12 17:12:56 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-08-12 17:13:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Started
+2024-08-12 17:13:10 [scheduling-1] INFO  c.f.a.schedulers.ItemStatusScheduler - Update Item Status Ended

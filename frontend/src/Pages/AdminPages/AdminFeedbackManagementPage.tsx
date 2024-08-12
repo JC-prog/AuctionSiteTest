@@ -7,7 +7,7 @@ interface Feedback {
   feedback_id: number;
   username: string;
   message: string;
-  feedback_timestamp: Date; 
+  feedbackTimestamp: Date; 
 }
 
 const AdminFeedbackManagementPage: React.FC = () => {
