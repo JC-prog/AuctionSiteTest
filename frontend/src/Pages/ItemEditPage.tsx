@@ -39,8 +39,8 @@ const ItemEditPage: React.FC<AuthProps> = () => {
 
         const fetchItem = async () => {
             try {
-                const response = await fetchItemByItemId(itemId);
-                setItem(response);
+                const response = await fetchItemByItemId(parseInt(itemId));
+                setItem(response.data);
 
                 const categoryResponse = await fetchCategories();
                 setCategories(categoryResponse.data);

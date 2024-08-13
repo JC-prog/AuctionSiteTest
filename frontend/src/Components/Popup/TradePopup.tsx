@@ -1,8 +1,6 @@
 // src/Popup.tsx
 import React, { useState, useEffect } from 'react';
 import Item from '../../interfaces/Item';
-import { AxiosResponse } from 'axios';
-import api from '../../config/Api';
 import { toast } from 'react-toastify';
 import { initiateTrade } from '../../services/TradeRequestService';
 import { fetchCreatedItem } from '../../services/ItemService';
