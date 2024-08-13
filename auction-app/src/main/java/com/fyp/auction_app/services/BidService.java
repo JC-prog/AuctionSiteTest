@@ -36,11 +36,15 @@ public class BidService {
     }
 
     public List<Bid> findBidsByUsername(String username) {
-        List<Bid> bids = bidRepository.findByBidderName(username);
-        return bids;
+        return bidRepository.findLatestBidsByUsername(username);
     }
+
 
     public Long getBidCountByItemId(Integer itemId) {
         return bidRepository.countBidsByItemId(itemId);
+    }
+
+    public List<Bid> getLatestBids(List<Integer> itemIds) {
+        return bidRepository.findLatestBidsByItemIds(itemIds);
     }
 }

@@ -21,4 +21,12 @@ public interface BidRepository extends JpaRepository<Bid, Integer> {
     @Query("SELECT COUNT(b) FROM Bid b WHERE b.itemId = :itemId")
     Long countBidsByItemId(@Param("itemId") Integer itemId);
 
+    @Query("SELECT b FROM Bid b WHERE b.bidId IN (" +
+            "SELECT MAX(bid.bidId) FROM Bid bid WHERE bid.itemId IN :itemIds GROUP BY bid.itemId)")
+    List<Bid> findLatestBidsByItemIds(@Param("itemIds") List<Integer> itemIds);
+
+    @Query("SELECT b FROM Bid b WHERE b.bidId IN (" +
+            "SELECT MAX(bid.bidId) FROM Bid bid WHERE bid.bidderName = :username GROUP BY bid.itemId)")
+    List<Bid> findLatestBidsByUsername(@Param("username") String username);
+
 }

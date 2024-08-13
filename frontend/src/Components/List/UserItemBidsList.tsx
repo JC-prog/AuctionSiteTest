@@ -45,6 +45,15 @@ const UserItemBidsList: React.FC<ItemListProps> = ({ listTitle, bids }) => {
         }
     };
 
+    const renderStatus = (bidAmount: number, itemAmount: number) => {
+        if(bidAmount == itemAmount)
+        { 
+            return <p className="text-green-600" >Winning</p>
+        } else {
+            return <p className="text-red-600">Losing</p>
+        }
+    }
+
     return (
         <div className="mb-8 lg:mb-0">
             <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
@@ -82,7 +91,7 @@ const UserItemBidsList: React.FC<ItemListProps> = ({ listTitle, bids }) => {
                                     <span className="text-gray-500">{index + 1}</span>
                                 </div>
                                 <div className="col-span-1">
-                                    <img src={itemImages[bid.itemId] || "/upload-photo.jpg"} alt={bid.itemTitle} className="w-12 h-12 object-cover rounded-md" />
+                                    <img src={itemImages[bid.itemId] || "/upload-photo.png"} className="w-12 h-12 object-cover rounded-md" />
                                 </div>
                                 <div className="col-span-3">
                                     <Link to={`/item/${bid.itemId}`} className="block">
@@ -93,7 +102,7 @@ const UserItemBidsList: React.FC<ItemListProps> = ({ listTitle, bids }) => {
                                     <Timer endTime={bid.endDate} />
                                 </div>
                                 <div className="col-span-1">
-                                    <span></span>
+                                    <span>{renderStatus(bid.bidAmount, itemPrices[bid.itemId])}</span>
                                 </div>
                                 <div className="col-span-2 space-x-2">
                                     <span className="text-gray-500">${bid.bidAmount}</span>

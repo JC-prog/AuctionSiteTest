@@ -101,4 +101,9 @@ public class BidController {
         return new ResponseEntity<>(numberOfBids, HttpStatus.OK);
     }
 
+    @GetMapping("/latest-bids")
+    public List<Bid> getLatestBids(@RequestParam List<Integer> itemIds) {
+        return bidService.getLatestBids(itemIds);
+    }
+
 }
