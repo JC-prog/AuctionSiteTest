@@ -22,6 +22,12 @@ public class TradeRequestService {
         return tradeRequestRepository.findById(id);
     }
 
+    // Return Trade Request By Buyer Item and Seller Item
+    public Optional<TradeRequest> findTradeRequestByBuyerAndSellerItem(Integer buyerItemId, Integer sellerItemId)
+    {
+        return tradeRequestRepository.findByBuyerItemIdAndSellerItemId(buyerItemId, sellerItemId);
+    }
+
     public Page<TradeRequest> getTradeRequestBySellerName(String buyerName, Pageable pageable) {
         return tradeRequestRepository.findBySellerNameOrderByTimeStampDesc(buyerName, pageable);
     }
@@ -35,8 +41,9 @@ public class TradeRequestService {
         tradeRequestRepository.save(tradeRequest);
     }
 
-
-
-    //
+    public Long getTradeCountBySellerItemId(Integer itemId)
+    {
+        return tradeRequestRepository.countTradesBySellerItemId(itemId);
+    }
 
 }

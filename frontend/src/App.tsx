@@ -87,7 +87,7 @@ function App() {
         
       try {
         const response = await api.get(`/api/user/interest/${user}`);
-       
+        console.log(response);
         setInterestCheck(response.data);
         
     } catch (error) {
@@ -117,7 +117,7 @@ function App() {
           <Navbar isAuth={authenticated} user={user}/>
           <main className="flex-1 bg-gray-100">
             <Routes>
-              <Route path="/" element={<HomePage user={user} interestChecked={interestChecked}/>} />
+              <Route path="/" element={<HomePage user={user} />} />
               <Route path="/admin" element={<AdminDashboardPage />} />
               <Route path="/admin/user-management" element={<AdminUserManagementPage />} />
               <Route path="/admin/listing-management" element={<AdminListingManagementPage />} />

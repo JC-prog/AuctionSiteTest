@@ -88,3 +88,12 @@ export const postReject = (tradeId: number) => {
     return response;
 };
 
+// Count Trades
+export const countTrades = (itemId: string) => {
+    const apiUrl = `/api/trade/count-trade/${itemId}`;
+
+    const response = apiGet(apiUrl);
+    
+    return response;
+}
+

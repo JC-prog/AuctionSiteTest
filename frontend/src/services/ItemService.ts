@@ -74,27 +74,12 @@ export const fetchItems = async (page: number = 0) => {
   };
 
 // Fetch Item by ItemId
-export const fetchItemByItemId = async (itemId: string) => {
-    try {
-      const accessToken = Cookies.get('access_token');
-      if (!accessToken) {
-        throw new Error('No access token found');
-      }
-  
-      const response: AxiosResponse<Item> = await baseUrl.get(`/api/item/${itemId}`, {
-        headers: {
-          Authorization: 'Bearer ' + accessToken,
-        },
-      });
-  
-      if (response.status !== 200) {
-        throw new Error('Network response was not ok');
-      }
-  
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+export const fetchItemByItemId = async (itemId: number) => {
+    const apiUrl = `/api/item/${itemId}`;
+
+    const response = apiGet(apiUrl);
+    console.log(response);
+    return response;
   };
 
   // Fetch Items By Keyword
@@ -169,7 +154,7 @@ export const fetchItemsByEndDate = async (page: number = 0): Promise<Item[]> => 
     }
   };
 
-// Fetch Items By User
+// Fetch List Items By User
 export const fetchItemsByUsername = async (username: string | null | undefined): Promise<Item[]> => {
     try {
         const accessToken = Cookies.get('access_token');
@@ -266,8 +251,8 @@ export const rejectBid = (itemId: number) => {
 }
 
 // Fetch Items that are in CREATED
-export const fetchCreatedItem = (username: string) => {
-  const apiUrl = `/api/created-items/${username}`;
+export const fetchCreatedItem = (username: string | null | undefined) => {
+  const apiUrl = `/api/item/created/${username}`;
 
   const response = apiGet(apiUrl);
 

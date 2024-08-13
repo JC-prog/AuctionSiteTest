@@ -7,6 +7,7 @@ import com.fyp.auction_app.models.TradeRequest;
 import com.fyp.auction_app.models.Transaction;
 import com.fyp.auction_app.services.ItemService;
 import com.fyp.auction_app.services.TradeRequestService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -60,11 +61,18 @@ public class TradeRequestController {
 
         Optional<Item> sellerItem = itemService.findItemByItemId(request.getSellerItemId());
 
+        Optional<TradeRequest> tradeRequest = tradeRequestService.findTradeRequestByBuyerAndSellerItem(request.getBuyerItemId(), request.getSellerItemId());
+
         if(buyerItem.isPresent() && sellerItem.isPresent())
         {
             if (Objects.equals(request.getBuyerName(), sellerItem.get().getSellerName()))
             {
                 return new ResponseEntity<>("Cannot Trade own item", HttpStatus.BAD_REQUEST);
+            }
+
+            if (tradeRequest.isPresent())
+            {
+                return new ResponseEntity<>("Item already Traded", HttpStatus.BAD_REQUEST);
             }
 
             TradeRequest tradeRequestToCreate = new TradeRequest();
@@ -122,6 +130,12 @@ public class TradeRequestController {
         return new ResponseEntity<>("Trade Request Not Found", HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/count-trade/{sellerItemId}")
+    public ResponseEntity<Long> getNumberOfTrades(@PathVariable Integer sellerItemId)
+    {
+        Long numberOfTrades = tradeRequestService.getTradeCountBySellerItemId(sellerItemId);
 
+        return new ResponseEntity<>(numberOfTrades, HttpStatus.OK);
+    }
 
 }

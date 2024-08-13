@@ -9,11 +9,13 @@ import TradePopup from '../Components/Popup/TradePopup';
 import BidConfirmPopup from '../Components/Popup/BidConfirmPopup';
 
 // API Function Calls
+import { fetchItemByItemId } from '../services/ItemService';
 import { countBids } from '../services/BidService';
 
 // Interface
 import Item from '../interfaces/Item';
 import { logClickCategory } from '../services/ClickstreamService';
+import { countTrades } from '../services/TradeRequestService';
 
 interface AuthProps {
     isAuth?: boolean;
@@ -24,6 +26,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
     const { itemId } = useParams<{ itemId: string }>();
     const [item, setItem] = useState<Item>();
     const [numOfBids, setNumOfBids] = useState(0);
+    const [numOfTrades, setNumOfTrades] = useState(0);
     const [userImage, setUserImage] = useState<string | null>(null);
     const [itemImage, setItemImage] = useState<string | null>(null);
     const [itemImageError, setItemImageError] = useState(false);
@@ -46,17 +49,36 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
         const fetchItem = async () => {
             try {
-                const [itemResponse, numBidsResponse]: [AxiosResponse<Item>, AxiosResponse] = await Promise.all([
-                    api.get(`/api/item/${itemId}`),
-                    countBids(itemId)
-                ]);
+                const itemResponse = await fetchItemByItemId(parseInt(itemId));
 
-                if (itemResponse.status !== 200 || numBidsResponse.status !== 200) {
+                if (itemResponse.status !== 200) {
                     throw new Error('Network response was not ok');
                 }
 
                 setItem(itemResponse.data);
-                setNumOfBids(numBidsResponse.data);
+
+                if(item?.auctionType == 'trade')
+                {
+                    const numTradesResponse  = await countTrades(itemId);
+
+                    if (numTradesResponse.status != 200)
+                    {
+                        throw new Error("Network response was not ok");
+                    }
+
+                    setNumOfTrades(numTradesResponse.data);
+
+                } else {
+                    const numBidsResponse  = await countBids(itemId);
+
+                    if (numBidsResponse.status != 200)
+                    {
+                        throw new Error("Network response was not ok");
+                    }
+
+                    setNumOfBids(numBidsResponse.data);
+                }
+                
                 
                 if (isAuth && item?.itemCategory != null) {
                     logClickCategory(user, item?.itemCategory);
@@ -197,7 +219,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                                 {item?.auctionType === 'trade' ? (
                                     <>
                                         <p className="font-medium">Trade</p>
-                                        <span className="font-medium">{numOfBids} Trade Requests</span>
+                                        <span className="font-medium">{numOfTrades} Trade Requests</span>
                                     </>
                                 ) : (
                                     <>

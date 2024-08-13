@@ -5,15 +5,12 @@ import { AxiosResponse } from 'axios';
 import api from '../../config/Api';
 import { toast } from 'react-toastify';
 import { initiateTrade } from '../../services/TradeRequestService';
+import { fetchCreatedItem } from '../../services/ItemService';
 
 interface PopupProps {
     onClose: () => void;
     itemId: number | null | undefined;
     username: string | null | undefined;
-}
-
-interface PaginatedResponse {
-    content: Item[];
 }
 
 const TradePopup: React.FC<PopupProps> = ({ onClose, itemId, username }) => {
@@ -27,7 +24,10 @@ const TradePopup: React.FC<PopupProps> = ({ onClose, itemId, username }) => {
         const fetchItems = async () => {
             console.log(itemId);
             try {
-                const response: AxiosResponse<PaginatedResponse> = await api.get('/api/item/all');
+                const response = await fetchCreatedItem(username);
+
+                console.log(response);
+
                 if (response.status !== 200) {
                     throw new Error('Network response was not ok');
                 }
