@@ -13,4 +13,5 @@ public interface WatchlistRepository extends JpaRepository<Watchlist, Integer> {
 
     List<Watchlist> findByUsername(String username);
 
+    List<Watchlist> findByItemId(Integer itemId);
 }
