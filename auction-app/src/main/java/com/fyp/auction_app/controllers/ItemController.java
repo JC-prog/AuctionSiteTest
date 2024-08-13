@@ -131,6 +131,7 @@ public class ItemController {
 
         item.setStatus(ListingStatus.CREATED);
         item.setCurrentPrice(item.getStartPrice());
+        item.setCreateAt(new Date());
 
         Item createdItem = itemService.createItem(item);
 

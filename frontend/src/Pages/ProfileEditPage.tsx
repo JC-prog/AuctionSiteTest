@@ -172,41 +172,43 @@ const ProfileEditPage = () => {
 
   return (
     <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
-      <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-8">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-semibold">Edit Profile</h2>
-          <Link to={`/user/${user.username}`} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">
-            Cancel
-          </Link>
+        <div className="flex items-center mb-4">
+            <Link to="/" className="text-blue-500 text-sm hover:underline">
+                Back to Home
+            </Link>
+            <span className="text-gray-500 mx-2">/</span>
+            <span className="text-gray-500 text-sm">Edit Profile</span>
         </div>
+        <h1 className="text-2xl font-semibold mb-6">Edit Profile</h1>
 
-        <div className="flex mb-8 space-x-4">
-            <ProfilePhotoSection
-                preview={preview}
-                onClick={() => triggerFileInput(fileInputRef)}
-                onFileChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFileChange(e, setSelectedFile, setPreview)}
-                fileInputRef={fileInputRef}
-            />
-            <BannerPhotoSection
-                bannerPreview={bannerPreview}
-                onClick={() => triggerFileInput(bannerFileInputRef)}
-                onFileChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFileChange(e, setSelectedBanner, setBannerPreview)}
-                bannerFileInputRef={bannerFileInputRef}
+        <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-8">
+            <div className="flex mb-8 space-x-4">
+                <ProfilePhotoSection
+                    preview={preview}
+                    onClick={() => triggerFileInput(fileInputRef)}
+                    onFileChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFileChange(e, setSelectedFile, setPreview)}
+                    fileInputRef={fileInputRef}
+                />
+                <BannerPhotoSection
+                    bannerPreview={bannerPreview}
+                    onClick={() => triggerFileInput(bannerFileInputRef)}
+                    onFileChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFileChange(e, setSelectedBanner, setBannerPreview)}
+                    bannerFileInputRef={bannerFileInputRef}
+                />
+            </div>
+
+            <form onSubmit={handleSave} className="space-y-6">
+            <UserDetailsSection user={user} onChange={handleChange} />
+            <AddressSection addressParts={addressParts} onAddressChange={handleAddressChange} />
+            <PasswordSection password={user.password} onChange={handleChange} onChangePassword={handleChangePassword} />
+            <ActionsSection onDeactivate={handleDeactivate} />
+            </form>
+
+            <UploadSection
+            onUploadPhoto={() => handleUpload(`/api/user/upload-photo/${username}`, selectedFile, 'Photo uploaded successfully!', 'Failed to upload photo. Please try again.')}
+            onUploadBanner={() => handleUpload(`/api/user/upload-banner/${username}`, selectedBanner, 'Banner uploaded successfully!', 'Failed to upload banner. Please try again.')}
             />
         </div>
-
-        <form onSubmit={handleSave} className="space-y-6">
-          <UserDetailsSection user={user} onChange={handleChange} />
-          <AddressSection addressParts={addressParts} onAddressChange={handleAddressChange} />
-          <PasswordSection password={user.password} onChange={handleChange} onChangePassword={handleChangePassword} />
-          <ActionsSection onDeactivate={handleDeactivate} />
-        </form>
-
-        <UploadSection
-          onUploadPhoto={() => handleUpload(`/api/user/upload-photo/${username}`, selectedFile, 'Photo uploaded successfully!', 'Failed to upload photo. Please try again.')}
-          onUploadBanner={() => handleUpload(`/api/user/upload-banner/${username}`, selectedBanner, 'Banner uploaded successfully!', 'Failed to upload banner. Please try again.')}
-        />
-      </div>
     </div>
   );
 };
@@ -234,19 +236,19 @@ const BannerPhotoSection = ({ bannerPreview, onClick, onFileChange, bannerFileIn
 const UserDetailsSection = ({ user, onChange }: any) => (
   <>
     <div className="flex justify-between items-center">
-      <label className="block text-xl font-semibold mb-2">Username</label>
+      <label className="block text-sm font-medium text-gray-700">Username</label>
       <input type="text" name="username" value={user.username || ''} onChange={onChange} className="w-2/3 p-2 border rounded-md" />
     </div>
     <div className="flex justify-between items-center">
-      <label className="block text-xl font-semibold mb-2">Email</label>
+      <label className="block text-sm font-medium text-gray-700">Email</label>
       <input type="email" name="email" value={user.email || ''} onChange={onChange} className="w-2/3 p-2 border rounded-md" />
     </div>
     <div className="flex justify-between items-center">
-      <label className="block text-xl font-semibold mb-2">Contact Number</label>
+      <label className="block text-sm font-medium text-gray-700">Contact Number</label>
       <input type="tel" name="contactNumber" value={user.contactNumber || ''} onChange={onChange} className="w-2/3 p-2 border rounded-md" />
     </div>
     <div className="flex justify-between items-center">
-      <label className="block text-xl font-semibold mb-2">Gender</label>
+      <label className="block text-sm font-medium text-gray-700">Gender</label>
       <select name="gender" value={user.gender || ''} onChange={onChange} className="w-2/3 p-2 border rounded-md">
         <option value="">Select Gender</option>
         <option value="MALE">Male</option>
@@ -260,19 +262,19 @@ const UserDetailsSection = ({ user, onChange }: any) => (
 const AddressSection = ({ addressParts, onAddressChange }: any) => (
   <>
     <div className="flex justify-between items-center">
-      <label className="block text-xl font-semibold mb-2">Street</label>
+      <label className="block text-sm font-medium text-gray-700">Street</label>
       <input type="text" name="street" value={addressParts[0]} onChange={(e) => onAddressChange(0, e.target.value)} className="w-2/3 p-2 border rounded-md" />
     </div>
     <div className="flex justify-between items-center">
-      <label className="block text-xl font-semibold mb-2">City</label>
+      <label className="block text-sm font-medium text-gray-700">City</label>
       <input type="text" name="city" value={addressParts[1]} onChange={(e) => onAddressChange(1, e.target.value)} className="w-2/3 p-2 border rounded-md" />
     </div>
     <div className="flex justify-between items-center">
-      <label className="block text-xl font-semibold mb-2">State</label>
+      <label className="block text-sm font-medium text-gray-700">State</label>
       <input type="text" name="state" value={addressParts[2]} onChange={(e) => onAddressChange(2, e.target.value)} className="w-2/3 p-2 border rounded-md" />
     </div>
     <div className="flex justify-between items-center">
-      <label className="block text-xl font-semibold mb-2">ZIP Code</label>
+      <label className="block text-sm font-medium text-gray-700">ZIP Code</label>
       <input type="text" name="zipCode" value={addressParts[3]} onChange={(e) => onAddressChange(3, e.target.value)} className="w-2/3 p-2 border rounded-md" />
     </div>
   </>
@@ -281,7 +283,7 @@ const AddressSection = ({ addressParts, onAddressChange }: any) => (
 const PasswordSection = ({ password, onChange, onChangePassword }: any) => (
   <>
     <div className="flex justify-between items-center">
-      <label className="block text-xl font-semibold mb-2">Password</label>
+      <label className="block text-sm font-medium text-gray-700">Password</label>
       <input type="password" name="password" value={password || ''} onChange={onChange} className="w-2/3 p-2 border rounded-md" />
     </div>
     <button type="button" onClick={onChangePassword} className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">

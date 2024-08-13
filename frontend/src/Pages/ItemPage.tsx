@@ -182,10 +182,13 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                                 </div>
                             )}
                             
-                            <div className="flex justify-between">
-                                <p className="font-medium">Current Price</p>
-                                <span className="font-medium">${item?.currentPrice.toFixed(2)}</span>
-                            </div>
+                            {item?.auctionType != 'trade' && ( 
+                                <div className="flex justify-between">
+                                    <p className="font-medium">Current Price</p>
+                                    <span className="font-medium">${item?.currentPrice.toFixed(2)}</span>
+                                </div>
+                            )}
+
                             <div className="flex justify-between">
                                 <p className="font-medium">Time left</p>
                                 {renderStatus(item)}

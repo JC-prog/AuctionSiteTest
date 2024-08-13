@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 
-
 // Base URL
 import baseUrl from '../config/baseUrl';
 
