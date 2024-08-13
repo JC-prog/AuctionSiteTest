@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const baseUrl = axios.create({
-    baseURL: 'http://localhost:8080'
+    baseURL: 'http://auctionapp.ap-southeast-1.elasticbeanstalk.com'
 })
 
 export default baseUrl;
