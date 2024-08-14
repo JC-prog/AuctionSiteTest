@@ -295,9 +295,9 @@ const ItemEditPage: React.FC<AuthProps> = () => {
                         required
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
                     >
-                        <option value="1:00:00">1 Hour</option>
-                        <option value="24:00:00">1 Day</option>
-                        <option value="168:00:00">7 Days</option>
+                        <option value="0:01:00">1 Hour</option>
+                        <option value="1:00:00">1 Day</option>
+                        <option value="7:00:00">7 Days</option>
                         <option value="custom">Custom</option>
                     </select>
                 </div>
