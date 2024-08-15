@@ -58,7 +58,7 @@ public class ItemStatusScheduler {
 
     private void updateStatusBasedOnAuctionType(Item item) {
         if ("low-start-high".equals(item.getAuctionType())) {
-            item.setStatus(item.getMinSellPrice() < item.getCurrentPrice() ? ListingStatus.EXPIRED : ListingStatus.FINISHED);
+            item.setStatus(item.getMinSellPrice() < item.getCurrentPrice() ? ListingStatus.SOLD : ListingStatus.FINISHED);
         } else {
             item.setStatus(ListingStatus.SOLD);
         }
