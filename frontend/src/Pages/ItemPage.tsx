@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faBookmark } from '@fortawesome/free-regular-svg-icons';
 import api from '../config/api/loginApi';
 import Timer from '../Components/Timer';
 import TradePopup from '../Components/Popup/TradePopup';
@@ -15,6 +13,7 @@ import { countBids } from '../services/BidService';
 import Item from '../interfaces/Item';
 import { logClickCategory } from '../services/ClickstreamService';
 import { countTrades } from '../services/TradeRequestService';
+// import LikeButton from '../Components/Interactive/LikeButton';
 
 interface AuthProps {
     isAuth?: boolean;
@@ -29,6 +28,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
     const [userImage, setUserImage] = useState<string | null>(null);
     const [itemImage, setItemImage] = useState<string | null>(null);
     const [itemImageError, setItemImageError] = useState(false);
+    // const [itemLiked, setItemLiked] = useState<boolean>(false);
 
     // Popup
     const [isBidConfirmPopupOpen, setIsBidConfirmPopupOpen] = useState(false);
@@ -123,10 +123,6 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
         fetchProfilePhoto();
     }, [item?.sellerName]);
 
-    // Fetch Bid
-
-    // Fetch Trade Requests
-
     // Render Auction Type
     const renderAuctionType = (item?: Item) => {
         switch (item?.auctionType) {
@@ -179,12 +175,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                             className="w-48 h-48 object-cover rounded-md shadow-md mb-4"
                         />
                         <div className="flex space-x-2">
-                            <button className="p-2 bg-gray-200 rounded-full">
-                                <FontAwesomeIcon icon={faHeart} />
-                            </button>
-                            <button className="p-2 bg-gray-200 rounded-full">
-                                <FontAwesomeIcon icon={faBookmark} />
-                            </button>
+                            {/* <LikeButton isLiked={itemLiked} username={user} itemId={itemId}/> */}
                         </div>
                     </div>
                     {/* Info Section */}

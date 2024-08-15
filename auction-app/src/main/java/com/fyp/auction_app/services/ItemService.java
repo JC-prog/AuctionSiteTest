@@ -2,10 +2,7 @@ package com.fyp.auction_app.services;
 
 import com.fyp.auction_app.models.Enums.ListingStatus;
 import com.fyp.auction_app.models.Item;
-import com.fyp.auction_app.models.ItemImage;
-import com.fyp.auction_app.models.User;
-import com.fyp.auction_app.repository.ItemImageRepository;
-import com.fyp.auction_app.repository.ItemRepo;
+import com.fyp.auction_app.repository.ItemRepository;
 import com.fyp.auction_app.repository.ItemSpecification;
 import com.fyp.auction_app.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,34 +22,63 @@ import java.util.Optional;
 public class ItemService {
 
     @Autowired
-    private ItemRepo itemRepo;
+    private ItemRepository itemRepository;
 
-    @Autowired
-    private ItemImageRepository itemImageRepository;
-
-    public Page<Item> findItems(int page, int size) {
+    // Returns Paginated all Items
+    public Page<Item> findAllItems(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return itemRepo.findByStatus(ListingStatus.LISTED, pageable);
+
+        return itemRepository.findAll(pageable);
     }
 
-    public Page<Item> findCreatedItems(String username, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return itemRepo.findBySellerNameAndStatus(username, ListingStatus.CREATED, pageable);
-    }
-
+    // Return List of Items by Seller Name
     public List<Item> findItemsBySeller(String sellerName) {
 
-        return itemRepo.findBySellerName(sellerName);
+        return itemRepository.findBySellerName(sellerName);
     }
 
+    // Return Paginated all Items by Seller name
+    public Page<Item> findItemsBySellerName(String sellerName, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return itemRepository.findBySellerName(sellerName, pageable);
+    }
+
+    // Return List of Items by Status
+    public List<Item> findItemsByStatus(ListingStatus status) {
+
+        return itemRepository.findByStatus(status);
+    }
+
+    // Return Paginated all Items by Status
+    public Page<Item> findItemsByStatus(ListingStatus status, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return itemRepository.findByStatus(status, pageable);
+    }
+
+    // Return List of Items by Seller Name and Listing Status
+    public List<Item> findItemsBySellerNameAndStatus(String sellerName, ListingStatus status)
+    {
+        return itemRepository.findBySellerNameAndStatus(sellerName, status);
+    }
+
+    // Return List of Items by Seller Name and Listing Status
+    public Page<Item> findItemsBySellerNameAndStatus(String sellerName, ListingStatus status, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return itemRepository.findBySellerNameAndStatus(sellerName, status, pageable);
+    }
+
+    // Return Paginated Items By Seller Name and End Date
     public Page<Item> findItemsBySellerNameAndEndDate(String sellerName, Date endDate, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return itemRepo.findBySellerNameAndEndDate(sellerName, endDate, pageable);
+        return itemRepository.findBySellerNameAndEndDate(sellerName, endDate, pageable);
     }
 
     public Page<Item> findItemsSortedByDuration(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return itemRepo.findAllSortedByDuration(pageable);
+        return itemRepository.findAllSortedByDuration(pageable);
     }
 
     public Page<Item> searchItems(String keyword, int page, int size) {
@@ -60,34 +86,34 @@ public class ItemService {
 
         Specification<Item> spec = Specification.where(ItemSpecification.containsKeyword(keyword));
 
-        return itemRepo.findAll(spec, pageable);
+        return itemRepository.findAll(spec, pageable);
     }
 
     public Optional<Item> findItemById(Integer id) {
-        return itemRepo.findById(id);
+        return itemRepository.findById(id);
     }
 
     public Item createItem(Item item) {
 
-        return itemRepo.save(item);
+        return itemRepository.save(item);
     }
 
     public void updateItem(Item item) {
-        itemRepo.save(item);
+        itemRepository.save(item);
     }
 
     public void deleteById(Integer id) {
-        itemRepo.deleteById(id);
+        itemRepository.deleteById(id);
     }
 
     public Optional<Item> findItemByItemId(Integer itemId) {
-        return itemRepo.findById(itemId);
+        return itemRepository.findById(itemId);
     }
 
     // Find Item Image
     public byte[] findImage(Integer itemId) {
 
-        Optional<Item> item = itemRepo.findById(itemId);
+        Optional<Item> item = itemRepository.findById(itemId);
 
         if (item.isPresent())
         {
@@ -102,14 +128,14 @@ public class ItemService {
 
         byte[] compressedImage = ImageUtils.compressImage(file.getBytes(), "jpeg", 0.75f);
 
-        Optional<Item> item = itemRepo.findById(itemId);
+        Optional<Item> item = itemRepository.findById(itemId);
 
         if(item.isPresent())
         {
             Item itemToUpdate = item.get();
             itemToUpdate.setItemPhoto(compressedImage);
 
-            itemRepo.save(itemToUpdate);
+            itemRepository.save(itemToUpdate);
         }
     }
 }

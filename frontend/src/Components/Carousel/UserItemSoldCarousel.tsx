@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../Cards/ProductCard';
 import { Link } from 'react-router-dom';
-import { AxiosResponse } from 'axios'; // Import Axios and AxiosResponse
 
 // Interface
 import Item from '../../interfaces/Item';
 
 // API Function Call
-import api from '../../config/Api';
+import { fetchUserItemsByStatus } from '../../services/ItemService';
 
 type ItemProps = {
     username: string | null | undefined;
 };
-
-interface PaginatedResponse {
-    content: Item[];
-}
 
 const UserItemSoldCarousel: React.FC<ItemProps> = ({ username }) => {
     const [items, setItems] = useState<Item[]>([]);
@@ -25,7 +20,7 @@ const UserItemSoldCarousel: React.FC<ItemProps> = ({ username }) => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response: AxiosResponse<PaginatedResponse> = await api.get('/api/item/all');
+                const response = await fetchUserItemsByStatus(username, "SOLD")
 
                 if (response.status !== 200) {
                     throw new Error('Network response was not ok');

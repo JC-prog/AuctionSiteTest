@@ -51,13 +51,100 @@ public class ItemController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+
+
+
     // Get Paginated All Items
     @GetMapping("/all")
     public ResponseEntity<Page<Item>> getItems(
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(value = "size", defaultValue = "10") int size
     ) {
-        Page<Item> items = itemService.findItems(page, size);
+        Page<Item> items = itemService.findAllItems(page, size);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    // Get Paginated Items that are Listed
+    @GetMapping("/all-listed")
+    public ResponseEntity<Page<Item>> getAllListedItems(
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "size", defaultValue = "10") int size
+    )
+    {
+        Page<Item> items = itemService.findItemsByStatus(ListingStatus.LISTED, page, size);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    // Get Paginated Items that are Created
+    @GetMapping("/all-created")
+    public ResponseEntity<Page<Item>> getAllCreatedItems(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    )
+    {
+        Page<Item> items = itemService.findItemsByStatus(ListingStatus.CREATED, page, size);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    // Get Paginated Items that are Sold
+    @GetMapping("/all-sold")
+    public ResponseEntity<Page<Item>> getAllSoldItems(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    )
+    {
+        Page<Item> items = itemService.findItemsByStatus(ListingStatus.SOLD, page, size);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    // Get Paginated Items that are Expired
+    @GetMapping("/all-expired")
+    public ResponseEntity<Page<Item>> getAllExpiredItems(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    )
+    {
+        Page<Item> items = itemService.findItemsByStatus(ListingStatus.EXPIRED, page, size);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    // Get Paginated Items that are Suspended
+    @GetMapping("/all-suspended")
+    public ResponseEntity<Page<Item>> getAllSuspendedItems(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    )
+    {
+        Page<Item> items = itemService.findItemsByStatus(ListingStatus.SUSPENDED, page, size);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    // Get Paginated Items that are Finished
+    @GetMapping("/all-finished")
+    public ResponseEntity<Page<Item>> getAllFinishedItems(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    )
+    {
+        Page<Item> items = itemService.findItemsByStatus(ListingStatus.FINISHED, page, size);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    // Get Paginated Items that are Rejected
+    @GetMapping("/all-rejected")
+    public ResponseEntity<Page<Item>> getAllRejectedItems(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    )
+    {
+        Page<Item> items = itemService.findItemsByStatus(ListingStatus.REJECTED, page, size);
 
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
@@ -72,25 +159,35 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
-    // Get Paginated All Items Recently Listed
-    @GetMapping("/recent/all")
-    public ResponseEntity<Page<Item>> getRecentItems(
+    // Get Paginated Items Created By User
+    @GetMapping("/all/{sellerName}")
+    public ResponseEntity<Page<Item>> getAllUserCreatedItems(
+            @PathVariable String sellerName,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size
     ) {
-        Page<Item> items = itemService.findItems(page, size);
+        Page<Item> items = itemService.findItemsBySellerName(sellerName, page, size);
 
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
-    // Get Paginated Items Created By User
-    @GetMapping("/created/{username}")
-    public ResponseEntity<Page<Item>> getUserCreatedItems(
-            @PathVariable String username,
+    // Get Paginated Items by Seller and Status
+    @GetMapping("/{status}/{sellerName}")
+    public ResponseEntity<Page<Item>> getUserItemsByStatus(
+            @PathVariable String sellerName,
+            @PathVariable String status,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size
     ) {
-        Page<Item> items = itemService.findCreatedItems(username, page, size);
+        ListingStatus listingStatus;
+
+        try {
+            listingStatus = ListingStatus.valueOf(status.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Page<Item> items = itemService.findItemsBySellerNameAndStatus(sellerName, listingStatus, page, size);
 
         return new ResponseEntity<>(items, HttpStatus.OK);
     }

@@ -1,8 +1,7 @@
 package com.fyp.auction_app.services;
 
 import com.fyp.auction_app.models.Feedback;
-import com.fyp.auction_app.models.User;
-import com.fyp.auction_app.repository.FeedbackRepo;
+import com.fyp.auction_app.repository.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,16 +12,16 @@ import org.springframework.stereotype.Service;
 public class FeedbackService {
 
     @Autowired
-    FeedbackRepo feedbackRepo;
+    FeedbackRepository feedbackRepository;
 
     public Page<Feedback> findFeedback(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return feedbackRepo.findAll(pageable);
+        return feedbackRepository.findAll(pageable);
     }
 
     public void createFeedback(Feedback feedback)
     {
-        feedbackRepo.save(feedback);
+        feedbackRepository.save(feedback);
     }
 
 }

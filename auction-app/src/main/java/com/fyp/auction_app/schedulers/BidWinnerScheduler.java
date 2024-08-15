@@ -5,7 +5,7 @@ import com.fyp.auction_app.models.Enums.TransactionStatus;
 import com.fyp.auction_app.models.Item;
 import com.fyp.auction_app.models.Notification;
 import com.fyp.auction_app.models.Transaction;
-import com.fyp.auction_app.repository.ItemRepo;
+import com.fyp.auction_app.repository.ItemRepository;
 import com.fyp.auction_app.services.NotificationService;
 import com.fyp.auction_app.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class BidWinnerScheduler {
 
     @Autowired
-    private ItemRepo itemRepository;
+    private ItemRepository itemRepository;
 
     @Autowired
     private NotificationService notificationService;

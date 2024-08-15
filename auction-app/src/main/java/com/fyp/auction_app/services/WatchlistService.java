@@ -1,11 +1,13 @@
 package com.fyp.auction_app.services;
 
 import com.fyp.auction_app.models.Item;
-import com.fyp.auction_app.models.User;
 import com.fyp.auction_app.models.Watchlist;
-import com.fyp.auction_app.repository.ItemRepo;
+import com.fyp.auction_app.repository.ItemRepository;
 import com.fyp.auction_app.repository.WatchlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public class WatchlistService {
     private WatchlistRepository watchlistRepository;
 
     @Autowired
-    private ItemRepo itemRepo;
+    private ItemRepository itemRepository;
 
     public void addItemToWatchlist(Watchlist watchlist) {
         watchlistRepository.save(watchlist);
@@ -42,13 +44,15 @@ public class WatchlistService {
         watchlistRepository.save(watchlist);
     }
 
-    public List<Item> getItemsFromWatchlist(String username) {
+    public Page<Item> getItemsFromWatchlist(String username, int page, int size) {
         List<Watchlist> watchlist = watchlistRepository.findByUsername(username);
         List<Integer> itemIds = watchlist.stream()
                 .map(Watchlist::getItemId)
                 .collect(Collectors.toList());
 
-        return itemRepo.findByItemIdIn(itemIds);
+        Pageable pageable = PageRequest.of(page, size);
+
+        return itemRepository.findByItemIdIn(itemIds, pageable);
     }
 
 }

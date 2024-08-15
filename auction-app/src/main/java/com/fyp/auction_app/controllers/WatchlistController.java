@@ -4,10 +4,10 @@ import com.fyp.auction_app.models.Item;
 import com.fyp.auction_app.models.Requests.AddWatchlistRequest;
 import com.fyp.auction_app.models.Requests.RemoveWatchlistRequest;
 import com.fyp.auction_app.models.Watchlist;
-import com.fyp.auction_app.repository.ItemRepo;
 import com.fyp.auction_app.services.ItemService;
 import com.fyp.auction_app.services.WatchlistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -84,8 +84,12 @@ public class WatchlistController {
     }
 
     @GetMapping("/items/{username}")
-    public List<Item> getWatchlistItems(@PathVariable String username) {
-        return watchlistService.getItemsFromWatchlist(username);
+    public Page<Item> getWatchlistItems(
+        @PathVariable String username,
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "size", defaultValue = "10") int size) {
+
+        return watchlistService.getItemsFromWatchlist(username, page, size);
     }
 
 

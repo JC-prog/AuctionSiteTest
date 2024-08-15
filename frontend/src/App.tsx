@@ -43,6 +43,7 @@ import AdminUserManagementPage from './Pages/AdminPages/AdminUserManagementPage'
 import AdminListingManagementPage from './Pages/AdminPages/AdminListingManagementPage';
 import AdminSystemManagementPage from './Pages/AdminPages/AdminSystemManagementPage';
 import AdminFeedbackManagementPage from './Pages/AdminPages/AdminFeedbackManagementPage';
+import ProfileUserItemsPage from './Pages/ProfileUserItemsPage';
 
 
 function App() {
@@ -134,6 +135,7 @@ function App() {
               <Route path="/my-trade" element={<TradeRequestPage user={user} />} />
               <Route path="/user/:username" element={<UserProfile />} />
               <Route path="/user/edit/:username" element={<UserEditProfile />} />
+              <Route path="/user/items/:username" element={<ProfileUserItemsPage/>} />
               <Route path="/item/create" element={<ItemCreatePage user={user} />} />
               <Route path="/item/edit/:itemId" element={<ItemEditPage user={user}/>} />
               <Route path="/item/:itemId" element={<ItemPage isAuth={authenticated} user={user} />} />

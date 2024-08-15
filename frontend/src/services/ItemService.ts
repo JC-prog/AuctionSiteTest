@@ -10,7 +10,7 @@ import Item from '../interfaces/Item';
 const getAuthConfig = () => {
     const token = Cookies.get('access_token');
     if (!token) {
-        throw new Error('No access token found');
+        
     }
 
     return {
@@ -29,7 +29,6 @@ const apiPost = async (url: string, payload: any) => {
     } catch (error) {
 
         throw error;
-
     }
 };
 
@@ -42,7 +41,6 @@ const apiGet = async (url: string) => {
     } catch (error) {
 
         throw error;
-
     }
 };
 
@@ -257,6 +255,18 @@ export const fetchCreatedItem = (username: string | null | undefined) => {
   const response = apiGet(apiUrl);
 
   return response;
+};
+
+// Fetch User Items
+export const fetchUserItemsByStatus = (username: string | null | undefined, status: string, page: number = 0) => {
+    const apiUrl = `/api/item/${status.toLowerCase()}/${username}?page=${page}`;
+
+    console.log(apiUrl);
+    const response = apiGet(apiUrl);
+
+    console.log(response);
+
+    return response;
 };
 
 // Stop Listing

@@ -6,7 +6,7 @@ import com.fyp.auction_app.models.Bid;
 import com.fyp.auction_app.models.Enums.ListingStatus;
 import com.fyp.auction_app.models.Item;
 import com.fyp.auction_app.repository.BidRepository;
-import com.fyp.auction_app.repository.ItemRepo;
+import com.fyp.auction_app.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ import java.util.Optional;
 public class ItemStatusScheduler {
 
     @Autowired
-    private ItemRepo itemRepository;
+    private ItemRepository itemRepository;
 
     @Autowired
     private BidRepository bidRepository;
