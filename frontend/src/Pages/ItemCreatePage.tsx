@@ -350,7 +350,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               >
                 <option value="">Select Option</option>
-                <option value="01:00:00">1 Hour</option>
+                <option value="00:01:00:00">1 Hour</option>
                 <option value="01:00:00:00">1 Day</option>
                 <option value="07:00:00:00">7 Days</option>
                 <option value="custom">Custom</option>

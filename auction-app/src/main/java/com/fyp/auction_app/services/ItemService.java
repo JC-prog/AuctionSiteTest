@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,9 +65,9 @@ public class ItemService {
     }
 
     // Return List of Items by Seller Name and Listing Status
-    public Page<Item> findItemsBySellerNameAndStatus(String sellerName, ListingStatus status, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-
+    public Page<Item> findItemsBySellerNameAndStatus(String sellerName, ListingStatus status, int page, int size, String sortBy, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
         return itemRepository.findBySellerNameAndStatus(sellerName, status, pageable);
     }
 
@@ -84,7 +85,7 @@ public class ItemService {
     public Page<Item> searchItems(String keyword, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        Specification<Item> spec = Specification.where(ItemSpecification.containsKeyword(keyword));
+        Specification<Item> spec = Specification.where(ItemSpecification.containsKeywordAndIsListed(keyword));
 
         return itemRepository.findAll(spec, pageable);
     }
@@ -137,5 +138,24 @@ public class ItemService {
 
             itemRepository.save(itemToUpdate);
         }
+    }
+
+    public List<Item> getTop10ItemsBySellerName(String sellerName) {
+        return itemRepository.findTop10ItemsBySellerNameOrderByBidCount(sellerName);
+    }
+
+    public Page<Item> findItemsByNotSellerNameAndCategory(String sellerName, String category, int page, int size, String sortBy, String sortDirection) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return itemRepository.findBySellerNameNotAndItemCategoryNotOrderByEndDateAsc(sellerName, category, pageable);
+    }
+
+    public Page<Item> getTradeItemsBySellerAndStatus(String sellerName, int page, int size) {
+        List<ListingStatus> statuses = List.of(ListingStatus.CREATED, ListingStatus.LISTED, ListingStatus.EXPIRED);
+        String auctionType = "trade";
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return itemRepository.findItemsBySellerNameAndStatusAndAuctionType(sellerName, statuses, auctionType, pageable);
     }
 }

@@ -48,4 +48,17 @@ public interface ItemRepository extends JpaRepository<Item, Integer>, JpaSpecifi
 
     Page<Item> findByItemIdIn(List<Integer> itemIds, Pageable pageable);
 
+    @Query("SELECT i FROM Item i WHERE i.sellerName = :sellerName AND status = 'LISTED'" +
+            "ORDER BY (SELECT COUNT(b) FROM Bid b WHERE b.itemId = i.itemId) DESC")
+    List<Item> findTop10ItemsBySellerNameOrderByBidCount(@Param("sellerName") String sellerName);
+
+    Page<Item> findBySellerNameNotAndItemCategoryNotOrderByEndDateAsc(String sellerName, String category, Pageable pageable);
+
+    @Query("SELECT i FROM Item i WHERE i.sellerName = :sellerName AND i.status IN :statuses AND i.auctionType = :auctionType")
+    Page<Item> findItemsBySellerNameAndStatusAndAuctionType(
+            @Param("sellerName") String sellerName,
+            @Param("statuses") List<ListingStatus> statuses,
+            @Param("auctionType") String auctionType,
+            Pageable pageable
+    );
 }

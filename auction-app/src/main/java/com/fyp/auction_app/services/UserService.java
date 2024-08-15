@@ -1,5 +1,6 @@
 package com.fyp.auction_app.services;
 
+import com.fyp.auction_app.models.Enums.UserStatus;
 import com.fyp.auction_app.models.User;
 import com.fyp.auction_app.repository.UserRepository;
 import com.fyp.auction_app.util.ImageUtils;
@@ -113,5 +114,17 @@ public class UserService {
 
             userRepository.save(userToUpdate);
         }
+    }
+
+    // JSP Admin Function
+    public User servletFindById(Integer id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public void servletUpdateUserStatus(Integer id, UserStatus status) {
+        User user = servletFindById(id);
+        user.setStatus(status);
+        userRepository.save(user);
     }
 }

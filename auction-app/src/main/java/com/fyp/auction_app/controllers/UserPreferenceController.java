@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -46,10 +47,10 @@ public class UserPreferenceController {
         return new ResponseEntity<>("Successfully Logged", HttpStatus.OK);
     }
 
-    @GetMapping("/get-recommendation")
-    public String getRecomendationCategory(@RequestBody String username)
+    @GetMapping("/category/{username}")
+    public List<String> getRecomendationCategory(@PathVariable String username)
     {
-        return userPreferenceService.findUserPreferenceCategory(username);
+        return userPreferenceService.findTopUserPreference(username);
     }
 
 }

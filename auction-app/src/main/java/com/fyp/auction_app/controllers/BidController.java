@@ -30,8 +30,6 @@ public class BidController {
     @Autowired
     private ItemService itemService;
 
-
-
     @GetMapping("/{username}")
     public ResponseEntity<List<FetchBidsResponse>> getUserBids(@PathVariable("username") String username) {
         List<Bid> bids = bidService.findBidsByUsername(username);

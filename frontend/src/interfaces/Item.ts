@@ -12,7 +12,7 @@ interface Item {
     minSellPrice: number;
     currentPrice: number;
     startPrice: number;
-    itemPhoto: string | ArrayBuffer | null;
+    itemPhoto: string | ArrayBuffer | null | Uint8Array;
     status: string;
   }
   

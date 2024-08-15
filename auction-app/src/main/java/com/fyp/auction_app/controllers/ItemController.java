@@ -7,10 +7,13 @@ import com.fyp.auction_app.models.ItemImage;
 import com.fyp.auction_app.models.Requests.EditItemStatusRequest;
 import com.fyp.auction_app.models.Requests.EditUserStatusRequest;
 import com.fyp.auction_app.models.Requests.LaunchListingRequest;
+import com.fyp.auction_app.models.Response.FetchItemResponse;
 import com.fyp.auction_app.models.User;
 import com.fyp.auction_app.models.UserImage;
 import com.fyp.auction_app.services.BidService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import com.fyp.auction_app.services.ItemService;
@@ -23,10 +26,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -50,9 +51,6 @@ public class ItemController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-
-
 
     // Get Paginated All Items
     @GetMapping("/all")
@@ -177,7 +175,9 @@ public class ItemController {
             @PathVariable String sellerName,
             @PathVariable String status,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "sortBy", defaultValue = "itemId") String sortBy,
+            @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection
     ) {
         ListingStatus listingStatus;
 
@@ -187,13 +187,13 @@ public class ItemController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Page<Item> items = itemService.findItemsBySellerNameAndStatus(sellerName, listingStatus, page, size);
+        Page<Item> items = itemService.findItemsBySellerNameAndStatus(sellerName, listingStatus, page, size, sortBy, sortDirection);
 
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
     @GetMapping("/bySellerNameAndEndDate")
-    public ResponseEntity<Page<Item>> getItemsBySellerNameAndEndDate(
+    public ResponseEntity<Page<Item>> getItemsBySellerTradeItem(
             @RequestParam("sellerName") String sellerName,
             @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
             @RequestParam(value = "page", defaultValue = "0") int page,
@@ -439,4 +439,35 @@ public class ItemController {
         }
     }
 
+    @GetMapping("/top10/{sellerName}")
+    public ResponseEntity<List<Item>> getTop10ItemsBySellerName(@PathVariable String sellerName) {
+        List<Item> items = itemService.getTop10ItemsBySellerName(sellerName);
+
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    // Get Paginated Items by Seller and Status
+    @GetMapping("/{category}/{sellerName}/exclude")
+    public ResponseEntity<Page<Item>> getItemsExcludingSellerAndCategory(
+            @PathVariable String sellerName,
+            @PathVariable String category,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "sortBy", defaultValue = "endDate") String sortBy,
+            @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection
+    ) {
+        Page<Item> items = itemService.findItemsByNotSellerNameAndCategory(sellerName, category, page, size, sortBy, sortDirection);
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    @GetMapping("/trade")
+    public Page<Item> getTradeItemFromUser(
+            @RequestParam String username,
+            @RequestParam int page,
+            @RequestParam int size
+    ) {
+        return itemService.getTradeItemsBySellerAndStatus(username, page, size);
+    }
+
 }
+

@@ -100,30 +100,27 @@ const ItemsTable: React.FC<AuthProps> = ({ user }) => {
 
             <UserItemList listTitle='My Listings' items={items} />
 
-            <div className="flex justify-between items-center mt-4">
-                <button
-                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 0}
-                >
-                    Previous
-                </button>
-                <span>
-                    { items.length > 1 ? ( 
-                        <>Page {currentPage + 1} of {totalPages}</>
-                    ) : ( 
-                        <>Page 0</>
-                    )}
-                    
-                </span>
-                <button
-                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage >= totalPages - 1}
-                >
-                    Next
-                </button>
-            </div>
+            { items.length > 1 ? ( 
+                <div className="flex justify-between items-center mt-4">
+                    <button
+                        className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 0}
+                    >
+                        Previous
+                    </button>
+                    <span>Page {currentPage + 1} of {totalPages}</span>
+                    <button
+                        className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage >= totalPages - 1}
+                    >
+                        Next
+                    </button>
+                </div>
+            ) : ( 
+                <></>
+            )}
         </div>
     );
 };

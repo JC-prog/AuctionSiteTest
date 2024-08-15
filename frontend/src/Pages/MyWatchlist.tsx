@@ -24,8 +24,8 @@ const MyWatchList: React.FC<MyWatchListProps> = ({ user }) => {
         throw new Error('Network response was not ok');
       }
 
-      const data: Item[] = response.data.items;
-      setItems(data);
+      setItems(response.data.content);
+
       setTotalPages(response.data.totalPages);
     } catch (error) {
       setError((error as Error).message);
@@ -51,25 +51,27 @@ const MyWatchList: React.FC<MyWatchListProps> = ({ user }) => {
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <ItemWatchList listTitle="Watchlist" items={items} username={user} />
 
-      <div className="flex justify-between items-center mt-4">
-        <button
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 0}
-        >
-          Previous
-        </button>
-        <span>
-          Page {currentPage + 1} of {totalPages}
-        </span>
-        <button
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage >= totalPages - 1}
-        >
-          Next
-        </button>
-      </div>
+      { items.length > 1 ? ( 
+        <div className="flex justify-between items-center mt-4">
+            <button
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 0}
+            >
+                Previous
+            </button>
+            <span>Page {currentPage + 1} of {totalPages}</span>
+            <button
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage >= totalPages - 1}
+            >
+                Next
+            </button>
+        </div>
+    ) : ( 
+        <></>
+    )}
     </div>
   );
 };

@@ -6,32 +6,18 @@ import Cookies from 'js-cookie';
 // Config
 import api from '../config/api/loginApi';
 
-// Models
+// Interfaces
 import User from '../interfaces/User';
+import Item from '../interfaces/Item';
 
 // Components
-import ItemList from '../Components/List/ItemList';
+import PopularItemList from '../Components/List/PopularItemList'
 import UserItemExpiringCarousel from '../Components/Carousel/UserItemExpiringCarousel';
 import UserItemSoldCarousel from '../Components/Carousel/UserItemSoldCarousel';
 import UserItemListedCarousel from '../Components/Carousel/UserItemListedCarousel';
 
-
-const items = [
-    {
-        itemId: 1,
-        image: '/bike.jpg',
-        title: 'Bike',
-        price: 20,
-    },
-    {
-        itemId: 2,
-        image: '/bike.jpg',
-        title: 'Laptop',
-        price: 500,
-    },
-    // Add more items here
-];
-
+// API Function Call
+import { fetchTopTenItems } from '../services/ItemService';
 
 const ProfilePage: React.FC = () => {
     const { username } = useParams<{ username: string }>();
@@ -40,6 +26,26 @@ const ProfilePage: React.FC = () => {
     const [error, setError] = useState<Error | null>(null);
     const [userImage, setUserImage] = useState<string | null>(null);
     const [bannerImage, setBannerImage] = useState<string | null>(null);
+    const [items, setItems] = useState<Item[]>([]);
+
+     // Fetch Top Ten Items
+     useEffect(() => {
+        const fetchItems = async () => {
+            setLoading(true);
+            try {
+                const response = await fetchTopTenItems(username)
+                setItems(response.data);
+                
+            } catch (error) {
+                console.error('Error fetching items:', error);
+                setError(error as Error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchItems();
+    }, [user]);
 
     // Fetch User
     useEffect(() => {
@@ -120,7 +126,7 @@ const ProfilePage: React.FC = () => {
 
             <div className="p-6">
                 <div className="flex flex-col lg:flex-row lg:space-x-8">
-                    <ItemList listTitle="Popular" items={items} />
+                    <PopularItemList listTitle="Popular" items={items} />
 
                     <div className="lg:w-1/2">
                         <h2 className="text-2xl font-semibold mb-4">Seller</h2>

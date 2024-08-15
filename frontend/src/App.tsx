@@ -23,9 +23,6 @@ import SignupPage from './Pages/SignupPage';
 import MyWatchlist from './Pages/MyWatchlist';
 import MyItemListing from './Pages/MyItemListing';
 
-import UserProfile from "./Pages/ProfilePage";
-import UserEditProfile from "./Pages/ProfileEditPage";
-
 import ItemPage from "./Pages/ItemPage";
 import ItemCreatePage from "./Pages/ItemCreatePage"
 import ItemEditPage from "./Pages/ItemEditPage"
@@ -43,8 +40,13 @@ import AdminUserManagementPage from './Pages/AdminPages/AdminUserManagementPage'
 import AdminListingManagementPage from './Pages/AdminPages/AdminListingManagementPage';
 import AdminSystemManagementPage from './Pages/AdminPages/AdminSystemManagementPage';
 import AdminFeedbackManagementPage from './Pages/AdminPages/AdminFeedbackManagementPage';
-import ProfileUserItemsPage from './Pages/ProfileUserItemsPage';
 
+// User Pages
+import UserProfile from "./Pages/ProfilePage";
+import UserEditProfile from "./Pages/ProfileEditPage";
+import UserListedItemsPage from './Pages/UserItemPage/UserListedItemsPage';
+import UserExpiringItemsPage from './Pages/UserItemPage/UserExpiringtemsPage';
+import UserSoldItemsPage from './Pages/UserItemPage/UserSoldtemsPage';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -125,7 +127,7 @@ function App() {
               <Route path="/admin/system-management" element={<AdminSystemManagementPage />} />
               <Route path="/admin/feedback-management" element={<AdminFeedbackManagementPage />} />
 
-              <Route path="/search" element={<SearchPage />} />
+              <Route path="/search" element={<SearchPage user={user}/>} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/notification" element={<MyNotificationPage user={user} />} />
@@ -133,9 +135,15 @@ function App() {
               <Route path="/watchlist" element={<MyWatchlist user={user}/>} />
               <Route path="/my-listings" element={<MyItemListing user={user} />} />
               <Route path="/my-trade" element={<TradeRequestPage user={user} />} />
+
+              {/* User pages */}
               <Route path="/user/:username" element={<UserProfile />} />
               <Route path="/user/edit/:username" element={<UserEditProfile />} />
-              <Route path="/user/items/:username" element={<ProfileUserItemsPage/>} />
+              <Route path="/user/listed-items/:username" element={<UserListedItemsPage/>} />
+              <Route path="/user/expiring-items/:username" element={<UserExpiringItemsPage/>} />
+              <Route path="/user/sold-items/:username" element={<UserSoldItemsPage/>} />
+
+              {/* Item Pages */}
               <Route path="/item/create" element={<ItemCreatePage user={user} />} />
               <Route path="/item/edit/:itemId" element={<ItemEditPage user={user}/>} />
               <Route path="/item/:itemId" element={<ItemPage isAuth={authenticated} user={user} />} />

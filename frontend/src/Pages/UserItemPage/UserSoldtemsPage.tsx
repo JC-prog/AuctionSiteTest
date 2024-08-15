@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 // Interface
-import Item from '../interfaces/Item';
+import Item from '../../interfaces/Item';
 
 
 // Components
-import ProductCard from '../Components/Cards/ProductCard';
+import ProductCardSold from '../../Components/Cards/ProductCardSold';
 
 // API Function Calls
-import { fetchUserItemsByStatus } from '../services/ItemService';
+import { fetchUserItemsByStatus } from '../../services/ItemService';
 
-const ProfileUserItemsPage = () => {
+const UserSoldItemsPage = () => {
     const { username } = useParams<{ username: string }>();
     const [items, setItems] = useState<Item[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -24,7 +24,7 @@ const ProfileUserItemsPage = () => {
         const fetchItems = async () => {
             setLoading(true);
             try {
-                const items = await fetchUserItemsByStatus(username, "LISTED", currentPage);
+                const items = await fetchUserItemsByStatus(username, "SOLD", currentPage, 20);
                 setItems(items.data.content);
                 setTotalPages(items.data.totalPages);
             } catch (error) {
@@ -56,13 +56,13 @@ const ProfileUserItemsPage = () => {
   return (
         <div className="container mx-auto px-4">
             <div className="flex justify-between items-center mb-6 mt-6">
-                <h2 className="text-2xl font-bold">Listed Items for {username}</h2>
+                <h2 className="text-2xl font-bold">SoldC Items for {username}</h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {items.length > 0 ? (
                     items.map((item) => (
                         <div key={item.itemId} className="">
-                            <ProductCard item={item} username={username} />
+                            <ProductCardSold item={item} username={username} />
                         </div>
                     ))
                 ) : (
@@ -101,4 +101,4 @@ const ProfileUserItemsPage = () => {
   )
 }
 
-export default ProfileUserItemsPage
+export default UserSoldItemsPage

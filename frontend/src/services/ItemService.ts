@@ -80,54 +80,6 @@ export const fetchItemByItemId = async (itemId: number) => {
     return response;
   };
 
-  // Fetch Items By Keyword
-  export const fetchItemsByKeyword = async (keyword: string): Promise<Item[]> => {
-    try {
-      const accessToken = Cookies.get('access_token');
-      if (!accessToken) {
-        throw new Error('No access token found');
-      }
-  
-      const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/item/search?keyword=${keyword}`, {
-        headers: {
-          Authorization: 'Bearer ' + accessToken,
-        },
-      });
-  
-      if (response.status !== 200) {
-        throw new Error('Network response was not ok');
-      }
-  
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
-
-// Fetch Items from Category
-export const fetchItemsByCategory = async (page: number = 0): Promise<Item[]> => {
-  try {
-    const accessToken = Cookies.get('access_token');
-    if (!accessToken) {
-      throw new Error('No access token found');
-    }
-
-    const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/item?page=${page}`, {
-      headers: {
-        Authorization: 'Bearer ' + accessToken,
-      },
-    });
-
-    if (response.status !== 200) {
-      throw new Error('Network response was not ok');
-    }
-
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
 // Fetch Recent Items
 export const fetchItemsByEndDate = async (page: number = 0): Promise<Item[]> => {
     try {
@@ -257,14 +209,21 @@ export const fetchCreatedItem = (username: string | null | undefined) => {
   return response;
 };
 
-// Fetch User Items
-export const fetchUserItemsByStatus = (username: string | null | undefined, status: string, page: number = 0) => {
-    const apiUrl = `/api/item/${status.toLowerCase()}/${username}?page=${page}`;
-
-    console.log(apiUrl);
+// Fetch Items that are is Up for Trade
+export const fetchTradeItem = (username: string | null | undefined, page: number = 0, size: number = 10) => {
+    const apiUrl = `/api/item/trade?username=${username}&page=${page}&size=${size}`;
+  
     const response = apiGet(apiUrl);
+  
+    return response;
+  };
 
-    console.log(response);
+
+// Fetch User Items
+export const fetchUserItemsByStatus = (username: string | null | undefined, status: string, page: number = 0, size: number = 10) => {
+    const apiUrl = `/api/item/${status.toLowerCase()}/${username}?page=${page}&size=${size}`;
+
+    const response = apiGet(apiUrl);
 
     return response;
 };
@@ -275,3 +234,31 @@ export const stopListing = (itemId: number) => {
   
     return apiPost(apiUrl, null);
   }
+
+// Get Top 10 Items
+export const fetchTopTenItems = (username: string | null | undefined) => {
+    const apiUrl = `/api/item/top10/${username}`;
+
+    const response = apiGet(apiUrl);
+
+    return response;
+
+}
+
+// Fetch Items from Category
+export const fetchItemsByCategory = async (username: string | null | undefined, category: string) => {
+    const apiUrl = `/api/item/${category}/${username}/exclude`
+
+    const response = apiGet(apiUrl);
+
+    return response;
+};
+
+// Fetch Items Search from Keyword
+export const fetchItemsByKeyword = async (sellername: string | null | undefined, keyword: string | null, page: number = 0, size: number = 20) => {
+    const apiUrl = `/api/item/search?sellerName=${sellername}&keyword=${keyword}&page=${page}&size=${size}`
+
+    const response = apiGet(apiUrl);
+
+    return response;
+};

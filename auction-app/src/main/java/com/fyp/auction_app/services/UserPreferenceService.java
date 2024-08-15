@@ -6,6 +6,7 @@ import com.fyp.auction_app.repository.UserPreferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +46,20 @@ public class UserPreferenceService {
         List<UserPreference> userPreferenceList = userPreferenceRepository.findByUsernameOrderByPreferenceScoreDesc(username);
 
         return userPreferenceList.getFirst().getCategory();
+    }
+
+    // Get Top User Preference
+    public List<String> findTopUserPreference(String username)
+    {
+        List<UserPreference> userPreferenceList = userPreferenceRepository.findByUsernameOrderByPreferenceScoreDesc(username);
+
+        List<String> topUserPreference = new ArrayList<>();
+
+        for(UserPreference userPreference : userPreferenceList)
+        {
+            topUserPreference.add(userPreference.getCategory());
+        }
+        return topUserPreference;
     }
     
 }

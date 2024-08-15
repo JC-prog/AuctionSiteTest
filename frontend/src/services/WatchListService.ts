@@ -63,7 +63,7 @@ export const removeItemFromWatchlist = async ( itemId: number, username: string 
 // Fetche Item from Watchlist
 export const fetchItemsFromWatchlist = async ( username: string | null | undefined, page: number = 0, size: number = 10 ) => {
   
-    const apiUrl = `/api/watchlist/items/${username}?page=${page}?size=${size}`;
+    const apiUrl = `/api/watchlist/items/${username}?page=${page}&size=${size}`;
 
     const response = apiGet(apiUrl);
 
