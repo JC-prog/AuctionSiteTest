@@ -222,21 +222,32 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                         </div>
 
                         <div className="flex space-x-4 mt-4">
-                            {item?.auctionType === 'trade' ? (
-                                <>
-                                    <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600" onClick={openPopup}>
-                                        Trade
-                                    </button>
-                                    {isPopupOpen && <TradePopup itemId={item?.itemId} username={user} onClose={closePopup} />}
-                                </>
+                            {isAuth ? (
+                                item?.auctionType === 'trade' ? (
+                                    <>
+                                        <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600" onClick={openPopup}>
+                                            Trade
+                                        </button>
+                                        {isPopupOpen && <TradePopup itemId={item?.itemId} username={user} onClose={closePopup} />}
+                                    </>
+                                ) : (
+                                    <>
+                                        <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" onClick={() => setIsBidConfirmPopupOpen(true)}>
+                                            Place Bid
+                                        </button>
+                                        {isBidConfirmPopupOpen && <BidConfirmPopup itemId={item?.itemId} username={user} onClose={() => setIsBidConfirmPopupOpen(false)} />}
+                                    </>
+                                )
                             ) : (
                                 <>
-                                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" onClick={() => setIsBidConfirmPopupOpen(true)}>
-                                        Place Bid
-                                    </button>
-                                    {isBidConfirmPopupOpen && <BidConfirmPopup itemId={item?.itemId} username={user} onClose={() => setIsBidConfirmPopupOpen(false)} />}
+                                    <Link to="/login" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" >
+                                        Login required to bid or trade
+                                    </Link>
                                 </>
                             )}
+
+
+                            
                         </div>
                     </div>
                 </div>
