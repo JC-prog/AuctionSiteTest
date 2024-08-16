@@ -118,7 +118,7 @@ const TradeRequestRow: React.FC<{ tradeRequest: TradeRequest; index: number; ite
         />
       </div>
       <div className="col-span-2">
-        <a href={`/item/{tradeRequest.buyerItemId}`} className="block">
+        <a href={`/item/${tradeRequest.buyerItemId}`} className="block">
           <h3 className="text-sm text-gray-500 px-1m">{tradeRequest.buyerItemTitle}</h3>
         </a>
       </div>

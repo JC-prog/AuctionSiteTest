@@ -81,8 +81,8 @@ public class TradeRequestController {
             tradeRequestToCreate.setBuyerName(request.getBuyerName());
 
             tradeRequestToCreate.setSellerItemId(request.getSellerItemId());
-            tradeRequestToCreate.setBuyerItemTitle(sellerItem.get().getItemTitle());
-            tradeRequestToCreate.setBuyerName(sellerItem.get().getSellerName());
+            tradeRequestToCreate.setSellerItemTitle(sellerItem.get().getItemTitle());
+            tradeRequestToCreate.setSellerName(sellerItem.get().getSellerName());
 
             tradeRequestToCreate.setStatus(TradeRequestStatus.PENDING);
             tradeRequestToCreate.setTimeStamp(new Date());

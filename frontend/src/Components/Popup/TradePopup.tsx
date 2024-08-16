@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Item from '../../interfaces/Item';
 import { toast } from 'react-toastify';
 import { initiateTrade } from '../../services/TradeRequestService';
-import { fetchCreatedItem } from '../../services/ItemService';
+import { fetchTradeItem } from '../../services/ItemService';
 
 interface PopupProps {
     onClose: () => void;
@@ -22,7 +22,7 @@ const TradePopup: React.FC<PopupProps> = ({ onClose, itemId, username }) => {
         const fetchItems = async () => {
             console.log(itemId);
             try {
-                const response = await fetchCreatedItem(username);
+                const response = await fetchTradeItem(username);
 
                 console.log(response);
 
@@ -58,6 +58,10 @@ const TradePopup: React.FC<PopupProps> = ({ onClose, itemId, username }) => {
 
             const message = response.data;
 
+            console.log(selectedTradeItem);
+            console.log(username);
+            console.log(itemId);
+
             toast[response.status === 200 ? 'success' : 'error'](message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000,
@@ -67,7 +71,7 @@ const TradePopup: React.FC<PopupProps> = ({ onClose, itemId, username }) => {
                 setTimeout(() => window.location.reload(), 2000);
             }
         } catch (error: any) {
-            const errorMessage = error.response?.data || 'Bid Failed!';
+            const errorMessage = error.response?.data || 'Trade Failed!';
             toast.error(errorMessage, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000,

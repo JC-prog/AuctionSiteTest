@@ -50,10 +50,10 @@ const AdminUserList: React.FC<UserListProps> = ({ listTitle, users = [] }) => {
     try {
       if (action === 'suspend') {
         await suspendUser(username);
-        toast.success('User suspended successfully.');
+        
       } else {
         await activateUser(username);
-        toast.success('User activated successfully.');
+        
       }
       reloadPage();
     } catch (error) {

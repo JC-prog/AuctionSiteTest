@@ -56,7 +56,7 @@ const TradeRequestRow: React.FC<{ tradeRequest: TradeRequest; index: number; ite
       </div>
       <div className="col-span-2">
         <a href={`/item/${tradeRequest.buyerItemId}`} className="block">
-          <h3 className="text-sm text-gray-500 px-1">{tradeRequest.buyerItemId}</h3>
+          <h3 className="text-sm text-gray-500 px-1">{tradeRequest.buyerItemTitle}</h3>
         </a>
       </div>
       <div className="col-span-1">
@@ -67,10 +67,14 @@ const TradeRequestRow: React.FC<{ tradeRequest: TradeRequest; index: number; ite
         />
       </div>
       <div className="col-span-2">
-        <p className="text-sm text-gray-500 px-1">{tradeRequest.sellerItemId}</p>
+        <a href={`/item/${tradeRequest.sellerItemId}`} className="block">
+            <p className="text-sm text-gray-500 px-1">{tradeRequest.sellerItemTitle}</p>
+        </a>
       </div>
       <div className="col-span-2">
-        <p className="text-sm text-gray-500 px-1">{new Date(tradeRequest.timestamp).toLocaleString()}</p>
+        <p className="text-sm text-gray-500 px-1">
+            {new Date(tradeRequest.timestamp).toLocaleString()}
+        </p>
       </div>
       <div className="col-span-1 flex items-center">
         {tradeRequest.status}

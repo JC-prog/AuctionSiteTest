@@ -199,11 +199,6 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
                 >
                     <FiUpload className="mr-1" /> Launch
                 </button>
-                <button 
-                    className="text-red-600 hover:text-red-900 focus:outline-none flex items-center px-1"
-                >
-                    <FiTrash className="mr-1" /> Delete
-                </button>
             </>);
       case "FINISHED":
         return (
@@ -242,7 +237,7 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
 
             {item.auctionType !== 'low-start-high' && (
               <button
-                className="text-yellow-600 hover:text-green-900 focus:outline-none flex items-center px-1"
+                className="text-green-600 hover:text-green-900 focus:outline-none flex items-center px-1"
               >
                 <FaExclamationCircle className="mr-1" /> Bidding in Progress
               </button>
