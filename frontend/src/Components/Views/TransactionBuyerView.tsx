@@ -4,6 +4,7 @@ import Transaction from '../../interfaces/Transaction';
 import { fetchBuyerTransaction, postPayment } from '../../services/TransactionService';
 import api from '../../config/Api';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 // Custom hook for fetching item images
 const useItemImages = (transactions: Transaction[]) => {
@@ -107,7 +108,7 @@ const TransactionRow: React.FC<{ transaction: Transaction; index: number; itemIm
         {transaction.status}
       </div>
       <div className="col-span-3 flex items-center">
-        <button className="mx-1 bg-blue-500 text-white px-2 py-1 rounded">View</button>
+        <Link to={`/item/${transaction.itemId}`} className="mx-1 bg-blue-500 text-white px-2 py-1 rounded">View</Link>
         {renderActions(transaction.status, transaction.id)}
       </div>
     </div>
