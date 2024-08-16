@@ -106,6 +106,8 @@ public class TradeRequestController {
             TradeRequest tradeRequestToUpdate = tradeRequest.get();
             tradeRequestToUpdate.setStatus(TradeRequestStatus.ACCEPTED);
 
+            tradeRequestService.updateTradeRequest(tradeRequestToUpdate);
+
             return new ResponseEntity<>("Trade Request Accepted", HttpStatus.OK);
         }
 
@@ -123,6 +125,8 @@ public class TradeRequestController {
         {
             TradeRequest tradeRequestToUpdate = tradeRequest.get();
             tradeRequestToUpdate.setStatus(TradeRequestStatus.REJECTED);
+
+            tradeRequestService.updateTradeRequest(tradeRequestToUpdate);
 
             return new ResponseEntity<>("Trade Request Accepted", HttpStatus.OK);
         }

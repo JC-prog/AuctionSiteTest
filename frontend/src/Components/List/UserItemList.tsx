@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FiTrash, FiEdit, FiUpload } from 'react-icons/fi';
+import { FiEdit, FiUpload } from 'react-icons/fi';
 import { TiTick } from "react-icons/ti";
 import { MdCancel } from "react-icons/md";
 import { FaStop, FaExclamationCircle } from "react-icons/fa";

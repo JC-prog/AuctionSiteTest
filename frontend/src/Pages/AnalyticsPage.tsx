@@ -1,4 +1,4 @@
-import PlanCard from '../Components/Cards/PlanCard'
+
 
 const AnalyticsPage = () => {
   return (

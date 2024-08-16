@@ -71,11 +71,12 @@ const TradeRequestRow: React.FC<{ tradeRequest: TradeRequest; index: number; ite
             <p className="text-sm text-gray-500 px-1">{tradeRequest.sellerItemTitle}</p>
         </a>
       </div>
+      {/* 
       <div className="col-span-2">
         <p className="text-sm text-gray-500 px-1">
             {new Date(tradeRequest.timestamp).toLocaleString()}
         </p>
-      </div>
+      </div> */}
       <div className="col-span-1 flex items-center">
         {tradeRequest.status}
       </div>
@@ -130,7 +131,7 @@ const TradeRequestBuyerView: React.FC<{ username: string | null | undefined }> =
             <div className="col-span-2">Buyer Item</div>
             <div className="col-span-1"></div>
             <div className="col-span-2">Seller Item</div>
-            <div className="col-span-2">Timestamp</div>
+            {/* <div className="col-span-2">Timestamp</div> */}
             <div className="col-span-1">Status</div>
             <div className="col-span-2">Action</div>
           </div>

@@ -41,6 +41,11 @@ public class TradeRequestService {
         tradeRequestRepository.save(tradeRequest);
     }
 
+    public void updateTradeRequest(TradeRequest tradeRequest)
+    {
+        tradeRequestRepository.save(tradeRequest);
+    }
+
     public Long getTradeCountBySellerItemId(Integer itemId)
     {
         return tradeRequestRepository.countTradesBySellerItemId(itemId);
