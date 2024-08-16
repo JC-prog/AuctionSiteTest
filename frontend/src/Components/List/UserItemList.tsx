@@ -242,9 +242,9 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
 
             {item.auctionType !== 'low-start-high' && (
               <button
-                className="text-yellow-600 hover:text-yellow-900 focus:outline-none flex items-center px-1"
+                className="text-yellow-600 hover:text-green-900 focus:outline-none flex items-center px-1"
               >
-                <FaExclamationCircle className="mr-1" /> Contact Admin
+                <FaExclamationCircle className="mr-1" /> Bidding in Progress
               </button>
             )}
           </>
@@ -256,7 +256,7 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
                     className="text-yellow-500 hover:text-yellow-700 focus:outline-none flex items-center px-1"
                    
                 >
-                    <FaExclamationCircle className="mr-1" /> Appeal
+                    <FaExclamationCircle className="mr-1" /> Under Investigation
                 </button>
             </>
         );

@@ -36,7 +36,7 @@ const handleAccept = async (tradeRequestId: number) => {
     const response: AxiosResponse = await postAccept(tradeRequestId);
 
     if (response.status === 200) {
-      toast.success('Ship Successful', {
+      toast.success('Trade Accepted', {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
@@ -45,14 +45,14 @@ const handleAccept = async (tradeRequestId: number) => {
         window.location.reload();
       }, 2000);
     } else {
-      toast.error(`Ship Failed: ${response.data.error}`, {
+      toast.error(`Trade Failed: ${response.data.error}`, {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
     }
   } catch (error) {
     console.error('Error:', error);
-    toast.error('Ship Failed. Please try again.', {
+    toast.error('Trade Failed. Please try again.', {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
     });
@@ -65,7 +65,7 @@ const handleReject = async (tradeRequestId: number) => {
     const response: AxiosResponse = await postReject(tradeRequestId);
 
     if (response.status === 200) {
-      toast.success('Deliver Successful', {
+      toast.success('Trade Rejected', {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
@@ -75,7 +75,7 @@ const handleReject = async (tradeRequestId: number) => {
       }, 2000);
 
     } else {
-      toast.error(`Deliver Failed: ${response.data.error}`, {
+      toast.error(`Trade Reject Failed: ${response.data.error}`, {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });

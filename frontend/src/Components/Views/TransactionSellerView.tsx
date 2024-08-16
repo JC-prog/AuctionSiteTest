@@ -96,7 +96,6 @@ const renderActions = (status: string, transactionId: number) => {
     case "UNPAID":
       return (
           <>
-            <button className="mx-1 bg-report-500 text-white px-2 py-1 rounded">Report</button>
           </>);
     case "PAID":
       return (

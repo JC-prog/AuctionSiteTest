@@ -68,13 +68,10 @@ const renderActions = (status: string, transactionId: number) => {
       return (
           <>
             <button onClick= {() => handlePayment(transactionId)} className="mx-1 bg-green-500 text-white px-2 py-1 rounded">Payment</button>
-            <button className="mx-1 bg-red-500 text-white px-2 py-1 rounded">Cancel</button>
           </>);
     default:
       return (
         <>
-          <button className="mx-1 bg-yellow-500 text-white px-2 py-1 rounded">Contact Seller</button>
-          <button className="mx-1 bg-red-500 text-white px-2 py-1 rounded">Cancel</button>
         </>);
   };
 };

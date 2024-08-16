@@ -262,7 +262,6 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                         />
                         <div className="ml-4">
                             <p className="font-semibold">{item?.sellerName}</p>
-                            <span className="text-yellow-500 text-lg">5 ★</span>
                         </div>
                     </div>
                     <div className="col-span-12 md:col-span-6 flex justify-center md:justify-end items-center mt-4 md:mt-0">
