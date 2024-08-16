@@ -82,7 +82,8 @@ const SignupPage = () => {
                                 placeholder="Enter your username"
                                 name="username"
                                 value={formData.username} 
-                                onChange={handleChange} />
+                                onChange={handleChange} 
+                                required/>
                         </div>
                         <div className='flex flex-col mt-4'>
                             <label className='text-lg font-medium'>Password</label>
@@ -93,6 +94,7 @@ const SignupPage = () => {
                                 type="password"
                                 value={formData.password}
                                 onChange={handleChange}
+                                required
                             />
                         </div>
                         <div className='flex flex-col mt-4'>
@@ -104,11 +106,12 @@ const SignupPage = () => {
                                 type="email"
                                 value={formData.email}
                                 onChange={handleChange}
+                                required
                             />
                         </div>
                         <div className='mt-8 flex justify-between items-center'>
                             <div>
-                                <input type="checkbox" id='remember'/>
+                                <input type="checkbox" id='remember' required/>
                                 <label className='ml-2 font-medium text-base' htmlFor="remember">Agree to Terms & Conditions</label>
                             </div>
                         </div>
