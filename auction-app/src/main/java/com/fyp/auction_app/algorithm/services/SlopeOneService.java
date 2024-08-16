@@ -5,6 +5,7 @@ import com.fyp.auction_app.repository.WatchlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,30 +22,41 @@ public class SlopeOneService {
 
         List<Watchlist> watchlists = watchlistRepository.findAll();
 
+        Map<String, List<Watchlist>> userWatchlists = new HashMap<>();
         for (Watchlist entry : watchlists) {
-            String username = entry.getUsername();
-            Integer itemId1 = entry.getItemId();
+            userWatchlists.putIfAbsent(entry.getUsername(), new ArrayList<>());
+            userWatchlists.get(entry.getUsername()).add(entry);
+        }
 
-            for (Watchlist otherEntry : watchlistRepository.findByUsername(username)) {
-                Integer itemId2 = otherEntry.getItemId();
+        // Calculate co-occurrence frequencies
+        for (List<Watchlist> userWatchlist : userWatchlists.values()) {
+            for (int i = 0; i < userWatchlist.size(); i++) {
+                Integer itemId1 = userWatchlist.get(i).getItemId();
 
-                if (itemId1.equals(itemId2)) continue;
+                for (int j = 0; j < userWatchlist.size(); j++) {
+                    if (i == j) continue;  // Skip the same item comparison
 
-                deviations.putIfAbsent(itemId1, new HashMap<>());
-                deviations.get(itemId1).putIfAbsent(itemId2, 0.0);
-                frequencies.putIfAbsent(itemId1, new HashMap<>());
-                frequencies.get(itemId1).putIfAbsent(itemId2, 0);
+                    Integer itemId2 = userWatchlist.get(j).getItemId();
 
-                deviations.get(itemId1).put(itemId2, deviations.get(itemId1).get(itemId2) + 1.0);
-                frequencies.get(itemId1).put(itemId2, frequencies.get(itemId1).get(itemId2) + 1);
+                    deviations.putIfAbsent(itemId1, new HashMap<>());
+                    frequencies.putIfAbsent(itemId1, new HashMap<>());
+
+                    deviations.get(itemId1).putIfAbsent(itemId2, 0.0);
+                    frequencies.get(itemId1).putIfAbsent(itemId2, 0);
+
+                    // Increment deviation and frequency for co-occurrence
+                    deviations.get(itemId1).put(itemId2, deviations.get(itemId1).get(itemId2) + 1.0);
+                    frequencies.get(itemId1).put(itemId2, frequencies.get(itemId1).get(itemId2) + 1);
+                }
             }
         }
 
+        // Normalize deviations by frequency count
         for (Integer itemId1 : deviations.keySet()) {
             for (Integer itemId2 : deviations.get(itemId1).keySet()) {
-                Double oldValue = deviations.get(itemId1).get(itemId2);
+                Double totalDeviation = deviations.get(itemId1).get(itemId2);
                 int count = frequencies.get(itemId1).get(itemId2);
-                deviations.get(itemId1).put(itemId2, oldValue / count);
+                deviations.get(itemId1).put(itemId2, totalDeviation / count);
             }
         }
 
@@ -64,21 +76,27 @@ public class SlopeOneService {
             for (Integer itemId2 : deviations.keySet()) {
                 if (itemId1.equals(itemId2)) continue;
 
+                // Ensure the prediction map is initialized
                 predictions.putIfAbsent(itemId2, 0.0);
                 frequencies.putIfAbsent(itemId2, 0);
 
-                Double deviation = deviations.get(itemId1).get(itemId2);
-
-                predictions.put(itemId2, predictions.get(itemId2) + deviation);
-                frequencies.put(itemId2, frequencies.get(itemId2) + 1);
+                // Check if deviation exists to prevent NullPointerException
+                Map<Integer, Double> itemDeviations = deviations.get(itemId1);
+                if (itemDeviations != null) {
+                    Double deviation = itemDeviations.get(itemId2);
+                    if (deviation != null) {
+                        predictions.put(itemId2, predictions.get(itemId2) + deviation);
+                        frequencies.put(itemId2, frequencies.get(itemId2) + 1);
+                    }
+                }
             }
         }
 
+        // Normalize the predictions by the frequency of co-occurrence
         for (Integer itemId : predictions.keySet()) {
             predictions.put(itemId, predictions.get(itemId) / frequencies.get(itemId));
         }
 
         return predictions;
     }
-
 }

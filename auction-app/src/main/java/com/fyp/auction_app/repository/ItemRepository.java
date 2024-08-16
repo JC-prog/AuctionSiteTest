@@ -63,4 +63,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer>, JpaSpecifi
             @Param("auctionType") String auctionType,
             Pageable pageable
     );
+
+    List<Item> findAllByItemIdInAndStatus(List<Integer> itemIds, ListingStatus status);
 }

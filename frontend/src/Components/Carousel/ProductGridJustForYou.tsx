@@ -13,9 +13,6 @@ type ItemProps = {
     username: string | null | undefined;
 };
 
-interface PaginatedResponse {
-    content: Item[];
-}
 
 const ProductGridJustForYou: React.FC<ItemProps> = ({ username }) => {
     const [items, setItems] = useState<Item[]>([]);
@@ -27,7 +24,7 @@ const ProductGridJustForYou: React.FC<ItemProps> = ({ username }) => {
 
                 console.log("Collaborative Filtering: ");
 
-                const response: AxiosResponse<PaginatedResponse> = await api.get(`/api/predict/${username}`);
+                const response: AxiosResponse<Item> = await api.get(`/api/predict/${username}`);
 
                 console.log("Collaborative Filtering: ");
                 console.log(response);
@@ -36,7 +33,7 @@ const ProductGridJustForYou: React.FC<ItemProps> = ({ username }) => {
                     console.log('Network response was not ok');
                 }
 
-                setItems(response.data.content);
+                setItems(response.data);
             } catch (error) {
                 
             } finally {
