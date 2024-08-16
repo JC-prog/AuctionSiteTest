@@ -21,6 +21,9 @@ const HomeProductCategoryGrid: React.FC<ItemProps> = ({ username, category }) =>
     useEffect(() => {
         const fetchItems = async () => {
             try {
+                console.log("User: " + username);
+                console.log('Category: ' + category);
+
                 const response = await fetchItemsByCategory(username, category)
 
                 console.log(response);

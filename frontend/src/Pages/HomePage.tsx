@@ -48,7 +48,7 @@ const HomePage: React.FC<AuthProps> = ({ isAuth, user }) => {
         const getPreference = async () => {
             try {
                 const response = await fetchUserCategoryPreference(user);
-                console.log(response);
+                
                 setUserCatPreference(response.data);
             } catch (error) {
                 console.error('Error fetching user preferences:', error);
@@ -56,6 +56,11 @@ const HomePage: React.FC<AuthProps> = ({ isAuth, user }) => {
         }
 
         checkAuthentication();
+
+        console.log("User Logged In: " + user);
+        console.log("User Authenticated: " + authenticated);
+        console.log("User Preference: " + userCatPreference);
+
     }, [user]);
 
     useEffect(() => {
@@ -75,7 +80,7 @@ const HomePage: React.FC<AuthProps> = ({ isAuth, user }) => {
             <div className="bg-white p-6 rounded-lg shadow-md w-full">
                 <AdPlacementCarousel />
     
-                {isAuth ? (
+                {authenticated ? (
                     <>
                         {showSurvey && <SurveyPopup username={user} onClose={() => setShowSurvey(false)} />}
                         <ProductGridJustForYou username={user} />

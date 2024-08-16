@@ -254,7 +254,7 @@ export const fetchItemsByCategory = async (username: string | null | undefined, 
   } else {
       apiUrl = `/api/item/${category}/exclude/${username}`;
   }
-
+  console.log(apiUrl);
   const response = await apiGet(apiUrl);
 
   return response;

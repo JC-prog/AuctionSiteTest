@@ -24,8 +24,13 @@ const ProductGridJustForYou: React.FC<ItemProps> = ({ username }) => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                console.log(username);
+
+                console.log("Collaborative Filtering: ");
+
                 const response: AxiosResponse<PaginatedResponse> = await api.get(`/api/predict/${username}`);
+
+                console.log("Collaborative Filtering: ");
+                console.log(response);
 
                 if (response.status !== 200) {
                     console.log('Network response was not ok');

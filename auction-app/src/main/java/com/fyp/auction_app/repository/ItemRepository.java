@@ -52,7 +52,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer>, JpaSpecifi
             "ORDER BY (SELECT COUNT(b) FROM Bid b WHERE b.itemId = i.itemId) DESC")
     List<Item> findTop10ItemsBySellerNameOrderByBidCount(@Param("sellerName") String sellerName);
 
-    Page<Item> findBySellerNameNotAndItemCategoryNotAndStatus(String sellerName, String category, ListingStatus status, Pageable pageable);
+    Page<Item> findBySellerNameNotAndItemCategoryAndStatus(String sellerName, String category, ListingStatus status, Pageable pageable);
 
     Page<Item> findByItemCategoryAndStatus(String category, ListingStatus status, Pageable pageable);
 

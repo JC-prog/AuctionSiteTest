@@ -147,7 +147,7 @@ public class ItemService {
     public Page<Item> findItemsByNotSellerNameAndCategory(String sellerName, String category, int page, int size, String sortBy, String sortDirection) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
-        return itemRepository.findBySellerNameNotAndItemCategoryNotAndStatus(
+        return itemRepository.findBySellerNameNotAndItemCategoryAndStatus(
                 sellerName, category, ListingStatus.LISTED, pageable);
     }
 
