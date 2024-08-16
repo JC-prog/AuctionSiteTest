@@ -12,7 +12,7 @@ type ItemProps = {
     keyword: string | null;
 };
 
-const ProductGrid: React.FC<ItemProps> = ({ username, keyword }) => {
+const ProductGridSearch: React.FC<ItemProps> = ({ username, keyword }) => {
     const [items, setItems] = useState<Item[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
@@ -100,4 +100,4 @@ const ProductGrid: React.FC<ItemProps> = ({ username, keyword }) => {
     );
 };
 
-export default ProductGrid;
+export default ProductGridSearch;
