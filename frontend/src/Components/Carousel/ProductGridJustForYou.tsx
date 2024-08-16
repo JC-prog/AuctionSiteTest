@@ -13,7 +13,6 @@ type ItemProps = {
     username: string | null | undefined;
 };
 
-
 const ProductGridJustForYou: React.FC<ItemProps> = ({ username }) => {
     const [items, setItems] = useState<Item[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -21,10 +20,10 @@ const ProductGridJustForYou: React.FC<ItemProps> = ({ username }) => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-
                 console.log("Collaborative Filtering: ");
 
-                const response: AxiosResponse<Item> = await api.get(`/api/predict/${username}`);
+                // Expecting an array of items
+                const response: AxiosResponse<Item[]> = await api.get(`/api/predict/${username}`);
 
                 console.log("Collaborative Filtering: ");
                 console.log(response);
@@ -33,16 +32,17 @@ const ProductGridJustForYou: React.FC<ItemProps> = ({ username }) => {
                     console.log('Network response was not ok');
                 }
 
+                // Set the items
                 setItems(response.data);
             } catch (error) {
-                
+                console.error("Failed to fetch items", error);
             } finally {
                 setLoading(false);
             }
         };
 
         fetchItems();
-    }, []);
+    }, [username]); // Add username as a dependency to re-fetch when it changes
 
     if (loading) {
         return <div className="w-full text-center py-4">Loading...</div>;
