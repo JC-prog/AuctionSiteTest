@@ -127,12 +127,12 @@ export const activateItem = async (itemId: number): Promise<User> => {
     );
 
     if (response.status === 200) {
-      await toast.success('User Activation Successful!', {
+      await toast.success('Item Activation Successful!', {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
     } else {
-      toast.error('Failed to activate user. Please try again.', {
+      toast.error('Failed to activate Item. Please try again.', {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });

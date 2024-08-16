@@ -250,7 +250,7 @@ public class ItemController {
         if (existingItem.isPresent()) {
             Item itemToActivate = existingItem.get();
 
-            itemToActivate.setStatus(ListingStatus.valueOf("ACTIVE"));
+            itemToActivate.setStatus(ListingStatus.valueOf("CREATED"));
             itemService.updateItem(itemToActivate);
 
             return new ResponseEntity<>(itemToActivate, HttpStatus.OK);
