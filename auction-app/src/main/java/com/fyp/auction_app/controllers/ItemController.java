@@ -1,19 +1,11 @@
 package com.fyp.auction_app.controllers;
 
 import com.fyp.auction_app.models.Enums.ListingStatus;
-import com.fyp.auction_app.models.Enums.UserStatus;
 import com.fyp.auction_app.models.Item;
-import com.fyp.auction_app.models.ItemImage;
 import com.fyp.auction_app.models.Requests.EditItemStatusRequest;
-import com.fyp.auction_app.models.Requests.EditUserStatusRequest;
 import com.fyp.auction_app.models.Requests.LaunchListingRequest;
-import com.fyp.auction_app.models.Response.FetchItemResponse;
-import com.fyp.auction_app.models.User;
-import com.fyp.auction_app.models.UserImage;
 import com.fyp.auction_app.services.BidService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import com.fyp.auction_app.services.ItemService;
@@ -25,9 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
