@@ -26,9 +26,19 @@ const Navbar: React.FC<IAuth> = ({ isAuth }) => {
         }, 1000);
     };
 
+    const handleNavigateHome = () => {
+        navigate('/', { replace: true });
+        window.location.reload();
+    };
+
     return (
         <div className="flex justify-between items-center bg-gray-800 text-gray-100 px-4 py-2">
-            <Link to="/" className="text-2xl font-bold">EzAuction</Link>
+            <button 
+                className="text-2xl font-bold" 
+                onClick={handleNavigateHome}
+            >
+                EzAuction
+            </button>
             <div className="flex-1 flex justify-center px-4">
                 <SearchBar />
             </div>
