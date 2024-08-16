@@ -447,7 +447,7 @@ public class ItemController {
     }
 
     // Get Paginated Items by Seller and Status
-    @GetMapping("/{category}/{sellerName}/exclude")
+    @GetMapping("/{category}/exclude/{sellerName}")
     public ResponseEntity<Page<Item>> getItemsExcludingSellerAndCategory(
             @PathVariable String sellerName,
             @PathVariable String category,
@@ -456,7 +456,29 @@ public class ItemController {
             @RequestParam(value = "sortBy", defaultValue = "endDate") String sortBy,
             @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection
     ) {
-        Page<Item> items = itemService.findItemsByNotSellerNameAndCategory(sellerName, category, page, size, sortBy, sortDirection);
+        if(sellerName != null)
+        {
+            Page<Item> items = itemService.findItemsByNotSellerNameAndCategory(sellerName, category, page, size, sortBy, sortDirection);
+
+            return new ResponseEntity<>(items, HttpStatus.OK);
+        } else {
+            Page<Item> items = itemService.findItemsByCategoryAndStatus(category, ListingStatus.LISTED, page, size, sortBy, sortDirection);
+
+            return new ResponseEntity<>(items, HttpStatus.OK);
+        }
+    }
+
+    // Get Paginated Items by Seller and Status
+    @GetMapping("/category")
+    public ResponseEntity<Page<Item>> getItemsByCategory(
+            @RequestParam(value = "name") String category,
+            @RequestParam(value = "status", defaultValue = "LISTED") ListingStatus status,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "sortBy", defaultValue = "endDate") String sortBy,
+            @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection
+    ) {
+        Page<Item> items = itemService.findItemsByCategoryAndStatus(category, status, page, size, sortBy, sortDirection);
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 

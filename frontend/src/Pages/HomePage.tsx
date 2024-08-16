@@ -16,7 +16,7 @@ interface AuthProps {
   user: string | null | undefined;
 }
 
-const HomePage: React.FC<AuthProps> = ({ user }) => {
+const HomePage: React.FC<AuthProps> = ({ isAuth, user }) => {
     const [authenticated, setAuthenticated] = useState(false);
     const [interestChecked, setInterestCheck] = useState(true);
     const [showSurvey, setShowSurvey] = useState<boolean>(false);
@@ -72,11 +72,22 @@ const HomePage: React.FC<AuthProps> = ({ user }) => {
     
     return (
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            {showSurvey && <SurveyPopup username={user} onClose={() => setShowSurvey(false)} />}
             <div className="bg-white p-6 rounded-lg shadow-md w-full">
                 <AdPlacementCarousel />
-                <ProductGridJustForYou username={user}/>
-                {generateCategory()}
+    
+                {isAuth ? (
+                    <>
+                        {showSurvey && <SurveyPopup username={user} onClose={() => setShowSurvey(false)} />}
+                        <ProductGridJustForYou username={user} />
+                        {generateCategory()}
+                    </>
+                ) : (
+                    <>
+                        <HomeProductCategoryGrid username={user} category="Sports" />
+                        <HomeProductCategoryGrid username={user} category="Arts" />
+                        <HomeProductCategoryGrid username={user} category="Electronics" />
+                    </>
+                )}
             </div>
         </div>
     );

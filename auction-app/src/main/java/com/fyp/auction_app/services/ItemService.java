@@ -147,7 +147,13 @@ public class ItemService {
     public Page<Item> findItemsByNotSellerNameAndCategory(String sellerName, String category, int page, int size, String sortBy, String sortDirection) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
-        return itemRepository.findBySellerNameNotAndItemCategoryNotOrderByEndDateAsc(sellerName, category, pageable);
+        return itemRepository.findBySellerNameNotAndItemCategoryNotAndStatus(
+                sellerName, category, ListingStatus.LISTED, pageable);
+    }
+
+    public Page<Item> findItemsByCategoryAndStatus(String category, ListingStatus status, int page, int size, String sortBy, String sortDirection) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortDirection), sortBy));
+        return itemRepository.findByItemCategoryAndStatus(category, status, pageable);
     }
 
     public Page<Item> getTradeItemsBySellerAndStatus(String sellerName, int page, int size) {

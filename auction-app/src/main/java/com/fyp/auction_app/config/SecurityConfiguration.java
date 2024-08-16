@@ -44,7 +44,8 @@ public class SecurityConfiguration {
                     auth -> auth
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/auth/register").permitAll()
-                        .requestMatchers("/api/items/search").permitAll()
+                        .requestMatchers("/api/item/search").permitAll()
+                        .requestMatchers("/api/item/**").permitAll()
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest()

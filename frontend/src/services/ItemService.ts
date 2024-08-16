@@ -245,13 +245,19 @@ export const fetchTopTenItems = (username: string | null | undefined) => {
 
 }
 
-// Fetch Items from Category
 export const fetchItemsByCategory = async (username: string | null | undefined, category: string) => {
-    const apiUrl = `/api/item/${category}/${username}/exclude`
 
-    const response = apiGet(apiUrl);
+  let apiUrl: string;
 
-    return response;
+  if (username === null || username === undefined) {
+      apiUrl = `/api/item/category?name=${category}`;
+  } else {
+      apiUrl = `/api/item/${category}/exclude/${username}`;
+  }
+
+  const response = await apiGet(apiUrl);
+
+  return response;
 };
 
 // Fetch Items Search from Keyword
