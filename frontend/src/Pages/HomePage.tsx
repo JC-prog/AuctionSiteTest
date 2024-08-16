@@ -16,7 +16,7 @@ interface AuthProps {
   user: string | null | undefined;
 }
 
-const HomePage: React.FC<AuthProps> = ({ isAuth, user }) => {
+const HomePage: React.FC<AuthProps> = ({ user }) => {
     const [authenticated, setAuthenticated] = useState(false);
     const [interestChecked, setInterestCheck] = useState(true);
     const [showSurvey, setShowSurvey] = useState<boolean>(false);
