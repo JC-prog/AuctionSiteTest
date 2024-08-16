@@ -83,8 +83,18 @@ const HomePage: React.FC<AuthProps> = ({ user }) => {
                 {authenticated ? (
                     <>
                         {showSurvey && <SurveyPopup username={user} onClose={() => setShowSurvey(false)} />}
-                        <ProductGridJustForYou username={user} />
-                        {generateCategory()}
+                        {userCatPreference.length > 0 ? (
+                            <>
+                                <ProductGridJustForYou username={user} />
+                                {generateCategory()}
+                            </>
+                        ) : (
+                            <>
+                                <HomeProductCategoryGrid username={user} category="Sports" />
+                                <HomeProductCategoryGrid username={user} category="Arts" />
+                                <HomeProductCategoryGrid username={user} category="Electronics" />
+                            </>
+                        )}
                     </>
                 ) : (
                     <>
