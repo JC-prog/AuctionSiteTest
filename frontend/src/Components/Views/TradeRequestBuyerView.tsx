@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import TradeRequest from '../../interfaces/TradeRequest.ts';
 import { fetchBuyerTradeRequest } from '../../services/TradeRequestService';
-import api from '../../config/Api';;
+import api from '../../config/Api';
 
 // Custom hook for fetching item images
 const useItemImages = (tradeRequests: TradeRequest[]) => {
-  const [itemImages, setItemImages] = useState<{ [key: number]: string }>({});
+  const [buyerItemImages, setBuyerItemImages] = useState<{ [key: number]: string }>({});
+  const [sellerItemImages, setSellerItemImages] = useState<{ [key: number]: string }>({});
 
   useEffect(() => {
-    const fetchItemImage = async (itemId: number) => {
+    const fetchItemImage = async (itemId: number, setImage: React.Dispatch<React.SetStateAction<{ [key: number]: string }>>) => {
       try {
         const response = await api.get(`/api/item/image/${itemId}`, { responseType: 'arraybuffer' });
         const blob = new Blob([response.data], { type: 'image/jpeg' });
         const reader = new FileReader();
         reader.onloadend = () => {
-          setItemImages((prev) => ({ ...prev, [itemId]: reader.result as string }));
+          setImage((prev) => ({ ...prev, [itemId]: reader.result as string }));
         };
         reader.readAsDataURL(blob);
       } catch (error) {
@@ -22,10 +23,13 @@ const useItemImages = (tradeRequests: TradeRequest[]) => {
       }
     };
 
-    tradeRequests.forEach((tradeRequest) => fetchItemImage(tradeRequest.id));
+    tradeRequests.forEach((tradeRequest) => {
+      fetchItemImage(tradeRequest.buyerItemId, setBuyerItemImages);
+      fetchItemImage(tradeRequest.sellerItemId, setSellerItemImages);
+    });
   }, [tradeRequests]);
 
-  return itemImages;
+  return { buyerItemImages, sellerItemImages };
 };
 
 // Render Available Actions
@@ -33,15 +37,17 @@ const renderActions = (status: string) => {
   switch (status) {
     case "PENDING":
       return (
-          <>
-          </>);
+        <>
+          {/* Add your pending actions here */}
+        </>
+      );
     default:
       return <p></p>;
-  };
+  }
 };
 
 // tradeRequest row component
-const TradeRequestRow: React.FC<{ tradeRequest: TradeRequest; index: number; itemImage: string }> = ({ tradeRequest, index, itemImage }) => (
+const TradeRequestRow: React.FC<{ tradeRequest: TradeRequest; index: number; buyerItemImage: string; sellerItemImage: string }> = ({ tradeRequest, index, buyerItemImage, sellerItemImage }) => (
   <div className="px-2 block transform transition-transform duration-300 hover:bg-gray-100">
     <div className="grid grid-cols-12 items-center py-4 border-b border-gray-200">
       <div className="col-span-1 text-center">
@@ -49,7 +55,7 @@ const TradeRequestRow: React.FC<{ tradeRequest: TradeRequest; index: number; ite
       </div>
       <div className="col-span-1">
         <img
-          src={itemImage || "/image-placeholder.jpeg"} 
+          src={buyerItemImage || "/image-placeholder.jpeg"} 
           alt="Item"
           className="w-12 h-12 object-cover rounded-md"
         />
@@ -61,14 +67,14 @@ const TradeRequestRow: React.FC<{ tradeRequest: TradeRequest; index: number; ite
       </div>
       <div className="col-span-1">
         <img
-          src={itemImage || "/image-placeholder.jpeg"} 
+          src={sellerItemImage || "/image-placeholder.jpeg"} 
           alt="Item"
           className="w-12 h-12 object-cover rounded-md"
         />
       </div>
       <div className="col-span-2">
         <a href={`/item/${tradeRequest.sellerItemId}`} className="block">
-            <p className="text-sm text-gray-500 px-1">{tradeRequest.sellerItemTitle}</p>
+          <p className="text-sm text-gray-500 px-1">{tradeRequest.sellerItemTitle}</p>
         </a>
       </div>
       {/* 
@@ -90,15 +96,15 @@ const TradeRequestRow: React.FC<{ tradeRequest: TradeRequest; index: number; ite
 
 // Main component
 const TradeRequestBuyerView: React.FC<{ username: string | null | undefined }> = ({ username }) => {
-  const [tradeRequests, settradeRequests] = useState<TradeRequest[]>([]);
+  const [tradeRequests, setTradeRequests] = useState<TradeRequest[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const fetchtradeRequest = async () => {
+    const fetchTradeRequests = async () => {
       try {
         const response = await fetchBuyerTradeRequest(username);
-        settradeRequests(response.data.content);
+        setTradeRequests(response.data.content);
       } catch (error) {
         setError(error as Error);
       } finally {
@@ -106,10 +112,10 @@ const TradeRequestBuyerView: React.FC<{ username: string | null | undefined }> =
       }
     };
 
-    fetchtradeRequest();
+    fetchTradeRequests();
   }, [username]);
 
-  const itemImages = useItemImages(tradeRequests);
+  const { buyerItemImages, sellerItemImages } = useItemImages(tradeRequests);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -143,7 +149,8 @@ const TradeRequestBuyerView: React.FC<{ username: string | null | undefined }> =
                 key={tradeRequest.id}
                 tradeRequest={tradeRequest}
                 index={index}
-                itemImage={itemImages[tradeRequest.id]}
+                buyerItemImage={buyerItemImages[tradeRequest.buyerItemId]}
+                sellerItemImage={sellerItemImages[tradeRequest.sellerItemId]}
               />
             ))
           ) : (

@@ -4,7 +4,7 @@ export default interface TradeRequest {
     buyerItemId: number;
     buyerItemTitle: string;
     sellerName: string;
-    sellerItemId: string;
+    sellerItemId: number;
     sellerItemTitle: string;
     status: string;
     timestamp: Date;
