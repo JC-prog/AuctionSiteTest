@@ -4,7 +4,7 @@ import baseUrl from '../config/baseUrl';
 const getAuthConfig = () => {
     const token = Cookies.get('access_token');
     if (!token) {
-        throw new Error('No access token found');
+        
     }
 
     return {

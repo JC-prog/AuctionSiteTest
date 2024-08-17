@@ -51,7 +51,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                 const itemResponse = await fetchItemByItemId(parseInt(itemId));
 
                 if (itemResponse.status !== 200) {
-                    throw new Error('Network response was not ok');
+                   
                 }
 
                 setItem(itemResponse.data);
@@ -62,7 +62,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
                     if (numTradesResponse.status != 200)
                     {
-                        throw new Error("Network response was not ok");
+                        
                     }
 
                     setNumOfTrades(numTradesResponse.data);
@@ -72,7 +72,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
 
                     if (numBidsResponse.status != 200)
                     {
-                        throw new Error("Network response was not ok");
+                        
                     }
 
                     setNumOfBids(numBidsResponse.data);
@@ -82,7 +82,7 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                 if (isAuth && item?.itemCategory != null) {
                     logClickCategory(user, item?.itemCategory);
                 }
-                
+                console.log("Test");
                 // Fetch Item Image
                 const imageResponse = await api.get(`/api/item/image/${itemId}`, { responseType: 'arraybuffer' });
                 const blob = new Blob([imageResponse.data], { type: 'image/jpeg' });

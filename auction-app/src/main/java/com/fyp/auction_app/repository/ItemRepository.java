@@ -14,6 +14,8 @@ import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Integer>, JpaSpecificationExecutor {
 
+    Item findByItemId(Integer itemId);
+
     // Find List of Items by sellerName
     List<Item> findBySellerName(String sellerName);
 

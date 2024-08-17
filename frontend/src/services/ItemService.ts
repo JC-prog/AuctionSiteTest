@@ -49,7 +49,7 @@ export const fetchItems = async (page: number = 0) => {
     try {
       const accessToken = Cookies.get('access_token');
       if (!accessToken) {
-        throw new Error('No access token found');
+        
       }
   
       const response = await baseUrl.get(`/api/item/all?page=${page}`, {
@@ -85,7 +85,7 @@ export const fetchItemsByEndDate = async (page: number = 0): Promise<Item[]> => 
     try {
       const accessToken = Cookies.get('access_token');
       if (!accessToken) {
-        throw new Error('No access token found');
+        
       }
   
       const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/item?page=${page}`, {
@@ -109,7 +109,7 @@ export const fetchItemsByUsername = async (username: string | null | undefined):
     try {
         const accessToken = Cookies.get('access_token');
         if (!accessToken) {
-        throw new Error('No access token found');
+        
         }
 
         const response: AxiosResponse<Item[]> = await baseUrl.get(`/api/item/seller?sellerName=${username}`, {
