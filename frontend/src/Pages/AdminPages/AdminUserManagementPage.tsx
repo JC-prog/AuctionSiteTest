@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import AdminUserList from '../../Components/List/AdminUserList'
+import AdminUserList from '../../Components/List/AdminUserList';
 
 import IUser from '../../interfaces/User';
 import { fetchUsers } from '../../services/UserService';
@@ -14,6 +14,7 @@ const AdminUserManagementPage = () => {
 
     useEffect(() => {
         const loadUsers = async () => {
+          setLoading(true);
           try {
             const usersData = await fetchUsers(currentPage - 1);
 
@@ -30,7 +31,7 @@ const AdminUserManagementPage = () => {
         };
     
         loadUsers();
-      }, []);
+      }, [currentPage]); // Add currentPage as a dependency
     
       if (loading) {
         return <div>Loading...</div>;
@@ -77,4 +78,4 @@ const AdminUserManagementPage = () => {
   );
 };
 
-export default AdminUserManagementPage
+export default AdminUserManagementPage;

@@ -30,12 +30,17 @@ public class TradeRequestScheduler {
         for(TradeRequest tradeRequest : tradeRequestAcceptedList)
         {
             Item buyerItemToUpdate = itemRepository.findByItemId(tradeRequest.getBuyerItemId());
-            buyerItemToUpdate.setStatus(ListingStatus.SOLD);
+            buyerItemToUpdate.setStatus(ListingStatus.TRADED);
+            buyerItemToUpdate.setBidWinner(tradeRequest.getSellerName());
             itemRepository.save(buyerItemToUpdate);
 
             Item sellerItemToUpdate = itemRepository.findByItemId(tradeRequest.getSellerItemId());
-            sellerItemToUpdate.setStatus(ListingStatus.SOLD);
+            sellerItemToUpdate.setStatus(ListingStatus.TRADED);
+            sellerItemToUpdate.setBidWinner(tradeRequest.getBuyerName());
             itemRepository.save(sellerItemToUpdate);
+
+            tradeRequest.setStatus(TradeRequestStatus.REJECTED);
+            tradeRequestRepository.save(tradeRequest);
         }
     }
 }

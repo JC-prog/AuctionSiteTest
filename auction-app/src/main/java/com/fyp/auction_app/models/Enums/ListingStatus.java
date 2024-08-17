@@ -10,5 +10,6 @@ public enum ListingStatus {
     DELETED,
     FINISHED,
     REJECTED,
-    REVIEWING
+    REVIEWING,
+    TRADED
 }
