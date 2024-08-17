@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 const AdPlacementCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const ads = [
-    { id: 1, imageUrl: '/bike.jpg' }, // Adjust the path according to your public folder structure
-    { id: 2, imageUrl: '/bike.jpg' },
-    { id: 3, imageUrl: '/bike.jpg' },
+    { id: 1, imageUrl: '/ad.jpg' }, // Adjust the path according to your public folder structure
+    { id: 2, imageUrl: '/ad1.jpg' },
+    { id: 3, imageUrl: '/ad2.jpg' },
   ];
 
   useEffect(() => {
