@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';;
 import { CiStop1, CiPlay1 } from 'react-icons/ci';
 import IItem from '../../interfaces/Item';
@@ -9,7 +9,31 @@ type ItemListProps = {
     items: IItem[];
 };
 
+import api from '../../config/api/loginApi';
+
 const AdminItemList: React.FC<ItemListProps> = ({ listTitle, items }) => {
+    // State to store item images
+    const [itemImages, setItemImages] = useState<{ [key: number]: string }>({});
+
+    // Fetch item images
+    const fetchItemImage = async (itemId: number) => {
+        try {
+        const response = await api.get(`/api/item/image/${itemId}`, { responseType: 'arraybuffer' });
+        const blob = new Blob([response.data], { type: 'image/jpeg' });
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setItemImages((prev) => ({ ...prev, [itemId]: reader.result as string }));
+        };
+        reader.readAsDataURL(blob);
+        } catch (error) {
+        console.error('Failed to fetch item image:', error);
+        }
+    };
+
+    // Fetch images for all items on component mount
+    useEffect(() => {
+        items.forEach((item) => fetchItemImage(item.itemId));
+    }, [items]);
 
     const handleSuspendItem = async (itemId: number) => {
         try {
@@ -75,7 +99,7 @@ const AdminItemList: React.FC<ItemListProps> = ({ listTitle, items }) => {
                                 <span className="text-gray-500">{index + 1}</span>
                             </div>
                             <div className="col-span-2">
-                                <img src='/bike.jpg' className="w-12 h-12 object-cover rounded-md" />
+                                <img src={itemImages[item.itemId] || "/image-placeholder.jpeg"}  className="w-12 h-12 object-cover rounded-md" />
                             </div>
                             <div className="col-span-3">
                                 <h3 className="text-lg font-medium">{item.itemTitle}</h3>

@@ -3,8 +3,8 @@ import { checkInterestUser } from '../../services/UserService';
 import { toast } from 'react-toastify';
 
 interface SurveyPopupProps {
-    username: string | null | undefined;
-    onClose: () => void;
+  username: string | null | undefined;
+  onClose: () => void;
 }
 
 const SurveyPopup: React.FC<SurveyPopupProps> = ({ username, onClose }) => {
@@ -17,14 +17,16 @@ const SurveyPopup: React.FC<SurveyPopupProps> = ({ username, onClose }) => {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+    const { name, value } = e.target;
 
-    if (type === 'select-one') {
-      setResponses((prevResponses) => ({ ...prevResponses, [name]: value }));
-    } else if (type === 'textarea') {
-      setResponses((prevResponses) => ({ ...prevResponses, [name]: value }));
+    if (name === 'purchaseFactors') {
+      setResponses((prevResponses) => ({
+        ...prevResponses,
+        purchaseFactors: prevResponses.purchaseFactors.includes(value)
+          ? prevResponses.purchaseFactors.filter((factor) => factor !== value)
+          : [...prevResponses.purchaseFactors, value]
+      }));
     } else {
-      
       setResponses((prevResponses) => ({
         ...prevResponses,
         [name]: value
@@ -63,7 +65,7 @@ const SurveyPopup: React.FC<SurveyPopupProps> = ({ username, onClose }) => {
         <form>
           <div className="mb-4">
             <label className="block font-bold mb-2">What type of products are you most interested in?</label>
-            <select name="productInterest" value={responses.productInterest} onChange={handleChange} className="w-full p-2 border rounded">
+            <select name="productInterest" value={responses.productInterest} onChange={handleChange} className="w-full p-2 border rounded" required>
               <option value="">Select</option>
               <option value="Electronics">Electronics</option>
               <option value="Fashion">Fashion</option>
@@ -74,7 +76,7 @@ const SurveyPopup: React.FC<SurveyPopupProps> = ({ username, onClose }) => {
           </div>
           <div className="mb-4">
             <label className="block font-bold mb-2">How often do you shop online?</label>
-            <select name="shoppingFrequency" value={responses.shoppingFrequency} onChange={handleChange} className="w-full p-2 border rounded">
+            <select name="shoppingFrequency" value={responses.shoppingFrequency} onChange={handleChange} className="w-full p-2 border rounded" required>
               <option value="">Select</option>
               <option value="Daily">Daily</option>
               <option value="Weekly">Weekly</option>
@@ -86,13 +88,15 @@ const SurveyPopup: React.FC<SurveyPopupProps> = ({ username, onClose }) => {
             <label className="block font-bold mb-2">Which factors influence your purchase decisions the most?</label>
             <div className="flex flex-wrap">
               {['Price', 'Brand', 'Customer Reviews', 'Product Features', 'Discounts and Offers'].map((factor) => (
-                <label key={factor} className="mr-4">
+                <label key={factor} className="mr-4 flex items-center">
                   <input
-                    type="text"
+                    type="checkbox"
                     name="purchaseFactors"
                     value={factor}
+                    checked={responses.purchaseFactors.includes(factor)}
                     onChange={handleChange}
-                    className="mr-1"
+                    className="mr-2"
+                    required
                   />
                   {factor}
                 </label>
@@ -101,7 +105,7 @@ const SurveyPopup: React.FC<SurveyPopupProps> = ({ username, onClose }) => {
           </div>
           <div className="mb-4">
             <label className="block font-bold mb-2">What is your preferred mode of payment?</label>
-            <select name="paymentMethod" value={responses.paymentMethod} onChange={handleChange} className="w-full p-2 border rounded">
+            <select name="paymentMethod" value={responses.paymentMethod} onChange={handleChange} className="w-full p-2 border rounded" required>
               <option value="">Select</option>
               <option value="Credit/Debit Card">Credit/Debit Card</option>
               <option value="PayPal">PayPal</option>
@@ -111,7 +115,7 @@ const SurveyPopup: React.FC<SurveyPopupProps> = ({ username, onClose }) => {
           </div>
           <div className="mb-4">
             <label className="block font-bold mb-2">How do you usually find new products on our website?</label>
-            <select name="productDiscovery" value={responses.productDiscovery} onChange={handleChange} className="w-full p-2 border rounded">
+            <select name="productDiscovery" value={responses.productDiscovery} onChange={handleChange} className="w-full p-2 border rounded" required>
               <option value="">Select</option>
               <option value="Browsing categories">Browsing categories</option>
               <option value="Using the search bar">Using the search bar</option>

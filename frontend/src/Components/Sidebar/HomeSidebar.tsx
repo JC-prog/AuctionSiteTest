@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { RiSettings4Line, RiFeedbackLine} from "react-icons/ri";
-import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiFolder, FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -18,7 +17,6 @@ const HomeSidebar: React.FC<IAuth> = ({ isAuth, user, role }) => {
     const authMenus = [
         { name: "User", link: `/user/${user ? user : ''}`, icon: AiOutlineUser },
         { name: "Notifications", link: "/notification", icon: IoMdNotificationsOutline },
-        { name: "Analytics", link: "/analytics", icon: TbReportAnalytics },
         { name: "My Bids", link: "/my-bids", icon: RiAuctionLine, margin: true },
         { name: "My Listing", link: "/my-listings", icon: FiFolder },
         { name: "Trade Request", link: "/my-trade", icon: LuArrowRightLeft },
@@ -37,7 +35,6 @@ const HomeSidebar: React.FC<IAuth> = ({ isAuth, user, role }) => {
         { name: "Dashboard", link: `/admin`, icon: MdDashboard },
         { name: "User Management", link: "/admin/user-management", icon: AiOutlineUser, margin: true },
         { name: "Listing Management", link: "/admin/listing-management", icon: CiCircleList },
-        { name: "System Management", link: "/admin/system-management", icon: RiSettings4Line },
         { name: "Feedback Management", link: "/admin/feedback-management", icon: RiFeedbackLine }
     ];
 
