@@ -239,7 +239,7 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
               <button
                 className="text-green-600 hover:text-green-900 focus:outline-none flex items-center px-1"
               >
-                <FaExclamationCircle className="mr-1" /> Bidding in Progress
+                <FaExclamationCircle className="mr-1" /> Trading Bidding in Progress
               </button>
             )}
           </>
