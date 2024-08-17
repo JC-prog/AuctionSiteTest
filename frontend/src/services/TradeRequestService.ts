@@ -51,7 +51,7 @@ export const fetchBuyerTradeRequest = (username: string | null | undefined) => {
 
 // Fetch Seller Trade Request 
 export const fetchSellerTradeRequest = (username: string | null | undefined) => {
-    const apiUrl = `/api/trade/buyer/${username}`;
+    const apiUrl = `/api/trade/seller/${username}`;
     console.log(apiUrl);
     const response = apiGet(apiUrl);
     console.log(response);

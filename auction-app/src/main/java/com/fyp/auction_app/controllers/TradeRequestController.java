@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -103,10 +104,27 @@ public class TradeRequestController {
 
         if (tradeRequest.isPresent())
         {
+            if(tradeRequest.get().getStatus() != TradeRequestStatus.PENDING)
+            {
+                return new ResponseEntity<>("Trade Request ", HttpStatus.BAD_REQUEST);
+            }
+
             TradeRequest tradeRequestToUpdate = tradeRequest.get();
             tradeRequestToUpdate.setStatus(TradeRequestStatus.ACCEPTED);
 
             tradeRequestService.updateTradeRequest(tradeRequestToUpdate);
+
+            List<TradeRequest> otherTradeRequests = tradeRequestService.getAllTradeRequestBySellerItemId(tradeRequestToUpdate.getSellerItemId());
+
+            for(TradeRequest tr : otherTradeRequests)
+            {
+                if(!Objects.equals(tr.getId(), tradeId))
+                {
+                    tr.setStatus(TradeRequestStatus.REJECTED);
+
+                    tradeRequestService.updateTradeRequest(tr);
+                }
+            }
 
             return new ResponseEntity<>("Trade Request Accepted", HttpStatus.OK);
         }

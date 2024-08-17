@@ -24,4 +24,6 @@ public interface TradeRequestRepository extends JpaRepository<TradeRequest, Inte
 
     @Query("SELECT COUNT(tr) FROM TradeRequest tr WHERE tr.sellerItemId = :sellerItemId")
     Long countTradesBySellerItemId(@Param("sellerItemId") Integer sellerItemId);
+
+    List<TradeRequest> findBySellerItemId(Integer sellerItemId);
 }
