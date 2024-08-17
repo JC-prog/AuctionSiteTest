@@ -1,0 +1,17 @@
+.login-link div {
+    display: flex;
+    gap: 10px; 
+}
+
+.login-link .link {
+    text-decoration: none; 
+    padding: 5px 10px;
+    color: #000; 
+    background-color: #f0f0f0; 
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+}
+
+.login-link .link:hover {
+    background-color: #e0e0e0; 
+}
