@@ -49,7 +49,7 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
       console.log(response);
   
       if (response.status === 200) {
-        toast.success(response.data.message || 'Item launched successfully!', {
+        toast.success(response.data || 'Item launched successfully!', {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000,
         });
@@ -59,7 +59,7 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
         }, 2000);
 
       } else {
-        toast.error(response.data.message || 'Failed to launch item.', {
+        toast.error(response.data || 'Failed to launch item.', {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000,
         });

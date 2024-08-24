@@ -138,14 +138,10 @@ export const launchItem = async (itemId: number) => {
             Authorization: 'Bearer ' + Cookies.get('access_token'),
         },
     };
-    
+
     try {
         const response: AxiosResponse = await baseUrl.post(apiUrl, payload, config);
-
-        if (response.status !== 200) {
-            throw new Error('Network response was not ok');
-        }
-
+        console.log(response);
         return response;
 
     } catch (error) {

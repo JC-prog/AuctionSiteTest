@@ -1,10 +1,13 @@
 package com.fyp.auction_app.controllers;
 
+import com.fyp.auction_app.models.Enums.AccountType;
 import com.fyp.auction_app.models.Enums.ListingStatus;
 import com.fyp.auction_app.models.Item;
 import com.fyp.auction_app.models.Requests.EditItemStatusRequest;
 import com.fyp.auction_app.models.Requests.LaunchListingRequest;
+import com.fyp.auction_app.models.User;
 import com.fyp.auction_app.services.BidService;
+import com.fyp.auction_app.services.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -14,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -29,6 +33,9 @@ public class ItemController {
 
     @Autowired
     private BidService bidService;
+
+    @Autowired
+    private UserService userService;
 
     // Get ONE Item based on itemId
     @GetMapping("/{itemId}")
@@ -216,13 +223,13 @@ public class ItemController {
     @PostMapping("/create")
     public ResponseEntity<Integer> createItem(@RequestBody Item item) {
 
-        item.setStatus(ListingStatus.CREATED);
-        item.setCurrentPrice(item.getStartPrice());
-        item.setCreateAt(new Date());
+            item.setStatus(ListingStatus.CREATED);
+            item.setCurrentPrice(item.getStartPrice());
+            item.setCreateAt(new Date());
 
-        Item createdItem = itemService.createItem(item);
+            Item createdItem = itemService.createItem(item);
 
-        return new ResponseEntity<>(createdItem.getItemId(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/suspend")
@@ -279,19 +286,31 @@ public class ItemController {
         if (existingItem.isPresent()) {
             Item itemToUpdate = existingItem.get();
 
+            Optional<User> sellerUser = userService.findUserByUsername(itemToUpdate.getSellerName());
+
             if(itemToUpdate.getStatus() == ListingStatus.LISTED)
             {
-                return new ResponseEntity<>("Cannot Launch Listed Items", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Cannot Launch Listed Items", HttpStatus.ACCEPTED);
             }
 
             if(itemToUpdate.getStatus() == ListingStatus.SOLD)
             {
-                return new ResponseEntity<>("Cannot Launch Sold Items", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Cannot Launch Sold Items", HttpStatus.ACCEPTED);
             }
 
             if(itemToUpdate.getStatus() == ListingStatus.SUSPENDED)
             {
-                return new ResponseEntity<>("Cannot Launch Suspended Items", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Cannot Launch Suspended Items", HttpStatus.ACCEPTED);
+            }
+
+            List<Item> items = itemService.findItemsBySellerNameAndStatus(itemToUpdate.getSellerName(), ListingStatus.LISTED);
+
+            if(items.size() >= 20)
+            {
+                if (sellerUser.isPresent() && sellerUser.get().getAccountType() == AccountType.STANDARD)
+                {
+                    return new ResponseEntity<>("Upgrade to Premium to launch more items", HttpStatus.ACCEPTED);
+                }
             }
 
             LocalDateTime launchDate = LocalDateTime.now();
