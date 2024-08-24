@@ -147,7 +147,7 @@ function App() {
               <Route path="/item/create" element={<ItemCreatePage user={user} />} />
               <Route path="/item/edit/:itemId" element={<ItemEditPage user={user}/>} />
               <Route path="/item/:itemId" element={<ItemPage isAuth={authenticated} user={user} />} />
-              <Route path="/analytics" element={<AnalyticsPage />} />
+              <Route path="/subscription" element={<AnalyticsPage />} />
               <Route path="/transactions" element={<TransactionPage user={user}/>} />
               <Route path="/feedback" element={<FeedbackPage user={user}/>} />
               
