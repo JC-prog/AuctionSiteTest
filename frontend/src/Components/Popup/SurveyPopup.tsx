@@ -35,15 +35,30 @@ const SurveyPopup: React.FC<SurveyPopupProps> = ({ username, onClose }) => {
   };
 
   const handleSubmit = async () => {
+    // Validation check
+    if (
+      !responses.productInterest ||
+      !responses.shoppingFrequency ||
+      responses.purchaseFactors.length === 0 ||
+      !responses.paymentMethod ||
+      !responses.productDiscovery
+    ) {
+      toast.error('Please fill out all fields and select at least one purchase factor.', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
+      return;
+    }
+  
     try {
       const response = await checkInterestUser(username);
       const message = response.data;
-
+  
       toast[response.status === 200 ? 'success' : 'error'](message, {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
-
+  
       if (response.status === 200) {
         setTimeout(() => window.location.reload(), 2000);
       }
@@ -57,6 +72,7 @@ const SurveyPopup: React.FC<SurveyPopupProps> = ({ username, onClose }) => {
       onClose();
     }
   };
+  
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
@@ -67,6 +83,7 @@ const SurveyPopup: React.FC<SurveyPopupProps> = ({ username, onClose }) => {
             <label className="block font-bold mb-2">What type of products are you most interested in?</label>
             <select name="productInterest" value={responses.productInterest} onChange={handleChange} className="w-full p-2 border rounded" required>
               <option value="">Select</option>
+              <option value="Sports">Sports</option>
               <option value="Electronics">Electronics</option>
               <option value="Fashion">Fashion</option>
               <option value="Home & Kitchen">Home & Kitchen</option>
