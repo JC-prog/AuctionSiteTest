@@ -81,12 +81,12 @@ const ItemEditPage: React.FC<AuthProps> = () => {
         }
     };
 
-    const handleUpload = async (itemId: number) => {
+    const handleUpload = async (itemId: string | undefined) => {
         if (!selectedFile) return;
 
         const formData = new FormData();
         formData.append('file', selectedFile);
-
+        
         try {
             const response = await api.post(`/api/item/upload-image/${itemId}`, formData, {
                 headers: {
@@ -140,9 +140,9 @@ const ItemEditPage: React.FC<AuthProps> = () => {
             const response: AxiosResponse = await api.post('/api/item/create', item);
 
             if (response.status === 200) {
-                const createdItemId = response.data;
+
                 if (selectedFile) {
-                    await handleUpload(createdItemId);
+                    await handleUpload(itemId?.toString());
                 }
                 toast.success('Create Listing Successful!', {
                     position: toast.POSITION.TOP_RIGHT,

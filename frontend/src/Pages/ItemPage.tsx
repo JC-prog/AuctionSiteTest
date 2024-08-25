@@ -45,44 +45,45 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
             setError(new Error("Item ID is not provided"));
             return;
         }
-
+    
+        // Fetch Item
         const fetchItem = async () => {
             try {
                 const itemResponse = await fetchItemByItemId(parseInt(itemId));
-
+    
                 if (itemResponse.status !== 200) {
-                   
+                    throw new Error("Failed to fetch item");
                 }
-
-                setItem(itemResponse.data);
-
-                if(item?.auctionType == 'trade')
-                {
-                    const numTradesResponse  = await countTrades(itemId);
-
-                    if (numTradesResponse.status != 200)
-                    {
-                        
+    
+                const fetchedItem = itemResponse.data;
+                setItem(fetchedItem);
+    
+                // Fetch the number of trades or bids based on auction type
+                if (fetchedItem.auctionType === 'trade') {
+                    const numTradesResponse = await countTrades(itemId);
+    
+                    if (numTradesResponse.status !== 200) {
+                        throw new Error("Failed to fetch number of trades");
                     }
-
+    
                     setNumOfTrades(numTradesResponse.data);
-
+    
                 } else {
-                    const numBidsResponse  = await countBids(itemId);
-
-                    if (numBidsResponse.status != 200)
-                    {
-                        
+                    const numBidsResponse = await countBids(itemId);
+    
+                    if (numBidsResponse.status !== 200) {
+                        throw new Error("Failed to fetch number of bids");
                     }
-
+    
                     setNumOfBids(numBidsResponse.data);
                 }
-                
-                
-                if (isAuth && item?.itemCategory != null) {
-                    logClickCategory(user, item?.itemCategory);
+    
+                // Log the category click if authenticated and itemCategory is available
+                if (isAuth && fetchedItem.itemCategory) {
+                    await logClickCategory(user, fetchedItem.itemCategory);
+                    console.log("User Category Logged");
                 }
-                console.log("Test");
+    
                 // Fetch Item Image
                 const imageResponse = await api.get(`/api/item/image/${itemId}`, { responseType: 'arraybuffer' });
                 const blob = new Blob([imageResponse.data], { type: 'image/jpeg' });
@@ -91,17 +92,18 @@ const ItemPage: React.FC<AuthProps> = ({ isAuth, user }) => {
                     setItemImage(reader.result as string);
                 };
                 reader.readAsDataURL(blob);
+    
             } catch (error) {
                 setItemImageError(true); // Set error state when fetching image fails
-                console.error('Failed to fetch item image:', error);
+                console.error('Failed to fetch item or image:', error);
             } finally {
                 setLoading(false);
             }
         };
-
+    
         fetchItem();
-    }, [itemId]);
-
+    }, [itemId, isAuth, user]);  // Add itemImageError to the dependency array if necessary
+    
     // Fetch User Photo
     useEffect(() => {
         if (!item?.sellerName) return;

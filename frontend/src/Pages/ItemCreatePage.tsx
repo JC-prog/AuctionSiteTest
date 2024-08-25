@@ -84,7 +84,7 @@ const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
     }
   };
 
-  const handleUpload = async (itemId: number) => {
+  const handleUpload = async (itemId: string | undefined) => {
     if (!selectedFile) return;
 
     const formData = new FormData();
@@ -174,9 +174,9 @@ const CreateItemPage: React.FC<AuthProps> = ({ user }) => {
       const response: AxiosResponse = await api.post('/api/item/create', item);
 
       if (response.status === 200) {
-        const createdItemId = response.data; // Assuming the response contains the created item's ID
+        
         if (selectedFile) {
-          await handleUpload(createdItemId);
+          await handleUpload(item.itemId?.toString());
         }
         toast.success('Create Listing Successful!', {
           position: toast.POSITION.TOP_RIGHT,

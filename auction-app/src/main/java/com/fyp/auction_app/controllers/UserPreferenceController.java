@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +31,24 @@ public class UserPreferenceController {
         {
             UserPreference userPreferenceToUpdate = existingUserPreference.get();
 
-            Double currentScore = userPreferenceToUpdate.getPreferenceScore();
-            userPreferenceToUpdate.setPreferenceScore(currentScore + 1);
+            // Calculate the time difference in days (or use other units depending on your requirement)
+            long timeDifferenceInMillis = new Date().getTime() - userPreferenceToUpdate.getTimestamp().getTime();
+            double timeDifferenceInDays = timeDifferenceInMillis / (1000.0 * 60 * 60 * 24);
 
+            // Set the decay constant (λ)
+            double lambda = 0.5; // Adjust this value based on your requirement
+
+            // Calculate the weight using the exponential decay formula
+            double weight = Math.exp(-lambda * timeDifferenceInDays);
+
+            // Update the preference score
+            Double currentScore = userPreferenceToUpdate.getPreferenceScore();
+            userPreferenceToUpdate.setPreferenceScore(currentScore + 0.5 * weight);
+
+            // Update the timestamp to the current time
+            userPreferenceToUpdate.setTimestamp(new Date());
+
+            // Save the updated user preference
             userPreferenceService.updateUserPreference(userPreferenceToUpdate);
         } else
         {
@@ -40,6 +57,7 @@ public class UserPreferenceController {
             userPreferenceToCreate.setUsername(request.getUsername());
             userPreferenceToCreate.setCategory(request.getCategory());
             userPreferenceToCreate.setPreferenceScore(1.0);
+            userPreferenceToCreate.setTimestamp(new Date());
 
             userPreferenceService.createUserPreference(userPreferenceToCreate);
         }
