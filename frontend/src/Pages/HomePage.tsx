@@ -96,8 +96,6 @@ const HomePage: React.FC<AuthProps> = ({ user }) => {
                   <>
                     <ProductGridJustForYou username={user} />
                     {generateCategory()}
-                    <HomeProductCategoryGrid username={user} category="Books" />
-                    <HomeProductCategoryGrid username={user} category="Beauty" />
                   </>
                 ) : (
                   <>
