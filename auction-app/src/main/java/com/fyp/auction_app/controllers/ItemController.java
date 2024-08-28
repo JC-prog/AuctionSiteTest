@@ -49,6 +49,16 @@ public class ItemController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("")
+    public ResponseEntity<Item> getItemByTitle(
+            @RequestParam(value = "name") String itemTitle
+    ) {
+
+        Item foundItem = itemService.findItemByItemTitle(itemTitle);
+
+        return new ResponseEntity<>(foundItem, HttpStatus.OK);
+    }
+
     // Get Paginated All Items
     @GetMapping("/all")
     public ResponseEntity<Page<Item>> getItems(

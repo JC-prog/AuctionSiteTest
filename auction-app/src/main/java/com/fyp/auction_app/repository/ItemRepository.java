@@ -34,6 +34,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer>, JpaSpecifi
     // Find Paginated Items by Seller Name and Status
     Page<Item> findBySellerNameAndStatus(String sellerName, ListingStatus status, Pageable pageable);
 
+    Item findByItemTitle(String itemTitle);
 
     // Custom Queries
     // Find items by sellerName and endDate

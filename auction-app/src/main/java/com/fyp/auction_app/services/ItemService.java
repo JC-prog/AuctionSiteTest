@@ -25,6 +25,11 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
+    public Item findItemByItemTitle(String itemTitle)
+    {
+        return itemRepository.findByItemTitle(itemTitle);
+    }
+
     // Returns Paginated all Items
     public Page<Item> findAllItems(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
