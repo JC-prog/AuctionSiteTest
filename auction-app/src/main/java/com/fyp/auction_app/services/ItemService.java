@@ -32,7 +32,7 @@ public class ItemService {
 
     // Returns Paginated all Items
     public Page<Item> findAllItems(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createAt"));
 
         return itemRepository.findAll(pageable);
     }
@@ -45,7 +45,7 @@ public class ItemService {
 
     // Return Paginated all Items by Seller name
     public Page<Item> findItemsBySellerName(String sellerName, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createAt"));
 
         return itemRepository.findBySellerName(sellerName, pageable);
     }

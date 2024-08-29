@@ -1,5 +1,6 @@
 package com.fyp.auction_app.services;
 
+import com.fyp.auction_app.models.Enums.TradeRequestStatus;
 import com.fyp.auction_app.models.TradeRequest;
 import com.fyp.auction_app.models.Transaction;
 import com.fyp.auction_app.models.User;
@@ -52,9 +53,9 @@ public class TradeRequestService {
         return tradeRequestRepository.countTradesBySellerItemId(itemId);
     }
 
-    public List<TradeRequest> getAllTradeRequestBySellerItemId(Integer itemId)
+    public List<TradeRequest> getAllTradeRequestBySellerItemIdAndStatus(Integer itemId, TradeRequestStatus status)
     {
-        return tradeRequestRepository.findBySellerItemId(itemId);
+        return tradeRequestRepository.findBySellerItemIdAndStatus(itemId, status);
     }
 
 }

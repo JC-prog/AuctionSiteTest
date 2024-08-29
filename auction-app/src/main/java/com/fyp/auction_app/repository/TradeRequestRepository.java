@@ -26,4 +26,6 @@ public interface TradeRequestRepository extends JpaRepository<TradeRequest, Inte
     Long countTradesBySellerItemId(@Param("sellerItemId") Integer sellerItemId);
 
     List<TradeRequest> findBySellerItemId(Integer sellerItemId);
+
+    List<TradeRequest> findBySellerItemIdAndStatus(Integer sellerItemId, TradeRequestStatus status);
 }

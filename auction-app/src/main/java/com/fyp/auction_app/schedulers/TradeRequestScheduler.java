@@ -38,9 +38,6 @@ public class TradeRequestScheduler {
             sellerItemToUpdate.setStatus(ListingStatus.TRADED);
             sellerItemToUpdate.setBidWinner(tradeRequest.getBuyerName());
             itemRepository.save(sellerItemToUpdate);
-
-            tradeRequest.setStatus(TradeRequestStatus.REJECTED);
-            tradeRequestRepository.save(tradeRequest);
         }
     }
 }

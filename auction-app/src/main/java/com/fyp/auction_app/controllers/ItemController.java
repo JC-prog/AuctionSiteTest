@@ -344,9 +344,10 @@ public class ItemController {
     }
 
     @DeleteMapping("/{itemId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("itemID") Integer itemID) {
+    public ResponseEntity<Void> deleteItem(@PathVariable("itemID") Integer itemID) {
         itemService.deleteById(itemID);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/image/{itemId}")

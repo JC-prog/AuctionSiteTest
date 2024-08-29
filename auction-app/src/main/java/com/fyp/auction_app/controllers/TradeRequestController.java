@@ -114,7 +114,7 @@ public class TradeRequestController {
 
             tradeRequestService.updateTradeRequest(tradeRequestToUpdate);
 
-            List<TradeRequest> otherTradeRequests = tradeRequestService.getAllTradeRequestBySellerItemId(tradeRequestToUpdate.getSellerItemId());
+            List<TradeRequest> otherTradeRequests = tradeRequestService.getAllTradeRequestBySellerItemIdAndStatus(tradeRequestToUpdate.getSellerItemId(), TradeRequestStatus.PENDING);
 
             for(TradeRequest tr : otherTradeRequests)
             {
