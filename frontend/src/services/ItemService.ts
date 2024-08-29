@@ -196,6 +196,13 @@ export const rejectBid = (itemId: number) => {
   return apiPost(apiUrl, null);
 }
 
+// Delete Listing
+export const deleteItem = (itemId: number) => {
+    const apiUrl = `/api/item/delete/${itemId}`;
+  
+    return apiPost(apiUrl, null);
+  }
+
 // Fetch Items that are in CREATED
 export const fetchCreatedItem = (username: string | null | undefined) => {
   const apiUrl = `/api/item/created/${username}`;

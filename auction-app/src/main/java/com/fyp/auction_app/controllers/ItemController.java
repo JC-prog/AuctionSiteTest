@@ -343,9 +343,9 @@ public class ItemController {
         }
     }
 
-    @DeleteMapping("/{itemId}")
-    public ResponseEntity<Void> deleteItem(@PathVariable("itemID") Integer itemID) {
-        itemService.deleteById(itemID);
+    @PostMapping("/delete/{itemId}")
+    public ResponseEntity<Void> deleteItem(@PathVariable("itemId") Integer itemId) {
+        itemService.deleteById(itemId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

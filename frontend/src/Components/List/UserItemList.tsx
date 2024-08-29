@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { FiEdit, FiUpload } from 'react-icons/fi';
 import { TiTick } from "react-icons/ti";
 import { MdCancel } from "react-icons/md";
-import { FaStop, FaExclamationCircle } from "react-icons/fa";
+import { FaStop, FaExclamationCircle, FaTrash } from "react-icons/fa";
 import { toast } from 'react-toastify';
 
 // Config
 import api from '../../config/api/loginApi';
-import { launchItem, acceptBid, rejectBid, stopListing } from '../../services/ItemService'; 
+import { launchItem, acceptBid, rejectBid, stopListing, deleteItem } from '../../services/ItemService'; 
 
 import Timer from '../../Components/Timer';
 import Item from '../../interfaces/Item'; 
@@ -71,6 +71,37 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
         autoClose: 2000,
       });
     }
+  };
+
+  // Delete Listing
+  const deleteListing = async (itemId: number) => {
+    try {
+        const response = await deleteItem(itemId);
+        console.log(response);
+    
+        if (response.status === 200) {
+          toast.success(response.data.message || 'Listing Deleted', {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          });
+  
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+  
+        } else {
+          toast.error(response.data.message || 'Failed to Delete Item', {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          });
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        toast.error('Failed to Delete. Please try again later.', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
   };
 
   // Accept Bid
@@ -198,6 +229,12 @@ const UserItemList: React.FC<ItemListProps> = ({ items }) => {
                     onClick={() => launchListing(item.itemId)}
                 >
                     <FiUpload className="mr-1" /> Launch
+                </button>
+                <button 
+                    className="text-red-600 hover:text-red-900 focus:outline-none flex items-center px-1"
+                    onClick={() => deleteListing(item.itemId)}
+                >
+                    <FaTrash className="mr-1" /> Delete
                 </button>
             </>);
       case "FINISHED":
