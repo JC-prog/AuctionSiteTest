@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../Cards/ProductCard';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // Interface
 import Item from '../../interfaces/Item';
@@ -17,6 +17,11 @@ const HomeProductCategoryGrid: React.FC<ItemProps> = ({ username, category }) =>
     const [items, setItems] = useState<Item[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
+    const navigate = useNavigate();
+
+    const handleNavigate = (category: string) => {
+        navigate(`/category-search?keyword=${category}`);
+    };
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -56,7 +61,7 @@ const HomeProductCategoryGrid: React.FC<ItemProps> = ({ username, category }) =>
                 <div className="container mx-auto px-4">
                     <div className="flex justify-between items-center mb-6 mt-6">
                         <h2 className="text-2xl font-bold">{category}</h2>
-                        <Link to="/all-items" className="text-blue-500 hover:underline">Show all</Link>
+                        <button onClick={() => handleNavigate(category)} className="text-blue-500 hover:underline">Show all</button>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                         {items.map((item) => (

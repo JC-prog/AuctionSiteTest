@@ -5,14 +5,14 @@ import ProductCard from '../Cards/ProductCard';
 import Item from '../../interfaces/Item';
 
 // API Function Call
-import { fetchItemsByKeyword, fetchAllItems } from '../../services/ItemService';
+import { fetchItemsByCategorySearch } from '../../services/ItemService';
 
 type ItemProps = {
     username: string | null | undefined;
     keyword: string | null;
 };
 
-const ProductGridSearch: React.FC<ItemProps> = ({ username, keyword }) => {
+const ProductGridSearchCategory: React.FC<ItemProps> = ({ username, keyword }) => {
     const [items, setItems] = useState<Item[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
@@ -22,30 +22,25 @@ const ProductGridSearch: React.FC<ItemProps> = ({ username, keyword }) => {
     // Function to search for items based on keyword
     useEffect(() => {
         const fetchItems = async () => {
-            setLoading(true);
-            try {
-                let response;
-                if (keyword) {
-                    response = await fetchItemsByKeyword(username, keyword, currentPage);
-                } else {
-                    response = await fetchAllItems(currentPage);
-                }
-    
-                if (response.status !== 200) {
-                    throw new Error('Network response was not ok');
-                }
-    
-                setItems(response.data.content);
-                setTotalPages(response.data.totalPages);
-            } catch (error) {
-                setError(error as Error);
-            } finally {
-                setLoading(false);
+        setLoading(true);
+        try {
+            const response = await fetchItemsByCategorySearch(username, keyword, currentPage);
+            if (response.status !== 200) {
+            throw new Error('Network response was not ok');
             }
+            setItems(response.data.content);
+            setTotalPages(response.data.totalPages);
+        } catch (error) {
+            setError(error as Error);
+        } finally {
+            setLoading(false);
+        }
         };
-    
-        fetchItems();
-    }, [keyword, currentPage]);
+  
+    if (keyword) {
+      fetchItems();
+    }
+  }, [keyword, currentPage]);
 
     const handleNextPage = () => {
         if (currentPage < totalPages - 1) {
@@ -105,4 +100,4 @@ const ProductGridSearch: React.FC<ItemProps> = ({ username, keyword }) => {
     );
 };
 
-export default ProductGridSearch;
+export default ProductGridSearchCategory;

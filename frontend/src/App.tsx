@@ -26,7 +26,8 @@ import MyItemListing from './Pages/MyItemListing';
 import ItemPage from "./Pages/ItemPage";
 import ItemCreatePage from "./Pages/ItemCreatePage"
 import ItemEditPage from "./Pages/ItemEditPage"
-import SearchPage from "./Pages/SearchPage"
+import SearchPageKeyword from "./Pages/SearchPageKeyword"
+import SearchPageCategory from "./Pages/SearchPageCategory"
 import AnalyticsPage from './Pages/AnalyticsPage';
 import TransactionPage from './Pages/TransactionPage';
 import FeedbackPage from './Pages/FeedbackPage';
@@ -127,7 +128,8 @@ function App() {
               <Route path="/admin/system-management" element={<AdminSystemManagementPage />} />
               <Route path="/admin/feedback-management" element={<AdminFeedbackManagementPage />} />
 
-              <Route path="/search" element={<SearchPage user={user}/>} />
+              <Route path="/search" element={<SearchPageKeyword user={user}/>} />
+              <Route path="/category-search" element={<SearchPageCategory user={user}/>} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/notification" element={<MyNotificationPage user={user} />} />

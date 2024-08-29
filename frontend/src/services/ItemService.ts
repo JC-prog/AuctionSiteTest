@@ -264,3 +264,21 @@ export const fetchItemsByKeyword = async (sellername: string | null | undefined,
 
     return response;
 };
+
+// Fetch Items Search from Category
+export const fetchItemsByCategorySearch = async (username: string | null | undefined, category: string | null, page: number = 0, size: number = 20) => {
+    const apiUrl = `/api/item/${category}/exclude/${username}&page=${page}&size=${size}`
+
+    const response = apiGet(apiUrl);
+
+    return response;
+};
+
+// Fetch All Items Search
+export const fetchAllItems = async (page: number = 0, size: number = 20) => {
+    const apiUrl = `/api/item/all-listed?page=${page}&size=${size}`
+
+    const response = apiGet(apiUrl);
+
+    return response;
+};

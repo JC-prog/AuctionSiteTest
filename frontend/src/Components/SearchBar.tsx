@@ -8,9 +8,8 @@ const SearchBar: React.FC = () => {
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        if (query.trim()) {
-            navigate(`/search?keyword=${query}`);
-        }
+        const trimmedQuery = query.trim();
+        navigate(`/search?keyword=${trimmedQuery}`);
     };
 
     return (
