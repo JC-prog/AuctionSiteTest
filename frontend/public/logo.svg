@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="2.6917276in"
+   height="0.61220473in"
+   viewBox="0 0 68.369882 15.55"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="in"
+     inkscape:zoom="3.1108586"
+     inkscape:cx="53.200747"
+     inkscape:cy="58.183294"
+     inkscape:window-width="2560"
+     inkscape:window-height="1403"
+     inkscape:window-x="1440"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g8617" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-10.265058,-17.625)">
+    <g
+       id="g8617"
+       transform="translate(1.5614327,-0.25745604)">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="25.691797"
+         y="29.60294"
+         id="text231"><tspan
+           sodipodi:role="line"
+           id="tspan229"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Abyssinica SIL';-inkscape-font-specification:'Abyssinica SIL, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+           x="25.691797"
+           y="29.60294">EzAuction</tspan></text>
+      <g
+         id="g7345"
+         transform="matrix(0.64791667,0,0,0.64791667,8.7036255,17.882456)">
+        <path
+           fill="none"
+           d="M 0,0 H 24 V 24 H 0 Z"
+           id="path7341" />
+        <path
+           d="m 14,20 v 2 H 2 V 20 Z M 14.586,0.686 22.364,8.464 20.95,9.88 19.89,9.526 17.413,12 23.07,17.657 21.656,19.071 16,13.414 l -2.404,2.404 0.283,1.132 -1.415,1.414 -7.778,-7.778 1.415,-1.414 1.13,0.282 6.294,-6.293 -0.353,-1.06 z"
+           id="path7343" />
+      </g>
+    </g>
+  </g>
+</svg>
